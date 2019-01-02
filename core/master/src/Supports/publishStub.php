@@ -84,7 +84,7 @@ trait PublishStub
     	$regexs = $values = array();
     	foreach ($translates as $regex => $value) {
     		$regexs[] = $regex;
-    		$values = $value;
+    		$values[] = $value;
     	}
     	return [$regexs, $values];
     }
@@ -122,6 +122,7 @@ trait PublishStub
     public function transformFilename($path)
     {
     	list($regexs, $values) = $this->parseDataTranslate($this->filenameTranslate);
+        
         return str_replace(
             $regexs,
             $values,

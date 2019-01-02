@@ -1,5 +1,5 @@
 <?php
-namespace Packages\Core\Commands;
+namespace Core\Base\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Core\Master\Supports\PublishStub;
@@ -65,15 +65,8 @@ class MakeRepositoryCommand extends Command
         $this->renameFileName($this->location);
         $this->searchAndReplaceInFiles();
 
-
-
         $this->line('------------------');
         $this->line('<info>The plugin repository</info> <comment>' . studly_case($this->plugin) . '</comment> <info>was created in</info> <comment>' . $this->location . '</comment><info>, customize it!</info>');
         $this->line('------------------');
-
-
-        if ($this->confirm('Do you want to bind repo with interface?')) {
-            return $this->call("make:bind-repo",['package' => $package, 'repo' => $repo]);
-        }
     }
 }
