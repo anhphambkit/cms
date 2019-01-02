@@ -1,9 +1,11 @@
 <?php
 namespace Packages\Core\Commands;
 use Illuminate\Console\Command;
-
+use Illuminate\Filesystem\Filesystem;
+use Core\Master\Supports\PublishStub;
 class MakeRepositoryCommand extends Command
 {
+    use PublishStub;
     /**
      * The name and signature of the console command.
      *
@@ -19,6 +21,20 @@ class MakeRepositoryCommand extends Command
     protected $description = '[Eden] Make new repo.';
 
     /**
+     * Create a new key generator command.
+     *
+     * @param \Illuminate\Filesystem\Filesystem $files
+     * @param Composer $composer
+     * @author TrinhLe
+     */
+    public function __construct(Filesystem $files)
+    {
+        parent::__construct();
+
+        $this->files = $files;
+    }
+
+    /**
      * Execute the console command.
      *
      * @return mixed
@@ -30,9 +46,9 @@ class MakeRepositoryCommand extends Command
         $repo = $this->argument('repo');
 
         $this->plugin = ucfirst(strtolower($this->argument('name')));
-        $this->location = $basePath . '/' . strtolower($this->plugin);
+        $this->location = $basePath . '/' . strtolower($this->plugin) . '/src/Repositories';
 
-        $fromStub = base_path('core/base/stubs/repository');
+        $fromStub = base_path('core/base/stubs/repository/Repositories');
 
         $this->dataTranslate = [
             "{CoreNamespace}" => $coreNamespace,

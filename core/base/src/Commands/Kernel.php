@@ -12,7 +12,8 @@ class Kernel
     protected $commands = [
         DumpAutoload::class,
         PublishConfig::class,
-        PluginCreateCommand::class
+        PluginCreateCommand::class,
+        MakeRepositoryCommand::class
     ];
 
     /**

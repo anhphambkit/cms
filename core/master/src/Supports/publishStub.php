@@ -6,7 +6,7 @@ use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\MountManager;
 
-trait publishStub
+trait PublishStub
 {   
 	/**
      * The filesystem instance.
