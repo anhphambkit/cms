@@ -1,0 +1,4 @@
+Host gitlab.com
+	HostName gitlab.com
+	IdentityFile /root/gitlab_key
+	User trinh.le@bigin.vn

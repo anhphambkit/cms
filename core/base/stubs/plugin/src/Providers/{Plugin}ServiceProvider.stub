@@ -1,0 +1,43 @@
+<?php
+
+namespace Plugins\{Plugin}\Providers;
+
+use Plugins\{Plugin}\Models\{Plugin};
+use Illuminate\Support\ServiceProvider;
+use Plugins\{Plugin}\Repositories\Caches\{Plugin}CacheDecorator;
+use Plugins\{Plugin}\Repositories\Eloquent\{Plugin}Repository;
+use Plugins\{Plugin}\Repositories\Interfaces\{Plugin}Interface;
+use Core\Master\Services\Cache\Cache;
+use Core\Base\Supports\Helper;
+
+class {Plugin}ServiceProvider extends ServiceProvider
+{
+    /**
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
+
+    /**
+     * @author Sang Nguyen
+     */
+    public function register()
+    {
+        if (setting('enable_cache', false)) {
+            $this->app->singleton({Plugin}Interface::class, function () {
+                return new {Plugin}CacheDecorator(new {Plugin}Repository(new {Plugin}()), new Cache($this->app['cache'], {Plugin}Repository::class));
+            });
+        } else {
+            $this->app->singleton({Plugin}Interface::class, function () {
+                return new {Plugin}Repository(new {Plugin}());
+            });
+        }
+    }
+
+    /**
+     * @author Sang Nguyen
+     */
+    public function boot()
+    {
+        
+    }
+}

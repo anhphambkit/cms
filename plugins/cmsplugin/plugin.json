@@ -1,0 +1,8 @@
+{
+    "name": "Cmsplugin",
+    "provider": "Plugins\\Cmsplugin\\Providers\\CmspluginServiceProvider",
+    "plugin": "Plugins\\Cmsplugin\\Plugin",
+    "author": "Trinh Le",
+    "version": "1.0",
+    "description": "Cmsplugin"
+}
