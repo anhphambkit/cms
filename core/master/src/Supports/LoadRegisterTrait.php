@@ -13,7 +13,7 @@ trait LoadRegisterTrait
      */
     protected function cmsLoadViews()
     {
-        $sources = $this->loadPackages(self::SOURCE_VIEWS);
+        $sources = $this->loadPackages(SOURCE_VIEWS);
        
         foreach ($sources as $group => $dir) {
             # code...
@@ -27,7 +27,7 @@ trait LoadRegisterTrait
      */
 	protected function cmsLoadTranslates()
     {
-        $sources = $this->loadPackages(self::SOURCE_TRANSLATES);
+        $sources = $this->loadPackages(SOURCE_TRANSLATES);
 
         foreach ($sources as $group => $dir) {
             # code...
@@ -43,7 +43,7 @@ trait LoadRegisterTrait
      */
     protected function cmsLoadConfigs()
     {
-        $sources = $this->loadPackages(self::SOURCE_CONFIGS);
+        $sources = $this->loadPackages(SOURCE_CONFIGS);
 
         foreach ($sources as $group => $dir) {
 

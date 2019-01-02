@@ -10,20 +10,6 @@ use Core\Master\Supports\LoadRegisterTrait;
 class BaseServiceProvider extends ServiceProvider
 {	
 	use LoadRegisterTrait;
-	/**
-     * {@inheritDoc}
-     */
-    const SOURCE_VIEWS = '/../resources/views';
-
-    /**
-     * {@inheritDoc}
-     */
-    const SOURCE_TRANSLATES = '/../resources/lang';
-
-    /**
-     * {@inheritDoc}
-     */
-    const SOURCE_CONFIGS = '/../config';
 
 	/**
      * @var \Illuminate\Foundation\Application
@@ -41,7 +27,6 @@ class BaseServiceProvider extends ServiceProvider
 		$this->app->register(MasterServiceProvider::class);
 
 		$this->app->singleton(ExceptionHandler::class, Handler::class);
-
 	}
     
 	/**

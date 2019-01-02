@@ -5,6 +5,7 @@ return [
     'version'            => env('VERSION', '2.3'),
     'plugin-default-img' => '/vendor/core/images/plugin.png',
     'plugin_path'        => base_path() . '/plugins',
+    'core_path'        => base_path() . '/core',
     'media-default-img'  => '/vendor/core/images/default-image.jpg',
     'upload' => [
       'base_dir' => public_path('uploads'),

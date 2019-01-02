@@ -37,21 +37,6 @@ class RouteServiceProvider extends ServiceProvider
     protected $routeSources = [];
 
     /**
-     * {@inheritDoc}
-     */
-    const SOURCE_ROUTERS = '/Routes';
-
-    /**
-     * {@inheritDoc}
-     */
-    const SOURCE_CONTROLERS = '/Controllers';
-
-    /**
-     * {@inheritDoc}
-     */
-    const SOURCE_CONNECTION_ROUTER_CONTROLER = '/../Controllers';
-
-    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
@@ -90,7 +75,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->routeSources = loadPackages(self::SOURCE_ROUTERS, false);
+        $this->routeSources = loadPackages(SOURCE_ROUTERS, false);
         
         foreach ($this->routeSources as $group => $directory) 
         {   
