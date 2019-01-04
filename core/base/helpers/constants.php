@@ -15,3 +15,11 @@ if (!defined('SOURCE_CONFIGS')) {
 if (!defined('SOURCE_ROUTERS')) {
     define('SOURCE_ROUTERS', '/Routes');
 }
+
+if (!defined('SOURCE_MIGRATIONS')) {
+    define('SOURCE_MIGRATIONS', '/../database/migrations');
+}
+
+if (!defined('PREFIX_ADMIN')) {
+    define('PREFIX_ADMIN', 'admin');
+}

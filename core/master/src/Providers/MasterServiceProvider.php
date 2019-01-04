@@ -12,7 +12,7 @@ class MasterServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function register()
     {

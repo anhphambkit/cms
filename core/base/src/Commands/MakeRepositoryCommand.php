@@ -68,5 +68,13 @@ class MakeRepositoryCommand extends Command
         $this->line('------------------');
         $this->line('<info>The plugin repository</info> <comment>' . studly_case($this->plugin) . '</comment> <info>was created in</info> <comment>' . $this->location . '</comment><info>, customize it!</info>');
         $this->line('------------------');
+
+        if ($this->confirm('Do you want to bind repo with interface?')) 
+        {
+            $params = ['package' => studly_case($this->plugin), 'repo' => studly_case($repo)];
+            if($this->option('plugin'))
+                $params = array_merge(['--plugin' => '--plugin'], $params);
+            return $this->call("make:bind-repo",$params);
+        }
     }
 }

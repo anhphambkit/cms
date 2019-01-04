@@ -12,23 +12,34 @@ class Helper
      * {@inheritDoc}
      */
     const SOURCE_HELPERS = '/../helpers';
-
-	/**
+	
+    /**
      * Load module's helpers
-     * @param $directory
+     * @param string|null $directory 
      * @author TrinhLe
      */
-    public static function autoloadHelpers()
+    public static function autoloadHelpers($directory = null)
     {
-        $sources = loadPackages(self::SOURCE_HELPERS);
+        if(!$directory)
+        {
+            $sources = loadPackages(self::SOURCE_HELPERS);
 
-        foreach ($sources as $group => $dir) {
+            foreach ($sources as $group => $dir) {
 
-            $helpers = File::glob($dir . '/*.php');
+                $helpers = File::glob($dir . '/*.php');
 
+                foreach ($helpers as $helper) {
+                    File::requireOnce($helper);
+                }
+            }
+        }
+        else 
+        {
+            $helpers = File::glob($directory . '/*.php');
             foreach ($helpers as $helper) {
                 File::requireOnce($helper);
             }
         }
+            
     }
 }

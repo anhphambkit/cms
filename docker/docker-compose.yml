@@ -31,7 +31,7 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - "postgresdb:/var/lib/postgresql/data"
+      - "postgresdbcms:/var/lib/postgresql/data"
     ports:
       - "${DB_PORT}:5432"
     networks:
@@ -50,7 +50,7 @@ services:
       cms:
         ipv4_address: ${IP_SERVER}.24
 volumes:
-  postgresdb:
+  postgresdbcms:
 networks:
   cms:
     driver: bridge

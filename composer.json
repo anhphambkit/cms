@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.1.3",
         "fideloper/proxy": "^4.0",
+        "floatingpoint/stylist": "^1.0",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "predis/predis": "^1.1"
@@ -30,6 +31,9 @@
             "App\\": "app/",
             "Core\\Base\\": "core/base/src",
             "Core\\Master\\": "core/master/src",
+            "Core\\Setting\\": "core/setting/src",
+            "Core\\Theme\\": "core/theme/src",
+            "Core\\User\\": "core/user/src",
             "Plugins\\Cmsplugin\\": "plugins/cmsplugin/src"
         },
         "files": [

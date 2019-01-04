@@ -64,13 +64,14 @@ trait LoadRegisterTrait
      * Publish the given configuration file name (without extension) and the given module
      * @param string $module
      * @param string $fileName
+     * @author TrinhLe
      */
     protected function publishConfig($group, $config, $fileName)
     {
         if (app()->environment() !== 'testing') 
         {
             if ($this->app->runningInConsole()) {
-
+                   
                 $package = getPackageNamespace($group);
                 
                 if(isCorePackage($group))
@@ -89,23 +90,23 @@ trait LoadRegisterTrait
     }
 
     /**
-     * Get path of the give file name in the given package
-     * @param string $package
-     * @param string $file
-     * @return string
+     * Description
+     * @author TrinhLe
      */
-    private function getPackageConfigFilePath($package, $file)
+    protected function publishMigration()
     {
-        return $this->getPackagePath($package) . "/Config/$file.php";
-    }
+        if (app()->environment() !== 'testing') 
+        {
+            if ($this->app->runningInConsole()) {
 
-    /**
-     * @param $package
-     * @return string
-     */
-    private function getPackagePath($package)
-    {
-        return base_path('Packages' . DIRECTORY_SEPARATOR . ucfirst($package));
+                $sources = $this->loadPackages(SOURCE_MIGRATIONS);
+                foreach ($sources as $group => $dir) {
+                    $this->publishes([
+                        $dir => database_path('migrations'),
+                    ], 'cms-migrations');
+                }
+            }
+        }
     }
 
     /**

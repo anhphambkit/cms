@@ -199,19 +199,21 @@ if (function_exists('getDirectoryController') === false) {
 
     /**
      * Get directory controler
+     * @param string $groupRoute 
      * @param string $routeDirectory 
      * @param string $routeFileName 
      * @author TrinhLe
      * @return string
      */
-    function getDirectoryController(string $routeDirectory, string $routeFileName)
+    function getDirectoryController(string $groupRoute, string $routeDirectory, string $routeFileName)
     {
         $rootDirectory        = explode('src', $routeDirectory)[0];
         $controllerFolderName = ucfirst($routeFileName);
         $controlerDirectory   = "{$rootDirectory}src/Controllers/{$controllerFolderName}";
+        $controllerNamespace = "{$groupRoute}Controllers\\{$controllerFolderName}";
         if(!is_dir($controlerDirectory))
             throw new \Exception("Not found controller directory: {$controlerDirectory}");
-        return $controlerDirectory;
+        return $controllerNamespace;
     }
 }
 

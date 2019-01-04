@@ -105,7 +105,7 @@ class RouteServiceProvider extends ServiceProvider
         
         $route = Route::prefix(getPrefixRoute($routeFileName));
         # get controler namespace
-        $controlerDirectory = getDirectoryController($routeDirectory, $routeFileName);
+        $controlerDirectory = getDirectoryController($group, $routeDirectory, $routeFileName);
         
         # get middleware namespace and push to middleware list
         $middlewareNamespace = getNamespaceMiddleware($group, $routeFileName, $routeDirectory);

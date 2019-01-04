@@ -15,10 +15,8 @@
 
 	// Hostname or IP address for server.  Use '' for UNIX domain socket.
 	// use 'localhost' for TCP/IP connection on this computer
-	$conf['servers'][0]['host'] = 'docker.for.mac.host.internal';
-	// $conf['servers'][0]['host'] = '10.225.77.117';
-	
-	$conf['servers'][0]['port'] = 5431;
+	$conf['servers'][0]['host'] = '174.23.0.1';
+    $conf['servers'][0]['port'] = 5447;
 
 	// Database SSL mode
 	// Possible options: disable, allow, prefer, require

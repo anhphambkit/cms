@@ -13,7 +13,9 @@ class Kernel
         DumpAutoload::class,
         PublishConfig::class,
         PluginCreateCommand::class,
-        MakeRepositoryCommand::class
+        MakeRepositoryCommand::class,
+        MakeBindContentRepository::class,
+        MigrateSystemCommand::class
     ];
 
     /**
