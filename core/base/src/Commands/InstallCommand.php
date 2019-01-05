@@ -76,9 +76,6 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        if(config('app.app_installed') == true)
-            return $this->line('Installed. Enjoy LCMS!');
-
         $this->line('------------------');
         $this->line('Welcome to LCMS');
         $this->line('------------------');
@@ -106,7 +103,7 @@ class InstallCommand extends Command
         $this->createSuperUser();
 
         $this->completed();
-        
+
         $this->line('------------------');
         $this->line('Done. Enjoy LCMS!');
     }
@@ -255,8 +252,8 @@ class InstallCommand extends Command
      * @author TrinhLe
      */
     protected function completed(){
-        $env = $this->finder->get('.env');
+        $env = $this->files->get('.env');
         $env = str_replace('CMS_INSTALLED=false', 'CMS_INSTALLED=true', $env);
-        $this->finder->put('.env', $env);
+        $this->files->put('.env', $env);
     }
 }

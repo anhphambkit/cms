@@ -1,11 +1,12 @@
 <?php namespace Core\User\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Carbon\Carbon;
 use Cartalyst\Sentinel\Permissions\PermissionsTrait;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Exception;
 
-class User extends EloquentUser
+class User extends EloquentUser implements AuthenticatableContract
 {
 
     /**

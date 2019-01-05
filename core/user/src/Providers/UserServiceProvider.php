@@ -1,14 +1,18 @@
 <?php
 
 namespace Core\User\Providers;
-
+use Cartalyst\Sentinel\Laravel\SentinelServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Core\User\Repositories\Interfaces\Authentication;
 use Core\User\Repositories\Eloquent\EloquentAuthentication;
+use Core\User\Repositories\Interfaces\UserInterface;
+use Core\User\Repositories\Eloquent\UserRepository;
+use Core\User\Guards\Sentinel;
 
 /**
- * Class AclServiceProvider
- * @package Botble\ACL
+ * Class UserServiceProvider
+ * @package Core\User
  */
 class UserServiceProvider extends ServiceProvider
 {
@@ -22,6 +26,9 @@ class UserServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        # reigster driver user # 
+        $this->app->register(SentinelServiceProvider::class);
+
         # binding basic services of user.
         $this->app->bind(
             Authentication::class,
@@ -91,6 +98,11 @@ class UserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        # Important register guard
+        Auth::extend('sentinel-guard', function () {
+            return new Sentinel();
+        });
+
         add_action(TEST_ACTION,[$this, 'testAction'], 1, 2);
     }
 

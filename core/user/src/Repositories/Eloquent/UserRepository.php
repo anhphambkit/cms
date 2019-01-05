@@ -7,7 +7,6 @@ use Core\Master\Repositories\Eloquent\RepositoriesAbstract;
 
 class UserRepository extends RepositoriesAbstract implements UserInterface
 {
-
     /**
      * @return mixed
      * @author TrinhLe

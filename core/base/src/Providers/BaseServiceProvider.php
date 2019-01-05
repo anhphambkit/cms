@@ -27,9 +27,6 @@ class BaseServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
-		if(config('app.app_installed') == false)
-			throw new \Exception("lcms not install", 1);
-		
 		Helper::autoloadHelpers();
 
 		$this->app->register(AssetServiceProvider::class);
