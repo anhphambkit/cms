@@ -1,6 +1,7 @@
 <?php namespace Core\User\Models;
 
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Auth\Authenticatable;
 use Carbon\Carbon;
 use Cartalyst\Sentinel\Permissions\PermissionsTrait;
 use Cartalyst\Sentinel\Users\EloquentUser;
@@ -8,7 +9,7 @@ use Exception;
 
 class User extends EloquentUser implements AuthenticatableContract
 {
-
+    use Authenticatable;
     /**
      * The database table used by the model.
      *
@@ -80,7 +81,7 @@ class User extends EloquentUser implements AuthenticatableContract
      * Always capitalize the first name when we retrieve it
      * @param $value
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getFirstNameAttribute($value)
     {
@@ -91,7 +92,7 @@ class User extends EloquentUser implements AuthenticatableContract
      * Always capitalize the last name when we retrieve it
      * @param $value
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getLastNameAttribute($value)
     {
@@ -100,7 +101,7 @@ class User extends EloquentUser implements AuthenticatableContract
 
     /**
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getFullName()
     {
@@ -109,7 +110,7 @@ class User extends EloquentUser implements AuthenticatableContract
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getProfileImage()
     {
@@ -122,7 +123,7 @@ class User extends EloquentUser implements AuthenticatableContract
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getRole()
     {
@@ -131,7 +132,7 @@ class User extends EloquentUser implements AuthenticatableContract
 
     /**
      * @return boolean
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function isSuperUser()
     {
@@ -144,7 +145,7 @@ class User extends EloquentUser implements AuthenticatableContract
     /**
      * @param $permissions
      * @return boolean
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function hasPermission($permissions)
     {
@@ -160,7 +161,7 @@ class User extends EloquentUser implements AuthenticatableContract
     /**
      * @param $permissions
      * @return bool
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function hasAnyPermission($permissions)
     {
@@ -188,7 +189,7 @@ class User extends EloquentUser implements AuthenticatableContract
 
     /**
      * @param $date
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function setDobAttribute($date)
     {
@@ -197,7 +198,7 @@ class User extends EloquentUser implements AuthenticatableContract
 
     /**
      * @param $date
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @return mixed
      */
     public function getDobAttribute($date)

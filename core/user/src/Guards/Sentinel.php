@@ -5,9 +5,27 @@ namespace Core\User\Guards;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel as SentinelFacade;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard as LaravelGuard;
+use Illuminate\Auth\AuthenticationException;
 
 class Sentinel implements LaravelGuard
 {
+
+    /**
+     * Determine if the current user is authenticated.
+     *
+     * @return \Illuminate\Contracts\Auth\Authenticatable
+     *
+     * @throws \Illuminate\Auth\AuthenticationException
+     */
+    public function authenticate()
+    {
+        if (! is_null($user = $this->user())) {
+            return $user;
+        }
+
+        throw new AuthenticationException;
+    }
+
     /**
      * Determine if the current user is authenticated.
      * @return bool

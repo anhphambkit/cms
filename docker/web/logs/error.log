@@ -2120,3 +2120,18 @@ PHP message: PHP  52. spl_autoload_call() /var/www/html/vendor/laravel/framework
 PHP message: PHP  53. Composer\Autoload\ClassLoader->loadClass() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/RouteSignatureParameters.php:25
 PHP message: PHP  54. Composer\Autoload\includeFile() /var/www/html/vendor/composer/ClassLoader.php:322
 PHP message: PHP  55. include() /var/www/html/vendor/composer/ClassLoader.php:444" while reading response header from upstream, client: 174.23.0.1, server: _, request: "POST /auth/login HTTP/1.1", upstream: "fastcgi://unix:/var/run/php/php7.1-fpm.sock:", host: "localhost", referrer: "http://localhost/auth/login"
+2019/01/05 12:04:56 [error] 67#67: *101 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Class 'ore\Base\Providers\CmsServiceProvider' not found in /var/www/html/core/user/src/Providers/UserServiceProvider.php on line 17
+PHP message: PHP Stack trace:
+PHP message: PHP   1. {main}() /var/www/html/public/index.php:0
+PHP message: PHP   2. App\Http\Kernel->handle() /var/www/html/public/index.php:55
+PHP message: PHP   3. App\Http\Kernel->sendRequestThroughRouter() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:116
+PHP message: PHP   4. App\Http\Kernel->bootstrap() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:146
+PHP message: PHP   5. Illuminate\Foundation\Application->bootstrapWith() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:162
+PHP message: PHP   6. Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:206
+PHP message: PHP   7. Illuminate\Foundation\Application->registerConfiguredProviders() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php:17
+PHP message: PHP   8. Illuminate\Foundation\ProviderRepository->load() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:548
+PHP message: PHP   9. Illuminate\Foundation\Application->register() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:75
+PHP message: PHP  10. Core\Base\Providers\BaseServiceProvider->register() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:573
+PHP message: PHP  11. Illuminate\Foundation\Application->register() /var/www/html/core/base/src/Providers/BaseServiceProvider.php:36
+PHP message: PHP  12. Illuminate\Foundation\Application->resolveProvider() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:569
+PHP message: PHP  13. spl_autoload_call() /var/www/html/vendor/laravel/fra

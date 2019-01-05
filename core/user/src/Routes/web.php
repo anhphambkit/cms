@@ -16,5 +16,4 @@ Route::get('/', function () {
 
 Route::get('auth/login', 'WebController@showLoginForm')->name('login')->middleware('guest');
 Route::post('auth/login', 'WebController@postLogin')->name('post.login');
-Route::get('auth/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
-
+Route::get('auth/logout', 'WebController@logout')->name('logout');

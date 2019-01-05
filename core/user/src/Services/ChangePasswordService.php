@@ -1,9 +1,9 @@
 <?php
 
-namespace Botble\ACL\Services;
+namespace Core\User\Services;
 
-use Botble\ACL\Repositories\Interfaces\UserInterface;
-use Botble\Support\Services\ProduceServiceInterface;
+use Core\User\Repositories\Interfaces\UserInterface;
+use Core\Master\Services\ProduceServiceInterface;
 use Exception;
 use Illuminate\Http\Request;
 use Sentinel;
