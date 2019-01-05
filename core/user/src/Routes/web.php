@@ -12,7 +12,7 @@
 */
 Route::get('/', function () {
 	return view('core-base::base');
-})->name('test');
+})->name('test')->middleware('access:dashboard.index');
 
 Route::get('auth/login', 'WebController@showLoginForm')->name('login')->middleware('guest');
 Route::post('auth/login', 'WebController@postLogin')->name('post.login');

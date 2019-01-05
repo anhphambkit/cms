@@ -23,3 +23,11 @@ if (!defined('SOURCE_MIGRATIONS')) {
 if (!defined('PREFIX_ADMIN')) {
     define('PREFIX_ADMIN', 'admin');
 }
+
+if (!defined('HOME_ROUTE_FRONTEND')) {
+    define('HOME_ROUTE_FRONTEND', 'homepage');
+}
+
+if (!defined('HOME_ROUTE_BACKEND')) {
+    define('HOME_ROUTE_BACKEND', 'homepage');
+}

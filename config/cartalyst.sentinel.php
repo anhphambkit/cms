@@ -69,7 +69,7 @@ return [
 
     'roles' => [
 
-        'model' => 'Cartalyst\Sentinel\Roles\EloquentRole',
+        'model' => 'Core\User\Models\Role',
 
     ],
 

@@ -96,8 +96,8 @@ class CreateTableUserRole extends Migration
             $table->string('slug', 120)->unique();
             $table->string('name', 120);
             $table->text('permissions')->nullable();
-            $table->string('description', 255);
-            $table->tinyInteger('is_staff');
+            $table->string('description', 255)->nullable();
+            $table->tinyInteger('is_staff')->default(1);
             $table->tinyInteger('is_default')->unsigned()->default(0);
             $table->integer('created_by')->unsigned()->references('id')->on('users')->index();
             $table->integer('updated_by')->unsigned()->references('id')->on('users')->index();

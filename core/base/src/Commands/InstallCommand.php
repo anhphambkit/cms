@@ -3,6 +3,8 @@
 namespace Core\Base\Commands;
 
 use Core\User\Repositories\Interfaces\UserInterface;
+use Illuminate\Database\Eloquent\Model;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
 use Symfony\Component\Console\Question\Question;
 use Illuminate\Filesystem\Filesystem;
@@ -101,6 +103,7 @@ class InstallCommand extends Command
 
         // Create a super user
         $this->createSuperUser();
+        $this->createRoles();
 
         $this->completed();
 
@@ -245,6 +248,48 @@ class InstallCommand extends Command
         }
 
         $this->line('------------------');
+    }
+
+    /**
+     * Create role default
+     * @return type
+     */
+    protected function createRoles()
+    {
+        $this->info('Creating Roles...');
+        Model::unguard();
+
+        $groups = Sentinel::getRoleRepository();
+
+        // Create an Admin group
+        $groups->createModel()->create(
+            [
+                'name' => 'Admin',
+                'slug' => 'admin',
+                'created_by' => 1,
+                'updated_by' => 1,
+            ]
+        );
+
+        // Create an Users group
+        $groups->createModel()->create(
+            [
+                'name' => 'User',
+                'slug' => 'user',
+                'created_by' => 1,
+                'updated_by' => 1,
+            ]
+        );
+
+        // Save the permissions
+        $group = Sentinel::findRoleBySlug('admin');
+        $group->permissions = [
+            /* Dashboard */
+            'dashboard.index' => true,
+        ];
+        $group->save();
+
+         $this->info('Roles are created.');
     }
 
     /**
