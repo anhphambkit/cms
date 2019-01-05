@@ -1,9 +1,5 @@
-<?php
+<?php namespace Core\User\Models;
 
-namespace Botble\ACL\Models;
-
-use Botble\Note\Models\Note;
-use Botble\Blog\Models\Post;
 use Carbon\Carbon;
 use Cartalyst\Sentinel\Permissions\PermissionsTrait;
 use Cartalyst\Sentinel\Users\EloquentUser;
@@ -111,31 +107,13 @@ class User extends EloquentUser
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     * @author Sang Nguyen
-     */
-    public function notes()
-    {
-        return $this->hasMany(Note::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     * @author Sang Nguyen
-     */
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
-
-    /**
      * @return mixed
      * @author Sang Nguyen
      */
     public function getProfileImage()
     {
         if (empty($this->profile_image)) {
-            return config('acl.avatar.default');
+            return config('core-user.acl.avatar.default');
         } else {
             return $this->profile_image;
         }

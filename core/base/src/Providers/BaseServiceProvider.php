@@ -10,6 +10,7 @@ use FloatingPoint\Stylist\StylistServiceProvider;
 use Core\Setting\Providers\SettingServiceProvider;
 use Core\Theme\Providers\AssetServiceProvider;
 use Core\Theme\Providers\ThemeServiceProvider;
+use Core\User\Providers\UserServiceProvider;
 
 class BaseServiceProvider extends ServiceProvider
 {	
@@ -26,12 +27,17 @@ class BaseServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
+		if(config('app.app_installed') == false)
+			throw new \Exception("lcms not install", 1);
+		
 		Helper::autoloadHelpers();
 
 		$this->app->register(AssetServiceProvider::class);
 		$this->app->register(StylistServiceProvider::class);
 		$this->app->register(MasterServiceProvider::class);
 		$this->app->register(SettingServiceProvider::class);
+		$this->app->register(UserServiceProvider::class);
+		
 		$this->app->singleton(ExceptionHandler::class, Handler::class);
 
 		#============Assets============#

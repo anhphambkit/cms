@@ -9,6 +9,7 @@
     "type": "project",
     "require": {
         "php": "^7.1.3",
+        "cartalyst/sentinel": "^2.0",
         "fideloper/proxy": "^4.0",
         "floatingpoint/stylist": "^1.0",
         "laravel/framework": "5.6.*",
@@ -33,8 +34,7 @@
             "Core\\Master\\": "core/master/src",
             "Core\\Setting\\": "core/setting/src",
             "Core\\Theme\\": "core/theme/src",
-            "Core\\User\\": "core/user/src",
-            "Plugins\\Cmsplugin\\": "plugins/cmsplugin/src"
+            "Core\\User\\": "core/user/src"
         },
         "files": [
             "helpers.php"

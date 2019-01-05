@@ -12,13 +12,6 @@ interface RepositoryInterface
      * @return mixed
      * @author TrinhLe
      */
-    public function setModel($model);
-
-    /**
-     * Get empty model.
-     * @return mixed
-     * @author TrinhLe
-     */
     public function getModel();
 
     /**

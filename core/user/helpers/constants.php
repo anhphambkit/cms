@@ -31,3 +31,11 @@ if (!defined('USER_ACTION_AFTER_UPDATE_PROFILE')) {
 if (!defined('USER_ACTION_AFTER_UPDATE_PASSWORD')) {
     define('USER_ACTION_AFTER_UPDATE_PASSWORD', 'action_after_update_password');
 }
+
+if (!defined('REDIRECT_AFTER_LOGIN')) {
+    define('REDIRECT_AFTER_LOGIN', 'test');
+}
+
+if (!defined('TEST_ACTION')) {
+    define('TEST_ACTION', 'action_test');
+}

@@ -2,15 +2,15 @@
 
 namespace Core\Base\Commands;
 
-use Artisan;
-use Botble\ACL\Repositories\Interfaces\UserInterface;
-use Exception;
-use File;
-use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
-use DB;
+use Core\User\Repositories\Interfaces\UserInterface;
 use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
 use Symfony\Component\Console\Question\Question;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Console\Command;
+use Exception;
+use Artisan;
+use File;
+use DB;
 
 class InstallCommand extends Command
 {
@@ -19,14 +19,14 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'cms:install';
+    protected $signature = 'lcms:install';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Installation of Botble CMS: Laravel setup, installation of npm packages';
+    protected $description = 'Installation of LCMS: Laravel setup, installation of npm packages';
 
     /**
      * The filesystem instance.
@@ -59,7 +59,7 @@ class InstallCommand extends Command
      * Install constructor.
      * @param UserInterface $user
      * @param Filesystem $files
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function __construct(UserInterface $user, Filesystem $files)
     {
@@ -72,12 +72,15 @@ class InstallCommand extends Command
     /**
      * Execute the console command.
      *
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function handle()
     {
+        if(config('app.app_installed') == true)
+            return $this->line('Installed. Enjoy LCMS!');
+
         $this->line('------------------');
-        $this->line('Welcome to Botble CMS');
+        $this->line('Welcome to LCMS');
         $this->line('------------------');
 
         $extensions = get_loaded_extensions();
@@ -88,13 +91,12 @@ class InstallCommand extends Command
 
         if (!file_exists('.env')) {
             File::copy('.env-example', '.env');
+            Artisan::call('key:generate');
         }
 
         // Set database credentials in .env and migrate
         $this->setDatabaseInfo();
         $this->line('------------------');
-
-        Artisan::call('key:generate');
 
         // Set cache key prefix
         $this->setCacheKeyPrefix($this->database);
@@ -103,37 +105,16 @@ class InstallCommand extends Command
         // Create a super user
         $this->createSuperUser();
 
-        if (function_exists('system')) {
-            $this->info('Running npm install...');
-            system('npm install');
-            $this->info('npm packages installed.');
-
-            if (!windows_os()) {
-                $this->info('Reset chmod files and folders.');
-                system('sudo find * -type d -exec chmod 755 {} \;');
-                system('sudo find * -type f -exec chmod 644 {} \;');
-
-                system('sudo find storage -type d -exec chmod 777 {} \;');
-                $this->info('Directory storage is now writable (777).');
-                system('sudo find bootstrap/cache -type d -exec chmod 777 {} \;');
-                $this->info('Directory bootstrap/cache is now writable (777).');
-                system('sudo find public/uploads -type d -exec chmod 777 {} \;');
-                $this->info('Directory public/uploads is now writable (777).');
-                $this->line('------------------');
-            }
-        } else {
-            $this->line('You can now make /storage, /bootstrap/cache and /public/uploads directories writable and run npm install.');
-        }
-
-        // Done
+        $this->completed();
+        
         $this->line('------------------');
-        $this->line('Done. Enjoy Botble CMS!');
+        $this->line('Done. Enjoy LCMS!');
     }
 
     /**
      * @param $prefix
      * @return void
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     protected function setCacheKeyPrefix($prefix)
     {
@@ -152,7 +133,7 @@ class InstallCommand extends Command
     /**
      * @throws Exception
      * @return void
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     protected function setDatabaseInfo()
     {
@@ -203,16 +184,7 @@ class InstallCommand extends Command
         }
 
         if (!empty($this->database)) {
-            // Force the new login to be used
-            DB::purge();
-
-            // Switch to use {$this->database}
-            DB::unprepared('USE `' . $this->database . '`');
-            DB::connection()->setDatabaseName($this->database);
-
-            $this->info('Import default database...');
-
-            DB::unprepared(file_get_contents(base_path() . '/database/dump/base.sql'));
+            $this->call('lcms:migrate');
         }
     }
 
@@ -220,7 +192,7 @@ class InstallCommand extends Command
      * Guess database name from app folder.
      *
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     protected function guessDatabaseName()
     {
@@ -238,7 +210,7 @@ class InstallCommand extends Command
      * Get the key file and return its content.
      *
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     protected function getKeyFile()
     {
@@ -249,21 +221,21 @@ class InstallCommand extends Command
      * Create a superuser.
      *
      * @return void
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     protected function createSuperUser()
     {
         $this->info('Creating a Super User...');
 
-        $user = $this->userRepository->getModel();
-        $user->first_name = $this->ask('Enter your first name');
-        $user->last_name = $this->ask('Enter your last name');
-        $user->username = $this->ask('Enter your username');
-        $user->email = $this->ask('Enter your email address');
-        $user->super_user = 1;
+        $user                = $this->userRepository->getModel();
+        $user->first_name    = $this->ask('Enter your first name');
+        $user->last_name     = $this->ask('Enter your last name');
+        $user->username      = $this->ask('Enter your username');
+        $user->email         = $this->ask('Enter your email address');
+        $user->super_user    = 1;
         $user->manage_supers = 1;
-        $user->password = bcrypt($this->secret('Enter a password'));
-        $user->profile_image = config('acl.avatar.default');
+        $user->password      = bcrypt($this->secret('Enter a password'));
+        $user->profile_image = config('base-user.acl.avatar.default');
 
         try {
             $this->userRepository->createOrUpdate($user);
@@ -276,5 +248,15 @@ class InstallCommand extends Command
         }
 
         $this->line('------------------');
+    }
+
+    /**
+     * Complete install cms
+     * @author TrinhLe
+     */
+    protected function completed(){
+        $env = $this->finder->get('.env');
+        $env = str_replace('CMS_INSTALLED=false', 'CMS_INSTALLED=true', $env);
+        $this->finder->put('.env', $env);
     }
 }

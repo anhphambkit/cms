@@ -2087,3 +2087,36 @@ PHP message: PHP  27. class_exists() /var/www/html/helpers.php:234
 PHP message: PHP  28. spl_autoload_call() /var/www/html/helpers.php:234
 PHP message: PHP  29. Composer\Autoload\ClassLoader->loadClass() /var/www/html/helpers.php:234
 PHP message: PHP  30. Composer\Autoload\includeFile() /var/www/html/vendor/composer/ClassLoader.php:322" while reading response header from upstream, client: 174.23.0.1, server: _, request: "GET /admin/theme HTTP/1.1", upstream: "fastcgi://unix:/var/run/php/php7.1-fpm.sock:", host: "localhost"
+2019/01/05 07:07:11 [error] 65#65: *192 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Class 'Core\Master\CoreRequest' not found in /var/www/html/core/user/src/Requests/LoginRequest.php on line 5
+PHP message: PHP Stack trace:
+PHP message: PHP   1. {main}() /var/www/html/public/index.php:0
+PHP message: PHP   2. App\Http\Kernel->handle() /var/www/html/public/index.php:55
+PHP message: PHP   3. App\Http\Kernel->sendRequestThroughRouter() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:116
+PHP message: PHP   4. Illuminate\Routing\Pipeline->then() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:151
+PHP message: PHP   5. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:104
+PHP message: PHP   6. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP   7. App\Http\Middleware\CheckForMaintenanceMode->handle() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP   8. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php:62
+PHP message: PHP   9. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  10. Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  11. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php:27
+PHP message: PHP  12. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  13. A
+2019/01/05 07:07:11 [error] 65#65: *192 FastCGI sent in stderr: "ork/src/Illuminate/Routing/Router.php:667
+PHP message: PHP  27. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:104
+PHP message: PHP  28. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  29. App\Http\Middleware\EncryptCookies->handle() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  30. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/EncryptCookies.php:66
+PHP message: PHP  31. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  32. Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse->handle() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  33. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/AddQueuedCookiesToResponse.php:37
+PHP message: PHP  34. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  35. Illuminate\Session\Middleware\StartSession->handle() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  36. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php:63
+PHP message: PHP  37. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  38. Illuminate\View\Middleware\ShareErrorsFromSession->handle() /var/www/html/vendor/laravel/framework/src/
+2019/01/05 07:07:12 [error] 65#65: *192 FastCGI sent in stderr: "ate/Routing/RouteSignatureParameters.php:25
+PHP message: PHP  52. spl_autoload_call() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/RouteSignatureParameters.php:25
+PHP message: PHP  53. Composer\Autoload\ClassLoader->loadClass() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/RouteSignatureParameters.php:25
+PHP message: PHP  54. Composer\Autoload\includeFile() /var/www/html/vendor/composer/ClassLoader.php:322
+PHP message: PHP  55. include() /var/www/html/vendor/composer/ClassLoader.php:444" while reading response header from upstream, client: 174.23.0.1, server: _, request: "POST /auth/login HTTP/1.1", upstream: "fastcgi://unix:/var/run/php/php7.1-fpm.sock:", host: "localhost", referrer: "http://localhost/auth/login"

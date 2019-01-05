@@ -3,6 +3,7 @@
 namespace Core\Master\Requests;
 
 use Core\Master\Exceptions\ValidationException;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;

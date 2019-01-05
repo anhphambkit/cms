@@ -32,6 +32,8 @@ class CmsAssetPipeline implements AssetPipeline
      */
     public function requireJs($dependency)
     {
+        if(empty($dependency))
+            return $this;
         if (is_array($dependency)) {
             foreach ($dependency as $dependency) {
                 $this->requireJs($dependency);
@@ -55,6 +57,9 @@ class CmsAssetPipeline implements AssetPipeline
      */
     public function requireCss($dependency)
     {
+        if(empty($dependency))
+            return $this;
+
         if (is_array($dependency)) {
             foreach ($dependency as $dependency) {
                 $this->requireCss($dependency);

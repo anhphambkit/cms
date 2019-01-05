@@ -1,6 +1,4 @@
-<?php
-
-namespace Botble\ACL\Models;
+<?php namespace Core\User\Models;
 
 use Eloquent;
 

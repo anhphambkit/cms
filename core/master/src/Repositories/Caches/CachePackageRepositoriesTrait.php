@@ -14,14 +14,6 @@ trait CachePackageRepositoriesTrait
     }
 
     /**
-     * @param Model $model
-     */
-    public function setModel($model)
-    {
-        return $this->repository->setModel($model);
-    }
-
-     /**
      * Get table name.
      *
      * @return string

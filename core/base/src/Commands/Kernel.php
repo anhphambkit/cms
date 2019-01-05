@@ -10,6 +10,7 @@ class Kernel
      * @var array
      */
     protected $commands = [
+        InstallCommand::class,
         DumpAutoload::class,
         PublishConfig::class,
         PluginCreateCommand::class,

@@ -43,23 +43,24 @@ class AssetsViewComposer
      */
     public function compose(View $view)
     {
-        $assets = $cssRequired = $jsRequired = array();
-        
-        if ($this->inAdministration() === false) {
-            $assets      = config('resources.admin-assets');
-            $cssRequired = config('resources.admin-required-assets.css');
-            $jsRequired  = config('resources.admin-required-assets.js');
-        }else
+        if(!app()->runningInConsole())
         {
-            $assets      = config('resources.frontend-assets');
-            $cssRequired = config('resources.frontend-required-assets.css');
-            $jsRequired  = config('resources.frontend-required-assets.js');
+            $assets = $cssRequired = $jsRequired = array();
+            if ($this->inAdministration() === false) {
+                $assets      = config('resources.frontend-assets');
+                $cssRequired = config('resources.frontend-required-assets.css');
+                $jsRequired  = config('resources.frontend-required-assets.js');
+                
+            }else
+            {
+                $assets      = config('resources.admin-assets');
+                $cssRequired = config('resources.admin-required-assets.css');
+                $jsRequired  = config('resources.admin-required-assets.js');
+            }
+            list($cssFiles,$jsFiles) = $this->bindAssets($assets, $cssRequired, $jsRequired);
+            $view->with('cssFiles',$cssFiles);
+            $view->with('jsFiles', $jsFiles);
         }
-
-        list($cssFiles,$jsFiles) = $this->bindAssets($assets, $cssRequired, $jsRequired);
-
-        $view->with('cssFiles',$cssFiles);
-        $view->with('jsFiles', $jsFiles);
     }
 
     /**

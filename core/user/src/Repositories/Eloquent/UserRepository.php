@@ -1,16 +1,16 @@
 <?php
 
-namespace Botble\ACL\Repositories\Eloquent;
+namespace Core\User\Repositories\Eloquent;
 
-use Botble\ACL\Repositories\Interfaces\UserInterface;
-use Botble\Support\Repositories\Eloquent\RepositoriesAbstract;
+use Core\User\Repositories\Interfaces\UserInterface;
+use Core\Master\Repositories\Eloquent\RepositoriesAbstract;
 
 class UserRepository extends RepositoriesAbstract implements UserInterface
 {
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getDataSiteMap()
     {
@@ -27,7 +27,7 @@ class UserRepository extends RepositoriesAbstract implements UserInterface
      *
      * @param $email
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getUniqueUsernameFromEmail($email)
     {

@@ -17,22 +17,22 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     protected $model;
 
     /**
+     * UserRepository constructor.
+     * @param Model|Eloquent $model
+     * @author Sang Nguyen
+     */
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+        $this->originalModel = $model;
+    }
+
+    /**
      * @return Model
      */
     public function getModel()
     {
         return $this->model;
-    }
-
-    /**
-     * @param Model $model
-     */
-    public function setModel($model)
-    {
-        $this->model = $model;
-
-        if(empty($this->originalModel))
-            $this->originalModel = $model;
     }
 
     /**

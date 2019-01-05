@@ -3,6 +3,9 @@
 namespace Core\Master\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
+use Core\Master\Facades\ActionFacade;
+use Core\Master\Facades\FilterFacade;
 
 class MasterServiceProvider extends ServiceProvider
 {
@@ -16,6 +19,8 @@ class MasterServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        #TODO
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Action', ActionFacade::class);
+        $loader->alias('Filter', FilterFacade::class);
     }
 }

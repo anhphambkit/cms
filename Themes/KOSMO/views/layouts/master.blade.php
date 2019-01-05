@@ -26,7 +26,6 @@
         <div class="clearfix"></div>
     </div>
     <div id="theme-option-intro-text">This is the theme option for the frontend UMH's website, please make sure that you can control what you changes.
-        <!-- This is the theme option for :theme theme, please make sure that you can control what you changes.', ['theme' => studly_case(setting('theme')) -->
     </div>
     <div class="theme-option-container">
         <div class="theme-option-sidebar">
