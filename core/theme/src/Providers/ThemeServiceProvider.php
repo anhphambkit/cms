@@ -5,6 +5,7 @@ namespace Core\Theme\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 use Core\Theme\Facades\ThemeOptionFacade;
+use Core\Master\Supports\Helper;
 
 class ThemeServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,15 @@ class ThemeServiceProvider extends ServiceProvider
         $this->registerAllThemes();
         $this->setActiveTheme();
         $this->registerFacades();
+    }
+
+    /**
+     * Binding containers
+     * @return mixed
+     */
+    public function boot()
+    {
+        $this->bootHelperThemeOption();
     }
 
     /**
@@ -54,17 +64,6 @@ class ThemeServiceProvider extends ServiceProvider
     }
 
     /**
-     * Check if we are in the administration
-     * @author TrinhLe
-     * @return bool
-     */
-    protected function inAdministration()
-    {
-        $segment = 1;
-        return $this->app['request']->segment($segment) === config('core-base.cms.router-prefix.admin');
-    }
-
-    /**
      * Register all themes with activating them
      * @author TrinhLe
      */
@@ -79,5 +78,31 @@ class ThemeServiceProvider extends ServiceProvider
         foreach ($directories as $directory) {
             $this->app['stylist']->registerPath($directory);
         }
+    }
+
+     /**
+     * Init option for theme
+     * @author TrinhLe
+     */
+    protected function bootHelperThemeOption()
+    {
+        if (check_database_connection()) {
+            if($this->inAdministration())
+            {
+                $helpers = base_path() . DIRECTORY_SEPARATOR . 'Themes' . DIRECTORY_SEPARATOR . 'functions';
+                Helper::autoloadHelpers($helpers);
+            }
+        }
+    }
+
+    /**
+     * Check if we are in the administration
+     * @author TrinhLe
+     * @return bool
+     */
+    protected function inAdministration()
+    {
+        $segment = 1;
+        return $this->app['request']->segment($segment) === config('core-base.cms.router-prefix.admin');
     }
 }

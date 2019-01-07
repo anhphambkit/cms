@@ -2,6 +2,8 @@
 namespace Core\User\Controllers\Admin;
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Validation\ValidationException;
+use AssetManager;
+use AssetPipeline;
 
 class UserController extends BaseAdminController{
     
@@ -16,7 +18,6 @@ class UserController extends BaseAdminController{
      */
     public function index()
     {
-        #TODO
         return view('core-user::admin.index');
     }
 }

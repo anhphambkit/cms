@@ -46,10 +46,6 @@ class BaseServiceProvider extends ServiceProvider
 		$this->app->register(UserServiceProvider::class);
 		
 		$this->app->singleton(ExceptionHandler::class, Handler::class);
-
-
-		#============Assets============#
-		$this->registerComposers();
 	}
     
 	/**
@@ -69,47 +65,10 @@ class BaseServiceProvider extends ServiceProvider
 		$this->app->register(RouteServiceProvider::class);
 		$this->app->register(ThemeServiceProvider::class);
 
-		$this->bootHelperThemeOption();
-
         add_filter(DASHBOARD_FILTER_MENU_NAME, [\Core\Dashboard\Hooks\DashboardMenuHook::class, 'renderMenuDashboard']);
 
         Event::listen(SessionStarted::class, function () {
-            return dashboard_menu()->loadRegisterMenus();
+            dashboard_menu()->loadRegisterMenus();
         });
-	}
-
-	/**
-	 * Init option for theme
-	 * @author TrinhLe
-	 */
-	protected function bootHelperThemeOption()
-	{
-		if (check_database_connection()) {
-			if($this->inAdministration())
-			{
-				$helpers = base_path() . DIRECTORY_SEPARATOR . 'Themes' . DIRECTORY_SEPARATOR . 'functions';
-            	Helper::autoloadHelpers($helpers);
-			}
-        }
-	}
-
-	/**
-     * Check if we are in the administration
-     * @author TrinhLe
-     * @return bool
-     */
-    protected function inAdministration()
-    {
-        $segment = 1;
-        return $this->app['request']->segment($segment) === config('core-base.cms.router-prefix.admin');
-    }
-
-	/**
-	 * Register view composer assets
-	 * @author TrinhLe
-	 */
-	protected function registerComposers()
-	{
-		view()->composer('layouts.master', \Core\Theme\Composers\AssetsViewComposer::class);
 	}
 }
