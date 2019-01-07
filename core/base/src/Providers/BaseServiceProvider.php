@@ -11,6 +11,9 @@ use Core\Setting\Providers\SettingServiceProvider;
 use Core\Theme\Providers\AssetServiceProvider;
 use Core\Theme\Providers\ThemeServiceProvider;
 use Core\User\Providers\UserServiceProvider;
+use Core\Base\Middlewares\StartSession;
+use Core\Base\Events\SessionStarted;
+use Event;
 
 class BaseServiceProvider extends ServiceProvider
 {	
@@ -29,6 +32,13 @@ class BaseServiceProvider extends ServiceProvider
 	{
 		Helper::autoloadHelpers();
 
+		/**
+         * @var Router $router
+         */
+        $router = $this->app['router'];
+
+        $router->pushMiddlewareToGroup('web', StartSession::class);
+
 		$this->app->register(AssetServiceProvider::class);
 		$this->app->register(StylistServiceProvider::class);
 		$this->app->register(MasterServiceProvider::class);
@@ -36,6 +46,7 @@ class BaseServiceProvider extends ServiceProvider
 		$this->app->register(UserServiceProvider::class);
 		
 		$this->app->singleton(ExceptionHandler::class, Handler::class);
+
 
 		#============Assets============#
 		$this->registerComposers();
@@ -61,6 +72,10 @@ class BaseServiceProvider extends ServiceProvider
 		$this->bootHelperThemeOption();
 
         add_filter(DASHBOARD_FILTER_MENU_NAME, [\Core\Dashboard\Hooks\DashboardMenuHook::class, 'renderMenuDashboard']);
+
+        Event::listen(SessionStarted::class, function () {
+            return dashboard_menu()->loadRegisterMenus();
+        });
 	}
 
 	/**

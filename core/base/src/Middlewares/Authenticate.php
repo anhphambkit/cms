@@ -19,7 +19,6 @@ class Authenticate extends LaravelCoreAuthenticate
     protected function authenticate(array $guards)
     {
         parent::authenticate($guards);
-        DashboardMenu::loadRegisterMenus();
         return DashboardMenu::init(request()->user());
     }
 }

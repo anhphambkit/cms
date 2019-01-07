@@ -133,7 +133,7 @@ class DashboardMenu
      */
     public function getAll()
     {
-        if (config('cms.enable_cache_dashboard_menu')) {
+        if (config('core-base.cms.enable_cache_dashboard_menu')) {
             $cache_key = md5('cache-dashboard-menu');
             if (!cache()->has($cache_key)) {
                 $links = collect($this->getChildren())->sortBy('priority');

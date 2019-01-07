@@ -17,7 +17,7 @@ class SidebarMenu extends CoreSidebar
 				'parent_id'   => null,
 				'name'        => __('Manage Users'),
 				'icon'        => 'la la-unlock',
-				'url'         => route('admin.user.index'),
+				'url'         => null,
 				'permissions' => ['user.index']
             ],
             [
@@ -35,7 +35,7 @@ class SidebarMenu extends CoreSidebar
 				'parent_id'   => 'cms-core-user',
 				'name'        => __('Manage Staffs'),
 				'icon'        => 'la la-unlock',
-				'url'         => route('admin.role.index'),
+				'url'         => route('admin.user.index'),
 				'permissions' => ['role.index']
             ],
             [
@@ -44,7 +44,7 @@ class SidebarMenu extends CoreSidebar
 				'parent_id'   => 'cms-core-user',
 				'name'        => __('Manage Super Admin'),
 				'icon'        => 'la la-unlock',
-				'url'         => route('admin.role.index'),
+				'url'         => route('admin.user.index'),
 				'permissions' => ['role.index']
             ]
 		];
