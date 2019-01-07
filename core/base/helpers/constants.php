@@ -20,6 +20,10 @@ if (!defined('SOURCE_MIGRATIONS')) {
     define('SOURCE_MIGRATIONS', '/../database/migrations');
 }
 
+if (!defined('SOURCE_DATAS')) {
+    define('SOURCE_DATAS', '/../resources/data');
+}
+
 if (!defined('PREFIX_ADMIN')) {
     define('PREFIX_ADMIN', 'admin');
 }
@@ -29,5 +33,5 @@ if (!defined('HOME_ROUTE_FRONTEND')) {
 }
 
 if (!defined('HOME_ROUTE_BACKEND')) {
-    define('HOME_ROUTE_BACKEND', 'homepage');
+    define('HOME_ROUTE_BACKEND', 'admin.dashboard.index');
 }

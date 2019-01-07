@@ -10,10 +10,31 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-	return view('core-base::base');
-})->name('test')->middleware('access:dashboard.index');
+use Illuminate\Routing\Router;
 
-Route::get('auth/login', 'WebController@showLoginForm')->name('login')->middleware('guest');
-Route::post('auth/login', 'WebController@postLogin')->name('post.login');
-Route::get('auth/logout', 'WebController@logout')->name('logout');
+Route::get('/', function () {
+	return view('welcome');
+})->name('test');
+
+/** @var Router $router */
+$router->group(['prefix' => 'auth'], function (Router $router) {
+    # Login
+    $router->get('login', [
+		'as'         => 'login', 
+		'uses'       => 'WebController@showLoginForm',
+		'middleware' => 'guest', 
+    ]);
+
+    $router->post('login', [ 
+		'as'         => 'post.login', 
+		'uses'       => 'WebController@postLogin',
+		'middleware' => 'guest', 
+    ]);
+   
+    # Logout
+    $router->get('logout', [
+		'as'         => 'logout', 
+		'uses'       => 'WebController@logout',
+		'middleware' => 'auth', 
+    ]);
+});

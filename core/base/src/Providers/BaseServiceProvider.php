@@ -52,12 +52,15 @@ class BaseServiceProvider extends ServiceProvider
 		$this->cmsLoadViews();
 		$this->cmsLoadTranslates();
 		$this->publishMigration();
+		$this->pushlishData();
 		
 		$this->app->register(CommandServiceProvider::class);
 		$this->app->register(RouteServiceProvider::class);
 		$this->app->register(ThemeServiceProvider::class);
 
 		$this->bootHelperThemeOption();
+
+        add_filter(DASHBOARD_FILTER_MENU_NAME, [\Core\Dashboard\Hooks\DashboardMenuHook::class, 'renderMenuDashboard']);
 	}
 
 	/**

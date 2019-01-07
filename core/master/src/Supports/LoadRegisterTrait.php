@@ -90,6 +90,26 @@ trait LoadRegisterTrait
     }
 
     /**
+     * Pushlish data system
+     * @author TrinhLe
+     */
+    protected function pushlishData()
+    {
+        if (app()->environment() !== 'testing') 
+        {
+            if ($this->app->runningInConsole()) {
+                   
+                $sources = $this->loadPackages(SOURCE_DATAS);
+
+                foreach ($sources as $group => $dir) {
+                    # publishes file export
+                    $this->publishes([ $dir => storage_path('app/public')], 'system-data');
+                }
+            }
+        }
+    }
+
+    /**
      * Description
      * @author TrinhLe
      */
@@ -112,16 +132,13 @@ trait LoadRegisterTrait
     /**
      * Description
      * @author TrinhLe
-     * @param type|null $pathSource 
+     * @param type|string $pathSource 
      * @return array
      */
-    protected function loadPackages($pathSource = null) : array
+    protected function loadPackages(string $pathSource = '', bool $formatNamespace = true) : array
     {
-        if(!$pathSource)
-            return array();
-
-        return Cache::tags('loadPackages')->remember("{$pathSource}", 120, function() use ($pathSource){
-            return loadPackages($pathSource);
+        return Cache::tags('loadPackages')->remember("{$pathSource}", 120, function() use ($pathSource, $formatNamespace){
+            return loadPackages($pathSource, $formatNamespace);
         });
     }
 }

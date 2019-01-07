@@ -1,4 +1,5 @@
 <?php
+use Core\Master\Facades\DashboardMenuFacade;
 
 if (!function_exists('check_database_connection')) {
     /**
@@ -35,5 +36,15 @@ if (!function_exists('parse_args')) {
             return array_merge($defaults, $result);
         }
         return $result;
+    }
+}
+
+if (!function_exists('dashboard_menu')) {
+    /**
+     * @return \Core\Base\Supports\DashboardMenu
+     */
+    function dashboard_menu()
+    {
+        return DashboardMenuFacade::getFacadeRoot();
     }
 }

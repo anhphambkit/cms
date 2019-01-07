@@ -16,7 +16,8 @@ class Kernel
         PluginCreateCommand::class,
         MakeRepositoryCommand::class,
         MakeBindContentRepository::class,
-        MigrateSystemCommand::class
+        MigrateSystemCommand::class,
+        PublishData::class,
     ];
 
     /**

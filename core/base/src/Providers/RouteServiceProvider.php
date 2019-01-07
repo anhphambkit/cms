@@ -3,6 +3,7 @@
 namespace Core\Base\Providers;
 
 use Illuminate\Support\Facades\Route;
+use Core\Base\Middlewares\Authenticate;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use File;
@@ -44,7 +45,15 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-        $this->registerMiddleware($this->app['router']);
+
+        /**
+         * @var Router $router
+         */
+        $router = $this->app['router'];
+
+        $router->aliasMiddleware('auth', Authenticate::class);
+
+        $this->registerMiddleware($router);
     }
 
     /**

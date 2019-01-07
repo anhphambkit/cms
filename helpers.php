@@ -107,7 +107,7 @@ if (function_exists('loadPackages') === false) {
      * @author TrinhLe
      * @return array
      */
-    function loadPackages(string $pathSource = null, bool $formatNamespace = true)
+    function loadPackages(string $pathSource, bool $formatNamespace = true)
     {
         $listPackages = packagesValid();
         $listSourcePath = array();
@@ -138,7 +138,10 @@ if (function_exists('mergePathSource') === false) {
      */
     function mergePathSource(string $package, string $source)
     {
-        return base_path("{$package}{$source}");
+        if($source)
+            return base_path("{$package}{$source}");
+
+        return base_path($package);
     }
 }
 

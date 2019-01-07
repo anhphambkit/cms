@@ -1,9 +1,25 @@
 <?php
 namespace Core\Base\Middlewares;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Closure;
 
 class Authorization {
+
+    /**
+     * @var Redirector
+     */
+    private $redirect;
+
+    /**
+     * Authorization constructor.
+     * @param RoleServices $role
+     */
+    public function __construct(Redirector $redirect)
+    {
+        $this->redirect = $redirect;
+    }
     /**
      * Handle an incoming request.
      *
@@ -15,11 +31,11 @@ class Authorization {
     public function handle($request, Closure $next, string $permission) 
     {
         if(!acl_check_login())
-            return $this->handleUnauthorizedRequest();
+            return $this->handleUnauthorizedRequest($request, $permission);
 
         if(!acl_get_current_user()->hasPermission($permission))
         {
-            return $this->handleUnauthorizedRequest();
+            return $this->handleUnauthorizedRequest($request, $permission);
         }
 
         return $next($request);

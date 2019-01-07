@@ -45,8 +45,7 @@ class ThemeServiceProvider extends ServiceProvider
         }
         
         if ($this->inAdministration()) {
-        	
-        	$themeName = setting('theme_admin', 'KOSMO');
+        	$themeName = setting('theme_admin', 'MODERN');
             return $this->app['stylist']->activate($themeName, true);
         }
 

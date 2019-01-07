@@ -34,7 +34,8 @@
             "Core\\Master\\": "core/master/src",
             "Core\\Setting\\": "core/setting/src",
             "Core\\Theme\\": "core/theme/src",
-            "Core\\User\\": "core/user/src"
+            "Core\\User\\": "core/user/src",
+            "Core\\Dashboard\\": "core/dashboard/src"
         },
         "files": [
             "helpers.php"

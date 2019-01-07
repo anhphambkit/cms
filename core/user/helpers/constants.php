@@ -33,7 +33,7 @@ if (!defined('USER_ACTION_AFTER_UPDATE_PASSWORD')) {
 }
 
 if (!defined('REDIRECT_AFTER_LOGIN')) {
-    define('REDIRECT_AFTER_LOGIN', 'test');
+    define('REDIRECT_AFTER_LOGIN', 'admin.dashboard.index');
 }
 
 if (!defined('TEST_ACTION')) {

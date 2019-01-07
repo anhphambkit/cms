@@ -3,6 +3,10 @@
 return [
     'avatar' => [
         'container_dir' => 'avatars',
-        'default' => '/uploads/system/images/default-avatar.jpg',
+        'default' => 'system/images/default-avatar.png',
+    ],
+    'logos' => [
+        'container_dir' => 'logos',
+        'default' => 'system/images/default-logo.png',
     ],
 ];
