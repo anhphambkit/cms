@@ -1,6 +1,6 @@
-@extends('bases::layouts.master')
+@extends('layouts.master')
 @section('content')
-    @include('bases::elements.tables.datatables', ['title' => trans('acl::users.list'), 'dataTable' => $dataTable])
+    @include('core-base::elements.tables.datatables', ['title' => __('Users'), 'dataTable' => $dataTable])
 
     <!-- Form modal -->
     <div id="invite_modal" class="modal fade" tabindex="-1" role="dialog">
@@ -8,11 +8,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"><i class="til_img"></i><strong>{{ trans('acl::users.invite_new_member') }}</strong></h4>
+                    <h4 class="modal-title"><i class="til_img"></i><strong>{{ trans('Invite new member') }}</strong></h4>
                 </div>
 
                 <!-- Form inside modal -->
-                {!! Form::open(['route' => 'invite.user', 'method' => 'post', 'role'=>'form']) !!}
+                {!! Form::open(['method' => 'post', 'role'=>'form']) !!}
                     <div class="modal-body with-padding">
                         <p>{{ trans('acl::users.invite_description') }}</p>
                         <div class="form-group">

@@ -61,7 +61,7 @@
       </li>
       <li class="scrollable-container media-list w-100"><a href="javascript:void(0)">
           <div class="media">
-            <div class="media-left"><span class="avatar avatar-sm avatar-online rounded-circle"><img src="../../../app-assets/images/portrait/small/avatar-s-19.png" alt="avatar"><i></i></span></div>
+            <div class="media-left"><span class="avatar avatar-sm avatar-online rounded-circle"><img src="{{ showImgStorage(false) }}" alt="avatar"><i></i></span></div>
             <div class="media-body">
               <h6 class="media-heading">Margaret Govan</h6>
               <p class="notification-text font-small-3 text-muted">I like your portfolio, let's start.</p><small>
@@ -69,7 +69,7 @@
             </div>
           </div></a><a href="javascript:void(0)">
           <div class="media">
-            <div class="media-left"><span class="avatar avatar-sm avatar-busy rounded-circle"><img src="../../../app-assets/images/portrait/small/avatar-s-2.png" alt="avatar"><i></i></span></div>
+            <div class="media-left"><span class="avatar avatar-sm avatar-busy rounded-circle"><img src="{{ showImgStorage(false) }}" alt="avatar"><i></i></span></div>
             <div class="media-body">
               <h6 class="media-heading">Bret Lezama</h6>
               <p class="notification-text font-small-3 text-muted">I have seen your work, there is</p><small>
@@ -77,7 +77,7 @@
             </div>
           </div></a><a href="javascript:void(0)">
           <div class="media">
-            <div class="media-left"><span class="avatar avatar-sm avatar-online rounded-circle"><img src="../../../app-assets/images/portrait/small/avatar-s-3.png" alt="avatar"><i></i></span></div>
+            <div class="media-left"><span class="avatar avatar-sm avatar-online rounded-circle"><img src="{{ showImgStorage(false) }}" alt="avatar"><i></i></span></div>
             <div class="media-body">
               <h6 class="media-heading">Carie Berra</h6>
               <p class="notification-text font-small-3 text-muted">Can we have call in this week ?</p><small>
@@ -85,7 +85,7 @@
             </div>
           </div></a><a href="javascript:void(0)">
           <div class="media">
-            <div class="media-left"><span class="avatar avatar-sm avatar-away rounded-circle"><img src="../../../app-assets/images/portrait/small/avatar-s-6.png" alt="avatar"><i></i></span></div>
+            <div class="media-left"><span class="avatar avatar-sm avatar-away rounded-circle"><img src="{{ showImgStorage(false) }}" alt="avatar"><i></i></span></div>
             <div class="media-body">
               <h6 class="media-heading">Eric Alsobrook</h6>
               <p class="notification-text font-small-3 text-muted">We have project party this saturday.</p><small>

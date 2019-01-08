@@ -64,7 +64,8 @@ class BaseServiceProvider extends ServiceProvider
 		$this->app->register(CommandServiceProvider::class);
 		$this->app->register(RouteServiceProvider::class);
 		$this->app->register(ThemeServiceProvider::class);
-
+		$this->app->register(FormServiceProvider::class);
+		
         add_filter(DASHBOARD_FILTER_MENU_NAME, [\Core\Dashboard\Hooks\DashboardMenuHook::class, 'renderMenuDashboard']);
 
         Event::listen(SessionStarted::class, function () {

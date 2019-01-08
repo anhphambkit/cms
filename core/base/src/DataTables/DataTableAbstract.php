@@ -1,40 +1,48 @@
 <?php
+namespace Core\Base\DataTables;
 
-namespace Botble\Base\Http\DataTables;
+use Yajra\DataTables\Services\DataTable as YajraTable;
+use Yajra\Datatables\Datatables as YajraTables;
+use Illuminate\Contracts\View\Factory;
 
-use Assets;
-use Yajra\Datatables\Services\DataTable;
-
-abstract class DataTableAbstract extends DataTable
+abstract class DataTableAbstract extends YajraTable 
 {
+
     /**
+     * DataTable constructor.
+     *
+     * @param \Yajra\Datatables\Datatables $datatables
+     * @param \Illuminate\Contracts\View\Factory $viewFactory
+     */
+    public function __construct(YajraTables $datatables, Factory $viewFactory)
+    {
+        $this->datatables  = $datatables;
+        $this->viewFactory = $viewFactory;
+    }
+
+	/**
      * Optional method if you want to use html builder.
      *
      * @return \Yajra\Datatables\Html\Builder
-     * @author Sang Nguyen
-     * @since 2.1
+     * @author TrinhLe
      */
     public function html()
     {
-        Assets::addJavascript(['datatables']);
-        Assets::addStylesheets(['datatables']);
-        Assets::addAppModule(['datatables']);
-
         return $this->builder()
             ->columns($this->getColumns())
             ->parameters([
-                'dom' => "Brt<'datatables__info_wrap'pli<'clearfix'>>",
-                'buttons' => $this->getBuilderParameters(),
-                'initComplete' => $this->htmlInitComplete(),
-                'drawCallback' => $this->htmlDrawCallback(),
-                'paging' => true,
-                'searching' => true,
-                'info' => true,
-                'searchDelay' => 350,
-                'bStateSave' => true,
+                // 'dom' => "Brt<'datatables__info_wrap'pli<'clearfix'>>",
+                // 'buttons' => $this->getBuilderParameters(),
+                // 'initComplete' => $this->htmlInitComplete(),
+                // 'drawCallback' => $this->htmlDrawCallback(),
+                // 'paging' => true,
+                // 'searching' => true,
+                // 'info' => true,
+                // 'searchDelay' => 350,
+                // 'bStateSave' => true,
                 'lengthMenu' => [
                     [10, 30, 50, -1],
-                    [10, 30, 50, trans('bases::tables.all')]
+                    [10, 30, 50, __('All')]
                 ],
                 'pageLength' => 10,
                 'processing' => true,
@@ -42,33 +50,17 @@ abstract class DataTableAbstract extends DataTable
                 'bServerSide' => true,
                 'bDeferRender' => true,
                 'bProcessing' => true,
-                'language' => [
-                    'aria' => [
-                        'sortAscending' => 'orderby asc',
-                        'sortDescending' => 'orderby desc'
-                    ],
-                    'emptyTable' => trans('bases::tables.no_data'),
-                    'info' => '<span class="dt-length-records"><i class="fa fa-globe"></i> <span class="hidden-xs">' . trans('bases::tables.show_from') . '</span> _START_ ' . trans('bases::tables.to') . ' _END_ ' . trans('bases::tables.in') . ' <span class="badge bold badge-dt">_TOTAL_</span> <span class="hidden-xs">' . trans('bases::tables.records') . '</span></span>',
-                    'infoEmpty' => trans('bases::tables.no_record'),
-                    'infoFiltered' => '(' . trans('bases::tables.filtered_from') . ' _MAX_ ' . trans('bases::tables.records') . ')',
-                    'lengthMenu' => '<span class="dt-length-style">_MENU_</span>',
-                    'search' => '',
-                    'zeroRecords' => trans('bases::tables.no_record'),
-                    'processing' => '<img src="' . url('/vendor/core/images/loading-spinner-blue.gif') . '" />',
-                ],
             ]);
     }
 
     /**
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function htmlInitComplete()
     {
         return 'function () {
-                $(".checkboxes").uniform();
                 $(".dataTables_wrapper").css({"width": $(".dataTable").width()});
-                
                 var index = 0;
                 var totalLength = this.api().columns().count();
                 var tr = document.createElement("tr");
@@ -139,7 +131,7 @@ abstract class DataTableAbstract extends DataTable
 
     /**
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function htmlDrawCallback()
     {
@@ -158,8 +150,6 @@ abstract class DataTableAbstract extends DataTable
                     $(".page-content .dataTables_wrapper").css("padding-bottom", "40px");
                 }
                     
-                $(".checkboxes").uniform();
-                
                 $(document).on("click", ".btn-search-table", function () {
                     $("#dataTableBuilder tfoot tr input").trigger("change");
                 });
@@ -183,7 +173,7 @@ abstract class DataTableAbstract extends DataTable
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @since 2.1
      */
     public function getBuilderParameters()
@@ -197,7 +187,7 @@ abstract class DataTableAbstract extends DataTable
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getActionsButton()
     {
@@ -212,7 +202,7 @@ abstract class DataTableAbstract extends DataTable
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getDefaultButtons()
     {
@@ -221,7 +211,7 @@ abstract class DataTableAbstract extends DataTable
             'print',
             [
                 'link' => '#',
-                'text' => view('bases::elements.tables.filter')->render(),
+                'text' => view('core-base::elements.tables.filter')->render(),
             ],
             'reset',
             'reload',
@@ -230,28 +220,28 @@ abstract class DataTableAbstract extends DataTable
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @since 2.1
      */
     abstract function columns();
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @since 2.1
      */
     abstract function buttons();
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @since 2.1
      */
     abstract function actions();
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @since 2.1
      */
     public function getButtons()
@@ -272,7 +262,7 @@ abstract class DataTableAbstract extends DataTable
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @since 2.1
      */
     public function getActions()
@@ -291,46 +281,25 @@ abstract class DataTableAbstract extends DataTable
      * Get columns.
      *
      * @return array
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @since 2.1
      */
     public function getColumns()
     {
         $headings = array_merge($this->getStatusColumnHeading(), $this->columns());
 
-        $extra = apply_filters(BASE_FILTER_TABLE_HEADINGS, $headings, $this->filename());
-
-        return array_merge($extra, $this->getOperationsHeading());
+        return array_merge($headings, $this->getOperationsHeading());
     }
 
     /**
      * @return array
-     * @author Sang Nguyen
-     */
-    public function getStatusColumnHeading()
-    {
-        return [
-            'checkbox' => [
-                'width' => '10px',
-                'class' => 'text-left no-sort',
-                'title' => '<div class="checkbox checkbox-primary"><input type="checkbox" class="group-checkable" data-set=".dataTable .checkboxes" /></div>',
-                'orderable' => false,
-                'searchable' => false,
-                'exportable' => false,
-                'printable' => false,
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getOperationsHeading()
     {
         return [
             'operations' => [
-                'title' => trans('bases::tables.operations'),
+                'title' => __('Operations'),
                 'width' => '134px',
                 'class' => 'text-center',
                 'orderable' => false,
@@ -342,15 +311,11 @@ abstract class DataTableAbstract extends DataTable
     }
 
     /**
-     * @param array $data
-     * @param array $mergeData
-     * @param string $view
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
-     * @since 2.4
-     * @author Sang Nguyen
+     * @return array
+     * @author TrinhLe
      */
-    public function renderTable($data = [], $mergeData = [], $view = 'bases::elements.table')
+    public function getStatusColumnHeading()
     {
-        return parent::render($view, $data, $mergeData);
+        return [];
     }
 }
