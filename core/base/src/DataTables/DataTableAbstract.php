@@ -32,14 +32,14 @@ abstract class DataTableAbstract extends YajraTable
             ->columns($this->getColumns())
             ->parameters([
                 // 'dom' => "Brt<'datatables__info_wrap'pli<'clearfix'>>",
-                // 'buttons' => $this->getBuilderParameters(),
-                // 'initComplete' => $this->htmlInitComplete(),
-                // 'drawCallback' => $this->htmlDrawCallback(),
-                // 'paging' => true,
-                // 'searching' => true,
-                // 'info' => true,
-                // 'searchDelay' => 350,
-                // 'bStateSave' => true,
+                'buttons' => $this->getBuilderParameters(),
+                'initComplete' => $this->htmlInitComplete(),
+                'drawCallback' => $this->htmlDrawCallback(),
+                'paging' => true,
+                'searching' => true,
+                'info' => true,
+                'searchDelay' => 350,
+                'bStateSave' => true,
                 'lengthMenu' => [
                     [10, 30, 50, -1],
                     [10, 30, 50, __('All')]
@@ -174,7 +174,6 @@ abstract class DataTableAbstract extends YajraTable
     /**
      * @return array
      * @author TrinhLe
-     * @since 2.1
      */
     public function getBuilderParameters()
     {
@@ -221,28 +220,24 @@ abstract class DataTableAbstract extends YajraTable
     /**
      * @return mixed
      * @author TrinhLe
-     * @since 2.1
      */
     abstract function columns();
 
     /**
      * @return mixed
      * @author TrinhLe
-     * @since 2.1
      */
     abstract function buttons();
 
     /**
      * @return mixed
      * @author TrinhLe
-     * @since 2.1
      */
     abstract function actions();
 
     /**
      * @return array
      * @author TrinhLe
-     * @since 2.1
      */
     public function getButtons()
     {
@@ -263,7 +258,6 @@ abstract class DataTableAbstract extends YajraTable
     /**
      * @return array
      * @author TrinhLe
-     * @since 2.1
      */
     public function getActions()
     {
@@ -282,7 +276,6 @@ abstract class DataTableAbstract extends YajraTable
      *
      * @return array
      * @author TrinhLe
-     * @since 2.1
      */
     public function getColumns()
     {

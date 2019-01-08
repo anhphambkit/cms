@@ -57,8 +57,7 @@ class UserDataTable extends DataTableAbstract
         /**
          * @var \Eloquent $model
          */
-        $query = $model->leftJoin('role_users', 'users.id', '=', 'role_users.user_id')
-            ->leftJoin('roles', 'roles.id', '=', 'role_users.role_id')
+        $query = $model
             ->select([
                 'users.id',
                 'users.username',
@@ -67,7 +66,9 @@ class UserDataTable extends DataTableAbstract
                 'roles.id as role_id',
                 'users.updated_at',
                 'users.created_at',
-            ]);
+            ])
+            ->leftJoin('role_users', 'users.id', '=', 'role_users.user_id')
+            ->leftJoin('roles', 'roles.id', '=', 'role_users.role_id');
         return $query;
     }
 
@@ -96,19 +97,23 @@ class UserDataTable extends DataTableAbstract
                 'class' => 'searchable',
             ],
             'role_name' => [
-                'name' => 'role_name',
+                'name' => 'roles.name',
                 'title' => __('Role'),
             ],
             'created_at' => [
-                'name' => 'users.created_at',
+                'name'  => 'users.created_at',
                 'title' => __('CreatedAt'),
                 'width' => '100px',
                 'class' => 'searchable',
             ],
             'status' => [
-                'name' => 'users.status',
-                'title' => __('Status'),
-                'width' => '100px',
+                'name'       => 'users.status',
+                'title'      => __('Status'),
+                'width'      => '100px',
+                'orderable'  => false,
+                'searchable' => false,
+                'exportable' => false,
+                'printable'  => false,
             ],
         ];
     }
