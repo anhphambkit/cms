@@ -193,7 +193,7 @@ abstract class DataTableAbstract extends YajraTable
         return [
             [
                 'extend' => 'collection',
-                'text' => '<span>' . trans('bases::forms.actions') . ' <span class="caret"></span></span>',
+                'text' => '<span>' . __('Actions') . ' <span class="caret"></span></span>',
                 'buttons' => $this->getActions(),
             ],
         ];
@@ -299,6 +299,7 @@ abstract class DataTableAbstract extends YajraTable
                 'searchable' => false,
                 'exportable' => false,
                 'printable' => false,
+                'footer' => __('Operations')
             ]
         ];
     }

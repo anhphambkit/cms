@@ -12,8 +12,7 @@ class UserDataTable extends DataTableAbstract
      * Display ajax response.
      *
      * @return \Illuminate\Http\JsonResponse
-     * @author Sang Nguyen
-     * @since 2.1
+     * @author TrinhLe
      */
     public function ajax()
     {
@@ -48,8 +47,7 @@ class UserDataTable extends DataTableAbstract
      * Get the query object to be processed by datatables.
      *
      * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
-     * @author Sang Nguyen
-     * @since 2.1
+     * @author TrinhLe
      */
     public function query()
     {
@@ -74,8 +72,7 @@ class UserDataTable extends DataTableAbstract
 
     /**
      * @return array
-     * @author Sang Nguyen
-     * @since 2.1
+     * @author TrinhLe
      */
     public function columns()
     {
@@ -85,26 +82,31 @@ class UserDataTable extends DataTableAbstract
                 'title' => __('ID'),
                 'width' => '20px',
                 'class' => 'searchable searchable_id',
+                'footer' => __('ID')
             ],
             'username' => [
                 'name' => 'users.username',
                 'title' => __('Username'),
                 'class' => 'text-left searchable',
+                'footer' => __('Username')
             ],
             'email' => [
                 'name' => 'users.email',
                 'title' => __('Email'),
                 'class' => 'searchable',
+                'footer' => __('Email')
             ],
             'role_name' => [
                 'name' => 'roles.name',
                 'title' => __('Role'),
+                'footer' => __('Role')
             ],
             'created_at' => [
                 'name'  => 'users.created_at',
                 'title' => __('CreatedAt'),
                 'width' => '100px',
                 'class' => 'searchable',
+                'footer' => __('CreatedAt')
             ],
             'status' => [
                 'name'       => 'users.status',
@@ -114,36 +116,54 @@ class UserDataTable extends DataTableAbstract
                 'searchable' => false,
                 'exportable' => false,
                 'printable'  => false,
+                'footer' => __('Status')
             ],
         ];
     }
 
     /**
      * @return array
-     * @author Sang Nguyen
-     * @since 2.1
+     * @author TrinhLe
      */
     public function buttons()
     {
-        return [];
+        $buttons = [
+            'create' => [
+                'link' => route('admin.user.create'),
+                'text' => view('core-base::elements.tables.actions.create')->render(),
+            ]
+        ];
+
+        return $buttons;
     }
 
     /**
      * @return array
-     * @author Sang Nguyen
-     * @since 2.1
+     * @author TrinhLe
      */
     public function actions()
     {
-        return [];
+        return [
+            'delete' => [
+                'link' => route('admin.user.create'),
+                'text' => view('core-base::elements.tables.actions.delete')->render(),
+            ],
+            'activate' => [
+                'link' => route('admin.user.create'),
+                'text' => view('core-base::elements.tables.actions.activate')->render(),
+            ],
+            'deactivate' => [
+                'link' => route('admin.user.create'),
+                'text' => view('core-base::elements.tables.actions.deactivate')->render(),
+            ]
+        ];
     }
 
     /**
      * Get filename for export.
      *
      * @return string
-     * @author Sang Nguyen
-     * @since 2.1
+     * @author TrinhLe
      */
     protected function filename()
     {

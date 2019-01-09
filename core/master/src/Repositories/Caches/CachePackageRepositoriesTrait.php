@@ -24,13 +24,24 @@ trait CachePackageRepositoriesTrait
         return $this->repository->getTable();
     }
 
-     /**
+    /**
+     * Make a new instance of the entity to query on.
+     * @param array $with
+     * @return mixed
+     * @author TrinhLe
+     */
+    public function make(array $with = [])
+    {
+        return $this->repository->make($with);
+    }
+
+    /**
      * Retrieve model by id regardless of status.
      *
      * @param int $id model ID
      * @param array $with
      * @return Object object of model information
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function findById($id, array $with = [])
     {
@@ -44,7 +55,7 @@ trait CachePackageRepositoriesTrait
      * @param array $select
      * @param array $with
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getFirstBy(array $condition = [], array $select = [], array $with = [])
     {
@@ -55,7 +66,7 @@ trait CachePackageRepositoriesTrait
      * @param string $column
      * @param string $key
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function pluck($column, $key = null)
     {
@@ -67,7 +78,7 @@ trait CachePackageRepositoriesTrait
      *
      * @param array $with Eager load related models
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function all(array $with = [])
     {
@@ -81,7 +92,7 @@ trait CachePackageRepositoriesTrait
      * @param array $with
      * @param array $select
      * @return Object with $items
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function allBy(array $condition, array $with = [], array $select = ['*'])
     {
@@ -94,7 +105,7 @@ trait CachePackageRepositoriesTrait
      * @param string $slug of model
      * @param array $with
      * @return object object of model information
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function bySlug($slug, array $with = [])
     {
@@ -104,7 +115,7 @@ trait CachePackageRepositoriesTrait
     /**
      * @param array $data
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function create(array $data)
     {
@@ -117,7 +128,7 @@ trait CachePackageRepositoriesTrait
      * @param Model|array $data
      * @param array $condition
      * @return false|Model
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function createOrUpdate($data, $condition = [])
     {
@@ -129,7 +140,7 @@ trait CachePackageRepositoriesTrait
      *
      * @param Model $model
      * @return bool
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function delete(Model $model)
     {
@@ -140,7 +151,7 @@ trait CachePackageRepositoriesTrait
      * @param array $data
      * @param array $with
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function firstOrCreate(array $data, array $with = [])
     {
@@ -151,7 +162,7 @@ trait CachePackageRepositoriesTrait
      * @param array $condition
      * @param array $data
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function update(array $condition, array $data)
     {
@@ -162,7 +173,7 @@ trait CachePackageRepositoriesTrait
      * @param array $select
      * @param array $condition
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function select(array $select = ['*'], array $condition = [])
     {
@@ -172,7 +183,7 @@ trait CachePackageRepositoriesTrait
     /**
      * @param array $condition
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function deleteBy(array $condition = [])
     {
@@ -182,7 +193,7 @@ trait CachePackageRepositoriesTrait
     /**
      * @param array $condition
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function count(array $condition = [])
     {
@@ -194,7 +205,7 @@ trait CachePackageRepositoriesTrait
      * @param array $value
      * @param array $args
      * @return \Illuminate\Database\Eloquent\Collection|static[]
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getByWhereIn($column, array $value = [], array $args = [])
     {
@@ -213,7 +224,7 @@ trait CachePackageRepositoriesTrait
     /**
      * @param array $condition
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function forceDelete(array $condition = [])
     {
@@ -223,7 +234,7 @@ trait CachePackageRepositoriesTrait
     /**
      * @param array $condition
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function restoreBy(array $condition = [])
     {
@@ -236,7 +247,7 @@ trait CachePackageRepositoriesTrait
      * @param array $condition
      * @param array $select
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getFirstByWithTrash(array $condition = [], array $select = [])
     {
@@ -246,7 +257,7 @@ trait CachePackageRepositoriesTrait
     /**
      * @param array $data
      * @return bool
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function insert(array $data)
     {

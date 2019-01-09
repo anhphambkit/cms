@@ -9,12 +9,13 @@ use AssetPipeline;
 class UserController extends BaseAdminController{
     
     /**
-     * Show page dashboard admin
-     * @return type
+     * Show page dashboard user
+     * @author TrinhLe
+     * @return View
      */
     public function index(UserDataTable $dataTable)
     {
         $roles = [];
-        return $dataTable->render('core-user::admin.index', compact('roles'));
+        return $dataTable->render('core-user::admin.user.index', compact('roles'));
     }
 }

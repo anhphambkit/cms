@@ -6,10 +6,10 @@ use Carbon\Carbon;
 use Cartalyst\Sentinel\Permissions\PermissionsTrait;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Exception;
-
+use Elasticquent\ElasticquentTrait;
 class User extends EloquentUser implements AuthenticatableContract
 {
-    use Authenticatable;
+    use Authenticatable, ElasticquentTrait;
     /**
      * The database table used by the model.
      *

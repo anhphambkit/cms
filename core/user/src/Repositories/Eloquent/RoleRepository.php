@@ -1,9 +1,9 @@
 <?php
 
-namespace Botble\ACL\Repositories\Eloquent;
+namespace Core\User\Repositories\Eloquent;
 
-use Botble\ACL\Repositories\Interfaces\RoleInterface;
-use Botble\Support\Repositories\Eloquent\RepositoriesAbstract;
+use Core\User\Repositories\Interfaces\RoleInterface;
+use Core\Master\Repositories\Eloquent\RepositoriesAbstract;
 
 class RoleRepository extends RepositoriesAbstract implements RoleInterface
 {
@@ -11,7 +11,7 @@ class RoleRepository extends RepositoriesAbstract implements RoleInterface
      * @param $name
      * @param $id
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function createSlug($name, $id)
     {

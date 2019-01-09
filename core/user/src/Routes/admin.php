@@ -22,6 +22,12 @@ $router->group(['prefix' =>'user'], function (Router $router) {
         'middleware' => 'access:user.index'
     ]);
 
+    $router->get('/create', [
+        'as' => 'admin.user.create',
+        'uses' => 'UserController@index',
+        'middleware' => 'access:user.create'
+    ]);
+
     $router->get('/search', [
         'as' => 'admin.user.search',
         'uses' => 'UserController@search',
@@ -38,6 +44,12 @@ $router->group(['prefix' =>'role'], function (Router $router) {
         'middleware' => 'access:role.index'
     ]);
 
+    $router->get('/create', [
+        'as' => 'admin.role.create',
+        'uses' => 'RoleController@getCreate',
+        'middleware' => 'access:role.create'
+    ]);
+
     $router->get('/roles/assign', [
         'as' => 'admin.roles.assign',
         'uses' => 'RoleController@index',
@@ -48,6 +60,18 @@ $router->group(['prefix' =>'role'], function (Router $router) {
         'as' => 'admin.roles.list.json',
         'uses' => 'RoleController@index',
         'middleware' => 'access:role.list'
+    ]);
+
+    $router->get('/edit', [
+        'as' => 'admin.role.edit',
+        'uses' => 'RoleController@index',
+        'middleware' => 'access:role.edit'
+    ]);
+
+    $router->delete('/delete', [
+        'as' => 'admin.role.delete',
+        'uses' => 'RoleController@index',
+        'middleware' => 'access:role.delete'
     ]);
 });
 

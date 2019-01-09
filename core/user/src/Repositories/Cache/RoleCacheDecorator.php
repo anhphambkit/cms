@@ -1,10 +1,9 @@
 <?php
 
-namespace Botble\ACL\Repositories\Caches;
+namespace Core\User\Repositories\Caches;
 
-use Botble\ACL\Repositories\Interfaces\RoleInterface;
-use Botble\Support\Repositories\Caches\CacheAbstractDecorator;
-use Botble\Support\Services\Cache\CacheInterface;
+use Core\User\Repositories\Interfaces\RoleInterface;
+use Core\Master\Repositories\Caches\CacheAbstractDecorator;
 
 class RoleCacheDecorator extends CacheAbstractDecorator implements RoleInterface
 {
@@ -14,20 +13,18 @@ class RoleCacheDecorator extends CacheAbstractDecorator implements RoleInterface
     protected $repository;
 
     /**
-     * @var CacheInterface
+     * @var string The entity name
      */
-    protected $cache;
+    protected $entityName = 'user-role';
 
     /**
      * RoleCacheDecorator constructor.
      * @param RoleInterface $repository
-     * @param CacheInterface $cache
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
-    public function __construct(RoleInterface $repository, CacheInterface $cache)
+    public function __construct(RoleInterface $repository)
     {
         $this->repository = $repository;
-        $this->cache = $cache;
     }
 
     /**

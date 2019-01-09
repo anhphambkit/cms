@@ -1,3 +1,7 @@
+<?php
+    $urlCreate = empty($urlCreate) ? '#' : $urlCreate;
+    $extend  = empty($extend) ? '#' : $extend;
+?>
 <div class="card">
     <div class="card-header">
         <h4 class="card-title">{{ $title }}</h4>
@@ -11,6 +15,9 @@
     </div>
     <div class="card-content collapse show">
         <div class="card-body">
+            <a href="{{ $urlCreate }}" {{ $extend }} class="btn btn-social width-200 mb-1 mr-1 btn-outline-adn">
+                <span class="la la-adn font-medium-4"></span> {{ __('Create') }}
+            </a>
             <div class="table-responsive">
                 {!! $dataTable->table(['class' => 'table table-striped table-bordered table-hover vertical-middle no-footer'], true) !!}
             </div>

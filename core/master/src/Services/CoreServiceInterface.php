@@ -11,7 +11,7 @@ interface CoreServiceInterface
      *
      * @param Request $request
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function execute(Request $request);
 }

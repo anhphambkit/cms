@@ -160,4 +160,13 @@ interface RepositoryInterface
      * @author TrinhLe
      */
     public function insert(array $data);
+
+    /**
+     * Make a new instance of the entity to query on.
+     *
+     * @param array $with
+     * @return mixed
+     * @author TrinhLe
+     */
+    public function make(array $with = []);
 }

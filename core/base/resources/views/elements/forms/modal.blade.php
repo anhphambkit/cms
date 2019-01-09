@@ -12,7 +12,7 @@
 
             <div class="modal-footer">
                 <a class="pull-left btn btn-{{ $type }}" id="{{ $action_id }}" href="#">{{ $action_name }}</a>
-                <button class="pull-right btn btn-primary" data-dismiss="modal">{{ trans('bases::tables.cancel') }}</button>
+                <button class="pull-right btn btn-primary" data-dismiss="modal">{{ __('Cancel') }}</button>
             </div>
         </div>
     </div>

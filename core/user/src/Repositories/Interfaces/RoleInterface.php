@@ -1,8 +1,7 @@
 <?php
+namespace Core\User\Repositories\Interfaces;
 
-namespace Botble\ACL\Repositories\Interfaces;
-
-use Botble\Support\Repositories\Interfaces\RepositoryInterface;
+use Core\Master\Repositories\Interfaces\RepositoryInterface;
 
 interface RoleInterface extends RepositoryInterface
 {
@@ -10,7 +9,7 @@ interface RoleInterface extends RepositoryInterface
      * @param $name
      * @param $id
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function createSlug($name, $id);
 }
