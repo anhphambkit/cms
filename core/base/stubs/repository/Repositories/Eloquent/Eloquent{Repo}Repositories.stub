@@ -3,9 +3,9 @@
  * {Repo} repository implemented
  */
 namespace {CoreNamespace}\{Package}\Repositories\Eloquent;
-use {CoreNamespace}\{Package}\Repositories\{c repo}Repositories;
+use {CoreNamespace}\{Package}\Repositories\Interfaces\{Repo}Repositories;
 use Core\Master\Repositories\Eloquent\RepositoriesAbstract;
 
-class Eloquent{Repo}Repositories implements {Repo}Repositories {
-    use RepositoriesAbstract;
+class Eloquent{Repo}Repositories extends RepositoriesAbstract implements {Repo}Repositories {
+	
 }

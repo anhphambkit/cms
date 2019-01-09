@@ -1,7 +1,7 @@
 <ul id='auto-checkboxes' data-name='foo' class="list-unstyled list-feature">
     <li id="mainNode">
         <input type="checkbox" id="expandCollapseAllTree">&nbsp;&nbsp;
-        <label for="expandCollapseAllTree" class="label label-default allTree" onClick="return expandCollapseTree('mainNode');">{{ trans('acl::permissions.all') }}</label>
+        <label for="expandCollapseAllTree" class="label label-default allTree" onClick="return expandCollapseTree('mainNode');">{{ __('All Permission') }}</label>
         <ul>
             @foreach($children[0] as $element)
                 <li class="collapsed" id="node{{ $flags[$element]->id }}">

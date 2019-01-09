@@ -44,7 +44,7 @@ class MakeBindContentRepository extends Command
         $package = ucfirst(trim($this->input->getArgument('package')));
         $repo = ucfirst(trim($this->input->getArgument('repo')));
         return [
-            "use {$coreNamespace}\\{$package}\Repositories\\{$repo}Repositories;",
+            "use {$coreNamespace}\\{$package}\Repositories\\Interfaces\\{$repo}Repositories;",
             "use {$coreNamespace}\\{$package}\Repositories\Eloquent\Eloquent{$repo}Repositories;",
             "use {$coreNamespace}\\{$package}\Repositories\Cache\Cache{$repo}Repositories;",
         ];

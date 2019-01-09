@@ -9,12 +9,33 @@ use Core\User\Repositories\Eloquent\EloquentAuthentication;
 #User
 use Core\User\Repositories\Interfaces\UserInterface;
 use Core\User\Repositories\Eloquent\UserRepository;
+
 #Role
 use Core\User\Repositories\Interfaces\RoleInterface;
 use Core\User\Repositories\Caches\RoleCacheDecorator;
 use Core\User\Repositories\Eloquent\RoleRepository;
 use Core\User\Services\Excute\RoleServiceExcute;
 use Core\User\Services\Interfaces\RoleServiceInterface;
+
+#Feature
+use Core\User\Repositories\Interfaces\FeatureRepositories;
+use Core\User\Repositories\Eloquent\EloquentFeatureRepositories;
+use Core\User\Repositories\Cache\CacheFeatureRepositories;
+
+#Permission
+use Core\User\Repositories\Interfaces\PermissionRepositories;
+use Core\User\Repositories\Eloquent\EloquentPermissionRepositories;
+use Core\User\Repositories\Cache\CachePermissionRepositories;
+
+#RoleFlag
+use Core\User\Repositories\Interfaces\RoleFlagRepositories;
+use Core\User\Repositories\Eloquent\EloquentRoleFlagRepositories;
+use Core\User\Repositories\Cache\CacheRoleFlagRepositories;
+
+#RoleUser
+use Core\User\Repositories\Interfaces\RoleUserRepositories;
+use Core\User\Repositories\Eloquent\EloquentRoleUserRepositories;
+use Core\User\Repositories\Cache\CacheRoleUserRepositories;
 
 use Core\User\Guards\Sentinel;
 use Core\Base\Providers\CmsServiceProvider as CoreServiceProvider;
@@ -83,54 +104,47 @@ class UserServiceProvider extends CoreServiceProvider
 
         if (setting('enable_cache', false)) {
 
-            // $this->app->singleton(PermissionInterface::class, function () {
-            //     return new PermissionCacheDecorator(new PermissionRepository(new PermissionFlag()), new Cache($this->app['cache'], __CLASS__));
-            // });
-
             $this->app->singleton(RoleInterface::class, function () {
                 return new RoleCacheDecorator(new RoleRepository(new \Core\User\Models\Role()));
             });
 
-            // $this->app->singleton(FeatureInterface::class, function () {
-            //     return new FeatureCacheDecorator(new FeatureRepository(new Feature()), new Cache($this->app['cache'], __CLASS__));
-            // });
+            $this->app->singleton(FeatureRepositories::class, function () {
+                return new CacheFeatureRepositories(new EloquentFeatureRepositories(new \Core\User\Models\Feature()));
+            });
 
-            // $this->app->singleton(RoleUserInterface::class, function () {
-            //     return new RoleUserCacheDecorator(new RoleUserRepository(new RoleUser()), new Cache($this->app['cache'], __CLASS__));
-            // });
+            $this->app->singleton(PermissionRepositories::class, function () {
+                return new CachePermissionRepositories(new EloquentPermissionRepositories(new \Core\User\Models\PermissionFlag()));
+            });
 
-            // $this->app->singleton(RoleFlagInterface::class, function () {
-            //     return new RoleFlagCacheDecorator(new RoleFlagRepository(new RoleFlag()), new Cache($this->app['cache'], __CLASS__));
-            // });
+            $this->app->singleton(RoleFlagRepositories::class, function () {
+                return new CacheRoleFlagRepositories(new EloquentRoleFlagRepositories(new \Core\User\Models\RoleFlag()));
+            });
 
-            // $this->app->singleton(InviteInterface::class, function () {
-            //     return new InviteCacheDecorator(new InviteRepository(new Invite()), new Cache($this->app['cache'], __CLASS__));
-            // });
+            $this->app->singleton(RoleUserRepositories::class, function () {
+                return new CacheRoleUserRepositories(new EloquentRoleUserRepositories(new \Core\User\Models\RoleUser()));
+            });
+            
         } else {
-
-            // $this->app->singleton(PermissionInterface::class, function () {
-            //     return new PermissionRepository(new PermissionFlag());
-            // });
 
             $this->app->singleton(RoleInterface::class, function () {
                 return new RoleRepository(new \Core\User\Models\Role());
             });
 
-            // $this->app->singleton(RoleUserInterface::class, function () {
-            //     return new RoleUserRepository(new RoleUser());
-            // });
+            $this->app->singleton(FeatureRepositories::class, function () {
+                return new EloquentFeatureRepositories(new \Core\User\Models\Feature());
+            });
 
-            // $this->app->singleton(RoleFlagInterface::class, function () {
-            //     return new RoleFlagRepository(new RoleFlag());
-            // });
+            $this->app->singleton(PermissionRepositories::class, function () {
+                return new EloquentPermissionRepositories(new \Core\User\Models\PermissionFlag());
+            });
 
-            // $this->app->singleton(FeatureInterface::class, function () {
-            //     return new FeatureRepository(new Feature());
-            // });
+            $this->app->singleton(RoleFlagRepositories::class, function () {
+                return new EloquentRoleFlagRepositories(new \Core\User\Models\RoleFlag());
+            });
 
-            // $this->app->singleton(InviteInterface::class, function () {
-            //     return new InviteRepository(new Invite());
-            // });
+            $this->app->singleton(RoleUserRepositories::class, function () {
+                return new EloquentRoleUserRepositories(new \Core\User\Models\RoleUser());
+            });
         }
     }
 

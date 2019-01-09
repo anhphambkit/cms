@@ -18,6 +18,8 @@ class Kernel
         MakeBindContentRepository::class,
         MigrateSystemCommand::class,
         PublishData::class,
+        BuildPermissions::class,
+        RebuildPermissionsCommand::class,
     ];
 
     /**

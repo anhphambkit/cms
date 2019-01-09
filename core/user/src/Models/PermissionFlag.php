@@ -36,7 +36,7 @@ class PermissionFlag extends Eloquent
      * This is to cleanly add an extra permission flags to the system
      * @param $args
      * @return \Illuminate\Database\Eloquent\Model | boolean
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public static function createNewPermissionFlag($args = [])
     {

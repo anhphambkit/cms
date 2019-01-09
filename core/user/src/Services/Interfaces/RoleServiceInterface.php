@@ -10,5 +10,5 @@ interface RoleServiceInterface extends CoreServiceInterface
 	 * @author TrinhLe
 	 * @return mixed
 	 */
-	public function getFlagsPermission(array $array);
+	public function getFlagsPermission():array;
 }

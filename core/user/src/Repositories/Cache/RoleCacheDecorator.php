@@ -13,11 +13,6 @@ class RoleCacheDecorator extends CacheAbstractDecorator implements RoleInterface
     protected $repository;
 
     /**
-     * @var string The entity name
-     */
-    protected $entityName = 'user-role';
-
-    /**
      * RoleCacheDecorator constructor.
      * @param RoleInterface $repository
      * @author TrinhLe
@@ -25,13 +20,14 @@ class RoleCacheDecorator extends CacheAbstractDecorator implements RoleInterface
     public function __construct(RoleInterface $repository)
     {
         $this->repository = $repository;
+        $this->entityName = 'user-role'; # Please setup reference name of cache.
     }
 
     /**
      * @param $name
      * @param $id
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function createSlug($name, $id)
     {

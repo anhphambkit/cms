@@ -41,39 +41,11 @@ class RoleController extends BaseAdminController
         AssetPipeline::requireCss('jquery-tree-css');
         AssetPipeline::requireJs('jquery-tree-js');
 
-        // $usableFlags = $this->roleService->getFlagsPermission(['id', 'name', 'parent_flag', 'is_feature']);
+        list( $flags, $children ) = $this->roleService->getFlagsPermission();
 
-        // $availableFeatures = $this->roleService->featurePluck('feature_id');
+        $active = [];
 
-        // $flags = [];
-
-        // if ($usableFlags) {
-        //     foreach ($usableFlags as $usableFlag) {
-        //         if ($usableFlag->is_feature && in_array($usableFlag->id, $availableFeatures)) {
-        //             $flags[$usableFlag->id] = $usableFlag;
-        //         } elseif ($usableFlag->is_feature == 0) {
-        //             $flags[$usableFlag->id] = $usableFlag;
-        //         }
-
-        //     }
-        // }
-
-        // $sortedFlag = $flags;
-        // sort($sortedFlag);
-        // $children[0] = $this->getChildren(0, $sortedFlag, $availableFeatures);
-
-        // foreach ($flags as $flagDetails) {
-        //     $childrenReturned = $this->getChildren($flagDetails->id, $flags, $availableFeatures);
-        //     if (count($childrenReturned) > 0) {
-        //         if ($flagDetails->is_feature && in_array($flagDetails->id, $availableFeatures)) {
-        //             $children[$flagDetails->id] = $childrenReturned;
-        //         } elseif ($flagDetails->is_feature == 0) {
-        //             $children[$flagDetails->id] = $childrenReturned;
-        //         }
-        //     }
-        // }
-
-        return view('core-user::admin.role.create',compact(''));
+        return view('core-user::admin.role.create',compact('flags', 'children', 'active'));
     }
 
     /**

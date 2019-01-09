@@ -1,7 +1,7 @@
 <?php
 namespace {CoreNamespace}\{Package}\Repositories\Cache;
 use Core\Master\Repositories\Cache\CacheAbstractDecorator;
-use {CoreNamespace}\{Package}\Repositories\{Repo}Repositories;
+use {CoreNamespace}\{Package}\Repositories\Interfaces\{Repo}Repositories;
 
 class Cache{Repo}Repositories extends CacheAbstractDecorator implements {Repo}Repositories
 {
