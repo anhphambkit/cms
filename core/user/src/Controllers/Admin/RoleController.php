@@ -38,8 +38,10 @@ class RoleController extends BaseAdminController
      */
     public function getCreate()
     {
+        AssetManager::addAsset('role-js', 'backend/user/role.js');
         AssetPipeline::requireCss('jquery-tree-css');
         AssetPipeline::requireJs('jquery-tree-js');
+        AssetPipeline::requireJs('role-js');
 
         list( $flags, $children ) = $this->roleService->getFlagsPermission();
 

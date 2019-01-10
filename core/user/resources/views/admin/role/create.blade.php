@@ -34,7 +34,7 @@
 	                    		</div>
 
 	                    		<div class="row">
-	                    			<div class="widget">
+	                    			<div class="widget form-group col-12 mb-2">
             							<div class="widget-title">
 							                <h4>
 							                    <i class="box_img_sale"></i><span> {{ __('Permissions') }}</span>

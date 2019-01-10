@@ -3,12 +3,13 @@
 return [
 	'admin-assets' => [
 		/* js */
-		'vendors-js'  => ['theme' => 'app-assets/vendors/js/vendors.min.js'],
-		'app-menu-js' => ['theme' => 'app-assets/js/core/app-menu.js'],
-		'app-js'      => ['theme' => 'app-assets/js/core/app.js'],
-		'jquery-tree-js'            => ['theme' => 'plugins/jquery-tree/jquery.tree.min.js'],
-		'toastr-js'            => ['theme' => 'plugins/toastr/toastr.min.js'],
-		'jquery-ui-js'            => ['theme' => 'plugins/jquery-ui/jquery-ui.min.js'],
+		'vendors-js'     => ['theme' => 'app-assets/vendors/js/vendors.min.js'],
+		'app-menu-js'    => ['theme' => 'app-assets/js/core/app-menu.js'],
+		'app-js'         => ['theme' => 'app-assets/js/core/app.js'],
+		'jquery-tree-js' => ['theme' => 'plugins/jquery-tree/jquery.tree.min.js'],
+		'toastr-js'      => ['theme' => 'plugins/toastr/toastr.min.js'],
+		'jquery-ui-js'   => ['theme' => 'plugins/jquery-ui/jquery-ui.min.js'],
+		'uniform-js'     => ['theme' => 'plugins/uniform/jquery.uniform.min.js'],
 
 		/* css */
 		'vendors-css'              => ['theme' => 'app-assets/css/vendors.css'],
@@ -16,8 +17,9 @@ return [
 		'palette-gradient-css'     => ['theme' => 'app-assets/css/core/colors/palette-gradient.css'],
 		'app-css'                  => ['theme' => 'app-assets/css/app.css'],
 		'cms-style-css'            => ['theme' => 'assets/css/style.css'],
-		'jquery-tree-css'            => ['theme' => 'plugins/jquery-tree/jquery.tree.min.css'],
-		'toastr-css'            => ['theme' => 'plugins/toastr/toastr.min.css'],
+		'cms-core-css'            => ['theme' => 'assets/css/core.css'],
+		'jquery-tree-css'          => ['theme' => 'plugins/jquery-tree/jquery.tree.min.css'],
+		'toastr-css'               => ['theme' => 'plugins/toastr/toastr.min.css'],
 		'jquery-ui-css'            => ['theme' => 'plugins/jquery-ui/jquery-ui.min.css'],
 	],
 
@@ -106,14 +108,16 @@ return [
 			'app-css'    ,              
 			'cms-style-css',
 			'toastr-css',
-			'jquery-ui-css'          
+			'jquery-ui-css',
+			'cms-core-css'          
 		],
 		'js' => [
 			'vendors-js' ,
 			'app-menu-js',
 			'app-js'   ,
 			'toastr-js',
-			'jquery-ui-js'
+			'jquery-ui-js',
+			'uniform-js'
 		]
 	]
 
