@@ -1,17 +1,16 @@
 <?php
 
-namespace Plugins\{Plugin}\Http\Requests;
+namespace Plugins\{Plugin}\Requests;
 
-use Core\Master\Http\Requests\Request;
+use Core\Master\Requests\CoreRequest;
 
-class {Plugin}Request extends Request
+class {Plugin}Request extends CoreRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function rules()
     {

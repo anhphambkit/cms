@@ -1,8 +1,8 @@
 <?php
-namespace Core\Dashboard\Middlewares;
+namespace Plugins\{Plugin}\Middlewares;
 use Closure;
 
-class webMiddleware {
+class AdminMiddleware {
     /**
      * Handle an incoming request.
      *

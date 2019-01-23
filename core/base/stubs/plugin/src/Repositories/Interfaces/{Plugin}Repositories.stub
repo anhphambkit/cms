@@ -4,6 +4,6 @@ namespace Plugins\{Plugin}\Repositories\Interfaces;
 
 use Core\Master\Repositories\Interfaces\RepositoryInterface;
 
-interface {Plugin}Interface extends RepositoryInterface
+interface {Plugin}Repositories extends RepositoryInterface
 {
 }

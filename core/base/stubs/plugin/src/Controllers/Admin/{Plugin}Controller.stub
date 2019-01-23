@@ -1,28 +1,26 @@
 <?php
 
-namespace Plugins\{Plugin}\Http\Controllers;
+namespace Plugins\{Plugin}\Controllers\Admin;
 
-use Assets;
-use Plugins\{Plugin}\Http\Requests\{Plugin}Request;
-use Plugins\{Plugin}\Repositories\Interfaces\{Plugin}Interface;
-use Core\Base\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
-use MongoDB\Driver\Exception\Exception;
+use Plugins\{Plugin}\Requests\{Plugin}Request;
+use Plugins\{Plugin}\Repositories\Interfaces\{Plugin}Repositories;
 use Plugins\{Plugin}\Http\DataTables\{Plugin}DataTable;
+use Core\Base\Controllers\Admin\BaseAdminController;
 
-class {Plugin}Controller extends BaseController
+class {Plugin}Controller extends BaseAdminController
 {
     /**
-     * @var {Plugin}Interface
+     * @var {Plugin}Repositories
      */
     protected ${plugin}Repository;
 
     /**
      * {Plugin}Controller constructor.
-     * @param {Plugin}Interface ${plugin}Repository
-     * @author Sang Nguyen
+     * @param {Plugin}Repositories ${plugin}Repository
+     * @author TrinhLe
      */
-    public function __construct({Plugin}Interface ${plugin}Repository)
+    public function __construct({Plugin}Repositories ${plugin}Repository)
     {
         $this->{plugin}Repository = ${plugin}Repository;
     }
@@ -31,7 +29,7 @@ class {Plugin}Controller extends BaseController
      * Display all {plugin}
      * @param {Plugin}DataTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getList({Plugin}DataTable $dataTable)
     {
@@ -44,7 +42,7 @@ class {Plugin}Controller extends BaseController
     /**
      * Show create form
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getCreate()
     {
@@ -58,7 +56,7 @@ class {Plugin}Controller extends BaseController
      *
      * @param {Plugin}Request $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function postCreate({Plugin}Request $request)
     {
@@ -78,7 +76,7 @@ class {Plugin}Controller extends BaseController
      *
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getEdit($id)
     {
@@ -96,7 +94,7 @@ class {Plugin}Controller extends BaseController
      * @param $id
      * @param {Plugin}Request $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function postEdit($id, {Plugin}Request $request)
     {
@@ -121,7 +119,7 @@ class {Plugin}Controller extends BaseController
      * @param Request $request
      * @param $id
      * @return array
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getDelete(Request $request, $id)
     {
@@ -138,68 +136,11 @@ class {Plugin}Controller extends BaseController
                 'error' => false,
                 'message' => trans('bases::notices.deleted'),
             ];
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return [
                 'error' => true,
                 'message' => trans('bases::notices.cannot_delete'),
             ];
         }
-    }
-
-    /**
-     * @param Request $request
-     * @return array|\Illuminate\Http\JsonResponse
-     * @author Sang Nguyen
-     */
-    public function postDeleteMany(Request $request)
-    {
-        $ids = $request->input('ids');
-        if (empty($ids)) {
-            return [
-                'error' => true,
-                'message' => trans('bases::notices.no_select'),
-            ];
-        }
-
-        foreach ($ids as $id) {
-            ${plugin} = $this->{plugin}Repository->findById($id);
-            $this->{plugin}Repository->delete(${plugin});
-            do_action(BASE_ACTION_AFTER_DELETE_CONTENT, {PLUGIN}_MODULE_SCREEN_NAME, $request, ${plugin});
-        }
-
-        return [
-            'error' => false,
-            'message' => trans('bases::notices.delete_success_message'),
-        ];
-    }
-
-    /**
-     * @param Request $request
-     * @return array
-     * @author Sang Nguyen
-     */
-    public function postChangeStatus(Request $request)
-    {
-        $ids = $request->input('ids');
-        if (empty($ids)) {
-            return [
-                'error' => true,
-                'message' => trans('bases::notices.no_select'),
-            ];
-        }
-
-        foreach ($ids as $id) {
-            ${plugin} = $this->{plugin}Repository->findById($id);
-            ${plugin}->status = $request->input('status');
-            $this->{plugin}Repository->createOrUpdate(${plugin});
-
-            do_action(BASE_ACTION_AFTER_UPDATE_CONTENT, {PLUGIN}_MODULE_SCREEN_NAME, $request, ${plugin});
-        }
-
-        return [
-            'error' => false,
-            'status' => $request->input('status'),
-            'message' => trans('bases::notices.update_success_message'),
-        ];
     }
 }

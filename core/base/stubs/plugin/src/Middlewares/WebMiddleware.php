@@ -1,8 +1,8 @@
 <?php
-namespace Core\Dashboard\Middlewares;
+namespace Plugins\{Plugin}\Middlewares;
 use Closure;
 
-class ajaxMiddleware {
+class WebMiddleware {
     /**
      * Handle an incoming request.
      *
