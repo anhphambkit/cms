@@ -6,7 +6,7 @@ if (!function_exists('format_time')) {
      * @param DateTime $timestamp
      * @param $format
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     function format_time(DateTime $timestamp, $format = 'j M Y H:i')
     {
@@ -24,7 +24,7 @@ if (!function_exists('date_from_database')) {
      * @param $time
      * @param string $format
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     function date_from_database($time, $format = 'Y-m-d')
     {
@@ -37,7 +37,7 @@ if (!function_exists('human_file_size')) {
      * @param $bytes
      * @param int $precision
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     function human_file_size($bytes, $precision = 2)
     {
@@ -58,7 +58,7 @@ if (!function_exists('string_limit_words')) {
      * @param $string
      * @param $limit
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     function string_limit_words($string, $limit)
     {
@@ -107,7 +107,7 @@ if (!function_exists('table_status')) {
      * @internal param $status
      * @internal param null $activated_text
      * @internal param null $deactivated_text
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     function table_status($selected, $statuses = [])
     {

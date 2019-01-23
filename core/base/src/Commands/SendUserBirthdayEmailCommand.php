@@ -31,7 +31,7 @@ class SendUserBirthdayEmailCommand extends Command
 
     /**
      * RebuildPermissions constructor.
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @param UserInterface $userRepository
      */
     public function __construct(UserInterface $userRepository)
@@ -42,7 +42,7 @@ class SendUserBirthdayEmailCommand extends Command
 
     /**
      * Execute the console command.
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function handle()
     {

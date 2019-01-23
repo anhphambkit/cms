@@ -39,7 +39,7 @@ class Role extends EloquentRole
      * Returns the list of flags that belong to this role
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function flags()
     {
@@ -48,7 +48,7 @@ class Role extends EloquentRole
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function users()
     {

@@ -1,5 +1,5 @@
 /**
- * Created by Sang Nguyen on 06/09/2015.
+ * Created by TrinhLe on 06/09/2015.
  */
 
 (function (factory) {

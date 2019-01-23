@@ -3,7 +3,6 @@
 namespace Core\User\DataTables;
 
 use Core\Base\DataTables\DataTableAbstract;
-use Core\User\Models\User;
 use Core\User\Repositories\Interfaces\RoleInterface;
 use Core\User\Repositories\Interfaces\UserInterface;
 

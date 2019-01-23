@@ -19,7 +19,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     /**
      * UserRepository constructor.
      * @param Model|Eloquent $model
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function __construct(Model $model)
     {
@@ -48,7 +48,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * Get table name.
      *
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getTable()
     {
@@ -62,7 +62,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param array $select
      * @param array $with
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getFirstBy(array $condition = [], array $select = ['*'], array $with = [])
     {
@@ -86,7 +86,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param $id
      * @param array $with
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function findById($id, array $with = [])
     {
@@ -101,7 +101,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      *
      * @param array $with Eager load related models
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function all(array $with = [])
     {
@@ -117,7 +117,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param string $column
      * @param string $key
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function pluck($column, $key = null)
     {
@@ -136,7 +136,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param array $with
      * @param array $select
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function allBy(array $condition, array $with = [], array $select = ['*'])
     {
@@ -154,7 +154,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param string $slug slug
      * @param array $with related tables
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function bySlug($slug, array $with = [])
     {
@@ -169,7 +169,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     /**
      * @param array $data
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function create(array $data)
     {
@@ -184,7 +184,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param $data
      * @param array $condition
      * @return false|Model
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function createOrUpdate($data, $condition = [])
     {
@@ -223,7 +223,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      *
      * @param Model $model
      * @return bool
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function delete(Model $model)
     {
@@ -234,7 +234,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param array $data
      * @param array $with
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function firstOrCreate(array $data, array $with = [])
     {
@@ -250,7 +250,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param array $condition
      * @param array $data
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function update(array $condition, array $data)
     {
@@ -263,7 +263,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param array $select
      * @param array $condition
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function select(array $select = ['*'], array $condition = [])
     {
@@ -275,7 +275,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     /**
      * @param array $condition
      * @return bool
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function deleteBy(array $condition = [])
     {
@@ -296,7 +296,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     /**
      * @param array $condition
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function count(array $condition = [])
     {
@@ -313,7 +313,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      * @param array $value
      * @param array $args
      * @return \Illuminate\Database\Eloquent\Collection|LengthAwarePaginator|mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getByWhereIn($column, array $value = [], array $args = [])
     {
@@ -412,7 +412,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     /**
      * @param array $data
      * @return bool
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function insert(array $data)
     {

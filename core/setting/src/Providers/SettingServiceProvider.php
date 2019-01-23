@@ -18,7 +18,7 @@ class SettingServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function register()
     {
@@ -35,7 +35,7 @@ class SettingServiceProvider extends ServiceProvider
     }
 
     /**
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function boot()
     {

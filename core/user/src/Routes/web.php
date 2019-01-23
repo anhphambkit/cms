@@ -14,7 +14,7 @@ use Illuminate\Routing\Router;
 
 Route::get('/', function () {
 	return view('welcome');
-})->name('test');
+});
 
 /** @var Router $router */
 $router->group(['prefix' => 'auth'], function (Router $router) {
@@ -28,6 +28,12 @@ $router->group(['prefix' => 'auth'], function (Router $router) {
     $router->post('login', [ 
 		'as'         => 'post.login', 
 		'uses'       => 'WebController@postLogin',
+		'middleware' => 'guest', 
+    ]);
+
+    $router->post('register', [ 
+		'as'         => 'register', 
+		'uses'       => 'WebController@showRegisterForm',
 		'middleware' => 'guest', 
     ]);
    

@@ -27,7 +27,7 @@ class CheckResetPasswordService implements ProduceServiceInterface
     /**
      * @param Request $request
      * @return bool|\Exception
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function execute(Request $request)
     {

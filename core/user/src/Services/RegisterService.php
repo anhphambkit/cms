@@ -28,7 +28,7 @@ class RegisterService implements ProduceServiceInterface
 
     /**
      * @param Request $request
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @return bool|Exception|mixed
      */
     public function execute(Request $request)

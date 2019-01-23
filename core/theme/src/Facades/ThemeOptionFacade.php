@@ -11,7 +11,7 @@ class ThemeOptionFacade extends Facade
      * Get the registered name of the component.
      *
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     protected static function getFacadeAccessor()
     {

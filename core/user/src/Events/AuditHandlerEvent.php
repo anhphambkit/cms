@@ -66,7 +66,7 @@ class AuditHandlerEvent extends Event
      * Get the channels the event should be broadcast on.
      *
      * @return array
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function broadcastOn()
     {

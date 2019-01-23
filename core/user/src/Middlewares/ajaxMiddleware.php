@@ -2,7 +2,7 @@
 namespace Core\User\Middlewares;
 use Closure;
 
-class ajaxMiddleware {
+class AjaxMiddleware {
     /**
      * Handle an incoming request.
      *

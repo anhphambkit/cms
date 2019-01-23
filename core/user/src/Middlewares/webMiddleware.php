@@ -2,7 +2,7 @@
 namespace Core\User\Middlewares;
 use Closure;
 
-class webMiddleware {
+class WebMiddleware {
     /**
      * Handle an incoming request.
      *

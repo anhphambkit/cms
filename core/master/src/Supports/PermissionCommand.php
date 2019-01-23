@@ -10,7 +10,7 @@ class PermissionCommand
 {
     /**
      * @param $permissions
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public static function registerPermission($permissions)
     {
@@ -29,7 +29,7 @@ class PermissionCommand
 
     /**
      * @param $permissions
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public static function removePermission($permissions)
     {

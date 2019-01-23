@@ -36,7 +36,7 @@ class PluginDeactivateCommand extends Command
      * Create a new key generator command.
      *
      * @param \Illuminate\Filesystem\Filesystem $files
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function __construct(Filesystem $files)
     {
@@ -47,7 +47,7 @@ class PluginDeactivateCommand extends Command
     /**
      * @throws Exception
      * @return boolean
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function fire()
     {

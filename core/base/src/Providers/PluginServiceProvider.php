@@ -10,7 +10,7 @@ use Schema;
 class PluginServiceProvider extends ServiceProvider
 {
     /**
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @param PluginInterface $pluginRepository
      */
     public function boot(PluginInterface $pluginRepository)

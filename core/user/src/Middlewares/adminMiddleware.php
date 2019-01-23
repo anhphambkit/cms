@@ -2,7 +2,7 @@
 namespace Core\User\Middlewares;
 use Closure;
 
-class adminMiddleware {
+class AdminMiddleware {
     /**
      * Handle an incoming request.
      *

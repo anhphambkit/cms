@@ -11,7 +11,7 @@ class SettingRequest extends Request
      * Get the validation rules that apply to the request.
      *
      * @return array
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function rules()
     {

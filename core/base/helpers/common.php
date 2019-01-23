@@ -1,23 +1,6 @@
 <?php
 use Core\Master\Facades\DashboardMenuFacade;
 
-if (!function_exists('check_database_connection')) {
-    /**
-     * Check connection to DB
-     * @return boolean
-     * @author TrinhLe
-     */
-    function check_database_connection()
-    {
-        try {
-            DB::connection()->reconnect();
-            return true;
-        } catch (Exception $ex) {
-            return false;
-        }
-    }
-}
-
 if (!function_exists('parse_args')) {
     /**
      * @param $args

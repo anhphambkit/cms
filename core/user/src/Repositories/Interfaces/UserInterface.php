@@ -8,7 +8,7 @@ interface UserInterface extends RepositoryInterface
 
     /**
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getDataSiteMap();
 
@@ -17,7 +17,7 @@ interface UserInterface extends RepositoryInterface
      *
      * @param $email
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getUniqueUsernameFromEmail($email);
 }

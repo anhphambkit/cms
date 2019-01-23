@@ -52,7 +52,7 @@ class ThemeOption
      * Prepare args of theme options
      *
      * @return array|mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function constructArgs()
     {
@@ -76,7 +76,7 @@ class ThemeOption
      * Prepare sections to display theme options page
      *
      * @return array
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function constructSections()
     {
@@ -103,7 +103,7 @@ class ThemeOption
      *
      * @param string $section_id
      * @return array
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function constructFields($section_id = '')
     {
@@ -127,7 +127,7 @@ class ThemeOption
     /**
      * @param string $id
      * @return bool
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getSection($id = '')
     {
@@ -144,7 +144,7 @@ class ThemeOption
     }
 
     /**
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function checkOptName()
     {
@@ -174,7 +174,7 @@ class ThemeOption
 
     /**
      * @return array|mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getSections()
     {
@@ -188,7 +188,7 @@ class ThemeOption
 
     /**
      * @param array $sections
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function setSections($sections = [])
     {
@@ -202,7 +202,7 @@ class ThemeOption
 
     /**
      * @param array $section
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function setSection($section = [])
     {
@@ -256,7 +256,7 @@ class ThemeOption
     /**
      * @param $type
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getPriority($type)
     {
@@ -269,7 +269,7 @@ class ThemeOption
     /**
      * @param string $section_id
      * @param array $fields
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function processFieldsArray($section_id = '', $fields = [])
     {
@@ -286,7 +286,7 @@ class ThemeOption
 
     /**
      * @param array $field
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function setField($field = [])
     {
@@ -306,7 +306,7 @@ class ThemeOption
     /**
      * @param string $id
      * @param bool $fields
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function removeSection($id = '', $fields = false)
     {
@@ -343,7 +343,7 @@ class ThemeOption
     /**
      * @param string $id
      * @param bool $hide
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function hideSection($id = '', $hide = true)
     {
@@ -359,7 +359,7 @@ class ThemeOption
     /**
      * @param string $id
      * @return bool
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getField($id = '')
     {
@@ -374,7 +374,7 @@ class ThemeOption
     /**
      * @param string $id
      * @param bool $hide
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function hideField($id = '', $hide = true)
     {
@@ -394,7 +394,7 @@ class ThemeOption
     /**
      * @param string $id
      * @return bool
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function removeField($id = '')
     {
@@ -424,7 +424,7 @@ class ThemeOption
 
     /**
      * @param array $tab
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function setHelpTab($tab = [])
     {
@@ -445,7 +445,7 @@ class ThemeOption
 
     /**
      * @param string $content
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function setHelpSidebar($content = '')
     {
@@ -457,7 +457,7 @@ class ThemeOption
 
     /**
      * @return array|mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getArgs()
     {
@@ -470,7 +470,7 @@ class ThemeOption
 
     /**
      * @param array $args
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function setArgs($args = [])
     {
@@ -486,7 +486,7 @@ class ThemeOption
     /**
      * @param string $key
      * @return null
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getArg($key = '')
     {
@@ -502,7 +502,7 @@ class ThemeOption
      * @param string $key
      * @param string $value
      * @return void
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function setOption($key, $value = '')
     {
@@ -512,7 +512,7 @@ class ThemeOption
     /**
      * @param $field
      * @return mixed|string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function renderField($field)
     {
@@ -533,7 +533,7 @@ class ThemeOption
     /**
      * @param string $key
      * @return bool
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function hasOption($key)
     {
@@ -543,7 +543,7 @@ class ThemeOption
     /**
      * @param string $key
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getOption($key = '', $default = '')
     {

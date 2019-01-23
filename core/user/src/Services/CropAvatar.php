@@ -7,7 +7,7 @@ use Storage;
 /**
  * Class CropAvatar
  * @package Botble\CropAvatar
- * @author Sang Nguyen
+ * @author TrinhLe
  * @since 08/19/2015 07:50
  */
 class CropAvatar
@@ -41,7 +41,7 @@ class CropAvatar
      * @param $src
      * @param $data
      * @param $file
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @since 08/19/2015
      */
     public function __construct($src, $data, $file)
@@ -53,7 +53,7 @@ class CropAvatar
 
     /**
      * @param $data
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @since 08/19/2015
      */
     protected function setData($data)
@@ -67,7 +67,7 @@ class CropAvatar
      * Crop avatar and set URL, return message
      *
      * @param $data
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @since 08/19/2015
      */
     protected function crop($data)
@@ -154,7 +154,7 @@ class CropAvatar
     /**
      * Get avatar URL uploaded
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @since 08/19/2015
      */
     public function getResult()
@@ -165,7 +165,7 @@ class CropAvatar
     /**
      * Get crop message: failed or successfully
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @since 08/19/2015
      */
     public function getMsg()

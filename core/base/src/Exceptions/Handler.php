@@ -24,7 +24,7 @@ class Handler extends ExceptionHandler
      * @param \Illuminate\Http\Request $request
      * @param Exception $ex
      * @return \Response|\Symfony\Component\HttpFoundation\Response|array
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function render($request, Exception $ex)
     {
@@ -125,7 +125,7 @@ class Handler extends ExceptionHandler
      * Determine if the exception is from the bot.
      *
      * @return boolean
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     protected function isExceptionFromBot()
     {

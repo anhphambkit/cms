@@ -232,6 +232,7 @@ if (function_exists('getNamespaceMiddleware') === false) {
      */
     function getNamespaceMiddleware(string $groupRoute, string $routeFileName, string $routeDirectory)
     {
+        $routeFileName = ucfirst($routeFileName);
         $rootDirectory = explode('src', $routeDirectory)[0];
         $middlewareNameDirectory = "{$rootDirectory}src/Middlewares/{$routeFileName}Middleware.php";
         $middlewareNamespace = "{$groupRoute}Middlewares\\{$routeFileName}Middleware";
@@ -256,5 +257,22 @@ if (function_exists('getPrefixRoute') === false) {
     {
         $prefixs = config('core-base.cms.router-prefix');
         return array_get($prefixs, $route);
+    }
+}
+
+if (!function_exists('check_database_connection')) {
+    /**
+     * Check connection to DB
+     * @return boolean
+     * @author TrinhLe
+     */
+    function check_database_connection()
+    {
+        try {
+            DB::connection()->reconnect();
+            return true;
+        } catch (Exception $ex) {
+            return false;
+        }
     }
 }

@@ -24,7 +24,7 @@ class RebuildPermissionsCommand extends Command
 
     /**
      * RebuildPermissions constructor.
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function __construct()
     {
@@ -34,7 +34,7 @@ class RebuildPermissionsCommand extends Command
     /**
      * Execute the console command.
      * @param $return
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function handle($return = false)
     {

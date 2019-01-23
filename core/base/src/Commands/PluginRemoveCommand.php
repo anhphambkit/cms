@@ -43,7 +43,7 @@ class PluginRemoveCommand extends Command
      *
      * @param \Illuminate\Filesystem\Filesystem $files
      * @param Composer $composer
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function __construct(Filesystem $files, Composer $composer)
     {
@@ -55,7 +55,7 @@ class PluginRemoveCommand extends Command
 
     /**
      * Execute the console command.
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function fire()
     {

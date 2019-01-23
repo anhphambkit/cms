@@ -344,7 +344,7 @@ class Setting
     /**
      * @param $setting
      * @return mixed|string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function render($setting)
     {
