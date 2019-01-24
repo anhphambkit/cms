@@ -107,6 +107,7 @@ class InstallCommand extends Command
 
         $this->completed();
 
+        Artisan::call('cache:clear');
         $this->line('------------------');
         $this->line('Done. Enjoy LCMS!');
     }
