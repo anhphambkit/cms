@@ -7,9 +7,11 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Core\Base\Repositories\Interfaces\PluginRepositories;
+use Core\Master\Supports\LoadRegisterTrait;
 
 class PluginActivateCommand extends Command
 {
+    use LoadRegisterTrait;
 
     /**
      * The filesystem instance.
@@ -90,7 +92,7 @@ class PluginActivateCommand extends Command
 
                 app(PluginRepositories::class)->createOrUpdate($plugin);
                 cache()->forget(md5('cache-dashboard-menu'));
-
+                $this->flushAllCacheProvider();
                 $this->line('<info>Activate plugin successfully!</info>');
             } else {
                 $this->line('<info>This plugin is activated already!</info>');

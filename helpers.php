@@ -77,7 +77,7 @@ if (!function_exists('scan_folder')) {
     }
 }
 
-if (function_exists('getPsr4Packages') === false) {
+if (function_exists('getPsr4Core') === false) {
 
     /**
      * Get packages from composer.json
@@ -86,11 +86,10 @@ if (function_exists('getPsr4Packages') === false) {
      * @author TrinhLe
      * @return mixed
      */
-    function getPsr4Packages(bool $bothSystem = true, bool $isCorePackages = true)
+    function getPsr4Core(bool $bothSystem = true, bool $isCorePackages = true)
     {
         $composer = get_file_data(base_path() . '/composer.json');
-        $listPsr4 = $composer['autoload']['psr-4'];
-        unset($listPsr4['App\\']);
+        $listPsr4 = $composer['psr-4-core'];
         return $listPsr4;
     }
 }
@@ -106,18 +105,15 @@ if (function_exists('loadPackages') === false) {
      */
     function loadPackages(string $pathSource, bool $formatNamespace = true)
     {
-        $listPackages = getPsr4Packages();
+        $listPackages = loadPackageAvailable();
         $listSourcePath = array();
 
         foreach ($listPackages as $namespace => $packageUrl) {
             if(is_dir($path = mergePathSource($packageUrl, $pathSource))){
                 if($formatNamespace === true)
-                {
                     $group = str_replace('-src', '', trim(preg_replace('/\//', '-', $packageUrl)));
-                }else
-                {
+                else
                     $group = $namespace;
-                }
                 $listSourcePath[$group] = $path;
             }
         }
@@ -266,18 +262,44 @@ if (function_exists('loadPackageAvailable') === false) {
      */
     function loadPackageAvailable()
     {
-        $allPackage = getPsr4Packages();
+        $psr4Core     = getPsr4Core();
+        $mergePlugins = [];
+        $plugins      = getAllPlugins(1) ?? [];
 
+        foreach ($plugins as $key => $plugin) {
+            $mergePlugins[$plugin->namespace] = $plugin->src;
+        }
+
+        return array_merge($psr4Core, $mergePlugins);
     }
 }
 
-if (!function_exists('check_database_connection')) {
+if (!function_exists('getAllPlugins')) {
+    /**
+     * @param null $status
+     * @return mixed
+     * @author TrinhLe
+     */
+    function getAllPlugins($status = null)
+    {
+        if(checkDatabaseConnection() && Schema::hasTable('plugins'))
+        {
+            $condition = [];
+            if ($status !== null) {
+                $condition['status'] = $status;
+            }
+            return DB::table('plugins')->where($condition)->get();
+        }
+    }
+}
+
+if (!function_exists('checkDatabaseConnection')) {
     /**
      * Check connection to DB
      * @return boolean
      * @author TrinhLe
      */
-    function check_database_connection()
+    function checkDatabaseConnection()
     {
         try {
             DB::connection()->reconnect();

@@ -86,7 +86,7 @@ class ThemeServiceProvider extends ServiceProvider
      */
     protected function bootHelperThemeOption()
     {
-        if (check_database_connection()) {
+        if (checkDatabaseConnection()) {
             if($this->inAdministration())
             {
                 $helpers = base_path() . DIRECTORY_SEPARATOR . 'Themes' . DIRECTORY_SEPARATOR . 'functions';

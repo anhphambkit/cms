@@ -4,5 +4,7 @@
     "plugin": "Plugins\\{Plugin}\\Plugin",
     "author": "Trinh Le",
     "version": "1.0",
-    "description": "{Plugin}"
+    "description": "{Plugin}",
+    "namespace": "Plugins\\{Plugin}\\",
+    "src": "plugins/{plugin}/src"
 }

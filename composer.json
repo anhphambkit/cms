@@ -73,5 +73,13 @@
         "optimize-autoloader": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "psr-4-core": {
+        "Core\\Base\\": "core/base/src",
+        "Core\\Master\\": "core/master/src",
+        "Core\\Setting\\": "core/setting/src",
+        "Core\\Theme\\": "core/theme/src",
+        "Core\\User\\": "core/user/src",
+        "Core\\Dashboard\\": "core/dashboard/src"
+    }
 }

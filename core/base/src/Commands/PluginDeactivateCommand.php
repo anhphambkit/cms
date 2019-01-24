@@ -7,9 +7,11 @@ use Core\Base\Repositories\Interfaces\PluginRepositories;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Core\Master\Supports\LoadRegisterTrait;
 
 class PluginDeactivateCommand extends Command
 {
+    use LoadRegisterTrait;
 
     /**
      * The filesystem instance.
@@ -83,6 +85,7 @@ class PluginDeactivateCommand extends Command
                 $plugin->status = 0;
                 app(PluginRepositories::class)->createOrUpdate($plugin);
                 cache()->forget(md5('cache-dashboard-menu'));
+                $this->flushAllCacheProvider();
                 $this->line('<info>Deactivate plugin successfully!</info>');
             } else {
                 $this->line('<info>This plugin is deactivated already!</info>');

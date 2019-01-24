@@ -143,7 +143,7 @@ class InstallCommand extends Command
         $this->username = env('DB_USERNAME');
         $this->password = env('DB_PASSWORD');
 
-        while (!check_database_connection()) {
+        while (!checkDatabaseConnection()) {
             // Ask for database name
             $this->database = $this->ask('Enter a database name', $this->guessDatabaseName());
 
@@ -176,7 +176,7 @@ class InstallCommand extends Command
             // Clear DB name in config
             unset($this->laravel['config']['database.connections.mysql.database']);
 
-            if (!check_database_connection()) {
+            if (!checkDatabaseConnection()) {
                 $this->error('Can not connect to database, please try again!');
             } else {
                 $this->info('Connect to database successfully!');

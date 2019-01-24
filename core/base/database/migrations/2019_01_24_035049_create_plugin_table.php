@@ -22,6 +22,8 @@ class CreatePluginTable extends Migration
             $table->string('version', 30)->nullable();
             $table->string('description', 255)->nullable();
             $table->string('alias', 120)->nullable();
+            $table->string('namespace', 120)->nullable();
+            $table->string('src', 255)->nullable();
             $table->tinyInteger('status')->unsigined()->default(0);
             $table->timestamps();
             $table->engine = 'InnoDB';

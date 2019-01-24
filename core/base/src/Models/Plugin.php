@@ -14,5 +14,5 @@ class Plugin extends Eloquent
      */
     protected $table = 'plugins';
 
-    protected $fillable = ['name', 'provider', 'author', 'url', 'version', 'description'];
+    protected $fillable = ['name', 'provider', 'author', 'url', 'version', 'description', 'namespace','src'];
 }

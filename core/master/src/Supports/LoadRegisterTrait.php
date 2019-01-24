@@ -8,6 +8,12 @@ use File;
 trait LoadRegisterTrait
 {   
     /**
+     * prefix cache tag package provider
+     * @var string
+     */
+    protected $entityCache = "cache-packages";
+
+    /**
      * Load all view for packages or plugins
      * @author TrinhLe
      */
@@ -78,12 +84,12 @@ trait LoadRegisterTrait
                 {
                     $this->publishes([
                         $config => config_path(strtolower("core/$package/$fileName") . '.php'),
-                    ], 'config');
+                    ], 'config-packages');
                 }else
                 {
                      $this->publishes([
                         $config => config_path(strtolower("plugins/$package/$fileName") . '.php'),
-                    ], 'config');
+                    ], 'config-packages');
                 }
             }
         }
@@ -137,8 +143,43 @@ trait LoadRegisterTrait
      */
     protected function loadPackages(string $pathSource = '', bool $formatNamespace = true) : array
     {
-        return Cache::tags('loadPackages')->remember("{$pathSource}", 120, function() use ($pathSource, $formatNamespace){
+        return Cache::tags($this->entityCache)->remember("{$pathSource}", 120, function() use ($pathSource, $formatNamespace){
             return loadPackages($pathSource, $formatNamespace);
         });
+    }
+
+    /**
+     * Description
+     * @author TrinhLe
+     * @param type|string $pathSource 
+     * @return array
+     */
+    protected function loadPackageAvailable() : array
+    {
+        return Cache::tags($this->entityCache)->remember("loadPackageAvailable", 120, function(){
+            return loadPackageAvailable();
+        });
+    }
+
+    /**
+     * Description
+     * @author TrinhLe
+     * @param type|string $pathSource 
+     * @return array
+     */
+    protected function loadPluginAvailable()
+    {
+        return Cache::tags($this->entityCache)->remember("loadPluginAvailable", 120, function(){
+            return getAllPlugins(1) ?? [];
+        });
+    }
+
+    /**
+     * FlushAll cache
+     * @author  TrinhLe
+     */
+    protected function flushAllCacheProvider()
+    {
+        return Cache::tags($this->entityCache)->flush();
     }
 }

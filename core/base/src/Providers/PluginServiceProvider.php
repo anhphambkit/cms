@@ -2,29 +2,26 @@
 
 namespace Core\Base\Providers;
 
-use Core\Base\Repositories\Interfaces\PluginInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Schema;
+use Core\Master\Supports\LoadRegisterTrait;
 
 class PluginServiceProvider extends ServiceProvider
 {
+    use LoadRegisterTrait;
+
     /**
      * @author TrinhLe
      * @param PluginInterface $pluginRepository
      */
-    public function boot(PluginInterface $pluginRepository)
+    public function boot()
     {
-        if (check_database_connection() && Schema::hasTable('plugins')) {
-            $plugins = $pluginRepository->allBy(['status' => 1]);
-            if ($plugins instanceof Collection && !empty($plugins)) {
-                foreach ($plugins as $plugin) {
-                    if (class_exists($plugin->provider)) {
-                        $this->app->register($plugin->provider);
-                    } else {
-                        $pluginRepository->deleteBy(['provider' => $plugin->provider]);
-                    }
-                }
+        $plugins = $this->loadPluginAvailable();
+
+        foreach ($plugins as $plugin) {
+            if (class_exists($plugin->provider)) {
+                $this->app->register($plugin->provider);
             }
         }
     }

@@ -37,6 +37,7 @@ class BaseServiceProvider extends ServiceProvider
 	{
 		Helper::autoloadHelpers();
 
+		
 		/**
          * @var Router $router
          */
@@ -60,6 +61,8 @@ class BaseServiceProvider extends ServiceProvider
             }
             return new CachePluginRepositories($repository);
         });
+
+        $this->app->register(PluginServiceProvider::class);
 	}
     
 	/**
@@ -74,7 +77,7 @@ class BaseServiceProvider extends ServiceProvider
 		$this->cmsLoadTranslates();
 		$this->publishMigration();
 		$this->pushlishData();
-		
+
 		$this->app->register(CommandServiceProvider::class);
 		$this->app->register(RouteServiceProvider::class);
 		$this->app->register(ThemeServiceProvider::class);

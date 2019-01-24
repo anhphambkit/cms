@@ -23,10 +23,10 @@ class PublishConfig extends Command
      *
      * @return mixed
      */
-    public function handle() {
-
+    public function handle() 
+    {
         $this->call('vendor:publish', [
-            '--tag' => 'config', '--force' => true
+            '--tag' => 'config-packages', '--force' => true
         ]);
     }
 }
