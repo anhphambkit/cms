@@ -12,7 +12,7 @@ class Kernel
     protected $commands = [
         InstallCommand::class,
         DumpAutoload::class,
-        
+
         MakeRepositoryCommand::class,
         MakeBindContentRepository::class,
         MigrateSystemCommand::class,
@@ -25,7 +25,8 @@ class Kernel
 
         PluginCreateCommand::class,
         PluginActivateCommand::class,
-        PluginDeactivateCommand::class
+        PluginDeactivateCommand::class,
+        PluginRemoveCommand::class
     ];
 
     /**

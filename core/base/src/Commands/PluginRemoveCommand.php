@@ -1,14 +1,14 @@
 <?php
 
-namespace Botble\Base\Commands;
+namespace Core\Base\Commands;
 
 use Artisan;
-use Botble\Base\Models\Migration;
-use Botble\Base\Repositories\Interfaces\PluginInterface;
+use Core\Base\Models\Migration;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Composer;
 use Schema;
+use Core\Base\Repositories\Interfaces\PluginRepositories;
 
 class PluginRemoveCommand extends Command
 {
@@ -57,7 +57,7 @@ class PluginRemoveCommand extends Command
      * Execute the console command.
      * @author TrinhLe
      */
-    public function fire()
+    public function handle()
     {
         if (!preg_match('/^[a-z\-]+$/i', $this->argument('name'))) {
             $this->error('Only alphabetic characters are allowed.');
@@ -65,7 +65,7 @@ class PluginRemoveCommand extends Command
         }
 
         $plugin = ucfirst(strtolower($this->argument('name')));
-        $location = config('cms.plugin_path') . '/' . strtolower($plugin);
+        $location = config('core-base.cms.plugin_path') . '/' . strtolower($plugin);
 
         if ($this->files->isDirectory($location)) {
 
@@ -78,7 +78,7 @@ class PluginRemoveCommand extends Command
                     Schema::disableForeignKeyConstraints();
                     call_user_func([$content['plugin'], 'remove']);
                     Schema::enableForeignKeyConstraints();
-                    app(PluginInterface::class)->deleteBy(['provider' => $content['provider']]);
+                    app(PluginRepositories::class)->deleteBy(['provider' => $content['provider']]);
                     $this->line('<info>Remove plugin successfully!</info>');
                 }
 
@@ -89,8 +89,8 @@ class PluginRemoveCommand extends Command
 
                 $this->files->deleteDirectory($location);
 
-                if (empty($this->files->directories(config('cms.plugin_path')))) {
-                    $this->files->deleteDirectory(config('cms.plugin_path'));
+                if (empty($this->files->directories(config('core-base.cms.plugin_path')))) {
+                    $this->files->deleteDirectory(config('core-base.cms.plugin_path'));
                 }
 
                 $composer = get_file_data(base_path() . '/composer.json');
@@ -101,7 +101,6 @@ class PluginRemoveCommand extends Command
 
                 $this->composer->dumpAutoloads();
                 $this->line('Composer autoload refreshed!');
-                $this->call('optimize');
                 Artisan::call('cache:clear');
             }
         } else {
