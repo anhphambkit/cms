@@ -3,10 +3,10 @@
 namespace Core\Base\Commands;
 
 use Artisan;
-use Botble\Base\Repositories\Interfaces\PluginInterface;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Core\Base\Repositories\Interfaces\PluginRepositories;
 
 class PluginActivateCommand extends Command
 {
@@ -50,7 +50,7 @@ class PluginActivateCommand extends Command
      * @return boolean
      * @author TrinhLe
      */
-    public function fire()
+    public function handle()
     {
         if (!preg_match('/^[a-z\-]+$/i', $this->argument('name'))) {
             $this->error('Only alphabetic characters are allowed.');
@@ -58,7 +58,7 @@ class PluginActivateCommand extends Command
         }
 
         $plugin_folder = ucfirst(strtolower($this->argument('name')));
-        $location = config('cms.plugin_path') . '/' . strtolower($plugin_folder);
+        $location = config('core-base.cms.plugin_path') . '/' . strtolower($plugin_folder);
 
         if (!$this->files->isDirectory($location)) {
             $this->error('This plugin is not exists.');
@@ -77,10 +77,10 @@ class PluginActivateCommand extends Command
                 Artisan::call('dump-autoload');
             }
 
-            $plugin = app(PluginInterface::class)->getFirstBy(['provider' => $content['provider']]);
+            $plugin = app(PluginRepositories::class)->getFirstBy(['provider' => $content['provider']]);
             if (empty($plugin) || $plugin->status != 1) {
                 if (empty($plugin)) {
-                    $plugin = app(PluginInterface::class)->getModel();
+                    $plugin = app(PluginRepositories::class)->getModel();
                     $plugin->fill($content);
                 }
                 $plugin->alias = strtolower($plugin_folder);
@@ -88,7 +88,7 @@ class PluginActivateCommand extends Command
 
                 call_user_func([$content['plugin'], 'activate']);
 
-                app(PluginInterface::class)->createOrUpdate($plugin);
+                app(PluginRepositories::class)->createOrUpdate($plugin);
                 cache()->forget(md5('cache-dashboard-menu'));
 
                 $this->line('<info>Activate plugin successfully!</info>');

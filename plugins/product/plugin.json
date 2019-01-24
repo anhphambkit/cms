@@ -1,0 +1,8 @@
+{
+    "name": "Product",
+    "provider": "Plugins\\Product\\Providers\\ProductServiceProvider",
+    "plugin": "Plugins\\Product\\Plugin",
+    "author": "Trinh Le",
+    "version": "1.0",
+    "description": "Product"
+}

@@ -17,7 +17,7 @@ class CommandServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		$listPackages = packagesValid();
+		$listPackages = getPsr4Packages();
 
 		$basePathKernel = "/Commands/Kernel.php";
 		$baseNamspace   = "Commands\\Kernel";

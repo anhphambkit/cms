@@ -46,6 +46,7 @@ class MakeRepositoryCommand extends Command
         $repo = $this->argument('repo');
 
         $this->plugin = ucfirst(strtolower($this->argument('name')));
+        $baseDirectory = $basePath . '/' . strtolower($this->plugin);
         $this->location = $basePath . '/' . strtolower($this->plugin) . '/src/Repositories';
 
         $fromStub = base_path('core/base/stubs/repository/Repositories');

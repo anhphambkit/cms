@@ -77,23 +77,20 @@ if (!function_exists('scan_folder')) {
     }
 }
 
-if (function_exists('packagesValid') === false) {
+if (function_exists('getPsr4Packages') === false) {
 
     /**
-     * Load list package or plugin
+     * Get packages from composer.json
      * @param type|bool $isCorePackages 
      * @param type|bool $bothSystem 
      * @author TrinhLe
      * @return mixed
      */
-    function packagesValid(bool $bothSystem = true, bool $isCorePackages = true)
+    function getPsr4Packages(bool $bothSystem = true, bool $isCorePackages = true)
     {
         $composer = get_file_data(base_path() . '/composer.json');
-
         $listPsr4 = $composer['autoload']['psr-4'];
-
         unset($listPsr4['App\\']);
-
         return $listPsr4;
     }
 }
@@ -109,7 +106,7 @@ if (function_exists('loadPackages') === false) {
      */
     function loadPackages(string $pathSource, bool $formatNamespace = true)
     {
-        $listPackages = packagesValid();
+        $listPackages = getPsr4Packages();
         $listSourcePath = array();
 
         foreach ($listPackages as $namespace => $packageUrl) {
@@ -161,7 +158,6 @@ if (function_exists('isCorePackage') === false) {
         if(mb_strtolower($array[0]) === 'core')
             return true;
         return false;
-            
     }
 }
 
@@ -257,6 +253,21 @@ if (function_exists('getPrefixRoute') === false) {
     {
         $prefixs = config('core-base.cms.router-prefix');
         return array_get($prefixs, $route);
+    }
+}
+
+if (function_exists('loadPackageAvailable') === false) {
+
+    /**
+     * Get prefix route
+     * @param string $route 
+     * @author TrinhLe
+     * @return string
+     */
+    function loadPackageAvailable()
+    {
+        $allPackage = getPsr4Packages();
+
     }
 }
 

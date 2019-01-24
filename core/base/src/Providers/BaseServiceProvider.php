@@ -15,6 +15,11 @@ use Core\Base\Middlewares\StartSession;
 use Core\Base\Events\SessionStarted;
 use Event;
 
+# Plugin 
+use Core\Base\Repositories\Interfaces\PluginRepositories;
+use Core\Base\Repositories\Eloquent\EloquentPluginRepositories;
+use Core\Base\Repositories\Cache\CachePluginRepositories;
+
 class BaseServiceProvider extends ServiceProvider
 {	
 	use LoadRegisterTrait;
@@ -46,6 +51,15 @@ class BaseServiceProvider extends ServiceProvider
 		$this->app->register(UserServiceProvider::class);
 		
 		$this->app->singleton(ExceptionHandler::class, Handler::class);
+
+		$this->app->singleton(PluginRepositories::class, function () {
+            $repository = new EloquentPluginRepositories(new \Core\Base\Models\Plugin());
+
+            if (! setting('enable_cache', false)) {
+                return $repository;
+            }
+            return new CachePluginRepositories($repository);
+        });
 	}
     
 	/**

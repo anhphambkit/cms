@@ -1,7 +1,7 @@
 <?php
 namespace Core\Base\Repositories\Cache;
 use Core\Master\Repositories\Cache\CacheAbstractDecorator;
-use Core\Base\Repositories\PluginRepositories;
+use Core\Base\Repositories\Interfaces\PluginRepositories;
 
 class CachePluginRepositories extends CacheAbstractDecorator implements PluginRepositories
 {

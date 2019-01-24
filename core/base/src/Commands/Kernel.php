@@ -12,14 +12,20 @@ class Kernel
     protected $commands = [
         InstallCommand::class,
         DumpAutoload::class,
-        PublishConfig::class,
-        PluginCreateCommand::class,
+        
         MakeRepositoryCommand::class,
         MakeBindContentRepository::class,
         MigrateSystemCommand::class,
+
+        PublishConfig::class,
         PublishData::class,
+
         BuildPermissions::class,
         RebuildPermissionsCommand::class,
+
+        PluginCreateCommand::class,
+        PluginActivateCommand::class,
+        PluginDeactivateCommand::class
     ];
 
     /**

@@ -1,9 +1,9 @@
 <?php
 
-namespace Botble\Base\Commands;
+namespace Core\Base\Commands;
 
 use Artisan;
-use Botble\Base\Repositories\Interfaces\PluginInterface;
+use Core\Base\Repositories\Interfaces\PluginRepositories;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -49,7 +49,7 @@ class PluginDeactivateCommand extends Command
      * @return boolean
      * @author TrinhLe
      */
-    public function fire()
+    public function handle()
     {
 
         if (!preg_match('/^[a-z\-]+$/i', $this->argument('name'))) {
@@ -58,7 +58,7 @@ class PluginDeactivateCommand extends Command
         }
 
         $plugin_folder = ucfirst(strtolower($this->argument('name')));
-        $location = config('cms.plugin_path') . '/' . strtolower($plugin_folder);
+        $location = config('core-base.cms.plugin_path') . '/' . strtolower($plugin_folder);
 
         $content = get_file_data($location . '/plugin.json');
         if (!empty($content)) {
@@ -72,16 +72,16 @@ class PluginDeactivateCommand extends Command
                 Artisan::call('dump-autoload');
             }
 
-            $plugin = app(PluginInterface::class)->getFirstBy(['provider' => $content['provider']]);
+            $plugin = app(PluginRepositories::class)->getFirstBy(['provider' => $content['provider']]);
             if (empty($plugin) || $plugin->status == 1) {
                 call_user_func([$content['plugin'], 'deactivate']);
                 if (empty($plugin)) {
-                    $plugin = app(PluginInterface::class)->getModel();
+                    $plugin = app(PluginRepositories::class)->getModel();
                     $plugin->fill($content);
                 }
                 $plugin->alias = strtolower($plugin_folder);
                 $plugin->status = 0;
-                app(PluginInterface::class)->createOrUpdate($plugin);
+                app(PluginRepositories::class)->createOrUpdate($plugin);
                 cache()->forget(md5('cache-dashboard-menu'));
                 $this->line('<info>Deactivate plugin successfully!</info>');
             } else {
