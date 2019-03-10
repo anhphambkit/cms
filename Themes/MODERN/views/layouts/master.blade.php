@@ -17,6 +17,9 @@
 
     @section('styles')
     @show
+
+    @section('master-head')
+    @show
   </head>
   <body class="@yield('body-class') vertical-layout vertical-menu-modern 2-columns  menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" id="@yield('body-id', 'module')">
     @include('partials.header')
@@ -39,8 +42,8 @@
         <script src="{{ URL::asset($js) }}" type="text/javascript"></script>
     @endforeach
     <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-    <script src="{{ URL::asset('backend/core/base/js/datatables.js') }}"></script>
-    <script src="{{ URL::asset('backend/core/base/js/script.js') }}"></script>
+    <script src="{{ URL::asset('core/base/assets/js/datatables.js') }}"></script>
+    <script src="{{ URL::asset('core/base/assets/js/script.js') }}"></script>
     
     @section('scripts')
     @show
@@ -50,5 +53,9 @@
     @show
 
     @include('core-base::elements.common')
+
+    @section('script-media')
+        @include('core-media::partials.media')
+    @show
   </body>
 </html>

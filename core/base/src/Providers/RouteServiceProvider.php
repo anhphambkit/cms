@@ -88,7 +88,6 @@ class RouteServiceProvider extends ServiceProvider
         
         foreach ($this->routeSources as $group => $directory) 
         {   
-            # make sure exists folder routes
             if(is_dir($directory))
             {
                 $routePaths = File::glob($directory . '/*.php');
@@ -112,13 +111,10 @@ class RouteServiceProvider extends ServiceProvider
         if(!is_array($middleware))
             throw new \Exception("System not support route type is {$routeFileName}", 1);
         
-        $route = Route::prefix(getPrefixRoute($routeFileName));
-        # get controler namespace
-        $controlerDirectory = getDirectoryController($group, $routeDirectory, $routeFileName);
-        
-        # get middleware namespace and push to middleware list
+        $route               = Route::prefix(getPrefixRoute($routeFileName));
+        $controlerDirectory  = getDirectoryController($group, $routeDirectory, $routeFileName);
         $middlewareNamespace = getNamespaceMiddleware($group, $routeFileName, $routeDirectory);
-        $middleware[] = $middlewareNamespace;
+        $middleware[]        = $middlewareNamespace;
 
         return $route->middleware($middleware)->namespace($controlerDirectory)->group($routeDirectory);
     }

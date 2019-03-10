@@ -17,7 +17,7 @@ return [
 		'palette-gradient-css'     => ['theme' => 'app-assets/css/core/colors/palette-gradient.css'],
 		'app-css'                  => ['theme' => 'app-assets/css/app.css'],
 		'cms-style-css'            => ['theme' => 'assets/css/style.css'],
-		'cms-core-css'            => ['theme' => 'assets/css/core.css'],
+		'cms-core-css'             => ['theme' => 'assets/css/core.css'],
 		'jquery-tree-css'          => ['theme' => 'plugins/jquery-tree/jquery.tree.min.css'],
 		'toastr-css'               => ['theme' => 'plugins/toastr/toastr.min.css'],
 		'jquery-ui-css'            => ['theme' => 'plugins/jquery-ui/jquery-ui.min.css'],

@@ -1,13 +1,10 @@
 <script type="text/javascript">
     var Lcms = Lcms || {};
-
-    Lcms.variables = {
-        youtube_api_key: '{{ env('YOUTUBE_DATA_API_KEY') }}'
-    };
-
     Lcms.routes = {
         home: '{{ url('/') }}',
         admin: '{{ route('admin.dashboard.index') }}',
+        media: '{{ route('media.popup') }}',
+        media_upload_from_editor: '{{ route('media.files.upload.from.editor') }}'
     };
 
     Lcms.languages = {

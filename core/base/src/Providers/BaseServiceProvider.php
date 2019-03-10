@@ -13,6 +13,7 @@ use Core\Theme\Providers\ThemeServiceProvider;
 use Core\User\Providers\UserServiceProvider;
 use Core\Base\Middlewares\StartSession;
 use Core\Base\Events\SessionStarted;
+use Core\Media\Providers\MediaServiceProvider;
 use Event;
 
 # Plugin 
@@ -36,7 +37,6 @@ class BaseServiceProvider extends ServiceProvider
 	public function register()
 	{
 		Helper::autoloadHelpers();
-
 		
 		/**
          * @var Router $router
@@ -49,7 +49,6 @@ class BaseServiceProvider extends ServiceProvider
 		$this->app->register(StylistServiceProvider::class);
 		$this->app->register(MasterServiceProvider::class);
 		$this->app->register(SettingServiceProvider::class);
-		$this->app->register(UserServiceProvider::class);
 		
 		$this->app->singleton(ExceptionHandler::class, Handler::class);
 
@@ -82,6 +81,8 @@ class BaseServiceProvider extends ServiceProvider
 		$this->app->register(RouteServiceProvider::class);
 		$this->app->register(ThemeServiceProvider::class);
 		$this->app->register(FormServiceProvider::class);
+		$this->app->register(UserServiceProvider::class);
+		$this->app->register(MediaServiceProvider::class);
 		
         add_filter(DASHBOARD_FILTER_MENU_NAME, [\Core\Dashboard\Hooks\DashboardMenuHook::class, 'renderMenuDashboard']);
 
