@@ -3,13 +3,13 @@
 namespace Core\Media\Providers;
 
 use Core\Media\Facades\BMediaFacade;
+use Core\Media\Facades\BFileServiceFacade;
 
 use Core\Media\Models\MediaSetting;
 use Core\Media\Models\MediaFolder;
 use Core\Media\Models\MediaShare;
 use Core\Media\Models\MediaFile;
 use Core\User\Models\User;
-
 use Core\Media\Repositories\Interfaces\MediaSettingRepositories;
 use Core\Media\Repositories\Eloquent\EloquentMediaSettingRepositories;
 use Core\Media\Repositories\Cache\CacheMediaSettingRepositories;
@@ -29,6 +29,13 @@ use Core\Media\Repositories\Cache\CacheMediaShareRepositories;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
+use Core\Media\Image\ThumbnailManager;
+use Core\Media\Image\ThumbnailManagerRepository;
+use Intervention\Image\ImageServiceProvider;
+use Core\Media\Image\Intervention\InterventionFactory;
+use Core\Media\Image\ImageFactoryInterface;
+use Intervention\Image\Facades\Image;
+
 /**
  * Class MediaServiceProvider
  * @package Core\Media
@@ -46,9 +53,31 @@ class MediaServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->register(ImageServiceProvider::class);
         $this->reigsterRepositories();
 
         AliasLoader::getInstance()->alias('BMedia', BMediaFacade::class);
+        AliasLoader::getInstance()->alias('BFileService', BFileServiceFacade::class);
+
+
+        $this->app->bind(ImageFactoryInterface::class, InterventionFactory::class);
+
+        $this->app->singleton(ThumbnailManager::class, function () {
+            return new ThumbnailManagerRepository();
+        });
+
+        $this->app->singleton('imagy', function ($app) {
+            $factory = new InterventionFactory();
+
+            return new Imagy($factory, $app[ThumbnailManager::class], $app['config']);
+        });
+
+        $this->app->booting(function () {
+            $loader = AliasLoader::getInstance();
+            $loader->alias('Image', \Core\Media\Image\Facade\Imagy::class);
+            $loader->alias('Imagy', \Core\Media\Image\Facade\Imagy::class);
+        });
+
     }
 
     /**
@@ -101,6 +130,45 @@ class MediaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       
+       $this->registerThumbnails();
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return ['imagy'];
+    }
+
+    /**
+     * Register thumbnails 
+     * @author  asgard
+     * @return type
+     */
+    private function registerThumbnails()
+    {
+        $this->app[ThumbnailManager::class]->registerThumbnail('smallThumb', [
+            'resize' => [
+                'width' => 50,
+                'height' => null,
+                'callback' => function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                },
+            ],
+        ]);
+        $this->app[ThumbnailManager::class]->registerThumbnail('mediumThumb', [
+            'resize' => [
+                'width' => 180,
+                'height' => null,
+                'callback' => function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                },
+            ],
+        ]);
     }
 }

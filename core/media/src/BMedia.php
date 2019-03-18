@@ -144,25 +144,16 @@ class BMedia
      */
     public function handleUpload($fileUpload, $folder_id = 0)
     {
-        try
-        {
-            if ($fileUpload->getSize() / 1024 > (int)config('core-media.media.max_file_size_upload')) {
-                return [
-                    'error' => true,
-                    'message' => trans('media::media.file_too_big', ['size' => config('core-media.media.max_file_size_upload')]),
-                ];
-            }
-            return [
-                'error' => false,
-                'data' => $this->fileService->store($fileUpload, $folder_id)
-            ];
-        }
-        catch(\Exception $ex){
+        if ($fileUpload->getSize() / 1024 > (int)config('core-media.media.max_file_size_upload')) {
             return [
                 'error' => true,
-                'message' => $ex->getMessage(),
+                'message' => trans('media::media.file_too_big', ['size' => config('core-media.media.max_file_size_upload')]),
             ];
         }
+        return [
+            'error' => false,
+            'data' => $this->fileService->store($fileUpload, $folder_id)
+        ];
             
     }
 

@@ -8,7 +8,6 @@ use Modules\Media\ValueObjects\MediaPath;
 use Modules\Media\Image\ThumbnailManager;
 use Modules\Media\Entities\File;
 use Illuminate\Support\Collection;
-// use EmailException;
 
 class BFileService
 {

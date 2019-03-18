@@ -49,6 +49,7 @@ class FileService
     public function store(UploadedFile $fileUpload, $folderId = 0)
     {
         $savedFile = $this->createFromFile($fileUpload, $folderId);
+        $path = $this->getDestinationPath($savedFile->getOriginal('url'));
         $stream = fopen($fileUpload->getRealPath(), 'r+');
         $this->filesystem->disk($this->getConfiguredFilesystem())->writeStream($path, $stream, [
             'visibility' => 'public',
@@ -75,7 +76,7 @@ class FileService
 			
 		return $this->fileRepository->createOrUpdate([
 			'name'          => $uuid4FileName,
-			'url'           => "{$folderPath}{$uuid4FileName}",
+			'url'           => config('core-media.media.upload.files-path') . "{$folderPath}{$uuid4FileName}",
 			'size'          => $fileUpload->getFileInfo()->getSize(),
 			'mime_type'     => $fileUpload->getClientMimeType(),
 			'folder_id'     => $folderId,
@@ -93,7 +94,7 @@ class FileService
      */
     private function createThumbnails(File $savedFile)
     {
-        $this->dispatch(new CreateThumbnails($savedFile->media_path));
+        // $this->dispatch(new CreateThumbnails($savedFile->media_path));
     }
 
     /**

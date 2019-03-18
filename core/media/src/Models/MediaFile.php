@@ -46,7 +46,7 @@ class MediaFile extends Eloquent
     /**
      * @var type
      */
-    protected $append  = [ "media_path" ];
+    protected $appends  = [ "media_path" ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -39,10 +39,10 @@ class Imagy
      */
     public function __construct(ImageFactoryInterface $imageFactory, ThumbnailManager $manager)
     {
-        $this->image = app(ImageManager::class);
-        $this->filesystem = app(Factory::class);
+        $this->image        = app(ImageManager::class);
+        $this->filesystem   = app(Factory::class);
         $this->imageFactory = $imageFactory;
-        $this->manager = $manager;
+        $this->manager      = $manager;
     }
 
     /**
@@ -108,15 +108,15 @@ class Imagy
             return;
         }
 
-        foreach ($this->manager->all() as $thumbnail) {
-            $image = $this->image->make($this->filesystem->disk($this->getConfiguredFilesystem())->get($this->getDestinationPath($path->getRelativeUrl())));
-            $filename = config('core-media.media.config.files-path') . $this->newFilename($path, $thumbnail->name());
-            foreach ($thumbnail->filters() as $manipulation => $options) {
-                $image = $this->imageFactory->make($manipulation)->handle($image, $options);
-            }
-            $image = $image->stream(pathinfo($path, PATHINFO_EXTENSION), array_get($thumbnail->filters(), 'quality', 90));
-            $this->writeImage($filename, $image);
-        }
+        // foreach ($this->manager->all() as $thumbnail) {
+        //     $image = $this->image->make($this->filesystem->disk($this->getConfiguredFilesystem())->get($this->getDestinationPath($path->getRelativeUrl())));
+        //     $filename = config('core-media.media.config.files-path') . $this->newFilename($path, $thumbnail->name());
+        //     foreach ($thumbnail->filters() as $manipulation => $options) {
+        //         $image = $this->imageFactory->make($manipulation)->handle($image, $options);
+        //     }
+        //     $image = $image->stream(pathinfo($path, PATHINFO_EXTENSION), array_get($thumbnail->filters(), 'quality', 90));
+        //     $this->writeImage($filename, $image);
+        // }
     }
 
     /**
