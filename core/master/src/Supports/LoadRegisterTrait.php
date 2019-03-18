@@ -20,7 +20,6 @@ trait LoadRegisterTrait
     protected function cmsLoadViews()
     {
         $sources = $this->loadPackages(SOURCE_VIEWS);
-       
         foreach ($sources as $group => $dir) {
             # code...
             $this->loadViewsFrom($dir, $group);

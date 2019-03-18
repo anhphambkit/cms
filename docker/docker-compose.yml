@@ -9,7 +9,6 @@ services:
     - "db"
     volumes:
       - "../:/var/www/html:Z"
-      - "./ssl/:/etc/arcssl"
       - "./pgadmin/:/var/www/pgadmin"
       - "./web/sites-enabled:/etc/nginx/sites-enabled"
       - "./web/fpm/php.ini:/etc/php/7.1/fpm/php.ini"

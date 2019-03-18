@@ -98,8 +98,9 @@ class MediaController extends BaseAdminController{
      */
     public function getList(Request $request)
     {
-        $files = [];
-        $folders = [];
+        $userId      = auth()->id();
+        $files       = [];
+        $folders     = [];
         $breadcrumbs = [];
 
         $orderBy = $this->transformOrderBy($request->input('sort_by'));
@@ -110,18 +111,18 @@ class MediaController extends BaseAdminController{
                 $request->merge(['folder_id' => $current_file->folder_id]);
             }
         }
-
+        
         switch ($request->input('view_in')) {
             case 'my_media':
                 $breadcrumbs = [
                     [
                         'id' => 0,
-                        'name' => trans('media::media.my_media'),
+                        'name' => trans('core-media::media.my_media'),
                         'icon' => 'fa fa-user-secret',
                     ],
                 ];
 
-                foreach ($this->fileRepository->getFilesByFolderId($request->input('folder_id'), [
+                foreach ($this->fileRepository->getFilesByFolderId($request->input('folder_id'), $userId, [
                     'order_by' => [
                         $orderBy[0] => $orderBy[1],
                     ],
@@ -134,7 +135,7 @@ class MediaController extends BaseAdminController{
                     }
                 }
 
-                foreach ($this->folderRepository->getFolderByParentId($request->input('folder_id'), [
+                foreach ($this->folderRepository->getFolderByParentId($request->input('folder_id'), $userId, [
                     'where' => [
                         ['name', 'LIKE', '%' . $request->input('search') . '%',]
                     ],
@@ -148,12 +149,12 @@ class MediaController extends BaseAdminController{
                 $breadcrumbs = [
                     [
                         'id' => 0,
-                        'name' => trans('media::media.public'),
+                        'name' => trans('core-media::media.public'),
                         'icon' => 'fa fa-home',
                     ],
                 ];
 
-                foreach ($this->fileRepository->getFilesByFolderId($request->input('folder_id'), [
+                foreach ($this->fileRepository->getFilesByFolderId($request->input('folder_id'), $userId, [
                     'order_by' => [
                         $orderBy[0] => $orderBy[1],
                     ],
@@ -167,7 +168,7 @@ class MediaController extends BaseAdminController{
                     }
                 }
 
-                foreach ($this->folderRepository->getFolderByParentId($request->input('folder_id'), [
+                foreach ($this->folderRepository->getFolderByParentId($request->input('folder_id'), $userId, [
                     'where' => [
                         ['name', 'LIKE', '%' . $request->input('search') . '%',]
                     ],
@@ -182,24 +183,24 @@ class MediaController extends BaseAdminController{
                 $breadcrumbs = [
                     [
                         'id' => 0,
-                        'name' => trans('media::media.shared_with_me'),
+                        'name' => trans('core-media::media.shared_with_me'),
                         'icon' => 'fa fa-share-alt-square',
                     ],
                 ];
 
                 if ($request->input('folder_id') == 0) {
-                    foreach ($this->mediaShareRepository->getSharedWithMeFolders($request->input('folder_id')) as $folder) {
+                    foreach ($this->mediaShareRepository->getSharedWithMeFolders($userId, $request->input('folder_id')) as $folder) {
                         $folders[] = $this->getResponseFolderData($folder);
                     }
 
-                    foreach ($this->mediaShareRepository->getShareWithMeFiles($request->input('folder_id')) as $shareItem) {
+                    foreach ($this->mediaShareRepository->getShareWithMeFiles($userId, $request->input('folder_id')) as $shareItem) {
                         $file = $shareItem->file()->first();
                         if (!empty($file)) {
                             $files[] = $this->getResponseFileData($file);
                         }
                     }
                 } else {
-                    foreach ($this->fileRepository->getFilesByFolderId($request->input('folder_id'), [
+                    foreach ($this->fileRepository->getFilesByFolderId($request->input('folder_id'), $userId, [
                         'order_by' => [
                             $orderBy[0] => $orderBy[1],
                         ],
@@ -212,7 +213,7 @@ class MediaController extends BaseAdminController{
                         }
                     }
 
-                    foreach ($this->folderRepository->getFolderByParentId($request->input('folder_id'), [
+                    foreach ($this->folderRepository->getFolderByParentId($request->input('folder_id'), $userId, [
                         'where' => [
                             ['name', 'LIKE', '%' . $request->input('search') . '%',]
                         ],
@@ -226,13 +227,13 @@ class MediaController extends BaseAdminController{
                 $breadcrumbs = [
                     [
                         'id' => 0,
-                        'name' => trans('media::media.shared'),
+                        'name' => trans('core-media::media.shared'),
                         'icon' => 'fa fa-share-square',
                     ],
                 ];
 
                 if ($request->input('folder_id') == 0) {
-                    foreach ($this->fileRepository->getFilesByFolderId($request->input('folder_id'), [
+                    foreach ($this->fileRepository->getFilesByFolderId($request->input('folder_id'), $userId, [
                         'order_by' => [
                             $orderBy[0] => $orderBy[1],
                         ],
@@ -246,7 +247,7 @@ class MediaController extends BaseAdminController{
                         }
                     }
 
-                    foreach ($this->folderRepository->getFolderByParentId($request->input('folder_id'), [
+                    foreach ($this->folderRepository->getFolderByParentId($request->input('folder_id'), $userId, [
                         'where' => [
                             ['name', 'LIKE', '%' . $request->input('search') . '%',]
                         ],
@@ -255,15 +256,15 @@ class MediaController extends BaseAdminController{
                         $folders[] = $this->getResponseFolderData($folder);
                     }
 
-                    foreach ($this->mediaShareRepository->getSharedFolders($request->input('folder_id')) as $folder) {
+                    foreach ($this->mediaShareRepository->getSharedFolders($userId, $request->input('folder_id')) as $folder) {
                         $folders[] = $this->getResponseFolderData($folder);
                     }
 
-                    foreach ($this->mediaShareRepository->getSharedFiles($request->input('folder_id')) as $shareItem) {
+                    foreach ($this->mediaShareRepository->getSharedFiles($userId, $request->input('folder_id')) as $shareItem) {
                         $files[] = $this->getResponseFileData($shareItem->file()->first());
                     }
                 } else {
-                    foreach ($this->fileRepository->getFilesByFolderId($request->input('folder_id'), [
+                    foreach ($this->fileRepository->getFilesByFolderId($request->input('folder_id'), $userId, [
                         'order_by' => [
                             $orderBy[0] => $orderBy[1],
                         ],
@@ -276,7 +277,7 @@ class MediaController extends BaseAdminController{
                         }
                     }
 
-                    foreach ($this->folderRepository->getFolderByParentId($request->input('folder_id'), [
+                    foreach ($this->folderRepository->getFolderByParentId($request->input('folder_id'), $userId, [
                         'where' => [
                             ['name', 'LIKE', '%' . $request->input('search') . '%',]
                         ],
@@ -290,12 +291,12 @@ class MediaController extends BaseAdminController{
                 $breadcrumbs = [
                     [
                         'id' => 0,
-                        'name' => trans('media::media.trash'),
+                        'name' => trans('core-media::media.trash'),
                         'icon' => 'fa fa-trash-o',
                     ],
                 ];
 
-                $trashed_folders = $this->folderRepository->getTrashed($request->input('folder_id'), [
+                $trashed_folders = $this->folderRepository->getTrashed($request->input('folder_id'), $userId, [
                     'where' => [
                         ['name', 'LIKE', '%' . $request->input('search') . '%',]
                     ],
@@ -305,7 +306,7 @@ class MediaController extends BaseAdminController{
                     $folders[] = $this->getResponseFolderData($folder);
                 }
 
-                foreach ($this->fileRepository->getTrashed($request->input('folder_id'), [
+                foreach ($this->fileRepository->getTrashed($request->input('folder_id'), $userId, [
                     'order_by' => [
                         $orderBy[0] => $orderBy[1],
                     ],
@@ -330,7 +331,7 @@ class MediaController extends BaseAdminController{
                 $breadcrumbs = [
                     [
                         'id' => 0,
-                        'name' => trans('media::media.recent'),
+                        'name' => trans('core-media::media.recent'),
                         'icon' => 'fa fa-clock-o',
                     ],
                 ];
@@ -345,7 +346,7 @@ class MediaController extends BaseAdminController{
                     'recent_items' => $request->input('recent_items', []),
                 ];
 
-                foreach ($this->fileRepository->getFilesByFolderId(-1, $params) as $file) {
+                foreach ($this->fileRepository->getFilesByFolderId(-1, $userId, $params) as $file) {
                     if ($request->input('filter') == 'everything' || $request->input('filter') == $file->type) {
                         $files[] = $this->getResponseFileData($file);
                     }
@@ -356,7 +357,7 @@ class MediaController extends BaseAdminController{
                 $breadcrumbs = [
                     [
                         'id' => 0,
-                        'name' => trans('media::media.favorites'),
+                        'name' => trans('core-media::media.favorites'),
                         'icon' => 'fa fa-star',
                     ],
                 ];
@@ -365,7 +366,7 @@ class MediaController extends BaseAdminController{
                 if (!empty($favorite_items)) {
                     $file_ids = collect($favorite_items->value)->where('is_folder', 'false')->pluck('id')->all();
                     if (!empty($file_ids)) {
-                        foreach ($this->fileRepository->getFilesByFolderId($request->input('folder_id'), [
+                        foreach ($this->fileRepository->getFilesByFolderId($request->input('folder_id'), $userId,[
                             'order_by' => [
                                 $orderBy[0] => $orderBy[1],
                             ],
@@ -386,7 +387,7 @@ class MediaController extends BaseAdminController{
                     $folder_ids = collect($favorite_items->value)->where('is_folder', 'true')->pluck('id')->all();
 
                     if (!empty($folder_ids)) {
-                        foreach ($this->folderRepository->getFolderByParentId($request->input('folder_id'), [
+                        foreach ($this->folderRepository->getFolderByParentId($request->input('folder_id'), $userId, [
                             'where' => [
                                 [
                                     'name', 'LIKE', '%' . $request->input('search') . '%',
@@ -441,22 +442,22 @@ class MediaController extends BaseAdminController{
         }
 
         return [
-            'id' => $file->id,
-            'name' => $file->name,
-            'basename' => File::basename($file->url),
-            'url' => $file->url,
-            'full_url' => url($file->url),
-            'type' => $file->type,
-            'icon' => $file->icon,
-            'thumb' => $file->type == 'image' ? get_image_url($file->url, 'thumb') : null,
-            'size' => $file->human_size,
-            'mime_type' => $file->mime_type,
+            'id'         => $file->id,
+            'name'       => $file->name,
+            'basename'   => File::basename($file->url),
+            'url'        => $file->url,
+            'full_url'   => url($file->url),
+            'type'       => $file->type,
+            'icon'       => $file->icon,
+            'thumb'      => $file->type == 'image' ? get_image_url($file->url, 'thumb') : null,
+            'size'       => $file->human_size,
+            'mime_type'  => $file->mime_type,
             'created_at' => date_from_database($file->created_at, config('cms.date_format.date_time', 'Y-m-d H:i:s')),
             'updated_at' => date_from_database($file->updated_at, config('cms.date_format.date_time', 'Y-m-d H:i:s')),
-            'focus' => $file->focus,
-            'is_public' => $file->is_public,
-            'options' => $file->options,
-            'folder_id' => $file->folder_id,
+            'focus'      => $file->focus,
+            'is_public'  => $file->is_public,
+            'options'    => $file->options,
+            'folder_id'  => $file->folder_id,
 
         ];
     }
@@ -506,10 +507,11 @@ class MediaController extends BaseAdminController{
      */
     public function getQuota()
     {
+        $userId      = auth()->id();
         return BMedia::responseSuccess([
-            'quota' => human_file_size($this->fileRepository->getQuota()),
-            'used' => human_file_size($this->fileRepository->getSpaceUsed()),
-            'percent' => $this->fileRepository->getPercentageUsed(),
+            'quota' => human_file_size($this->fileRepository->getQuota($userId)),
+            'used'  => human_file_size($this->fileRepository->getSpaceUsed($userId)),
+            'percent' => $this->fileRepository->getPercentageUsed($userId),
         ]);
     }
 
@@ -552,10 +554,10 @@ class MediaController extends BaseAdminController{
                 }
 
                 if ($error) {
-                    return BMedia::responseError(trans('media::media.trash_error'));
+                    return BMedia::responseError(trans('core-media::media.trash_error'));
                 }
 
-                return BMedia::responseSuccess([], trans('media::media.trash_success'));
+                return BMedia::responseSuccess([], trans('core-media::media.trash_success'));
 
                 break;
 
@@ -576,10 +578,10 @@ class MediaController extends BaseAdminController{
                 }
 
                 if ($error) {
-                    return BMedia::responseError(trans('media::media.restore_error'));
+                    return BMedia::responseError(trans('core-media::media.restore_error'));
                 }
 
-                return BMedia::responseSuccess([], trans('media::media.restore_success'));
+                return BMedia::responseSuccess([], trans('core-media::media.restore_success'));
 
                 break;
 
@@ -642,7 +644,7 @@ class MediaController extends BaseAdminController{
                     }
                 }
 
-                return BMedia::responseSuccess([], trans('media::media.copy_success'));
+                return BMedia::responseSuccess([], trans('core-media::media.copy_success'));
 
                 break;
             case 'share':
@@ -650,7 +652,7 @@ class MediaController extends BaseAdminController{
 
                 if ($request->input('share_option') == 'user') {
                     if (!count($users)) {
-                        return BMedia::responseError(trans('media::media.no_user_selected'));
+                        return BMedia::responseError(trans('core-media::media.no_user_selected'));
                     }
                 }
 
@@ -717,7 +719,7 @@ class MediaController extends BaseAdminController{
                     }
                 }
 
-                return BMedia::responseSuccess([], trans('media::media.share_success'));
+                return BMedia::responseSuccess([], trans('core-media::media.share_success'));
                 break;
 
             case 'un_share':
@@ -729,7 +731,7 @@ class MediaController extends BaseAdminController{
                     }
                 }
 
-                return BMedia::responseSuccess([], trans('media::media.un_share_success'));
+                return BMedia::responseSuccess([], trans('core-media::media.un_share_success'));
 
                 break;
 
@@ -742,7 +744,7 @@ class MediaController extends BaseAdminController{
                     }
                 }
 
-                return BMedia::responseSuccess([], trans('media::media.remove_share_success'));
+                return BMedia::responseSuccess([], trans('core-media::media.remove_share_success'));
 
                 break;
 
@@ -759,7 +761,7 @@ class MediaController extends BaseAdminController{
                 ];
                 $this->mediaSettingRepository->createOrUpdate($meta);
 
-                return BMedia::responseSuccess($meta, trans('media::media.set_focus_success'));
+                return BMedia::responseSuccess($meta, trans('core-media::media.set_focus_success'));
 
                 break;
 
@@ -777,7 +779,7 @@ class MediaController extends BaseAdminController{
                     }
                 }
 
-                return BMedia::responseSuccess([], trans('media::media.delete_success'));
+                return BMedia::responseSuccess([], trans('core-media::media.delete_success'));
 
                 break;
             case 'favorite':
@@ -790,7 +792,7 @@ class MediaController extends BaseAdminController{
 
                 $this->mediaSettingRepository->createOrUpdate($meta);
 
-                return BMedia::responseSuccess([], trans('media::media.favorite_success'));
+                return BMedia::responseSuccess([], trans('core-media::media.favorite_success'));
                 break;
 
             case 'remove_favorite':
@@ -812,7 +814,7 @@ class MediaController extends BaseAdminController{
 
                 }
 
-                return BMedia::responseSuccess([], trans('media::media.remove_favorite_success'));
+                return BMedia::responseSuccess([], trans('core-media::media.remove_favorite_success'));
                 break;
 
             case 'rename':
@@ -850,13 +852,13 @@ class MediaController extends BaseAdminController{
                 if (!empty($error)) {
 
                     if (!empty($in_reserved_name)) {
-                        return BMedia::responseError(trans('media::media.is_reserved_name', ['name' => $in_reserved_name]), $error);
+                        return BMedia::responseError(trans('core-media::media.is_reserved_name', ['name' => $in_reserved_name]), $error);
                     }
 
-                    return BMedia::responseError(trans('media::media.rename_error'));
+                    return BMedia::responseError(trans('core-media::media.rename_error'));
                 }
 
-                return BMedia::responseSuccess([], trans('media::media.rename_success'));
+                return BMedia::responseSuccess([], trans('core-media::media.rename_success'));
 
                 break;
 
@@ -864,11 +866,11 @@ class MediaController extends BaseAdminController{
                 $this->folderRepository->emptyTrash();
                 $this->fileRepository->emptyTrash();
 
-                return BMedia::responseSuccess([], trans('media::media.empty_trash_success'));
+                return BMedia::responseSuccess([], trans('core-media::media.empty_trash_success'));
                 break;
         }
 
-        return BMedia::responseError(trans('media::media.invalid_action'));
+        return BMedia::responseError(trans('core-media::media.invalid_action'));
     }
 
     /**
@@ -928,7 +930,7 @@ class MediaController extends BaseAdminController{
             $file = $this->fileRepository->getFirstByWithTrash(['id' => $items[0]['id']]);
             if (!empty($file) && $file->type != 'video') {
                 if (!file_exists(public_path($file->url))) {
-                    return BMedia::responseError(trans('media::media.file_not_exists'));
+                    return BMedia::responseError(trans('core-media::media.file_not_exists'));
                 }
                 return response()->download(public_path($file->url));
             }
@@ -961,13 +963,13 @@ class MediaController extends BaseAdminController{
                         return response()->download($file_name)->deleteFileAfterSend(true);
                     }
                 }
-                return BMedia::responseError(trans('media::media.download_file_error'));
+                return BMedia::responseError(trans('core-media::media.download_file_error'));
             } else {
-                return BMedia::responseError(trans('media::media.mMissing_zip_archive_extension'));
+                return BMedia::responseError(trans('core-media::media.mMissing_zip_archive_extension'));
             }
 
         }
-        return BMedia::responseError(trans('media::media.can_not_download_file'));
+        return BMedia::responseError(trans('core-media::media.can_not_download_file'));
     }
 
     /**

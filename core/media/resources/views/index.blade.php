@@ -3,5 +3,9 @@
 	{!! BMedia::renderHeader() !!}
 @endsection
 @section('content')
-	{!! BMedia::renderHeader() !!}
+	{!! BMedia::renderContent() !!}
+@endsection
+
+@section('master-footer')
+    {!! BMedia::renderFooter() !!}
 @endsection

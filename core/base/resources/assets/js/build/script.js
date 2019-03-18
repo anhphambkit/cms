@@ -391,9 +391,7 @@ Lcms.handleCounterup = function () {
 };
 
 Lcms.initMediaIntegrate = function () {
-
     if (jQuery().rvMedia) {
-
         $('[data-type="rv-media-standard-alone-button"]').rvMedia({
             multiple: false,
             onSelectFiles: function (files, $el) {
@@ -462,5 +460,5 @@ $(document).ready(function () {
     // Lcms.initResources();
     // Lcms.handleWaypoint();
     // Lcms.handleCounterup();
-    // Lcms.initMediaIntegrate();
+    Lcms.initMediaIntegrate();
 });

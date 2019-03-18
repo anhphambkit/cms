@@ -1,19 +1,17 @@
 <?php
 
 return [
+    'filesystem' => 'local',
     'mode' => env('RV_MEDIA_MODE', 'advanced'), // Use "simple" or "advanced"
     'sizes' => [
-        'thumb' => '150x150',
+        'thumb'    => '150x150',
         'featured' => '560x380',
-        'medium' => '540x360',
+        'medium'   => '540x360',
     ],
     'upload' => [
-        'folder' => 'uploads',
-        'path' => public_path('uploads'),
-        // User will can not create folder with these name
-        'reserved_names' => [
-            // 'avatars',
-        ],
+        'folder'         => 'uploads',
+        'path'           => public_path('uploads'),
+        'reserved_names' => [],
     ],
     'route' => [
         'prefix' => env('ADMIN_DIR', 'admin') . '/media',
@@ -33,8 +31,8 @@ return [
         'files.delete',
     ],
     'cache' => [
-        'enable' => env('RV_MEDIA_ENABLE_CACHE', false), // true or false
-        'cache_time' => env('RV_MEDIA_CACHE_TIME', 10),
+        'enable'      => env('RV_MEDIA_ENABLE_CACHE', false), // true or false
+        'cache_time'  => env('RV_MEDIA_CACHE_TIME', 10),
         'stored_keys' => storage_path('media_cache_keys.json'), // Cache config
     ],
     'allow_external_services' => env('RV_MEDIA_ALLOW_EXTERNAL_SERVICES', false),
@@ -47,21 +45,21 @@ return [
     ],
     'libraries' => [
         'stylesheets' => [
-            'vendor/media/packages/fancybox/dist/jquery.fancybox.css',
-            'vendor/media/packages/jquery-context-menu/jquery.contextMenu.min.css',
-            'vendor/media/packages/focuspoint/css/focuspoint.css',
+            'frontend/core/media/packages/fancybox/dist/jquery.fancybox.css',
+            'frontend/core/media/packages/jquery-context-menu/jquery.contextMenu.min.css',
+            'frontend/core/media/packages/focuspoint/css/focuspoint.css',
             'frontend/core/media/assets/css/media.css?v=' . time(),
         ],
         'javascript' => [
-            'vendor/media/packages/underscore/underscore-min.js',
-            'vendor/media/packages/clipboard/clipboard.min.js',
-            'vendor/media/packages/fancybox/dist/jquery.fancybox.js',
-            'vendor/media/packages/dropzone/dropzone.js',
-            'vendor/media/packages/jquery-context-menu/jquery.ui.position.min.js',
-            'vendor/media/packages/jquery-context-menu/jquery.contextMenu.min.js',
-            'vendor/media/packages/focuspoint/js/jquery.focuspoint.min.js',
-            'vendor/media/js/media.js?v=' . time(),
-            'vendor/media/js/focus.js?v=' . time(),
+            'frontend/core/media/packages/underscore/underscore-min.js',
+            'frontend/core/media/packages/clipboard/clipboard.min.js',
+            'frontend/core/media/packages/fancybox/dist/jquery.fancybox.js',
+            'frontend/core/media/packages/dropzone/dropzone.js',
+            'frontend/core/media/packages/jquery-context-menu/jquery.ui.position.min.js',
+            'frontend/core/media/packages/jquery-context-menu/jquery.contextMenu.min.js',
+            'frontend/core/media/packages/focuspoint/js/jquery.focuspoint.min.js',
+            'frontend/core/media/assets/js/media.js?v=' . time(),
+            'frontend/core/media/assets/js/focus.js?v=' . time(),
         ],
     ],
     'allowed_mime_types' => env('RV_MEDIA_ALLOWED_MIME_TYPES', 'jpg,jpeg,png,gif,txt,docx,zip,mp3,bmp,csv,docs,xls,xlsx,ppt,pptx,pdf,mp4'),
@@ -88,12 +86,12 @@ return [
         ],
     ],
     'max_file_size_upload' => env('RV_MEDIA_MAX_FILE_SIZE_UPLOAD', 10 * 1024), // Maximum size to upload
-    'default-img' => env('RV_MEDIA_DEFAULT_IMAGE', '/vendor/core/images/default-image.png'), // Default image
-    'sidebar_display' => env('RV_MEDIA_SIDEBAR_DISPLAY', 'horizontal'), // Use "vertical" or "horizontal"
-    'user_attributes' => 'users.id, CONCAT(users.first_name, " ", users.last_name) AS name',
+    'default-img'          => env('RV_MEDIA_DEFAULT_IMAGE', '/vendor/core/images/default-image.png'), // Default image
+    'sidebar_display'      => env('RV_MEDIA_SIDEBAR_DISPLAY', 'horizontal'), // Use "vertical" or "horizontal"
+    'user_attributes'      => 'users.id, CONCAT(users.first_name, " ", users.last_name) AS name',
     'layouts' => [
         'master' => 'bases::layouts.master',
-        'main' => 'content',
+        'main'   => 'content',
         'header' => 'head',
         'footer' => 'javascript',
     ],

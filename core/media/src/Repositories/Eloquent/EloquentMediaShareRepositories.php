@@ -5,6 +5,7 @@
 namespace Core\Media\Repositories\Eloquent;
 use Core\Media\Repositories\Interfaces\MediaShareRepositories;
 use Core\Master\Repositories\Eloquent\RepositoriesAbstract;
+use Request;
 
 class EloquentMediaShareRepositories extends RepositoriesAbstract implements MediaShareRepositories {
 	

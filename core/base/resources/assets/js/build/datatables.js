@@ -218,21 +218,21 @@
                 });
             });
 
-            $(document).find('.dataTables_filter input[type=search]').prop('placeholder', Botble.languages.tables.filter.trim());
+            // $(document).find('.dataTables_filter input[type=search]').prop('placeholder', Botble.languages.tables.filter.trim());
 
-            $(document).find('.dataTables_length select').select2({
-                minimumResultsForSearch: Infinity,
-                width: 70
-            }).removeClass('form-control');
+            // $(document).find('.dataTables_length select').select2({
+            //     minimumResultsForSearch: Infinity,
+            //     width: 70
+            // }).removeClass('form-control');
 
-            if (window.LaravelDataTables['dataTableBuilder']) {
-                window.LaravelDataTables['dataTableBuilder'].on('draw.dt', function () {
-                    $('.tip').tooltip({placement: 'top'});
-                    if ($.fn.editable) {
-                        $('.editable').editable();
-                    }
-                });
-            }
+            // if (window.LaravelDataTables['dataTableBuilder']) {
+            //     window.LaravelDataTables['dataTableBuilder'].on('draw.dt', function () {
+            //         $('.tip').tooltip({placement: 'top'});
+            //         if ($.fn.editable) {
+            //             $('.editable').editable();
+            //         }
+            //     });
+            // }
 
             $('.group-checkable').uniform();
 

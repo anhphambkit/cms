@@ -45,6 +45,8 @@ class CreateTableMediaCore extends Migration
             $table->string('focus', 255)->nullable();
             $table->text('options')->nullable();
             $table->tinyInteger('is_public')->default(0);
+            $table->string('storage')->default("local");
+            $table->text('real_filename')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->engine = 'InnoDB';

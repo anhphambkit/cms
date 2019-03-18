@@ -97,3 +97,23 @@ if (!function_exists('rv_get_image_list')) {
         return $result;
     }
 }
+
+if (!function_exists('human_file_size')) {
+    /**
+     * @param $bytes
+     * @param int $precision
+     * @return string
+     * @author Sang Nguyen
+     */
+    function human_file_size($bytes, $precision = 2)
+    {
+        $units = ['B', 'kB', 'MB', 'GB', 'TB'];
+
+        $bytes = max($bytes, 0);
+        $pow   = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow   = min($pow, count($units) - 1);
+        $bytes /= pow(1024, $pow);
+
+        return number_format($bytes, $precision, ',', '.') . ' ' . $units[$pow];
+    }
+}

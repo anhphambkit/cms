@@ -10,7 +10,8 @@
     <title>lcms laravel</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
-
+    <script src="{{ URL::asset('frontend/core/media/packages/dropzone/dropzone.js') }}"></script>
+    
     @foreach($cssFiles as $css)
         <link media="all" type="text/css" rel="stylesheet" href="{{ URL::asset($css) }}">
     @endforeach
@@ -42,8 +43,8 @@
         <script src="{{ URL::asset($js) }}" type="text/javascript"></script>
     @endforeach
     <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-    <script src="{{ URL::asset('core/base/assets/js/datatables.js') }}"></script>
-    <script src="{{ URL::asset('core/base/assets/js/script.js') }}"></script>
+    <script src="{{ URL::asset('frontend/core/base/assets/js/datatables.js') }}"></script>
+    <script src="{{ URL::asset('frontend/core/base/assets/js/script.js') }}"></script>
     
     @section('scripts')
     @show
@@ -56,6 +57,8 @@
 
     @section('script-media')
         @include('core-media::partials.media')
+    @show
+    @section('master-footer')
     @show
   </body>
 </html>

@@ -299,7 +299,7 @@ class InstallCommand extends Command
      */
     protected function completed(){
         $env = $this->files->get('.env');
-        $env = str_replace('CMS_INSTALLED=false', 'CMS_INSTALLED=true', $env);
+        $env = str_replace('INSTALLED=false', 'INSTALLED=true', $env);
         $this->files->put('.env', $env);
     }
 }

@@ -1,5 +1,6 @@
 <?php
-namespace Core\Media\Http\Requests;
+namespace Core\Media\Requests;
+
 use Core\Master\Requests\CoreRequest;
 
 class MediaFolderRequest extends CoreRequest

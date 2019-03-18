@@ -21,13 +21,12 @@ export class MessageService {
         if (typeof (data.responseJSON) !== 'undefined') {
             if (typeof (data.responseJSON.message) !== 'undefined') {
                 MessageService.showMessage('error', data.responseJSON.message, RV_MEDIA_CONFIG.translations.message.error_header);
-            } else {
-                $.each(data.responseJSON, function (index, el) {
-                    $.each(el, function (key, item) {
-                        MessageService.showMessage('error', item, RV_MEDIA_CONFIG.translations.message.error_header);
-                    });
-                });
             }
+            $.each(data.responseJSON.data, function (index, el) {
+                $.each(el, function (key, item) {
+                    MessageService.showMessage('error', item, RV_MEDIA_CONFIG.translations.message.error_header);
+                });
+            });
         } else {
             MessageService.showMessage('error', data.statusText, RV_MEDIA_CONFIG.translations.message.error_header);
         }

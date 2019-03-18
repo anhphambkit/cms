@@ -5,8 +5,8 @@
 namespace Core\Media\Repositories\Eloquent;
 use Core\Media\Repositories\Interfaces\MediaFileRepositories;
 use Core\Master\Repositories\Eloquent\RepositoriesAbstract;
-use Exception;
 use Request;
+use Exception;
 use DB;
 
 class EloquentMediaFileRepositories extends RepositoriesAbstract implements MediaFileRepositories 

@@ -7,10 +7,10 @@ use Eloquent;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Core\Media\ValueObjects\MediaPath;
 
 class MediaFile extends Eloquent
 {
-
     use SoftDeletes;
 
     /**
@@ -28,8 +28,24 @@ class MediaFile extends Eloquent
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     /**
+     * @var type
+     */
+    protected $fillable = [
+        'name'         ,
+        'url'          ,
+        'size'         ,
+        'mime_type'    ,
+        'folder_id'    ,
+        'user_id'      ,
+        'options'      ,
+        'is_public'    ,
+        'storage'      ,
+        'real_filename',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function folder()
     {
@@ -41,16 +57,26 @@ class MediaFile extends Eloquent
 
     /**
      * @return int
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function isShared()
     {
         return MediaShare::where('share_id', '=', $this->id)->where('share_type', '=', 'file')->count();
     }
 
+    // /**
+    //  * Description
+    //  * @param type $value 
+    //  * @return type
+    //  */
+    // public function getUrlAttribute($value)
+    // {
+    //     return new MediaPath($value, $this->storage);
+    // }
+
     /**
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getTypeAttribute()
     {
@@ -59,7 +85,7 @@ class MediaFile extends Eloquent
             return 'video';
         }
 
-        foreach (config('media.mime_types') as $key => $value) {
+        foreach (config('core-media.media.mime_types') as $key => $value) {
             if (in_array($this->attributes['mime_type'], $value)) {
                 $type = $key;
                 break;
@@ -71,7 +97,7 @@ class MediaFile extends Eloquent
 
     /**
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getHumanSizeAttribute()
     {
@@ -80,7 +106,7 @@ class MediaFile extends Eloquent
 
     /**
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getIconAttribute()
     {
@@ -113,7 +139,7 @@ class MediaFile extends Eloquent
     /**
      * @param $value
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getOptionsAttribute($value)
     {
@@ -121,7 +147,7 @@ class MediaFile extends Eloquent
     }
 
     /**
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @param $value
      */
     public function setOptionsAttribute($value)
@@ -131,7 +157,7 @@ class MediaFile extends Eloquent
 
     /**
      * @var array
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public static $mimeTypes = [
         'zip' => 'application/zip',
@@ -153,7 +179,7 @@ class MediaFile extends Eloquent
     ];
 
     /**
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     protected static function boot()
     {
@@ -166,7 +192,7 @@ class MediaFile extends Eloquent
                 MediaShare::where('share_id', '=', $file->id)->where('share_type', '=', 'file')->forceDelete();
 
                 $uploadManager = new UploadsManager();
-                $path = str_replace(config('media.upload.folder'), '', $file->url);
+                $path = str_replace(config('core-media.media.upload.folder'), '', $file->url);
                 $uploadManager->deleteFile($path);
             } else {
                 MediaShare::where('share_id', '=', $file->id)->where('share_type', '=', 'file')->delete();
@@ -193,7 +219,7 @@ class MediaFile extends Eloquent
 
     /**
      * @param $value
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function setFocusAttribute($value)
     {
@@ -201,7 +227,7 @@ class MediaFile extends Eloquent
     }
 
     /**
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function __wakeup()
     {

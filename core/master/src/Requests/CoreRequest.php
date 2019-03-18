@@ -13,6 +13,11 @@ abstract class CoreRequest extends FormRequest
     use FormatMessageTrait;
 
     /**
+     * @var type
+     */
+    protected $message;
+
+    /**
      * Custom bad request
      * @param Validator $validator 
      * @author TrinhLe
@@ -23,9 +28,11 @@ abstract class CoreRequest extends FormRequest
             
             $json = [
                 'status'    => RESPONSE_STATUS_VALIDATION_ERROR,
-                'message'   => 'Validation error.',
                 'data'      => $this->customErrors($validator->errors()->getMessages()),
             ];
+
+            if($this->message)
+                $json['message'] = $this->message;
 
             $response = new JsonResponse($json, 400 );
             throw (new ValidationException($validator, $response))->status(400);

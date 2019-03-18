@@ -46,11 +46,11 @@ class UploadsManager
     public function fileDetails($path)
     {
         return [
-            'filename' => basename($path),
-            'url' => '/' . $this->uploadPath($path),
+            'filename'  => basename($path),
+            'url'       => '/' . $this->uploadPath($path),
             'mime_type' => $this->fileMimeType($path),
-            'size' => $this->fileSize($path),
-            'modified' => $this->fileModified($path),
+            'size'      => $this->fileSize($path),
+            'modified'  => $this->fileModified($path),
         ];
     }
 
@@ -161,7 +161,7 @@ class UploadsManager
 
         if (is_image($this->fileMimeType($path))) {
             $filename = pathinfo($path, PATHINFO_FILENAME);
-            $thumb = str_replace($filename, $filename . '-' . config('media.sizes.thumb'), $path);
+            $thumb    = str_replace($filename, $filename . '-' . config('media.sizes.thumb'), $path);
             $featured = str_replace($filename, $filename . '-' . config('media.sizes.featured'), $path);
 
             return $this->disk->delete([$path, $thumb, $featured]);

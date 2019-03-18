@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'app_installed' => env('CMS_INSTALLED', false),
+    'app_installed' => env('INSTALLED', false),
 
     /*
     |--------------------------------------------------------------------------

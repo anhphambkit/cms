@@ -7,56 +7,28 @@ use Core\Media\Repositories\Interfaces\MediaFolderRepositories;
 use Core\Media\Services\UploadsManager;
 use Core\Media\Services\ThumbnailService;
 use Exception;
-use File;
-use Illuminate\Http\Exceptions\PostTooLargeException;
-use Illuminate\Http\UploadedFile;
+use Core\Media\Services\FileService;
 
 class BMedia
 {
-
     /**
      * @var array
      */
     protected $permissions = [];
 
     /**
-     * @var UploadsManager
+     * @var FileService
      */
-    protected $uploadManager;
+    protected $fileService;
 
     /**
-     * @var MediaFileRepositories
-     */
-    protected $fileRepository;
-
-    /**
-     * @var MediaFolderRepositories
-     */
-    protected $folderRepository;
-
-    /**
-     * @var ThumbnailService
-     */
-    protected $thumbnailService;
-
-    /**
-     * @param MediaFileRepositories $fileRepository
      * @param MediaFolderRepositories $folderRepository
-     * @param UploadsManager $uploadManager
-     * @param ThumbnailService $thumbnailService
      * @author TrinhLe
      */
     public function __construct(
-        MediaFileRepositories $fileRepository,
-        MediaFolderRepositories $folderRepository,
-        UploadsManager $uploadManager,
-        ThumbnailService $thumbnailService
+        FileService $fileService
     ) {
-        $this->fileRepository = $fileRepository;
-        $this->folderRepository = $folderRepository;
-        $this->uploadManager = $uploadManager;
-        $this->thumbnailService = $thumbnailService;
-
+        $this->fileService      = $fileService;
         $this->permissions = config('core-media.media.permissions', []);
     }
 
@@ -76,7 +48,7 @@ class BMedia
      */
     public function renderFooter()
     {
-        return view('media::footer')->render();
+        return view('core-media::footer')->render();
     }
 
     /**
@@ -163,79 +135,35 @@ class BMedia
     }
 
     /**
-     * @param int $folder_id
-     * @param $fileUpload
+     * Handle upload media file
+     * @author  TrinhLe
+     * @param type $fileUpload 
+     * @param type $folder_id 
      * @return \Illuminate\Http\JsonResponse|array
-     * @author TrinhLe
+     * @throws Exception
      */
     public function handleUpload($fileUpload, $folder_id = 0)
     {
-        /**
-         * @var UploadedFile $fileUpload
-         */
-        try {
-            $file = $this->fileRepository->getModel();
-
-            $folder_path = str_finish($this->folderRepository->getFullPath($folder_id), '/');
-
+        try
+        {
             if ($fileUpload->getSize() / 1024 > (int)config('core-media.media.max_file_size_upload')) {
                 return [
                     'error' => true,
                     'message' => trans('media::media.file_too_big', ['size' => config('core-media.media.max_file_size_upload')]),
                 ];
             }
-
-            $file_ext = $fileUpload->getClientOriginalExtension();
-
-            $fileName = $this->fileRepository->createSlug(File::name($fileUpload->getClientOriginalName()), $file_ext, $this->uploadManager->uploadPath($folder_path));
-
-            $path = $folder_path . $fileName;
-            $content = File::get($fileUpload->getRealPath());
-
-            $this->uploadManager->saveFile($path, $content);
-
-            $data = $this->uploadManager->fileDetails($path);
-
-            if (empty($data['mime_type'])) {
-                return [
-                    'error' => true,
-                    'message' => trans('media::media.can_not_detect_file_type'),
-                ];
-            }
-
-            $file->name = $this->fileRepository->createName(File::name($fileUpload->getClientOriginalName()), $folder_id);
-            $file->url = $data['url'];
-            $file->size = $data['size'];
-            $file->mime_type = $data['mime_type'];
-
-            $file->folder_id = $folder_id;
-            $file->user_id = rv_media_get_current_user_id();
-            $file->options = request()->get('options', []);
-            $file->is_public = request()->input('view_in') == 'public' ? 1 : 0;
-            $this->fileRepository->createOrUpdate($file);
-
-            if (is_image($this->uploadManager->fileMimeType($path))) {
-                foreach (config('core-media.media.sizes') as $size) {
-                    $readable_size = explode('x', $size);
-                    $this->thumbnailService->setImage(ltrim($file->url, '/'))
-                        ->setSize($readable_size[0], $readable_size[1])
-                        ->setDestPath($this->uploadManager->uploadPath($folder_path))
-                        ->setFileName(File::name($fileName) . '-' . $size . '.' . $file_ext)
-                        ->save();
-                }
-            }
-
             return [
                 'error' => false,
-                'data' => $file,
+                'data' => $this->fileService->store($fileUpload, $folder_id)
             ];
-
-        } catch (Exception $ex) {
+        }
+        catch(\Exception $ex){
             return [
                 'error' => true,
                 'message' => $ex->getMessage(),
             ];
         }
+            
     }
 
     /**

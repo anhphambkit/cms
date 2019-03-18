@@ -51,6 +51,19 @@ class MediaManagement {
             .addClass('active')
             .closest('.dropdown').find('.js-rv-media-filter-current').html('(' + $current_view_in.html() + ')');
 
+
+        /**
+         * append lht js
+         */
+        $current_filter.closest('button')
+            .addClass('active')
+            .closest('.menu-media').find('.js-rv-media-filter-current').html('(' + $current_filter.html() + ')');
+
+        $current_view_in.closest('button')
+            .addClass('active')
+            .closest('.menu-media').find('.js-rv-media-filter-current').html('(' + $current_view_in.html() + ')');
+        
+
         if (Helpers.isUseInModal()) {
             $('.rv-media-footer').removeClass('hidden');
         }
@@ -60,6 +73,13 @@ class MediaManagement {
          */
         $('.js-rv-media-change-filter[data-type="sort_by"][data-value="' + Helpers.getRequestParams().sort_by + '"]')
             .closest('li')
+            .addClass('active');
+
+        /**
+         * append lht js
+         */
+         $('.js-rv-media-change-filter[data-type="sort_by"][data-value="' + Helpers.getRequestParams().sort_by + '"]')
+            .closest('button')
             .addClass('active');
 
         /**

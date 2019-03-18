@@ -5,6 +5,7 @@
 namespace Core\Media\Repositories\Eloquent;
 use Core\Media\Repositories\Interfaces\MediaFolderRepositories;
 use Core\Master\Repositories\Eloquent\RepositoriesAbstract;
+use Request;
 
 class EloquentMediaFolderRepositories extends RepositoriesAbstract implements MediaFolderRepositories 
 {

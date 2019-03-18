@@ -50,7 +50,6 @@ const scanFiles = (resourcePath, prefix = 'js') => {
 let env            = argv.env;
 let packageName    = env.pkg;
 let basedir        = env.dir || "core";
-let resourceAppPath   = `./${basedir}/${packageName}/resources/app-assets`;
 let resourcePath   = `./${basedir}/${packageName}/resources/assets`;
 let configs        = { js : `${resourcePath}/js/build`, scss : `${resourcePath}/scss/build` };
 

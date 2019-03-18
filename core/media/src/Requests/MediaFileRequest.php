@@ -22,7 +22,7 @@ class MediaFileRequest extends CoreRequest
                 $files = [$files];
             }
             foreach ($files as $key => $file) {
-                $rules['file.' . $key] = 'required|mimes:' . config('media.allowed_mime_types');
+                $rules['file.' . $key] = 'required|mimes:' . config('core-media.media.allowed_mime_types');
             }
         }
 
