@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Media\Image\Intervention\Manipulations;
+namespace Core\Media\Image\Intervention\Manipulations;
 
-use Modules\Media\Image\ImageHandlerInterface;
+use Core\Media\Image\ImageHandlerInterface;
 
 class Flip implements ImageHandlerInterface
 {

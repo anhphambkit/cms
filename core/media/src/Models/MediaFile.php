@@ -44,6 +44,11 @@ class MediaFile extends Eloquent
     ];
 
     /**
+     * @var type
+     */
+    protected $append  = [ "media_path" ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      * @author TrinhLe
      */
@@ -64,15 +69,15 @@ class MediaFile extends Eloquent
         return MediaShare::where('share_id', '=', $this->id)->where('share_type', '=', 'file')->count();
     }
 
-    // /**
-    //  * Description
-    //  * @param type $value 
-    //  * @return type
-    //  */
-    // public function getUrlAttribute($value)
-    // {
-    //     return new MediaPath($value, $this->storage);
-    // }
+    /**
+     * Get full path media with storage
+     * @author  TrinhLe
+     * @return string
+     */
+    public function getMediaPathAttribute()
+    {
+        return new MediaPath($this->url, $this->storage);
+    }
 
     /**
      * @return string

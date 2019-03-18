@@ -44,6 +44,10 @@ class MediaPath
         return $this->path;
     }
 
+    /**
+     * Description
+     * @return type
+     */
     public function __toString()
     {
         try {

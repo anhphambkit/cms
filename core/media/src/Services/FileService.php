@@ -93,7 +93,7 @@ class FileService
      */
     private function createThumbnails(File $savedFile)
     {
-        // $this->dispatch(new CreateThumbnails($savedFile->url));
+        $this->dispatch(new CreateThumbnails($savedFile->media_path));
     }
 
     /**

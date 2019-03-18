@@ -6,7 +6,7 @@ if (!function_exists('is_image')) {
      *
      * @param $mimeType
      * @return bool
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     function is_image($mimeType)
     {
@@ -21,7 +21,7 @@ if (!function_exists('get_image_url')) {
      * @param bool $relative_path
      * @param null $default
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     function get_image_url($url, $size = null, $relative_path = false, $default = null)
     {
@@ -29,8 +29,8 @@ if (!function_exists('get_image_url')) {
             return $default;
         }
 
-        if (array_key_exists($size, config('media.sizes'))) {
-            $url = str_replace(File::name($url) . '.' . File::extension($url), File::name($url) . '-' . config('media.sizes.' . $size) . '.' . File::extension($url), $url);
+        if (array_key_exists($size, config('core-media.media.sizes'))) {
+            $url = str_replace(File::name($url) . '.' . File::extension($url), File::name($url) . '-' . config('core-media.media.sizes.' . $size) . '.' . File::extension($url), $url);
         }
 
         if ($relative_path) {
@@ -58,7 +58,7 @@ if (!function_exists('get_object_image')) {
             }
             return get_image_url($image, $size, $relative_path);
         } else {
-            return get_image_url(config('media.default-img'), $size, $relative_path);
+            return get_image_url(config('core-media.media.default-img'), $size, $relative_path);
         }
     }
 }
@@ -67,7 +67,7 @@ if (!function_exists('rv_media_handle_upload')) {
     /**
      * @param $fileUpload
      * @param int $folder_id
-     * @author Sang Nguyen
+     * @author TrinhLe
      * @return array|\Illuminate\Http\JsonResponse
      */
     function rv_media_handle_upload($fileUpload, $folder_id = 0) {
@@ -103,7 +103,7 @@ if (!function_exists('human_file_size')) {
      * @param $bytes
      * @param int $precision
      * @return string
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     function human_file_size($bytes, $precision = 2)
     {

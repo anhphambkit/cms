@@ -1,18 +1,18 @@
 <?php
 
-namespace Modules\Media\Image\Intervention;
+namespace Core\Media\Image\Intervention;
 
-use Modules\Media\Image\ImageFactoryInterface;
+use Core\Media\Image\ImageFactoryInterface;
 
 class InterventionFactory implements ImageFactoryInterface
 {
     /**
      * @param  string                                     $manipulation
-     * @return \Modules\Media\Image\ImageHandlerInterface
+     * @return \Core\Media\Image\ImageHandlerInterface
      */
     public function make($manipulation)
     {
-        $class = 'Modules\\Media\\Image\\Intervention\\Manipulations\\' . ucfirst($manipulation);
+        $class = 'Core\\Media\\Image\\Intervention\\Manipulations\\' . ucfirst($manipulation);
 
         return new $class();
     }
