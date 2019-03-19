@@ -11,6 +11,7 @@ use Core\Media\Jobs\CreateThumbnails;
 use Core\Media\Helpers\FileHelper;
 use Core\Media\Models\MediaFile as File;
 use Ramsey\Uuid\Uuid;
+use DB;
 
 class FileService
 {
@@ -49,8 +50,9 @@ class FileService
     public function store(UploadedFile $fileUpload, $folderId = 0)
     {
         $savedFile = $this->createFromFile($fileUpload, $folderId);
-        $path = $this->getDestinationPath($savedFile->getOriginal('url'));
-        $stream = fopen($fileUpload->getRealPath(), 'r+');
+        $path      = $this->getDestinationPath($savedFile->getOriginal('url'));
+        $stream    = fopen($fileUpload->getRealPath(), 'r+');
+        
         $this->filesystem->disk($this->getConfiguredFilesystem())->writeStream($path, $stream, [
             'visibility' => 'public',
             'mimetype' => $savedFile->mime_type,
@@ -94,7 +96,7 @@ class FileService
      */
     private function createThumbnails(File $savedFile)
     {
-        // $this->dispatch(new CreateThumbnails($savedFile->media_path));
+        $this->dispatch(new CreateThumbnails($savedFile->media_path));
     }
 
     /**

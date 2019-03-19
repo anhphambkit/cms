@@ -51,7 +51,6 @@ class MediaPath
     public function __toString()
     {
         try {
-            \Log::info("goto");
             return $this->getUrl();
         } catch (\Exception $e) {
             return '';

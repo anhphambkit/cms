@@ -14,15 +14,6 @@ class UploadsManager
      */
     protected $disk;
 
-    /**
-     * @author Sang Nguyen
-     */
-    public function __construct()
-    {
-        config()->set('filesystems.disks.local.root', config('core-media.media.upload.path'));
-
-        $this->disk = Storage::disk(config('filesystems.default'));
-    }
 
     /**
      * Sanitize the folder name

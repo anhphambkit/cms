@@ -108,15 +108,15 @@ class Imagy
             return;
         }
 
-        // foreach ($this->manager->all() as $thumbnail) {
-        //     $image = $this->image->make($this->filesystem->disk($this->getConfiguredFilesystem())->get($this->getDestinationPath($path->getRelativeUrl())));
-        //     $filename = config('core-media.media.config.files-path') . $this->newFilename($path, $thumbnail->name());
-        //     foreach ($thumbnail->filters() as $manipulation => $options) {
-        //         $image = $this->imageFactory->make($manipulation)->handle($image, $options);
-        //     }
-        //     $image = $image->stream(pathinfo($path, PATHINFO_EXTENSION), array_get($thumbnail->filters(), 'quality', 90));
-        //     $this->writeImage($filename, $image);
-        // }
+        foreach ($this->manager->all() as $thumbnail) {
+            $image = $this->image->make($this->filesystem->disk($this->getConfiguredFilesystem())->get($this->getDestinationPath($path->getRelativeUrl())));
+            $filename = config('core-media.media.config.files-path') . $this->newFilename($path->getRelativeUrl(), $thumbnail->name());
+            foreach ($thumbnail->filters() as $manipulation => $options) {
+                $image = $this->imageFactory->make($manipulation)->handle($image, $options);
+            }
+            $image = $image->stream(pathinfo($path, PATHINFO_EXTENSION), array_get($thumbnail->filters(), 'quality', 90));
+            $this->writeImage($filename, $image);
+        }
     }
 
     /**
@@ -128,8 +128,8 @@ class Imagy
     private function newFilename($path, $thumbnail)
     {
         $filename = pathinfo($path, PATHINFO_FILENAME);
-
-        return $filename . '_' . $thumbnail . '.' . pathinfo($path, PATHINFO_EXTENSION);
+        $dirname = pathinfo($path, PATHINFO_DIRNAME);
+        return "{$dirname}/{$filename}" . '_' . $thumbnail . '.' . pathinfo($path, PATHINFO_EXTENSION);
     }
 
     /**

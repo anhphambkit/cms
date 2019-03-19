@@ -35,7 +35,7 @@ use Intervention\Image\ImageServiceProvider;
 use Core\Media\Image\Intervention\InterventionFactory;
 use Core\Media\Image\ImageFactoryInterface;
 use Intervention\Image\Facades\Image;
-
+use Core\Media\Image\Imagy;
 /**
  * Class MediaServiceProvider
  * @package Core\Media

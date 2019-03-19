@@ -12,6 +12,13 @@ class CreateThumbnails implements ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 1;
+
+    /**
      * @var MediaPath
      */
     private $path;

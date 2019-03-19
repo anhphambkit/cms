@@ -2,12 +2,8 @@
 
 namespace Core\Media;
 
-use Core\Media\Repositories\Interfaces\MediaFileRepositories;
-use Core\Media\Repositories\Interfaces\MediaFolderRepositories;
-use Core\Media\Services\UploadsManager;
-use Core\Media\Services\ThumbnailService;
-use Exception;
 use Core\Media\Services\FileService;
+use Exception;
 
 class BMedia
 {
@@ -22,7 +18,7 @@ class BMedia
     protected $fileService;
 
     /**
-     * @param MediaFolderRepositories $folderRepository
+     * @param FileService $fileService
      * @author TrinhLe
      */
     public function __construct(

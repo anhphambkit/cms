@@ -3,22 +3,15 @@ namespace Core\Media\Controllers\Admin;
 
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Validation\ValidationException;
-use BMedia;
-#Interface Media
 use Core\Media\Repositories\Interfaces\MediaFileRepositories;
 use Core\Media\Repositories\Interfaces\MediaFolderRepositories;
 use Core\Media\Requests\MediaFileRequest;
-use Core\Media\Services\UploadsManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use BMedia;
 
 class MediaFileController extends BaseAdminController
 {
-    /**
-     * @var UploadsManager
-     */
-    protected $uploadManager;
-
     /**
      * @var MediaFileRepositories
      */
@@ -32,18 +25,15 @@ class MediaFileController extends BaseAdminController
     /**
      * @param MediaFileRepositories $fileRepository
      * @param MediaFolderRepositories $folderRepository
-     * @param UploadsManager $uploadManager
      * @author TrinhLe
      */
     public function __construct(
         MediaFileRepositories $fileRepository,
-        MediaFolderRepositories $folderRepository,
-        UploadsManager $uploadManager
+        MediaFolderRepositories $folderRepository
     )
     {
 		$this->fileRepository   = $fileRepository;
 		$this->folderRepository = $folderRepository;
-		$this->uploadManager    = $uploadManager;
         parent::__construct();
     }
 

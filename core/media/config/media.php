@@ -12,7 +12,7 @@ return [
         'folder'         => 'uploads',
         'path'           => public_path('uploads'),
         'reserved_names' => [],
-        'files-path' => '/uploads/media/'
+        'files-path'     => '/media/'
     ],
     'route' => [
         'prefix' => env('ADMIN_DIR', 'admin') . '/media',
