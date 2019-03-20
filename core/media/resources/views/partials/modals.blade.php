@@ -1,33 +1,32 @@
 <div class="modal fade text-left" id="modal_add_folder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel18" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel18"><i class="la la-tree"></i> {{ trans('core-media::media.create_folder') }}</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-dismiss-modal="#modal_add_folder">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <form class="rv-form form-add-folder">
-              <div class="input-group">
-                  <input type="text" class="form-control" placeholder="{{ trans('core-media::media.folder_name') }}">
-                  <div class="input-group-btn">
-                      <button class="btn btn-outline-primary rv-btn-add-folder" type="submit">{{ trans('core-media::media.create') }}</button>
-                  </div>
-              </div>
-          </form>
-          <div class="modal-notice"></div>
-      </div>
+        <div class="modal-header bg-info white">
+            <h4 class="modal-title white" id="myModalLabel11"><i class="la la-tree"></i>{{ trans('core-media::media.create_folder') }}</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-dismiss-modal="#modal_add_folder">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form class="rv-form form-add-folder">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="{{ trans('core-media::media.folder_name') }}">
+                    <button type="submit" class="btn btn-info rv-btn-add-folder">{{ trans('core-media::media.create') }}</button>
+                </div>
+            </form>
+            <div class="modal-notice"></div>
+        </div>
     </div>
   </div>
 </div>
-<div class="modal fade" tabindex="-1" role="dialog" id="modal_rename_items" aria-labelledby="myModalLabel18" aria-hidden="true">
+
+<div class="modal fade text-left" tabindex="-1" role="dialog" id="modal_rename_items" aria-labelledby="myModalLabel18" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form class="rv-form form-rename">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel18"><i class="far fa-window"></i> {{ trans('core-media::media.rename') }}</h4>
-                    <button type="button" class="close" data-dismiss-modal="#modal_rename_items" aria-label="{{ trans('core-media::media.close') }}">
+                <div class="modal-header bg-info white">
+                    <h4 class="modal-title white" id="myModalLabel18"><i class="fab fa-windows"></i> {{ trans('core-media::media.rename') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ trans('core-media::media.close') }}" data-dismiss-modal="#modal_rename_items">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -36,10 +35,10 @@
                     <div class="modal-notice"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss-modal="#modal_rename_items">
+                    <button type="button" class="btn btn-light" data-dismiss-modal="#modal_rename_items">
                         {{ trans('core-media::media.close') }}
                     </button>
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-info" data-dismiss-modal="#modal_rename_items">
                         {{ trans('core-media::media.save_changes') }}
                     </button>
                 </div>

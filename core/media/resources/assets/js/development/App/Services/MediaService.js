@@ -25,7 +25,7 @@ export class MediaService {
         let _self = this;
 
         _self.getFileDetails({
-            icon: 'fa fa-picture-o',
+            icon: 'far fa-image',
             nothing_selected: '',
         });
 

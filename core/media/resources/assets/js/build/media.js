@@ -183,7 +183,7 @@ class MediaManagement {
                     $('.rv-media-items input[type="checkbox"]').prop('checked', false);
                     $('.rv-dropdown-actions').addClass('disabled');
                     _self.MediaService.getFileDetails({
-                        icon: 'fa fa-picture-o',
+                        icon: 'far fa-image',
                         nothing_selected: '',
                     });
                 }

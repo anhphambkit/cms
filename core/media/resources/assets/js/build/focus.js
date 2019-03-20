@@ -36,7 +36,7 @@
             $focusPointImages = $('.focuspoint img');
 
             //Set the default source image
-            // setImage(defaultImage);
+            setImage(defaultImage);
 
         })();
 
@@ -50,8 +50,7 @@
         function setImage(imgURL) {
             //Get the dimensions of the image by referencing an image stored in memory
             $("<img/>")
-                .attr("src", imgURL)
-                .load(function () {
+                .attr("src", imgURL).on('load', function(){
                     focusPointAttr.w = this.width;
                     focusPointAttr.h = this.height;
 
@@ -87,8 +86,8 @@
 
                     //Run FocusPoint for the first time.
                     $('.focuspoint').focusPoint();
-
-                });
+                })
+                
         }
 
         /*-----------------------------------------*/
