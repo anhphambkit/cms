@@ -12,7 +12,7 @@ let defaultConfig = {
     },
     hide_details_pane: false,
     icons: {
-        folder: 'fa fa-folder-o',
+        folder: 'far fa-folder',
     },
     actions_list: {
         basic: [

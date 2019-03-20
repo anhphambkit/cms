@@ -52,7 +52,7 @@ export class MediaList {
                 .replace(/__name__/gi, value.name || '')
                 .replace(/__size__/gi, '')
                 .replace(/__date__/gi, value.created_at || '')
-                .replace(/__thumb__/gi, '<i class="fa fa-folder-o"></i>');
+                .replace(/__thumb__/gi, '<i class="far fa-folder"></i>');
             let $item = $(item);
             _.forEach(value, function (val, index) {
                 $item.data(index, val);

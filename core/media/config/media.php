@@ -81,6 +81,7 @@ return [
             'application/excel',
             'application/x-excel',
             'application/x-msexcel',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         ],
         'youtube' => [
             'youtube',

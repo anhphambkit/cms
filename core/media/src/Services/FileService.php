@@ -7,11 +7,10 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Core\Media\Repositories\Interfaces\MediaFileRepositories;
 use Core\Media\Repositories\Interfaces\MediaFolderRepositories;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Core\Media\Jobs\CreateThumbnails;
+use Core\Media\ValueObjects\MediaPath;
 use Core\Media\Helpers\FileHelper;
 use Core\Media\Models\MediaFile as File;
 use Ramsey\Uuid\Uuid;
-use DB;
 
 class FileService
 {
@@ -58,7 +57,7 @@ class FileService
             'mimetype' => $savedFile->mime_type,
         ]);
 
-        $this->createThumbnails($savedFile);
+        $this->createThumbnails($savedFile->media_path);
         return $savedFile;
     }
 
@@ -94,9 +93,9 @@ class FileService
      * Create the necessary thumbnails for the given file
      * @param $savedFile
      */
-    private function createThumbnails(File $savedFile)
+    private function createThumbnails(MediaPath $savedFile)
     {
-        $this->dispatch(new CreateThumbnails($savedFile->media_path));
+        return app('imagy')->createAll($savedFile);
     }
 
     /**

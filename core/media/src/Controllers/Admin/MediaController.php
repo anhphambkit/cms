@@ -443,13 +443,13 @@ class MediaController extends BaseAdminController{
 
         return [
             'id'         => $file->id,
-            'name'       => $file->name,
+            'name'       => $file->real_filename,
             'basename'   => File::basename($file->url),
             'url'        => $file->url,
-            'full_url'   => url($file->url),
+            'full_url'   => url($file->media_path),
             'type'       => $file->type,
             'icon'       => $file->icon,
-            'thumb'      => $file->type == 'image' ? get_image_url($file->url, 'thumb') : null,
+            'thumb'      => $file->type == 'image' ? app('imagy')->getThumbnail($file, 'mediumThumb') : null,
             'size'       => $file->human_size,
             'mime_type'  => $file->mime_type,
             'created_at' => date_from_database($file->created_at, config('cms.date_format.date_time', 'Y-m-d H:i:s')),

@@ -82,7 +82,7 @@ class Imagy
     public function getThumbnail($originalImage, $thumbnail)
     {
         if ($originalImage instanceof File) {
-            $originalImage = $originalImage->path;
+            $originalImage = $originalImage->url;
         }
 
         if (!$this->isImage($originalImage)) {
@@ -94,7 +94,6 @@ class Imagy
         }
 
         $path = config('core-media.media.config.files-path') . $this->newFilename($originalImage, $thumbnail);
-
         return (new MediaPath($path))->getUrl();
     }
 

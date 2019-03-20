@@ -431,4 +431,23 @@ abstract class RepositoriesAbstract implements RepositoryInterface
         $this->model = $this->model->with($with);
         return $this->model;
     }
+
+    /**
+     * Find a single entity by key value.
+     *
+     * @param array $condition
+     * @param array $select
+     * @return mixed
+     * @author TrinhLe
+     */
+    public function getFirstByWithTrash(array $condition = [], array $select = [])
+    {
+        $query = $this->model->where($condition)->withTrashed();
+
+        if (!empty($select)) {
+            return $query->select($select)->first();
+        }
+
+        return $query->first();
+    }
 }

@@ -127,6 +127,7 @@ class EloquentMediaFileRepositories extends RepositoriesAbstract implements Medi
     {
         $params = array_merge([
             'order_by' => [
+                'real_filename' => 'ASC',
                 'name' => 'ASC',
             ],
             'select' => [
@@ -141,6 +142,7 @@ class EloquentMediaFileRepositories extends RepositoriesAbstract implements Medi
                 'options',
                 'folder_id',
                 'is_public',
+                'real_filename'
             ],
             'where' => [],
             'is_public' => false,
@@ -201,6 +203,7 @@ class EloquentMediaFileRepositories extends RepositoriesAbstract implements Medi
     {
         $params = array_merge([
             'order_by' => [
+                'real_filename' => 'ASC',
                 'name' => 'ASC',
             ],
             'select' => [
@@ -213,6 +216,7 @@ class EloquentMediaFileRepositories extends RepositoriesAbstract implements Medi
                 'updated_at',
                 'options',
                 'folder_id',
+                'real_filename'
             ],
             'where' => [],
         ], $params);

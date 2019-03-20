@@ -169,4 +169,14 @@ interface RepositoryInterface
      * @author TrinhLe
      */
     public function make(array $with = []);
+
+    /**
+     * Find a single entity by key value.
+     *
+     * @param array $condition
+     * @param array $select
+     * @return mixed
+     * @author Sang Nguyen
+     */
+    public function getFirstByWithTrash(array $condition = [], array $select = []);
 }

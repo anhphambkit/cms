@@ -120,22 +120,22 @@ class MediaFile extends Eloquent
          */
         switch ($this->type) {
             case 'image':
-                $icon = 'fa fa-file-image-o';
+                $icon = 'fas fa-image';
                 break;
             case 'video':
-                $icon = 'fa fa-file-video-o';
+                $icon = 'far fa-file-video';
                 break;
             case 'pdf':
-                $icon = 'fa fa-file-pdf-o';
+                $icon = 'far fa-file-pdf';
                 break;
             case 'excel':
-                $icon = 'fa fa-file-excel-o';
+                $icon = 'far fa-file-excel';
                 break;
             case 'youtube':
-                $icon = 'fa fa-youtube';
+                $icon = 'fab fa-youtube';
                 break;
             default:
-                $icon = 'fa fa-file-text-o';
+                $icon = 'far fa-file-alt';
                 break;
         }
         return $icon;
