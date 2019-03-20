@@ -36,7 +36,7 @@
             $focusPointImages = $('.focuspoint img');
 
             //Set the default source image
-            setImage(defaultImage);
+            // setImage(defaultImage);
 
         })();
 

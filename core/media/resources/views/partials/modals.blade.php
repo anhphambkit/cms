@@ -21,6 +21,80 @@
     </div>
   </div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_rename_items" aria-labelledby="myModalLabel18" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form class="rv-form form-rename">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel18"><i class="far fa-window"></i> {{ trans('core-media::media.rename') }}</h4>
+                    <button type="button" class="close" data-dismiss-modal="#modal_rename_items" aria-label="{{ trans('core-media::media.close') }}">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="rename-items"></div>
+                    <div class="modal-notice"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss-modal="#modal_rename_items">
+                        {{ trans('core-media::media.close') }}
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        {{ trans('core-media::media.save_changes') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_set_focus_point" aria-labelledby="myModalLabel18" aria-hidden="true">
+    <div class="modal-dialog modal-danger modal-lg" role="document">
+        <div class="modal-content">
+            <form class="rv-form form-set-focus-point">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss-modal="#modal_set_focus_point" aria-label="{{ trans('core-media::media.close') }}">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">
+                        {{ trans('core-media::media.set_focus_point') }}
+                    </h4>
+                </div>
+                <div class="modal-body" style="padding: 10px 0 0 10px;">
+                    <div style="position: relative;">
+                        <div class="focuspoint-frames" style="min-height: 400px;"></div>
+
+                        <div class="focuspoint-info">
+                            <div class="helper-tool">
+                                <p>{{ trans('core-media::media.set_focus_description') }}</p>
+                                <div class="helper-tool-target">
+                                    <img class="helper-tool-img">
+                                    <img class="reticle" src="{{ url('frontend/core/media/packages/focuspoint/images/focuspoint-target.png') }}">
+                                    <img class="target-overlay">
+                                </div>
+                                <p>
+                                    <label for="data-attr">{{ trans('core-media::media.focus_data_attribute') }}:</label>
+                                    <input class='helper-tool-data-attr' id="data-attr" name="data-attr" type='text' placeholder='data-focus-x="0" data-focus-y="0" '>
+                                </p>
+                                <p>
+                                    <label for="css3-val">{{ trans('core-media::media.focus_css_background') }}:</label>
+                                    <input class='helper-tool-css3-val' id="css3-val" name="css3-val" type='text' placeholder='background-position:'>
+                                </p>
+                                <p>
+                                    <input type="hidden" class="helper-tool-reticle-css">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">{{ trans('core-media::media.save_changes') }}</button>
+                    <button type="button" class="btn btn-danger" data-dismiss-modal="#modal_set_focus_point">{{ trans('core-media::media.close') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <!-- 
 
 <div>
