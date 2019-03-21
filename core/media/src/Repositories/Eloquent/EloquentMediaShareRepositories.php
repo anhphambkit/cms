@@ -97,9 +97,9 @@ class EloquentMediaShareRepositories extends RepositoriesAbstract implements Med
     {
         return $this->model->join('users', 'users.id', '=', 'media_shares.user_id')
             ->where([
-                'shared_by' => $userId,
+                'shared_by'  => $userId,
                 'share_type' => $shareType,
-                'share_id' => $shareId,
+                'share_id'   => $shareId,
             ])
             ->selectRaw(config('media.user_attributes'))
             ->get();

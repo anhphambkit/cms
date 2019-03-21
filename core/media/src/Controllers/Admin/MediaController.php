@@ -534,6 +534,7 @@ class MediaController extends BaseAdminController{
      */
     public function postGlobalActions(Request $request)
     {
+        $userId = auth()->id();
         $type = $request->input('action');
         switch ($type) {
             case 'trash':
@@ -826,12 +827,12 @@ class MediaController extends BaseAdminController{
                         $file = $this->fileRepository->getFirstBy(['id' => $id]);
 
                         if (!empty($file)) {
-                            $file->name = $this->fileRepository->createName($item['name'], $file->folder_id);
+                            $file->real_filename = $this->fileRepository->createName($item['name'], $file->folder_id, $userId);
                             $this->fileRepository->createOrUpdate($file);
                         }
                     } else {
                         $name = $item['name'];
-                        if (in_array($name, config('media.upload.reserved_names', []))) {
+                        if (in_array($name, config('core.media.media.upload.reserved_names', []))) {
                             if (!empty($in_reserved_name)) {
                                 $in_reserved_name .= ', ';
                             }
@@ -841,7 +842,7 @@ class MediaController extends BaseAdminController{
                             $folder = $this->folderRepository->getFirstBy(['id' => $id]);
 
                             if (!empty($folder)) {
-                                $folder->name = $this->folderRepository->createName($name, $folder->parent_id);
+                                $folder->name = $this->folderRepository->createName($name, $folder->parent_id, $userId);
                                 $this->folderRepository->createOrUpdate($folder);
                             }
                         }
@@ -888,7 +889,7 @@ class MediaController extends BaseAdminController{
         if ($new_folder_id == null) {
             $file->name = $file->name . '-(copy)';
 
-            if (!in_array($file->type, array_merge(['video', 'youtube'], config('media.external_services')))) {
+            if (!in_array($file->type, array_merge(['video', 'youtube'], config('core.media.media.external_services')))) {
                 $folder_path = str_finish($this->folderRepository->getFullPath($file->folder_id), '/');
                 $path = $folder_path . File::name($file->url) . '-(copy)' . '.' . File::extension($file->url);
                 if (file_exists(public_path($file->url))) {
@@ -899,7 +900,7 @@ class MediaController extends BaseAdminController{
                     $file->url = $data['url'];
 
                     if (is_image($this->uploadManager->fileMimeType($path))) {
-                        foreach (config('media.sizes') as $size) {
+                        foreach (config('core.media.media.sizes') as $size) {
                             $readable_size = explode('x', $size);
                             Image::make(ltrim($file->url, '/'))->fit($readable_size[0], $readable_size[1])
                                 ->save($this->uploadManager->uploadPath($folder_path) . File::name($file->url) . '-' . $size . '.' . File::extension($file->url));
@@ -988,7 +989,7 @@ class MediaController extends BaseAdminController{
                 if (class_exists('ZipArchive', false)) {
                     $is_thumb = false;
                     if (in_array(mime_content_type($item), ['image/jpeg', 'image/gif', 'image/png', 'image/bmp'])) {
-                        foreach (config('media.sizes') as $size) {
+                        foreach (config('core.media.media.sizes') as $size) {
                             $size_detect = '-' . $size . '.' . File::extension($item);
                             if (strpos($item, $size_detect) !== false) {
                                 $is_thumb = true;
