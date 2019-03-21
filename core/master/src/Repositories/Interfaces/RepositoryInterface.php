@@ -179,4 +179,9 @@ interface RepositoryInterface
      * @author Sang Nguyen
      */
     public function getFirstByWithTrash(array $condition = [], array $select = []);
+
+    /**
+     * @param array $condition
+     */
+    public function forceDelete(array $condition = []);
 }

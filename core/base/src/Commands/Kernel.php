@@ -10,23 +10,20 @@ class Kernel
      * @var array
      */
     protected $commands = [
-        InstallCommand::class,
-        DumpAutoload::class,
-
-        MakeRepositoryCommand::class,
-        MakeBindContentRepository::class,
-        MigrateSystemCommand::class,
-
-        PublishConfig::class,
-        PublishData::class,
-
-        BuildPermissions::class,
-        RebuildPermissionsCommand::class,
-
-        PluginCreateCommand::class,
-        PluginActivateCommand::class,
-        PluginDeactivateCommand::class,
-        PluginRemoveCommand::class
+        Scripts\InstallCommand::class,
+        Scripts\DumpAutoload::class,
+        Scripts\MakeRepositoryCommand::class,
+        Scripts\MakeBindContentRepository::class,
+        Scripts\MigrateSystemCommand::class,
+        Scripts\PublishConfig::class,
+        Scripts\PublishData::class,
+        Scripts\BuildPermissions::class,
+        Scripts\RebuildPermissionsCommand::class,
+        Scripts\PluginCreateCommand::class,
+        Scripts\PluginActivateCommand::class,
+        Scripts\PluginDeactivateCommand::class,
+        Scripts\PluginRemoveCommand::class,
+        Scripts\CreateUserCommand::class
     ];
 
     /**

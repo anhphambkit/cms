@@ -1,6 +1,6 @@
 <?php
 
-namespace Botble\Base\Commands;
+namespace Botble\Base\Commands\Scripts;
 
 use Illuminate\Console\Command;
 

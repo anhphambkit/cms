@@ -1,15 +1,15 @@
 <?php
-namespace Core\Base\Commands;
+namespace Core\Base\Commands\Scripts;
 use Illuminate\Console\Command;
 
-class PublishData extends Command
+class PublishConfig extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'publish:data';
+    protected $signature = 'publish:config';
 
     /**
      * The console command description.
@@ -23,10 +23,10 @@ class PublishData extends Command
      *
      * @return mixed
      */
-    public function handle() {
-
+    public function handle() 
+    {
         $this->call('vendor:publish', [
-            '--tag' => 'system-data', '--force' => true
+            '--tag' => 'config-packages', '--force' => true
         ]);
     }
 }

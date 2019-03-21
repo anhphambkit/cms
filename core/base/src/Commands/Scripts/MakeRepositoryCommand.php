@@ -1,5 +1,5 @@
 <?php
-namespace Core\Base\Commands;
+namespace Core\Base\Commands\Scripts;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Core\Master\Supports\PublishStub;

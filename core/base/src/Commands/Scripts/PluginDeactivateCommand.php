@@ -1,15 +1,15 @@
 <?php
 
-namespace Core\Base\Commands;
+namespace Core\Base\Commands\Scripts;
 
 use Artisan;
+use Core\Base\Repositories\Interfaces\PluginRepositories;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Core\Base\Repositories\Interfaces\PluginRepositories;
 use Core\Master\Supports\LoadRegisterTrait;
 
-class PluginActivateCommand extends Command
+class PluginDeactivateCommand extends Command
 {
     use LoadRegisterTrait;
 
@@ -25,14 +25,14 @@ class PluginActivateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'plugin:activate {name : The plugin that you want to activate}';
+    protected $signature = 'plugin:deactivate {name : The plugin that you want to deactivate}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Activate a plugin in /plugins directory';
+    protected $description = 'Deactivate a plugin in /plugins directory';
 
     /**
      * Create a new key generator command.
@@ -43,7 +43,6 @@ class PluginActivateCommand extends Command
     public function __construct(Filesystem $files)
     {
         parent::__construct();
-
         $this->files = $files;
     }
 
@@ -54,6 +53,7 @@ class PluginActivateCommand extends Command
      */
     public function handle()
     {
+
         if (!preg_match('/^[a-z\-]+$/i', $this->argument('name'))) {
             $this->error('Only alphabetic characters are allowed.');
             return false;
@@ -61,11 +61,6 @@ class PluginActivateCommand extends Command
 
         $plugin_folder = ucfirst(strtolower($this->argument('name')));
         $location = config('core-base.cms.plugin_path') . '/' . strtolower($plugin_folder);
-
-        if (!$this->files->isDirectory($location)) {
-            $this->error('This plugin is not exists.');
-            return false;
-        }
 
         $content = get_file_data($location . '/plugin.json');
         if (!empty($content)) {
@@ -80,23 +75,26 @@ class PluginActivateCommand extends Command
             }
 
             $plugin = app(PluginRepositories::class)->getFirstBy(['provider' => $content['provider']]);
-            if (empty($plugin) || $plugin->status != 1) {
+            if (empty($plugin) || $plugin->status == 1) {
+                call_user_func([$content['plugin'], 'deactivate']);
                 if (empty($plugin)) {
                     $plugin = app(PluginRepositories::class)->getModel();
                     $plugin->fill($content);
                 }
                 $plugin->alias = strtolower($plugin_folder);
-                $plugin->status = 1;
-
-                call_user_func([$content['plugin'], 'activate']);
-
+                $plugin->status = 0;
                 app(PluginRepositories::class)->createOrUpdate($plugin);
                 cache()->forget(md5('cache-dashboard-menu'));
                 $this->flushAllCacheProvider();
-                $this->line('<info>Activate plugin successfully!</info>');
+                $this->line('<info>Deactivate plugin successfully!</info>');
             } else {
-                $this->line('<info>This plugin is activated already!</info>');
+                $this->line('<info>This plugin is deactivated already!</info>');
             }
+        }
+
+        if (!$this->files->isDirectory($location)) {
+            $this->error('This plugin is not exists.');
+            return false;
         }
         return true;
     }

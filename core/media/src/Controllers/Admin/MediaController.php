@@ -864,8 +864,8 @@ class MediaController extends BaseAdminController{
                 break;
 
             case 'empty_trash':
-                $this->folderRepository->emptyTrash();
-                $this->fileRepository->emptyTrash();
+                $this->folderRepository->emptyTrash($userId);
+                $this->fileRepository->emptyTrash($userId);
 
                 return BMedia::responseSuccess([], trans('core-media::media.empty_trash_success'));
                 break;

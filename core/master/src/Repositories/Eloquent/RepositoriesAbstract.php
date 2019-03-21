@@ -450,4 +450,16 @@ abstract class RepositoriesAbstract implements RepositoryInterface
 
         return $query->first();
     }
+
+    /**
+     * @param array $condition
+     */
+    public function forceDelete(array $condition = [])
+    {
+        $item = $this->model->where($condition)->withTrashed()->first();
+        if (!empty($item)) {
+            $item->forceDelete();
+        }
+    }
+
 }

@@ -20,6 +20,49 @@
   </div>
 </div>
 
+<div class="modal fade text-left" tabindex="-1" role="dialog" id="modal_share_items" aria-labelledby="myModalLabel18" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form class="rv-form form-share-items">
+                <div class="modal-header bg-info white">
+                    <h4 class="modal-title white" id="myModalLabel18"><i class="fab fa-windows"></i> {{ trans('core-media::media.share_title') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ trans('core-media::media.close') }}" data-dismiss-modal="#modal_share_items">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="share-to">
+                        <div class="form-group">
+                            <label for="share_option">{{ trans('core-media::media.share_to') }}</label>
+                            <select id="share_option" class="form-control">
+                                <option value="no_share">{{ trans('core-media::media.do_not_share') }}</option>
+                                <option value="everyone">{{ trans('core-media::media.share_everyone') }}</option>
+                                <option value="user">{{ trans('core-media::media.share_to_specific_users') }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="share_to_users">{{ trans('core-media::media.please_select_user') }}</label>
+                            <select id="share_to_users"
+                                    class="form-control"
+                                    multiple="multiple">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-notice"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss-modal="#modal_share_items">
+                        {{ trans('core-media::media.close') }}
+                    </button>
+                    <button type="submit" class="btn btn-info">
+                        {{ trans('core-media::media.confirm') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade text-left" tabindex="-1" role="dialog" id="modal_rename_items" aria-labelledby="myModalLabel18" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -220,43 +263,4 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" tabindex="-1" role="dialog" id="modal_share_items">
-        <div class="modal-dialog modal-primary" role="document">
-            <div class="modal-content">
-                <form class="rv-form form-share-items">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss-modal="#modal_share_items" aria-label="{{ trans('core-media::media.close') }}">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title">
-                            <i class="fa fa-windows"></i> {{ trans('core-media::media.share_title') }}
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="share-to">
-                            <div class="form-group">
-                                <label for="share_option">{{ trans('core-media::media.share_to') }}</label>
-                                <select id="share_option" class="form-control">
-                                    <option value="no_share">{{ trans('core-media::media.do_not_share') }}</option>
-                                    <option value="everyone">{{ trans('core-media::media.share_everyone') }}</option>
-                                    <option value="user">{{ trans('core-media::media.share_to_specific_users') }}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="share_to_users">{{ trans('core-media::media.please_select_user') }}</label>
-                                <select id="share_to_users"
-                                        class="form-control"
-                                        multiple="multiple">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="modal-notice"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">{{ trans('core-media::media.confirm') }}</button>
-                        <button type="button" class="btn btn-danger" data-dismiss-modal="#modal_share_items">{{ trans('core-media::media.close') }}</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    

@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Base\Commands;
+namespace Core\Base\Commands\Scripts;
 
 use Core\User\Repositories\Interfaces\UserInterface;
 use Illuminate\Database\Eloquent\Model;

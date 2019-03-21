@@ -147,7 +147,7 @@ class EloquentMediaFolderRepositories extends RepositoriesAbstract implements Me
             ->onlyTrashed();
 
         if (config('core-media.media.mode') != 'simple') {
-            $data = $data->where(function ($query) {
+            $data = $data->where(function ($query) use ($userId){
                 $query->orWhere('user_id', '=', $userId)
                     ->orWhere('user_id', '=', 0);
             });

@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Base\Commands;
+namespace Core\Base\Commands\Scripts;
 
 use Illuminate\Console\Command;
 use Core\Master\Supports\PermissionCommand;
