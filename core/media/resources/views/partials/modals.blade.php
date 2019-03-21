@@ -38,7 +38,7 @@
                     <button type="button" class="btn btn-light" data-dismiss-modal="#modal_rename_items">
                         {{ trans('core-media::media.close') }}
                     </button>
-                    <button type="submit" class="btn btn-info" data-dismiss-modal="#modal_rename_items">
+                    <button type="submit" class="btn btn-info">
                         {{ trans('core-media::media.save_changes') }}
                     </button>
                 </div>
@@ -51,13 +51,11 @@
     <div class="modal-dialog modal-danger modal-lg" role="document">
         <div class="modal-content">
             <form class="rv-form form-set-focus-point">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss-modal="#modal_set_focus_point" aria-label="{{ trans('core-media::media.close') }}">
+                <div class="modal-header bg-info white">
+                    <h4 class="modal-title white" id="myModalLabel18"><i class="fab fa-windows"></i> {{ trans('core-media::media.set_focus_point') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ trans('core-media::media.close') }}" data-dismiss-modal="#modal_set_focus_point">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title">
-                        {{ trans('core-media::media.set_focus_point') }}
-                    </h4>
                 </div>
                 <div class="modal-body" style="padding: 10px 0 0 10px;">
                     <div style="position: relative;">
@@ -87,16 +85,44 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">{{ trans('core-media::media.save_changes') }}</button>
-                    <button type="button" class="btn btn-danger" data-dismiss-modal="#modal_set_focus_point">{{ trans('core-media::media.close') }}</button>
+                    <button type="button" class="btn btn-light" data-dismiss-modal="#modal_set_focus_point">
+                        {{ trans('core-media::media.close') }}
+                    </button>
+                    <button type="submit" class="btn btn-info">
+                        {{ trans('core-media::media.save_changes') }}
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<!-- 
 
-<div>
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_trash_items">
+    <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+            <form class="rv-form form-delete-items">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss-modal="#modal_trash_items" aria-label="{{ trans('core-media::media.close') }}">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">
+                        <i class="fa fa-windows"></i> {{ trans('core-media::media.move_to_trash') }}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{ trans('core-media::media.confirm_trash') }}</p>
+                    <div class="modal-notice"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">{{ trans('core-media::media.confirm') }}</button>
+                    <button type="button" class="btn btn-primary" data-dismiss-modal="#modal_trash_items">{{ trans('core-media::media.close') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
     <div class="modal fade" tabindex="-1" role="dialog" id="modal_coming_soon">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -143,126 +169,6 @@
                     </div>
                     <div class="modal-notice"></div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" tabindex="-1" role="dialog" id="modal_add_folder">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss-modal="#modal_add_folder" aria-label="{{ trans('core-media::media.close') }}">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">
-                        <i class="fa fa-windows"></i> {{ trans('core-media::media.create_folder') }}
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <form class="rv-form form-add-folder">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="{{ trans('core-media::media.folder_name') }}">
-                            <div class="input-group-btn">
-                                <button class="btn btn-success rv-btn-add-folder" type="submit">{{ trans('core-media::media.create') }}</button>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="modal-notice"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" tabindex="-1" role="dialog" id="modal_rename_items">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form class="rv-form form-rename">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss-modal="#modal_rename_items" aria-label="{{ trans('core-media::media.close') }}">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title">
-                            <i class="fa fa-windows"></i> {{ trans('core-media::media.rename') }}
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="rename-items"></div>
-                        <div class="modal-notice"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss-modal="#modal_rename_items">{{ trans('core-media::media.close') }}</button>
-                        <button type="submit" class="btn btn-primary">{{ trans('core-media::media.save_changes') }}</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" tabindex="-1" role="dialog" id="modal_set_focus_point">
-        <div class="modal-dialog modal-danger modal-lg" role="document">
-            <div class="modal-content">
-                <form class="rv-form form-set-focus-point">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss-modal="#modal_set_focus_point" aria-label="{{ trans('core-media::media.close') }}">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title">
-                            {{ trans('core-media::media.set_focus_point') }}
-                        </h4>
-                    </div>
-                    <div class="modal-body" style="padding: 10px 0 0 10px;">
-                        <div style="position: relative;">
-                            <div class="focuspoint-frames" style="min-height: 400px;"></div>
-
-                            <div class="focuspoint-info">
-                                <div class="helper-tool">
-                                    <p>{{ trans('core-media::media.set_focus_description') }}</p>
-                                    <div class="helper-tool-target">
-                                        <img class="helper-tool-img">
-                                        <img class="reticle" src="{{ url('frontend/core/media/packages/focuspoint/images/focuspoint-target.png') }}">
-                                        <img class="target-overlay">
-                                    </div>
-                                    <p>
-                                        <label for="data-attr">{{ trans('core-media::media.focus_data_attribute') }}:</label>
-                                        <input class='helper-tool-data-attr' id="data-attr" name="data-attr" type='text' placeholder='data-focus-x="0" data-focus-y="0" '>
-                                    </p>
-                                    <p>
-                                        <label for="css3-val">{{ trans('core-media::media.focus_css_background') }}:</label>
-                                        <input class='helper-tool-css3-val' id="css3-val" name="css3-val" type='text' placeholder='background-position:'>
-                                    </p>
-                                    <p>
-                                        <input type="hidden" class="helper-tool-reticle-css">
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">{{ trans('core-media::media.save_changes') }}</button>
-                        <button type="button" class="btn btn-danger" data-dismiss-modal="#modal_set_focus_point">{{ trans('core-media::media.close') }}</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" tabindex="-1" role="dialog" id="modal_trash_items">
-        <div class="modal-dialog modal-danger" role="document">
-            <div class="modal-content">
-                <form class="rv-form form-delete-items">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss-modal="#modal_trash_items" aria-label="{{ trans('core-media::media.close') }}">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title">
-                            <i class="fa fa-windows"></i> {{ trans('core-media::media.move_to_trash') }}
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>{{ trans('core-media::media.confirm_trash') }}</p>
-                        <div class="modal-notice"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger">{{ trans('core-media::media.confirm') }}</button>
-                        <button type="button" class="btn btn-primary" data-dismiss-modal="#modal_trash_items">{{ trans('core-media::media.close') }}</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
@@ -354,4 +260,3 @@
             </div>
         </div>
     </div>
-</div> -->
