@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Media\Services;
+namespace Core\Media\Services;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Contracts\Filesystem\Factory;
-use Modules\Media\ValueObjects\MediaPath;
-use Modules\Media\Image\ThumbnailManager;
-use Modules\Media\Entities\File;
+use Core\Media\ValueObjects\MediaPath;
+use Core\Media\Image\ThumbnailManager;
+use Core\Media\Models\MediaFile as File;
 use Illuminate\Support\Collection;
 
 class BFileService
@@ -60,12 +60,12 @@ class BFileService
      * @param $file
      * @return bool
      */
-    public function deleteAllFor($files)
+    public function deleteAllFor($files, $pathAttr = "url")
     {
         $ids = array();
         foreach ($files as $file) {
             # code...
-            $this->deleteMedia($file);
+            $this->deleteMedia($file, $pathAttr);
             $ids[] = $file->id;
         }
         return File::whereIn('id', $ids)->delete();
@@ -78,9 +78,9 @@ class BFileService
      * @param type $extension 
      * @return type
      */
-    public function deleteMedia($file)
+    public function deleteMedia($file, $pathAttr = "url")
     {
-        list($path, $storage) = $this->validation($file);
+        list($path, $storage) = $this->validation($file, $pathAttr);
         list($urlPath, $fullPath, $filePath, $paths, $extension, $baseDir) = $this->listArrDestroy($path, $storage);
 
         if (!$this->isImage($urlPath)) {
@@ -93,7 +93,7 @@ class BFileService
                 $paths[] = (new MediaPath($thumbPath))->getRelativeUrl();
             }
         }
-
+        
         return $this->filesystem->disk($storage)->delete($paths);
     }
 
@@ -164,7 +164,7 @@ class BFileService
      * @author TrinhLe
      * @return mixed
      */
-    public function getMediaUrl($file, $pathAttr = "path")
+    public function getMediaUrl($file, $pathAttr = "url")
     {
         list($path, $storage) = $this->validation($file, $pathAttr);
         return $this->renderUrl($path, $storage);
@@ -176,7 +176,7 @@ class BFileService
      * @param type $file 
      * @return type
      */
-    protected function validation($file, $pathAttr = "path")
+    protected function validation($file, $pathAttr = "url")
     {
         if($file instanceof File){
             $path = ltrim($file->getAttribute($pathAttr)->getRelativeUrl(), '/');
@@ -210,9 +210,9 @@ class BFileService
      * @param type $file 
      * @return type
      */
-    public function isExists($file)
+    public function isExists($file, $pathAttr = "url")
     {
-        list($path, $storage) = $this->validation($file);
+        list($path, $storage) = $this->validation($file, $pathAttr);
         $path = "/{$path}";
         $path = $this->getDestinationPath($path, $storage);
         if($this->filesystem->disk($storage)->exists($path)) return $path;
@@ -280,5 +280,18 @@ class BFileService
         $localPath = public_path($filePath);
         if(file_exists($localPath))
             unlink($localPath);
+    }
+
+    /**
+     * Description
+     * @param type $filePath 
+     * @param type $storage 
+     * @return type
+     */
+    public function downloadFile($file, $pathAttr = "url")
+    {
+        $url = $file->{$pathAttr};
+        if($file->storage == 'local') return response()->download(storage_path("app/public/{$url}"));
+        return response()->download($filePath);
     }
 }

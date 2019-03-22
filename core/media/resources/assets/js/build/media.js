@@ -261,7 +261,7 @@ class MediaManagement {
             MediaConfig.request_params.search = $(this).find('input[type="text"]').val();
 
             Helpers.storeConfig();
-            _self.resetPagination();
+            Helpers.resetPagination();
             _self.MediaService.getMedia(true);
         })
     }

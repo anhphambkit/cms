@@ -218,7 +218,8 @@ class EloquentMediaFileRepositories extends RepositoriesAbstract implements Medi
                 'folder_id',
                 'real_filename'
             ],
-            'where' => [],
+            'where'      => [],
+            'whereNotIn' => []
         ], $params);
 
         $files = $this->model

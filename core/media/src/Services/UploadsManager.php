@@ -129,7 +129,7 @@ class UploadsManager
             $this->disk->files($folder)
         );
         if (!empty($filesFolders)) {
-            return trans('media::media.directory_must_empty');
+            return trans('core-media::media.directory_must_empty');
         }
 
         return $this->disk->deleteDirectory($folder);

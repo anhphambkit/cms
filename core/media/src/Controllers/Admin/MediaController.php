@@ -550,7 +550,7 @@ class MediaController extends BaseAdminController{
                         }
                     } else {
 
-                        $this->folderRepository->deleteFolder($id);
+                        $this->folderRepository->deleteFolder($id, $userId);
                     }
                 }
 
@@ -574,7 +574,7 @@ class MediaController extends BaseAdminController{
                             $error = true;
                         }
                     } else {
-                        $this->folderRepository->restoreFolder($id);
+                        $this->folderRepository->restoreFolder($id, $userId);
                     }
                 }
 
@@ -832,7 +832,7 @@ class MediaController extends BaseAdminController{
                         }
                     } else {
                         $name = $item['name'];
-                        if (in_array($name, config('core.media.media.upload.reserved_names', []))) {
+                        if (in_array($name, config('core-media.media.upload.reserved_names', []))) {
                             if (!empty($in_reserved_name)) {
                                 $in_reserved_name .= ', ';
                             }
@@ -883,39 +883,39 @@ class MediaController extends BaseAdminController{
         /**
          * @var MediaFile $file ;
          */
-        $file = $file->replicate();
-        $file->user_id = rv_media_get_current_user_id();
+        // $file = $file->replicate();
+        // $file->user_id = auth()->id();
 
-        if ($new_folder_id == null) {
-            $file->name = $file->name . '-(copy)';
+        // if ($new_folder_id == null) {
+        //     $file->name = $file->name . '-(copy)';
 
-            if (!in_array($file->type, array_merge(['video', 'youtube'], config('core.media.media.external_services')))) {
-                $folder_path = str_finish($this->folderRepository->getFullPath($file->folder_id), '/');
-                $path = $folder_path . File::name($file->url) . '-(copy)' . '.' . File::extension($file->url);
-                if (file_exists(public_path($file->url))) {
-                    $content = File::get(public_path($file->url));
+        //     if (!in_array($file->type, array_merge(['video', 'youtube'], config('core-media.media.external_services')))) {
+        //         $folder_path = str_finish($this->folderRepository->getFullPath($file->folder_id), '/');
+        //         $path = $folder_path . File::name($file->url) . '-(copy)' . '.' . File::extension($file->url);
+        //         if (file_exists(public_path($file->url))) {
+        //             $content = File::get(public_path($file->url));
 
-                    $this->uploadManager->saveFile($path, $content);
-                    $data = $this->uploadManager->fileDetails($path);
-                    $file->url = $data['url'];
+        //             $this->uploadManager->saveFile($path, $content);
+        //             $data = $this->uploadManager->fileDetails($path);
+        //             $file->url = $data['url'];
 
-                    if (is_image($this->uploadManager->fileMimeType($path))) {
-                        foreach (config('core.media.media.sizes') as $size) {
-                            $readable_size = explode('x', $size);
-                            Image::make(ltrim($file->url, '/'))->fit($readable_size[0], $readable_size[1])
-                                ->save($this->uploadManager->uploadPath($folder_path) . File::name($file->url) . '-' . $size . '.' . File::extension($file->url));
-                        }
-                    }
-                }
-            }
+        //             if (is_image($this->uploadManager->fileMimeType($path))) {
+        //                 foreach (config('core-media.media.sizes') as $size) {
+        //                     $readable_size = explode('x', $size);
+        //                     Image::make(ltrim($file->url, '/'))->fit($readable_size[0], $readable_size[1])
+        //                         ->save($this->uploadManager->uploadPath($folder_path) . File::name($file->url) . '-' . $size . '.' . File::extension($file->url));
+        //                 }
+        //             }
+        //         }
+        //     }
 
-        } else {
-            $file->url = str_replace($this->uploadManager->uploadPath($this->folderRepository->getFullPath($file->folder_id)),
-                $this->uploadManager->uploadPath($this->folderRepository->getFullPath($new_folder_id)), $file->url);
-            $file->folder_id = $new_folder_id;
-        }
+        // } else {
+        //     $file->url = str_replace($this->uploadManager->uploadPath($this->folderRepository->getFullPath($file->folder_id)),
+        //         $this->uploadManager->uploadPath($this->folderRepository->getFullPath($new_folder_id)), $file->url);
+        //     $file->folder_id = $new_folder_id;
+        // }
 
-        $this->fileRepository->createOrUpdate($file);
+        // $this->fileRepository->createOrUpdate($file);
     }
 
     /**
@@ -930,10 +930,10 @@ class MediaController extends BaseAdminController{
         if (count($items) == 1 && $items['0']['is_folder'] == 'false') {
             $file = $this->fileRepository->getFirstByWithTrash(['id' => $items[0]['id']]);
             if (!empty($file) && $file->type != 'video') {
-                if (!file_exists(public_path($file->url))) {
-                    return BMedia::responseError(trans('core-media::media.file_not_exists'));
+                if(\BFileService::isExists($file, "media_path")){
+                    return \BFileService::downloadFile($file);
                 }
-                return response()->download(public_path($file->url));
+                return BMedia::responseError(trans('core-media::media.file_not_exists'));
             }
         } else {
             if (class_exists('ZipArchive', false)) {
@@ -989,7 +989,7 @@ class MediaController extends BaseAdminController{
                 if (class_exists('ZipArchive', false)) {
                     $is_thumb = false;
                     if (in_array(mime_content_type($item), ['image/jpeg', 'image/gif', 'image/png', 'image/bmp'])) {
-                        foreach (config('core.media.media.sizes') as $size) {
+                        foreach (config('core-media.media.sizes') as $size) {
                             $size_detect = '-' . $size . '.' . File::extension($item);
                             if (strpos($item, $size_detect) !== false) {
                                 $is_thumb = true;

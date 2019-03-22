@@ -2,12 +2,10 @@
 
 namespace Core\Media\Models;
 
-use Core\Media\Repositories\Interfaces\MediaFolderInterface;
-use Core\Media\Services\UploadsManager;
-use Eloquent;
-use File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use File;
+use Eloquent;
 
 class MediaFolder extends Eloquent
 {
@@ -68,14 +66,12 @@ class MediaFolder extends Eloquent
     {
         parent::boot();
         static::deleting(function ($folder) {
-            // called BEFORE delete()
-            // Delete any shares of this folder
 
             $share_folders = MediaShare::where('share_id', '=', $folder->id)->where('share_type', '=', 'folder')->get();
-            $files = MediaFile::where('folder_id', '=', $folder->id)->get();
-            $share_files = MediaShare::join('media_files', 'media_files.id', '=', 'media_shares.share_id')
-                ->where('share_type', '=', 'file')
-                ->where('folder_id', '=', $folder->id)->get();
+            $files         = MediaFile::where('folder_id', '=', $folder->id)->get();
+            $share_files   = MediaShare::join('media_files', 'media_files.id', '=', 'media_shares.share_id')
+                            ->where('share_type', '=', 'file')
+                            ->where('folder_id', '=', $folder->id)->get();
 
             /**
              * @var MediaFolder $folder
@@ -93,9 +89,8 @@ class MediaFolder extends Eloquent
                     $share_file->forceDelete();
                 }
 
-                $uploadManager = new UploadsManager();
-
-                File::deleteDirectory($uploadManager->uploadPath(app(MediaFolderInterface::class)->getFullPath($folder->id)));
+                // $uploadManager = new UploadsManager();
+                // File::deleteDirectory($uploadManager->uploadPath(app(MediaFolderInterface::class)->getFullPath($folder->id)));
 
             } else {
 

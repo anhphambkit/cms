@@ -2,7 +2,6 @@
 
 namespace Core\Media\Models;
 
-use Core\Media\Services\UploadsManager;
 use Eloquent;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -195,10 +194,7 @@ class MediaFile extends Eloquent
              */
             if ($file->isForceDeleting()) {
                 MediaShare::where('share_id', '=', $file->id)->where('share_type', '=', 'file')->forceDelete();
-
-                $uploadManager = new UploadsManager();
-                $path = str_replace(config('core-media.media.upload.folder'), '', $file->url);
-                $uploadManager->deleteFile($path);
+                \BFileService::deleteMedia($file, "media_path");
             } else {
                 MediaShare::where('share_id', '=', $file->id)->where('share_type', '=', 'file')->delete();
             }

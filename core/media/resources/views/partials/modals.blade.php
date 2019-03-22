@@ -63,6 +63,33 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_trash_items">
+    <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+            <form class="rv-form form-delete-items">
+                <div class="modal-header bg-info white">
+                    <h4 class="modal-title white" id="myModalLabel18"><i class="fab fa-windows"></i> {{ trans('core-media::media.move_to_trash') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ trans('core-media::media.close') }}" data-dismiss-modal="#modal_trash_items">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ trans('core-media::media.confirm_trash') }}</p>
+                    <div class="modal-notice"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss-modal="#modal_trash_items">
+                        {{ trans('core-media::media.close') }}
+                    </button>
+                    <button type="submit" class="btn btn-info">
+                        {{ trans('core-media::media.confirm') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade text-left" tabindex="-1" role="dialog" id="modal_rename_items" aria-labelledby="myModalLabel18" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -140,30 +167,7 @@
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" id="modal_trash_items">
-    <div class="modal-dialog modal-danger" role="document">
-        <div class="modal-content">
-            <form class="rv-form form-delete-items">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss-modal="#modal_trash_items" aria-label="{{ trans('core-media::media.close') }}">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title">
-                        <i class="fa fa-windows"></i> {{ trans('core-media::media.move_to_trash') }}
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <p>{{ trans('core-media::media.confirm_trash') }}</p>
-                    <div class="modal-notice"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">{{ trans('core-media::media.confirm') }}</button>
-                    <button type="button" class="btn btn-primary" data-dismiss-modal="#modal_trash_items">{{ trans('core-media::media.close') }}</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modal_coming_soon">

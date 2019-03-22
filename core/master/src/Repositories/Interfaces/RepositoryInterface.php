@@ -176,7 +176,7 @@ interface RepositoryInterface
      * @param array $condition
      * @param array $select
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getFirstByWithTrash(array $condition = [], array $select = []);
 
@@ -184,4 +184,12 @@ interface RepositoryInterface
      * @param array $condition
      */
     public function forceDelete(array $condition = []);
+
+    /**
+     * @param array $condition
+     * @return mixed
+     * @author TrinhLe
+     */
+    public function restoreBy(array $condition = []);
+
 }

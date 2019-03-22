@@ -23,7 +23,8 @@ class Kernel
         Scripts\PluginActivateCommand::class,
         Scripts\PluginDeactivateCommand::class,
         Scripts\PluginRemoveCommand::class,
-        Scripts\CreateUserCommand::class
+        Scripts\CreateUserCommand::class,
+        Scripts\CommandTest::class
     ];
 
     /**

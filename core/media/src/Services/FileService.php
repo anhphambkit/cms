@@ -74,7 +74,6 @@ class FileService
 		$fileName      = FileHelper::slug($fileUpload->getClientOriginalName());
 		$extension     = substr(strrchr($fileName, '.'), 1);
 		$uuid4FileName = Uuid::uuid4() . ".{$extension}";
-			
 		return $this->fileRepository->createOrUpdate([
 			'name'          => $uuid4FileName,
 			'url'           => config('core-media.media.upload.files-path') . "{$folderPath}{$uuid4FileName}",

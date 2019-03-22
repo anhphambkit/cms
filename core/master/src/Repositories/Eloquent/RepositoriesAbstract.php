@@ -462,4 +462,17 @@ abstract class RepositoriesAbstract implements RepositoryInterface
         }
     }
 
+    /**
+     * @param array $condition
+     * @return mixed
+     * @author TrinhLe
+     */
+    public function restoreBy(array $condition = [])
+    {
+        $item = $this->model->where($condition)->withTrashed()->first();
+        if (!empty($item)) {
+            $item->restore();
+        }
+    }
+
 }

@@ -267,9 +267,19 @@ trait CachePackageRepositoriesTrait
     /**
      * @param array $condition
      * @return mixed
-     * @author Sang Nguyen
+     * @author Trinhle
      */
     public function forceDelete(array $condition = [])
+    {
+        return $this->flushCacheAndUpdateData(__FUNCTION__, func_get_args());
+    }
+
+    /**
+     * @param array $condition
+     * @return mixed
+     * @author Trinhle
+     */
+    public function restoreBy(array $condition = [])
     {
         return $this->flushCacheAndUpdateData(__FUNCTION__, func_get_args());
     }
