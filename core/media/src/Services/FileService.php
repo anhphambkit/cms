@@ -73,10 +73,11 @@ class FileService
 		$folderPath    = str_finish($this->folderRepository->getFullPath($folderId, $userId), '/');
 		$fileName      = FileHelper::slug($fileUpload->getClientOriginalName());
 		$extension     = substr(strrchr($fileName, '.'), 1);
-		$uuid4FileName = Uuid::uuid4() . ".{$extension}";
+		$uuid4FileName = Uuid::uuid4();
+
 		return $this->fileRepository->createOrUpdate([
-			'name'          => $uuid4FileName,
-			'url'           => config('core-media.media.upload.files-path') . "{$folderPath}{$uuid4FileName}",
+			'name'          => "{$uuid4FileName}.{$extension}",
+			'url'           => config('core-media.media.upload.files-path') . "{$folderPath}{$uuid4FileName}.{$extension}",
 			'size'          => $fileUpload->getFileInfo()->getSize(),
 			'mime_type'     => $fileUpload->getClientMimeType(),
 			'folder_id'     => $folderId,
@@ -84,7 +85,7 @@ class FileService
 			'options'       => request()->get('options', []),
 			'is_public'     => request()->input('view_in') == 'public' ? 1 : 0,
 			'storage'       => config('core-media.media.filesystem'),
-			'real_filename' => $fileName,
+			'real_filename' => pathinfo($fileName, PATHINFO_FILENAME),
 		]);
     }
 

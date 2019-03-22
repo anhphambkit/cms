@@ -8,7 +8,7 @@ use Core\Media\ValueObjects\MediaPath;
 use Core\Media\Image\ThumbnailManager;
 use Core\Media\Models\MediaFile as File;
 use Illuminate\Support\Collection;
-
+use Core\Media\Repositories\Interfaces\MediaFolderRepositories;
 class BFileService
 {
     /**
@@ -179,7 +179,6 @@ class BFileService
     protected function validation($file, $pathAttr = "url")
     {
         $storage = $file->storage;
-        \Log::info($storage);
         if(!in_array($storage, $this->storages)) throw new \Exception("Invalid storage type is {$storage}", 1);
         return [ $file->url, $storage ];
     }
@@ -246,27 +245,6 @@ class BFileService
      * @param type $filePath 
      * @return type
      */
-    public function storeMediaFromUrl($filePath, $locate = false, $fileName = null)
-    {
-        $localPath = public_path($filePath);
-        if(file_exists($localPath)){
-            if($locate) config()->set("asgard.media.config.files-path", $locate);
-            $file = $this->fileService->store(new UploadedFile(
-                        $localPath,
-                        $fileName ?? pathinfo($localPath, PATHINFO_BASENAME),
-                        mime_content_type($localPath),
-                        filesize($localPath))
-                    );
-            return $file;
-        }
-        // EmailException::sendErrorException(new \Exception(__("File does not exists with path: {$localPath}")));
-    }
-
-    /**
-     * Description
-     * @param type $filePath 
-     * @return type
-     */
     public function unlinkLocalFile($filePath)
     {
         $localPath = public_path($filePath);
@@ -282,8 +260,22 @@ class BFileService
      */
     public function downloadFile($file, $pathAttr = "url")
     {
-        $url = $file->{$pathAttr};
-        if($file->storage == 'local') return response()->download(storage_path("app/public/{$url}"));
-        return response()->download($filePath);
+        if($file->storage === 'local') return response()->download(storage_path("app/public{$file->url}"));
+                    
+        $filePath = $this->renderUrl($file->{$pathAttr}, $file->storage);
+        return response()->streamDownload(function () use($filePath){
+            echo file_get_contents($filePath);
+        }, pathinfo($filePath, PATHINFO_BASENAME));
+    }
+
+    /**
+     * Clean folder
+     * @param type $folder 
+     */
+    public function cleanFolder($folder)
+    {
+        $path = config('core-media.media.upload.files-path') . app(MediaFolderRepositories::class)->getFullPath($folder->id, auth()->id());
+        $this->filesystem->disk('s3')->deleteDirectory($path);
+        $this->filesystem->disk('local')->deleteDirectory("/public{$path}");
     }
 }

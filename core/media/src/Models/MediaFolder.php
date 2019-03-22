@@ -89,8 +89,7 @@ class MediaFolder extends Eloquent
                     $share_file->forceDelete();
                 }
 
-                // $uploadManager = new UploadsManager();
-                // File::deleteDirectory($uploadManager->uploadPath(app(MediaFolderInterface::class)->getFullPath($folder->id)));
+                \BFileService::cleanFolder($folder);
 
             } else {
 

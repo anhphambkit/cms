@@ -5,6 +5,8 @@ namespace Core\Base\Commands\Scripts;
 use Illuminate\Console\Command;
 use Illuminate\Support\Composer;
 use Core\Media\Models\MediaFile;
+use Core\Media\Models\MediaFolder;
+use Illuminate\Contracts\Filesystem\Factory;
 
 class CommandTest extends Command
 {
@@ -49,12 +51,20 @@ class CommandTest extends Command
     public function handle()
     {
         // MediaFile::withTrashed()->restore();
-        $file = MediaFile::find(40);
+        $file = MediaFolder::find(2);
+        $path = config('core-media.media.upload.files-path') . app(\Core\Media\Repositories\Interfaces\MediaFolderRepositories::class)->getFullPath($file->id, 1);
 
-        $url = \BFileService::renderUrl($file->url, $file->storage);
+        $localPath = "/public{$path}";
+        // app(Factory::class)->disk('s3')->deleteDirectory($path);
+        app(Factory::class)->disk('local')->deleteDirectory($localPath);
 
-        print_r($url);
+        print_r($localPath);
         print_r("\n");
+
+        // $url = \BFileService::renderUrl($file->url, $file->storage);
+
+        // print_r($url);
+        // print_r("\n");
         // \BFileService::deleteMedia($file, "media_path");
     }
 }
