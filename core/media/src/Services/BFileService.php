@@ -178,18 +178,10 @@ class BFileService
      */
     protected function validation($file, $pathAttr = "url")
     {
-        if($file instanceof File){
-            $path = ltrim($file->getAttribute($pathAttr)->getRelativeUrl(), '/');
-        }elseif(is_object($file)){
-            $path = ltrim($file->{$pathAttr}, '/');
-        }else
-            throw new \Exception("Invalid type of file, expect a collection of eloquent media file", 1);
-            
         $storage = $file->storage;
-
+        \Log::info($storage);
         if(!in_array($storage, $this->storages)) throw new \Exception("Invalid storage type is {$storage}", 1);
-
-        return [ $path, $storage ];
+        return [ $file->url, $storage ];
     }
 
     /**
@@ -226,7 +218,7 @@ class BFileService
      */
     public function renderUrl(string $path, string $storage)
     {
-        return $this->filesystem->disk($storage)->url($path);
+        return (new MediaPath($path, $storage))->getUrl();
     }
 
     /**

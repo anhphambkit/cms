@@ -142,7 +142,8 @@ class EloquentMediaFileRepositories extends RepositoriesAbstract implements Medi
                 'options',
                 'folder_id',
                 'is_public',
-                'real_filename'
+                'real_filename',
+                'storage'
             ],
             'where' => [],
             'is_public' => false,
@@ -216,7 +217,8 @@ class EloquentMediaFileRepositories extends RepositoriesAbstract implements Medi
                 'updated_at',
                 'options',
                 'folder_id',
-                'real_filename'
+                'real_filename',
+                'storage'
             ],
             'where'      => [],
             'whereNotIn' => []

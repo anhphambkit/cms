@@ -57,7 +57,7 @@ class FileService
             'mimetype' => $savedFile->mime_type,
         ]);
 
-        $this->createThumbnails($savedFile->media_path);
+        $this->createThumbnails($savedFile->url);
         return $savedFile;
     }
 
@@ -92,7 +92,7 @@ class FileService
      * Create the necessary thumbnails for the given file
      * @param $savedFile
      */
-    private function createThumbnails(MediaPath $savedFile)
+    private function createThumbnails($savedFile)
     {
         return app('imagy')->createAll($savedFile);
     }

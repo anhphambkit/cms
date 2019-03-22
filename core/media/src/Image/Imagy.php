@@ -81,35 +81,27 @@ class Imagy
      */
     public function getThumbnail($originalImage, $thumbnail)
     {
-        if ($originalImage instanceof File) {
-            $originalImage = $originalImage->url;
-        }
-
-        if (!$this->isImage($originalImage)) {
-            if ($originalImage instanceof MediaPath) {
-                return $originalImage->getUrl();
-            }
-
-            return (new MediaPath($originalImage))->getRelativeUrl();
-        }
-
-        $path = config('core-media.media.config.files-path') . $this->newFilename($originalImage, $thumbnail);
-        return (new MediaPath($path))->getUrl();
+        $url = $originalImage->url;
+        $path = config('core-media.media.config.files-path') . $this->newFilename($url, $thumbnail);
+        return (new MediaPath($path, $originalImage->storage))->getUrl();
     }
 
     /**
      * Create all thumbnails for the given image path
      * @param MediaPath $path
      */
-    public function createAll(MediaPath $path)
+    public function createAll($path)
     {
         if (!$this->isImage($path)) {
             return;
         }
 
         foreach ($this->manager->all() as $thumbnail) {
-            $image = $this->image->make($this->filesystem->disk($this->getConfiguredFilesystem())->get($this->getDestinationPath($path->getRelativeUrl())));
-            $filename = config('core-media.media.config.files-path') . $this->newFilename($path->getRelativeUrl(), $thumbnail->name());
+            $clonenode = $this->filesystem
+                            ->disk($this->getConfiguredFilesystem())
+                            ->get($this->getDestinationPath($path));
+            $image = $this->image->make($clonenode);
+            $filename = config('core-media.media.config.files-path') . $this->newFilename($path, $thumbnail->name());
             foreach ($thumbnail->filters() as $manipulation => $options) {
                 $image = $this->imageFactory->make($manipulation)->handle($image, $options);
             }

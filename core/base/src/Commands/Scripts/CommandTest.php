@@ -49,7 +49,12 @@ class CommandTest extends Command
     public function handle()
     {
         // MediaFile::withTrashed()->restore();
-        // $file = MediaFile::find(29);
+        $file = MediaFile::find(40);
+
+        $url = \BFileService::renderUrl($file->url, $file->storage);
+
+        print_r($url);
+        print_r("\n");
         // \BFileService::deleteMedia($file, "media_path");
     }
 }

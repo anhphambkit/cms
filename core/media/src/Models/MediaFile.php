@@ -194,7 +194,7 @@ class MediaFile extends Eloquent
              */
             if ($file->isForceDeleting()) {
                 MediaShare::where('share_id', '=', $file->id)->where('share_type', '=', 'file')->forceDelete();
-                \BFileService::deleteMedia($file, "media_path");
+                \BFileService::deleteMedia($file);
             } else {
                 MediaShare::where('share_id', '=', $file->id)->where('share_type', '=', 'file')->delete();
             }

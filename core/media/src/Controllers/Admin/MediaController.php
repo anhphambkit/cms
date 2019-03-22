@@ -446,7 +446,7 @@ class MediaController extends BaseAdminController{
             'name'       => $file->real_filename,
             'basename'   => File::basename($file->url),
             'url'        => $file->url,
-            'full_url'   => url($file->media_path),
+            'full_url'   => \BFileService::getMediaUrl($file),
             'type'       => $file->type,
             'icon'       => $file->icon,
             'thumb'      => $file->type == 'image' ? app('imagy')->getThumbnail($file, 'mediumThumb') : null,
@@ -930,7 +930,7 @@ class MediaController extends BaseAdminController{
         if (count($items) == 1 && $items['0']['is_folder'] == 'false') {
             $file = $this->fileRepository->getFirstByWithTrash(['id' => $items[0]['id']]);
             if (!empty($file) && $file->type != 'video') {
-                if(\BFileService::isExists($file, "media_path")){
+                if(\BFileService::isExists($file)){
                     return \BFileService::downloadFile($file);
                 }
                 return BMedia::responseError(trans('core-media::media.file_not_exists'));

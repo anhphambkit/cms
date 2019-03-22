@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'filesystem' => 'local',
+    'filesystem' => env('STORAGE_MEDIA', 'local'),
     'mode' => env('RV_MEDIA_MODE', 'advanced'), // Use "simple" or "advanced"
     'sizes' => [
         'thumb'    => '150x150',
