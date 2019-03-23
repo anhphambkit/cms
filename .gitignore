@@ -5,7 +5,8 @@
 /public/storage
 /storage/*.key
 /vendor
-/storage
+/storage/framework
+/storage/logs
 /.idea
 /.vscode
 /.vagrant
