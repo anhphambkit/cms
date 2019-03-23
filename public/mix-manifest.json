@@ -1,7 +1,7 @@
 {
-    "/frontend/core/media/assets/js/media.js": "/frontend/core/media/assets/js/media.js",
-    "/frontend/core/media/assets/js/integrate.js": "/frontend/core/media/assets/js/integrate.js",
-    "/frontend/core/media/assets/js/focus.js": "/frontend/core/media/assets/js/focus.js",
-    "/frontend/core/media/assets/css/media.css": "/frontend/core/media/assets/css/media.css",
-    "/frontend/core/media/assets/js/jquery.addMedia.js": "/frontend/core/media/assets/js/jquery.addMedia.js"
+    "/backend/core/media/assets/js/media.js": "/backend/core/media/assets/js/media.js",
+    "/backend/core/media/assets/js/integrate.js": "/backend/core/media/assets/js/integrate.js",
+    "/backend/core/media/assets/js/focus.js": "/backend/core/media/assets/js/focus.js",
+    "/backend/core/media/assets/css/media.css": "/backend/core/media/assets/css/media.css",
+    "/backend/core/media/assets/js/jquery.addMedia.js": "/backend/core/media/assets/js/jquery.addMedia.js"
 }

@@ -44,8 +44,8 @@
         <script src="{{ URL::asset($js) }}" type="text/javascript"></script>
     @endforeach
     <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-    <script src="{{ URL::asset('frontend/core/base/assets/js/datatables.js') }}"></script>
-    <script src="{{ URL::asset('frontend/core/base/assets/js/script.js') }}"></script>
+    <script src="{{ URL::asset('backend/core/base/assets/js/datatables.js') }}"></script>
+    <script src="{{ URL::asset('backend/core/base/assets/js/script.js') }}"></script>
     
     @section('scripts')
     @show

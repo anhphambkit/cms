@@ -38,7 +38,7 @@ class RoleController extends BaseAdminController
      */
     public function getCreate()
     {
-        AssetManager::addAsset('role-js', 'backend/user/role.js');
+        AssetManager::addAsset('role-js', 'backend/core/user/assets/js/role.js');
         AssetPipeline::requireCss('jquery-tree-css');
         AssetPipeline::requireJs('jquery-tree-js');
         AssetPipeline::requireJs('role-js');

@@ -11,7 +11,6 @@ let klawSync = require('klaw-sync');
 mix.disableNotifications();
 mix.webpackConfig(core);
 mix.options({ processCssUrls: false, poll: true });
-// Build specific file npm run build -- --env.pkg=frontend
 /**
  * Scan all folder in parent dir
  * @param p: path to folder
@@ -29,47 +28,76 @@ const files = (p) => {
     });
 };
 
-const scanFiles = (resourcePath, prefix = 'js') => {
+/**
+ * Parse klaw files to array path
+ * @param  {[type]} files [description]
+ * @return {[type]}       [description]
+ */
+const parseFiles = (files) => {
     let allFiles = [];
-    if (fs.existsSync(resourcePath)) {
-        let resultAllPaths = fs.readdirSync(resourcePath);
-        resultAllPaths.forEach(function (resultPath) {
-            let extension = resultPath.split('.').pop();
-            let filePath = path.resolve(resourcePath, resultPath);
-            if(fs.statSync(filePath).isFile() && (extension === prefix)) {
-                allFiles.push({
-                    filePath : filePath,
-                    fileName : resultPath
-                });
-            }
-        });
-    }
+    files.forEach(function (resultPath) {
+        if(fs.lstatSync(resultPath.path).isFile()) {
+            allFiles.push({
+                filePath : resultPath.path,
+                fileName : path.parse(resultPath.path).base
+            })
+        }
+    });
     return allFiles;
+}
+
+/**
+ * Bundle js and css for developer
+ * @param  {Object} configs [description]
+ * @param  {String} dir     [description]
+ * @return {[type]}         [description]
+ */
+const bundleDevelopment = (configs = {}, dir = 'frontend') => {
+
+    let dirscan = undefined;
+    let allFiles = [];
+    Object.keys(configs).forEach(function (key) {
+        dirscan = configs[key];
+        if(fs.existsSync(dirscan)){
+            allFiles = klawSync(dirscan);
+            allFiles = parseFiles(allFiles);
+            allFiles.forEach(function (file) {
+                let prefix   = key == 'js' ? key : 'css';
+                let tempArr  = file.fileName.split('.').slice(0, -1);
+                let fileName = [];
+                Object.keys(tempArr).map(function(index) {
+                  fileName.push(tempArr[index]);
+                });
+                fileName.push(prefix);
+                fileName = fileName.join('.');
+                let fileBuild = path.resolve(`public/${dir}/${basedir}`, packageName.toLowerCase(), `assets/${prefix}`, fileName);
+                prefix == 'js' ? mix.js(file.filePath, fileBuild).sourceMaps() : mix.sass(file.filePath, fileBuild).sourceMaps();
+            });
+        }
+    });
 }
 
 let env            = argv.env;
 let packageName    = env.pkg;
 let basedir        = env.dir || "core";
 let resourcePath   = `./${basedir}/${packageName}/resources/assets`;
-let configs        = { js : `${resourcePath}/js/build`, scss : `${resourcePath}/scss/build` };
+let configs = [
+    {
+        config: {
+            js : `${resourcePath}/js/frontend`,
+            scss : `${resourcePath}/scss/frontend`
+        },
+        key : 'frontend'
+    },
+    {
+        config: {
+            js : `${resourcePath}/js/backend`,
+            scss : `${resourcePath}/scss/backend`
+        },
+        key : 'backend'
+    },
+];
 
-/**
- * Scan file build
- * @param  {[type]} key) {              results[key] [description]
- * @return {[type]}      [description]
- */
-Object.keys(configs).forEach(function (key) {
-    let allFiles = scanFiles(configs[key], key);
-    allFiles.forEach(function (file) {
-        let prefix   = key == 'js' ? key : 'css';
-        let tempArr  = file.fileName.split('.').slice(0, -1);
-        let fileName = [];
-        Object.keys(tempArr).map(function(index) {
-          fileName.push(tempArr[index]);
-        });
-        fileName.push(prefix);
-        fileName = fileName.join('.');
-        let fileBuild = path.resolve(`public/frontend/${basedir}`, packageName.toLowerCase(), `assets/${prefix}`, fileName);
-        prefix == 'js' ? mix.js(file.filePath, fileBuild).sourceMaps() : mix.sass(file.filePath, fileBuild).sourceMaps();
-    });
-});
+configs.forEach((item) => {
+    bundleDevelopment(item.config, item.key);
+})
