@@ -4,7 +4,7 @@ namespace Core\Master\Supports;
 
 use Core\User\Models\Feature;
 use Core\User\Models\PermissionFlag;
-use Core\Base\Commands\RebuildPermissionsCommand;
+use Core\Base\Commands\Scripts\RebuildPermissionsCommand;
 
 class PermissionCommand
 {
