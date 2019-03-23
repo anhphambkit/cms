@@ -190,7 +190,7 @@
                                 <p>{{ trans('core-media::media.set_focus_description') }}</p>
                                 <div class="helper-tool-target">
                                     <img class="helper-tool-img">
-                                    <img class="reticle" src="{{ url('frontend/core/media/packages/focuspoint/images/focuspoint-target.png') }}">
+                                    <img class="reticle" src="{{ url('backend/core/media/packages/focuspoint/images/focuspoint-target.png') }}">
                                     <img class="target-overlay">
                                 </div>
                                 <p>
