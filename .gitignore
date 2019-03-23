@@ -1,10 +1,12 @@
 /node_modules
 /public/hot
+/public/frontend
+/public/backend
 /public/storage
+/public/vendor
 /storage/*.key
 /vendor
 /storage
-/public
 /.idea
 /.vscode
 /.vagrant
