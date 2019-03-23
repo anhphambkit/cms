@@ -138,41 +138,6 @@ if (function_exists('mergePathSource') === false) {
     }
 }
 
-if (function_exists('isCorePackage') === false) {
-
-    /**
-     * Check source is core or plugin
-     * @param type|string $psr4 
-     * @author TrinhLe
-     * @return bool
-     */
-    function isCorePackage(string $psr4)
-    {
-        $array = explode('-',$psr4);
-        if(empty($array))
-            throw new \Exception("Invalid package from composer.json", 1);
-        if(mb_strtolower($array[0]) === 'core')
-            return true;
-        return false;
-    }
-}
-
-if (function_exists('getBaseNamespace') === false) {
-
-    /**
-     * Get prefix namespace for core or plugin
-     * @param type|string $psr4 
-     * @author TrinhLe
-     * @return string
-     */
-    function getBaseNamespace(string $psr4)
-    {
-        if(isCorePackage($psr4))
-            return 'Core';
-        return 'Plugins';
-    }
-}
-
 if (function_exists('getPackageNamespace') === false) {
 
     /**

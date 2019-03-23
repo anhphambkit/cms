@@ -76,19 +76,19 @@ trait LoadRegisterTrait
         if (app()->environment() !== 'testing') 
         {
             if ($this->app->runningInConsole()) {
-                   
+
                 $package = getPackageNamespace($group);
-                
-                if(isCorePackage($group))
+                if(strpos($config, base_path() . "/core") === false)
                 {
                     $this->publishes([
                         $config => config_path(strtolower("core/$package/$fileName") . '.php'),
-                    ], 'config-packages');
-                }else
+                    ], "core-config:{$group}");
+                }
+                else
                 {
-                     $this->publishes([
+                    $this->publishes([
                         $config => config_path(strtolower("plugins/$package/$fileName") . '.php'),
-                    ], 'config-packages');
+                    ], "plugins-config:{$group}");
                 }
             }
         }
@@ -180,5 +180,35 @@ trait LoadRegisterTrait
     protected function flushAllCacheProvider()
     {
         return Cache::tags($this->entityCache)->flush();
+    }
+
+    /**
+     * Description
+     * @return type
+     */
+    protected function publishesAssetRegister()
+    {
+        if (app()->environment() !== 'testing') 
+        {
+            if ($this->app->runningInConsole()) {
+                $sources  = $this->loadPackages(SOURCE_ASSETS);
+                $configs = ['frontend', 'backend'];
+                foreach ($sources as $group => $dir) {
+                    $prefix = "core";
+                    if(strpos($dir, base_path() . "/{$prefix}") === false) $prefix = "plugins";
+
+                    foreach ($configs as $key => $config) {
+                        if(is_dir("{$dir}/{$config}"))
+                        {
+                            $package = getPackageNamespace($group);
+                            $this->publishes([
+                                "{$dir}/{$config}" => public_path("{$config}/{$prefix}/{$package}"),
+                            ], "assets:{$group}");
+                        }
+                    }
+
+                }
+            }
+        }
     }
 }

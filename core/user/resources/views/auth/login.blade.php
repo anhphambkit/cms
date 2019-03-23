@@ -6,7 +6,7 @@
   <title>CMS-LHT Login</title>
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link media="all" type="text/css" rel="stylesheet" href="{{ URL::asset('frontend/login/login.css') }}">
+    <link media="all" type="text/css" rel="stylesheet" href="{{ URL::asset('frontend/core/user/assets/css/login.css') }}">
 </head>
 
 <body>
@@ -122,6 +122,6 @@
 		</div>
 	{!! Form::close() !!}
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js'></script>
-	<script src="{{ URL::asset('frontend/login/login.js') }}" type="text/javascript"></script>
+	<script src="{{ URL::asset('frontend/core/user/assets/js/login.js') }}" type="text/javascript"></script>
 </body>
 </html>

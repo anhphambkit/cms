@@ -1,7 +1,5 @@
 {
-    "/backend/core/media/assets/js/media.js": "/backend/core/media/assets/js/media.js",
-    "/backend/core/media/assets/js/integrate.js": "/backend/core/media/assets/js/integrate.js",
-    "/backend/core/media/assets/js/focus.js": "/backend/core/media/assets/js/focus.js",
-    "/backend/core/media/assets/css/media.css": "/backend/core/media/assets/css/media.css",
-    "/backend/core/media/assets/js/jquery.addMedia.js": "/backend/core/media/assets/js/jquery.addMedia.js"
+    "/frontend/core/user/assets/js/login.js": "/frontend/core/user/assets/js/login.js",
+    "/frontend/core/user/assets/css/login.css": "/frontend/core/user/assets/css/login.css",
+    "/backend/core/user/assets/js/role.js": "/backend/core/user/assets/js/role.js"
 }

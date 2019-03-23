@@ -35,3 +35,7 @@ if (!defined('HOME_ROUTE_FRONTEND')) {
 if (!defined('HOME_ROUTE_BACKEND')) {
     define('HOME_ROUTE_BACKEND', 'admin.dashboard.index');
 }
+
+if (!defined('SOURCE_ASSETS')) {
+    define('SOURCE_ASSETS', '/../resources/app-assets');
+}

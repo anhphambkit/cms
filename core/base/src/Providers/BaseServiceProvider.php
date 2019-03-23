@@ -76,6 +76,7 @@ class BaseServiceProvider extends ServiceProvider
 		$this->cmsLoadTranslates();
 		$this->publishMigration();
 		$this->pushlishData();
+		$this->publishesAssetRegister();
 
 		$this->app->register(CommandServiceProvider::class);
 		$this->app->register(RouteServiceProvider::class);
