@@ -1,0 +1,10 @@
+{
+    "name": "Productcategory",
+    "provider": "Plugins\\Productcategory\\Providers\\ProductcategoryServiceProvider",
+    "plugin": "Plugins\\Productcategory\\Plugin",
+    "author": "Trinh Le",
+    "version": "1.0",
+    "description": "Productcategory",
+    "namespace": "Plugins\\Productcategory\\",
+    "src": "plugins/productcategory/src"
+}

@@ -42,7 +42,8 @@
             "Core\\Setting\\": "core/setting/src",
             "Core\\Theme\\": "core/theme/src",
             "Core\\User\\": "core/user/src",
-            "Core\\Dashboard\\": "core/dashboard/src"
+            "Core\\Dashboard\\": "core/dashboard/src",
+            "Plugins\\Productcategory\\": "plugins/productcategory/src"
         },
         "files": [
             "helpers.php"

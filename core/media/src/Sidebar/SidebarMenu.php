@@ -13,7 +13,7 @@ class SidebarMenu extends CoreSidebar
 		return [
 			[
 				'id'          => 'cms-core-media',
-				'priority'    => 1,
+				'priority'    => 3,
 				'parent_id'   => null,
 				'name'        => __('Manage Media'),
 				'icon'        => 'la la-unlock',

@@ -86,9 +86,21 @@ class BaseServiceProvider extends ServiceProvider
 		$this->app->register(MediaServiceProvider::class);
 		
         add_filter(DASHBOARD_FILTER_MENU_NAME, [\Core\Dashboard\Hooks\DashboardMenuHook::class, 'renderMenuDashboard']);
-
+        add_filter(BASE_FILTER_GET_LIST_DATA, [$this, 'addLanguageColumn'], 50, 2);
+        
         Event::listen(SessionStarted::class, function () {
             dashboard_menu()->loadRegisterMenus();
         });
 	}
+
+	/**
+     * @param $data
+     * @param $screen
+     * @return mixed
+     * @author Sang Nguyen
+     */
+    public function addLanguageColumn($data, $screen)
+    {
+        return $data;
+    }
 }

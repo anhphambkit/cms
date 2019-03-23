@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Media\Http\Controllers;
+namespace Core\Media\Controllers\Admin;
 
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Validation\ValidationException;

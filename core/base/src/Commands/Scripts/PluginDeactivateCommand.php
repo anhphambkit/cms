@@ -84,13 +84,13 @@ class PluginDeactivateCommand extends Command
                 $plugin->alias = strtolower($plugin_folder);
                 $plugin->status = 0;
                 app(PluginRepositories::class)->createOrUpdate($plugin);
-                cache()->forget(md5('cache-dashboard-menu'));
                 $this->flushAllCacheProvider();
                 $this->line('<info>Deactivate plugin successfully!</info>');
             } else {
                 $this->line('<info>This plugin is deactivated already!</info>');
             }
         }
+        cache()->forget(md5('cache-dashboard-menu'));
 
         if (!$this->files->isDirectory($location)) {
             $this->error('This plugin is not exists.');

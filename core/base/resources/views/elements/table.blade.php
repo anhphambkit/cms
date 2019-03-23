@@ -1,4 +1,8 @@
-@extends('bases::layouts.master')
+@extends('layouts.master')
 @section('content')
-    @include('bases::elements.tables.datatables', [get_defined_vars()['__data']])
-@stop
+<div class="row">
+    <div class="col-12">
+        @include('core-base::elements.tables.datatables', [get_defined_vars()['__data']])
+    </div>
+</div>
+@endsection

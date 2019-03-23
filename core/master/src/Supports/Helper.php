@@ -40,6 +40,5 @@ class Helper
                 File::requireOnce($helper);
             }
         }
-            
     }
 }

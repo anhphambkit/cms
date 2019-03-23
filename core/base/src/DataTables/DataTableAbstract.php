@@ -312,4 +312,16 @@ abstract class DataTableAbstract extends YajraTable
     {
         return [];
     }
+
+    /**
+     * @param array $data
+     * @param array $mergeData
+     * @param string $view
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
+     * @author TrinhLe
+     */
+    public function renderTable($data = [], $mergeData = [], $view = 'core-base::elements.table')
+    {
+        return parent::render($view, $data, $mergeData);
+    }
 }

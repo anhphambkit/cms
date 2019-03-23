@@ -25,7 +25,7 @@ class {Plugin}ServiceProvider extends ServiceProvider
             });
         } else {
             $this->app->singleton({Plugin}Repositories::class, function () {
-                return new Eloquent{Plugin}Repositories(new \Core\User\Models\{Plugin}());
+                return new Eloquent{Plugin}Repositories(new \Plugins\{Plugin}\Models\{Plugin}());
             });
         }
     }

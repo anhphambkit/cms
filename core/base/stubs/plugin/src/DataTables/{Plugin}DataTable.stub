@@ -64,24 +64,28 @@ class {Plugin}DataTable extends DataTableAbstract
         return [
             'id' => [
                 'name' => '{plugin}.id',
-                'title' => trans('bases::tables.id'),
+                'title' => trans('core-base::tables.id'),
+                'footer' => trans('core-base::tables.id'),
                 'width' => '20px',
                 'class' => 'searchable searchable_id',
             ],
             'name' => [
                 'name' => '{plugin}.name',
-                'title' => trans('bases::tables.name'),
+                'title' => trans('core-base::tables.name'),
+                'footer' => trans('core-base::tables.name'),
                 'class' => 'text-left searchable',
             ],
             'created_at' => [
                 'name' => '{plugin}.created_at',
-                'title' => trans('bases::tables.created_at'),
+                'title' => trans('core-base::tables.created_at'),
+                'footer' => trans('core-base::tables.created_at'),
                 'width' => '100px',
                 'class' => 'searchable',
             ],
             'status' => [
                 'name' => '{plugin}.status',
-                'title' => trans('bases::tables.status'),
+                'title' => trans('core-base::tables.status'),
+                'footer' => trans('core-base::tables.status'),
                 'width' => '100px',
             ],
         ];
@@ -108,6 +112,7 @@ class {Plugin}DataTable extends DataTableAbstract
      */
     public function actions()
     {
+        return [];
         return [
             'delete' => [
                 'link' => route('{plugin}.delete.many'),

@@ -5,7 +5,7 @@ namespace Plugins\{Plugin}\Controllers\Admin;
 use Illuminate\Http\Request;
 use Plugins\{Plugin}\Requests\{Plugin}Request;
 use Plugins\{Plugin}\Repositories\Interfaces\{Plugin}Repositories;
-use Plugins\{Plugin}\Http\DataTables\{Plugin}DataTable;
+use Plugins\{Plugin}\DataTables\{Plugin}DataTable;
 use Core\Base\Controllers\Admin\BaseAdminController;
 
 class {Plugin}Controller extends BaseAdminController
@@ -34,9 +34,9 @@ class {Plugin}Controller extends BaseAdminController
     public function getList({Plugin}DataTable $dataTable)
     {
 
-        page_title()->setTitle(trans('{plugin}::{plugin}.list'));
+        // page_title()->setTitle(trans('{plugin}::{plugin}.list'));
 
-        return $dataTable->renderTable(['title' => trans('{plugin}::{plugin}.list')]);
+        return $dataTable->renderTable(['title' => trans('plugins-{plugin}::{plugin}.list')]);
     }
 
     /**
@@ -46,7 +46,7 @@ class {Plugin}Controller extends BaseAdminController
      */
     public function getCreate()
     {
-        page_title()->setTitle(trans('{plugin}::{plugin}.create'));
+        // page_title()->setTitle(trans('{plugin}::{plugin}.create'));
 
         return view('{plugin}::create');
     }
@@ -85,7 +85,7 @@ class {Plugin}Controller extends BaseAdminController
             abort(404);
         }
 
-        page_title()->setTitle(trans('{plugin}::{plugin}.edit') . ' #' . $id);
+        // page_title()->setTitle(trans('{plugin}::{plugin}.edit') . ' #' . $id);
 
         return view('{plugin}::edit', compact('{plugin}'));
     }

@@ -39,3 +39,6 @@ if (!defined('HOME_ROUTE_BACKEND')) {
 if (!defined('SOURCE_ASSETS')) {
     define('SOURCE_ASSETS', '/../resources/app-assets');
 }
+if (!defined('BASE_FILTER_GET_LIST_DATA')) {
+    define('BASE_FILTER_GET_LIST_DATA', 'get_list_data');
+}
