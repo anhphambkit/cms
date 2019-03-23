@@ -95,7 +95,7 @@ class PluginRemoveCommand extends Command
 
                 $composer = get_file_data(base_path() . '/composer.json');
                 if (!empty($composer)) {
-                    unset($composer['autoload']['psr-4']['Botble\\' . studly_case($plugin) . '\\']);
+                    unset($composer['autoload']['psr-4']['Plugins\\' . studly_case($plugin) . '\\']);
                     save_file_data(base_path() . '/composer.json', $composer);
                 }
 
