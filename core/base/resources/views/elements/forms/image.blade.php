@@ -3,7 +3,7 @@
            name="{{ $name }}"
            value="{{ $value }}"
            class="image-data">
-    <img src="{{ get_object_image($value, 'thumb') }}"
+    <img src="{{ get_object_image($value, 'mediumThumb') }}"
         alt="preview image" class="preview_image">
     <div class="image-box-actions">
         <a class="btn_gallery" data-result="{{ $name }}" data-action="{{ $attributes['action'] or 'select-image' }}">

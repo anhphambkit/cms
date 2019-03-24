@@ -23,14 +23,18 @@ if (!function_exists('get_image_url')) {
      * @return mixed
      * @author TrinhLe
      */
-    function get_image_url($url, $size = null, $relative_path = false, $default = null)
+    function get_image_url($url, $thumbnail = null, $relative_path = false, $default = null)
     {
         if (empty($url)) {
             return $default;
         }
 
-        if (array_key_exists($size, config('core-media.media.sizes'))) {
-            $url = str_replace(File::name($url) . '.' . File::extension($url), File::name($url) . '-' . config('core-media.media.sizes.' . $size) . '.' . File::extension($url), $url);
+        if($thumbnail && \BFileService::isImage($url))
+        {
+            $extension = pathinfo($url, PATHINFO_EXTENSION);
+            $dirname   = pathinfo($url, PATHINFO_DIRNAME);
+            $filename  = pathinfo($url, PATHINFO_FILENAME);
+            $url = "{$dirname}/{$filename}_{$thumbnail}.{$extension}";
         }
 
         if ($relative_path) {
