@@ -1,5 +1,5 @@
-{!! RvMedia::renderHeader() !!}
+{!! BMedia::renderHeader() !!}
 
-{!! RvMedia::renderContent() !!}
+{!! BMedia::renderContent() !!}
 
-{!! RvMedia::renderFooter() !!}
+{!! BMedia::renderFooter() !!}

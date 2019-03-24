@@ -7,10 +7,10 @@
         alt="preview image" class="preview_image">
     <div class="image-box-actions">
         <a class="btn_gallery" data-result="{{ $name }}" data-action="{{ $attributes['action'] or 'select-image' }}">
-            {{ trans('bases::forms.choose_image') }}
+            {{ trans('core-base::forms.choose_image') }}
         </a> |
         <a class="btn_remove_image">
-            {{ trans('bases::forms.remove_image') }}
+            {{ trans('core-base::forms.remove_image') }}
         </a>
     </div>
 </div>

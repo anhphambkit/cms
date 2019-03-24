@@ -36,7 +36,7 @@ if (!function_exists('get_image_url')) {
         if ($relative_path) {
             return $url;
         }
-        return url("/storage{$url}");
+        return url($url);
     }
 }
 
