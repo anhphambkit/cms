@@ -17,8 +17,6 @@
 	                <div class="card-body">
 	                	{!! Form::open() !!}
 		                	<div class="form-body">
-
-		                		{!! Form::mediaImage('image', old('image')) !!}
 	                    		<div class="row">
 	                    			<div class="form-group col-12 mb-2 @if ($errors->has('name')) has-error @endif">
 	                    				<label for="eventInput1">{{ __('Role Name') }}</label>
