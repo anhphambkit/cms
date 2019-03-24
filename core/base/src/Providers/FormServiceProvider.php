@@ -15,6 +15,12 @@ class FormServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Form::component('mediaImage', 'core-base::elements.forms.image', [
+            'name',
+            'value' => null,
+            'attributes' => [],
+        ]);
+
         Form::component('modalAction', 'core-base::elements.forms.modal', [
             'name',
             'title',

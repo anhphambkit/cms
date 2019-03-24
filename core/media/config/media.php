@@ -88,7 +88,7 @@ return [
         ],
     ],
     'max_file_size_upload' => env('RV_MEDIA_MAX_FILE_SIZE_UPLOAD', 10 * 1024), // Maximum size to upload
-    'default-img'          => env('RV_MEDIA_DEFAULT_IMAGE', '/vendor/core/images/default-image.png'), // Default image
+    'default-img'          => env('RV_MEDIA_DEFAULT_IMAGE', '/backend/core/media/images/default-image.png'), // Default image
     'sidebar_display'      => env('RV_MEDIA_SIDEBAR_DISPLAY', 'horizontal'), // Use "vertical" or "horizontal"
     'user_attributes'      => 'users.id, CONCAT(users.first_name, " ", users.last_name) AS name',
     'layouts' => [

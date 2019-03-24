@@ -86,7 +86,7 @@ class MediaController extends BaseAdminController{
      */
     public function getPopup()
     {
-        return view('media::popup')->render();
+        return view('core-media::popup')->render();
     }
 
     /**
@@ -445,7 +445,7 @@ class MediaController extends BaseAdminController{
             'id'         => $file->id,
             'name'       => $file->real_filename,
             'basename'   => File::basename($file->url),
-            'url'        => $file->url,
+            'url'        => \BFileService::getMediaUrl($file), // value insert from modal
             'full_url'   => \BFileService::getMediaUrl($file),
             'type'       => $file->type,
             'icon'       => $file->icon,
