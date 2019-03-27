@@ -30,7 +30,7 @@
             <li class="rv-media-list-title up-one-level js-up-one-level" title="{{ trans('core-media::media.up_level') }}">
                 <div class="custom-checkbox"></div>
                 <div class="rv-media-file-name">
-                    <i class="fa fa-level-up"></i>
+                    <i class="fas fa-level-up-alt"></i>
                     <span>...</span>
                 </div>
                 <div class="rv-media-file-size"></div>
@@ -51,7 +51,7 @@
             <li class="rv-media-list-title up-one-level js-up-one-level">
                 <div class="rv-media-item" data-context="__type__" title="{{ trans('core-media::media.up_level') }}">
                     <div class="rv-media-thumbnail">
-                        <i class="fa fa-level-up"></i>
+                        <i class="fas fa-level-up-alt"></i>
                     </div>
                     <div class="rv-media-description">
                         <div class="title">...</div>
