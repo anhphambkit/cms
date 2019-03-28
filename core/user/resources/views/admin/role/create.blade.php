@@ -4,7 +4,7 @@
 		<div class="col-md-12">
 	        <div class="card">
 	            <div class="card-header">
-	                <h4 class="card-title" id="from-actions-top-bottom-center">New Roles</h4>
+	                <h4 class="card-title" id="from-actions-top-bottom-center">{{ __('New Role') }}</h4>
 	                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
         			<div class="heading-elements">
 	                    <ul class="list-inline mb-0">
@@ -41,15 +41,15 @@
 							                </h4>
 							            </div>
 							            <div class="widget-body">
-							                @include('core-user::roles.role-permissions')
+							                @include('core-user::admin.role.role-permissions')
 							            </div>
 							        </div>
 	                    		</div>	
 							</div>
 							<div class="form-actions clearfix">
 	                            <div class="buttons-group float-right">
-	                            	<a href="{{ route('admin.role.index') }}" class="btn btn-default" id="cancelButton">{{ __('Cancel') }}</a>
-				                    <input type="submit" value="{{ __('Create Role') }}" class="btn btn-success">
+	                            	<a href="{{ route('admin.role.index') }}" class="btn btn-light" id="cancelButton">{{ __('Cancel') }}</a>
+				                    <input type="submit" value="{{ __('Create Role') }}" class="btn btn-info">
 	                            </div>
 	                        </div>
 				    	{!! Form::close() !!}

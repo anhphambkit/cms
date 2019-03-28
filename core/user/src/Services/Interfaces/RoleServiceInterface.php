@@ -8,7 +8,7 @@ interface RoleServiceInterface extends CoreServiceInterface
 	 * Get flags
 	 * @param array $array 
 	 * @author TrinhLe
-	 * @return mixed
+	 * @return array
 	 */
 	public function getFlagsPermission():array;
 }

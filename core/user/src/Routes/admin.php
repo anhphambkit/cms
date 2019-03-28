@@ -50,6 +50,15 @@ $router->group(['prefix' =>'role'], function (Router $router) {
         'middleware' => 'access:role.create'
     ]);
 
+    $router->post('/create', [
+        'as' => 'admin.role.create',
+        'uses' => 'RoleController@postCreate',
+        'middleware' => 'access:role.create'
+    ]);
+
+
+    
+
     $router->get('/roles/assign', [
         'as' => 'admin.roles.assign',
         'uses' => 'RoleController@index',
@@ -62,13 +71,13 @@ $router->group(['prefix' =>'role'], function (Router $router) {
         'middleware' => 'access:role.list'
     ]);
 
-    $router->get('/edit', [
+    $router->get('/edit/{id}', [
         'as' => 'admin.role.edit',
-        'uses' => 'RoleController@index',
+        'uses' => 'RoleController@getEdit',
         'middleware' => 'access:role.edit'
     ]);
 
-    $router->delete('/delete', [
+    $router->delete('/delete/{id}', [
         'as' => 'admin.role.delete',
         'uses' => 'RoleController@index',
         'middleware' => 'access:role.delete'
