@@ -1,9 +1,9 @@
 <?php
 
-namespace Botble\ACL\Listeners;
+namespace Core\User\Events\Listeners;
 
-use Botble\ACL\Events\RoleUpdateEvent;
-use Botble\ACL\Repositories\Interfaces\UserInterface;
+use Core\User\Events\RoleUpdateEvent;
+use Core\User\Repositories\Interfaces\UserInterface;
 
 class RoleUpdateListener
 {
@@ -31,7 +31,6 @@ class RoleUpdateListener
      */
     public function handle(RoleUpdateEvent $event)
     {
-        info('Role ' . $event->role->name . ' updated; rebuilding permission sets');
         $permissions = [];
         foreach ($event->role->flags()->get() as $flag) {
             $permissions[$flag->flag] = true;

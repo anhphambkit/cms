@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\User\Listeners;
+namespace Core\User\Events\Listeners;
 
 use Core\User\Events\AuditHandlerEvent;
 use Core\User\Models\AuditHistory;

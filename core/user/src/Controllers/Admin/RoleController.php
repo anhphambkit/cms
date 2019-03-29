@@ -114,6 +114,43 @@ class RoleController extends BaseAdminController
     }
 
     /**
+     * @param $id
+     * @param RoleCreateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @author TrinhLe
+     */
+    public function postEdit($id, RoleCreateRequest $request)
+    {
+        $role = $this->roleRepository->findById((int)$id);
+        if (!$role) return redirect()->route('admin.role.index')->with('error', __('Role not found'));
+
+        $role->name        = $request->input('name');
+        $role->description = $request->input('description');
+        $role->updated_by  = auth()->id();
+        $role->is_staff    = $request->input('is_staff', 0);
+        $role->is_default  = $request->input('is_default', 0);
+        $this->roleRepository->createOrUpdate($role);
+
+        $this->roleFlag->deleteBy(['role_id' => $role->id]);
+
+        if (!empty($request->input('flags'))) {
+            $role_flags = [];
+            foreach ($request->input('flags') as $flag) {
+                $role_flags[] = [
+                        'role_id' => $role->id,
+                        'flag_id' => (int) $flag,
+                    ];
+            }
+            $this->roleFlag->insert($role_flags);
+        }
+
+        event(new RoleUpdateEvent($role));
+
+        return redirect()->route('admin.role.edit', $id)
+            ->with('success_msg', trans('core.user::permissions.modified_success'));
+    }
+
+    /**
      * Add frontend plugins for layout
      * @author TrinhLe
      */

@@ -462,3 +462,5 @@ $(document).ready(function () {
     // Lcms.handleCounterup();
     Lcms.initMediaIntegrate();
 });
+
+window.Lcms = Lcms;
