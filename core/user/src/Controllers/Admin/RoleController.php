@@ -9,10 +9,10 @@ use Core\User\Services\Interfaces\RoleServiceInterface;
 use Core\User\Repositories\Interfaces\RoleInterface;
 use Core\User\Repositories\Interfaces\RoleFlagRepositories;
 use Core\User\Requests\RoleCreateRequest;
+use Core\User\Events\RoleUpdateEvent;
 
 class RoleController extends BaseAdminController
 {
-    
     /**
      * @var RoleServiceInterface
      */
@@ -49,7 +49,7 @@ class RoleController extends BaseAdminController
     /**
      * Show page dashboard role
      * @author TrinhLe
-     * @return View
+     * @return Illuminate\View\View
      */
     public function getCreate()
     {
@@ -65,7 +65,7 @@ class RoleController extends BaseAdminController
     /**
      * Show page dashboard role
      * @author TrinhLe
-     * @return View
+     * @return Illuminate\View\View
      */
     public function postCreate(RoleCreateRequest $request)
     {
@@ -123,7 +123,7 @@ class RoleController extends BaseAdminController
     {
         $role = $this->roleRepository->findById((int)$id);
         if (!$role) return redirect()->route('admin.role.index')->with('error', __('Role not found'));
-
+       
         $role->name        = $request->input('name');
         $role->description = $request->input('description');
         $role->updated_by  = auth()->id();
@@ -147,7 +147,53 @@ class RoleController extends BaseAdminController
         event(new RoleUpdateEvent($role));
 
         return redirect()->route('admin.role.edit', $id)
-            ->with('success_msg', trans('core.user::permissions.modified_success'));
+            ->with('success_msg', trans('core-user::permissions.modified_success'));
+    }
+
+    /**
+     * Delete a role
+     *
+     * @param $id
+     * @return array
+     * @author TrinhLe
+     */
+    public function getDelete($id)
+    {
+        $role = $this->roleRepository->findById($id);
+
+        if (!$role) {
+            abort(404);
+        }
+
+        if ($role->reference !== 'global') {
+            $role->delete();
+            return [
+                'error' => false,
+                'message' => trans('core-user::permissions.delete_success'),
+            ];
+        } else {
+            return [
+                'error' => true,
+                'message' => trans('core-user::permissions.delete_global_role'),
+            ];
+        }
+    }
+
+    /**
+     * @return array
+     * @author Sang Nguyen
+     */
+    public function getJson()
+    {
+        $pl = [];
+        foreach ($this->roleRepository->all() as $role) {
+            $pl[] = [
+                'value' => $role->id,
+                'text' => $role->name,
+            ];
+        }
+
+        return $pl;
     }
 
     /**

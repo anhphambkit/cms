@@ -13,7 +13,7 @@
         className: 'buttons-excel',
 
         text: function (dt) {
-            return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.excel', Botble.languages.tables.excel);
+            return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.excel', Lcms.languages.tables.excel);
         },
 
         action: function (e, dt) {
@@ -27,7 +27,7 @@
         className: 'buttons-export',
 
         text: function (dt) {
-            return '<i class="fa fa-download"></i> ' + dt.i18n('buttons.export', Botble.languages.tables.export) + '&nbsp;<span class="caret"/>';
+            return '<i class="fa fa-download"></i> ' + dt.i18n('buttons.export', Lcms.languages.tables.export) + '&nbsp;<span class="caret"/>';
         },
 
         buttons: ['csv', 'excel', 'pdf']
@@ -37,7 +37,7 @@
         className: 'buttons-csv',
 
         text: function (dt) {
-            return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.csv', Botble.languages.tables.csv);
+            return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.csv', Lcms.languages.tables.csv);
         },
 
         action: function (e, dt) {
@@ -49,7 +49,7 @@
         className: 'buttons-pdf',
 
         text: function (dt) {
-            return '<i class="fa fa-file-pdf-o"></i> ' + dt.i18n('buttons.pdf', Botble.languages.tables.pdf);
+            return '<i class="fa fa-file-pdf-o"></i> ' + dt.i18n('buttons.pdf', Lcms.languages.tables.pdf);
         },
 
         action: function (e, dt) {
@@ -61,7 +61,7 @@
         className: 'buttons-print',
 
         text: function (dt) {
-            return '<i class="fa fa-print"></i> ' + dt.i18n('buttons.print', Botble.languages.tables.print);
+            return '<i class="fa fa-print"></i> ' + dt.i18n('buttons.print', Lcms.languages.tables.print);
         },
 
         action: function (e, dt) {
@@ -73,7 +73,7 @@
         className: 'buttons-reset',
 
         text: function (dt) {
-            return '<i class="fa fa-undo"></i> ' + dt.i18n('buttons.reset', Botble.languages.tables.reset);
+            return '<i class="fa fa-undo"></i> ' + dt.i18n('buttons.reset', Lcms.languages.tables.reset);
         },
 
         action: function (e, dt) {
@@ -87,7 +87,7 @@
         className: 'buttons-reload',
 
         text: function (dt) {
-            return '<i class="fa fa-refresh"></i> ' + dt.i18n('buttons.reload', Botble.languages.tables.reload);
+            return '<i class="fa fa-refresh"></i> ' + dt.i18n('buttons.reload', Lcms.languages.tables.reload);
         },
 
         action: function (e, dt) {
@@ -116,14 +116,14 @@
                     type: 'GET',
                     success: function (data) {
                         if (data.error) {
-                            Botble.showNotice('error', data.message, Botble.languages.notices_msg.error);
+                            Lcms.showNotice('error', data.message, Lcms.languages.notices_msg.error);
                         } else {
                             window.LaravelDataTables['dataTableBuilder'].row($('a[data-section="' + deleteURL + '"]').closest('tr')).remove().draw();
-                            Botble.showNotice('success', data.message, Botble.languages.notices_msg.success);
+                            Lcms.showNotice('success', data.message, Lcms.languages.notices_msg.success);
                         }
                     },
                     error: function (data) {
-                        Botble.handleError(data);
+                        Lcms.handleError(data);
                     }
                 });
             });
@@ -157,7 +157,7 @@
                         data: {'ids': ids},
                         success: function (data) {
                             if (data.error) {
-                                Botble.showNotice('error', data.message, Botble.languages.notices_msg.error);
+                                Lcms.showNotice('error', data.message, Lcms.languages.notices_msg.error);
                             } else {
                                 $.each(ids, function (index, item) {
                                     $(document).find('.group-checkable').prop('checked', false);
@@ -174,11 +174,11 @@
                                         _self.closest('tr').find('td > span.status-label').removeClass(success).addClass(danger).text(action_item.text());
                                     }
                                 });
-                                Botble.showNotice('success', data.message, Botble.languages.notices_msg.success);
+                                Lcms.showNotice('success', data.message, Lcms.languages.notices_msg.success);
                             }
                         },
                         error: function (data) {
-                            Botble.handleError(data);
+                            Lcms.handleError(data);
                         }
                     });
                 }
@@ -202,37 +202,37 @@
                     data: {'ids': ids},
                     success: function (data) {
                         if (data.error) {
-                            Botble.showNotice('error', data.message, Botble.languages.notices_msg.error);
+                            Lcms.showNotice('error', data.message, Lcms.languages.notices_msg.error);
                         } else {
                             $(document).find('.group-checkable').prop('checked', false);
                             $.uniform.update($(document).find('.group-checkable'));
                             $.each(ids, function (index, item) {
                                 window.LaravelDataTables['dataTableBuilder'].row($('.checkboxes[value="' + item + '"]').closest('tr')).remove().draw();
                             });
-                            Botble.showNotice('success', data.message, Botble.languages.notices_msg.success);
+                            Lcms.showNotice('success', data.message, Lcms.languages.notices_msg.success);
                         }
                     },
                     error: function (data) {
-                        Botble.handleError(data);
+                        Lcms.handleError(data);
                     }
                 });
             });
 
-            // $(document).find('.dataTables_filter input[type=search]').prop('placeholder', Botble.languages.tables.filter.trim());
+            $(document).find('.dataTables_filter input[type=search]').prop('placeholder', Lcms.languages.tables.filter.trim());
 
-            // $(document).find('.dataTables_length select').select2({
-            //     minimumResultsForSearch: Infinity,
-            //     width: 70
-            // }).removeClass('form-control');
+            $(document).find('.dataTables_length select').select2({
+                minimumResultsForSearch: Infinity,
+                width: 70
+            }).removeClass('form-control');
 
-            // if (window.LaravelDataTables['dataTableBuilder']) {
-            //     window.LaravelDataTables['dataTableBuilder'].on('draw.dt', function () {
-            //         $('.tip').tooltip({placement: 'top'});
-            //         if ($.fn.editable) {
-            //             $('.editable').editable();
-            //         }
-            //     });
-            // }
+            if (window.LaravelDataTables['dataTableBuilder']) {
+                window.LaravelDataTables['dataTableBuilder'].on('draw.dt', function () {
+                    $('.tip').tooltip({placement: 'top'});
+                    if ($.fn.editable) {
+                        $('.editable').editable();
+                    }
+                });
+            }
 
             $('.group-checkable').uniform();
 

@@ -10,6 +10,7 @@ return [
 		'toastr-js'      => ['theme' => 'plugins/toastr/toastr.min.js'],
 		'jquery-ui-js'   => ['theme' => 'plugins/jquery-ui/jquery-ui.min.js'],
 		'uniform-js'     => ['theme' => 'plugins/uniform/jquery.uniform.min.js'],
+		'editable-js'    => ['theme' => 'plugins/bootstrap-editable/bootstrap-editable.min.js'],
 
 		/* css */
 		'vendors-css'              => ['theme' => 'app-assets/css/vendors.css'],
@@ -21,6 +22,7 @@ return [
 		'jquery-tree-css'          => ['theme' => 'plugins/jquery-tree/jquery.tree.min.css'],
 		'toastr-css'               => ['theme' => 'plugins/toastr/toastr.min.css'],
 		'jquery-ui-css'            => ['theme' => 'plugins/jquery-ui/jquery-ui.min.css'],
+		'editable-css'             => ['theme' => 'plugins/bootstrap-editable/bootstrap-editable.css'],
 	],
 
 	'frontend-assets' => [

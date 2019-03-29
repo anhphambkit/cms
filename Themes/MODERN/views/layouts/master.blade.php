@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
     <script src="{{ URL::asset('backend/core/media/packages/dropzone/dropzone.js') }}"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     
     @foreach($cssFiles as $css)
         <link media="all" type="text/css" rel="stylesheet" href="{{ URL::asset($css) }}">
@@ -43,6 +44,7 @@
     @foreach($jsFiles as $js)
         <script src="{{ URL::asset($js) }}" type="text/javascript"></script>
     @endforeach
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="{{ URL::asset('backend/core/base/assets/js/datatables.js') }}"></script>
     <script src="{{ URL::asset('backend/core/base/assets/js/script.js') }}"></script>

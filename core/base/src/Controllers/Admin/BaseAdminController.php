@@ -10,7 +10,5 @@ abstract class BaseAdminController extends Controller
      * Constructor
      * @author TrinhLe
      */
-    public function __construct()
-    {
-    }
+    public function __construct(){}
 }
