@@ -114,11 +114,11 @@ if (!function_exists('table_status')) {
         if (empty($statuses) || !is_array($statuses)) {
             $statuses = [
                 0 => [
-                    'class' => 'label-danger',
+                    'class' => 'btn-danger',
                     'text' => __('Deactivated'),
                 ],
                 1 => [
-                    'class' => 'label-success',
+                    'class' => 'btn-info',
                     'text' => __('Activated'),
                 ],
             ];

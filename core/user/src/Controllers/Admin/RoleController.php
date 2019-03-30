@@ -3,13 +3,17 @@ namespace Core\User\Controllers\Admin;
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Validation\ValidationException;
 use Core\User\DataTables\RoleDataTable;
-use AssetManager;
-use AssetPipeline;
 use Core\User\Services\Interfaces\RoleServiceInterface;
 use Core\User\Repositories\Interfaces\RoleInterface;
 use Core\User\Repositories\Interfaces\RoleFlagRepositories;
+use Core\User\Repositories\Interfaces\RoleUserRepositories;
+use Core\User\Repositories\Interfaces\UserInterface;
 use Core\User\Requests\RoleCreateRequest;
+use Core\User\Requests\PostAssignRoleRequest;
 use Core\User\Events\RoleUpdateEvent;
+use Core\User\Events\RoleAssignmentEvent;
+use AssetManager;
+use AssetPipeline;
 
 class RoleController extends BaseAdminController
 {
@@ -28,11 +32,23 @@ class RoleController extends BaseAdminController
      */
     protected $roleFlag;
 
-    function __construct(RoleServiceInterface $roleService, RoleInterface $roleRepository, RoleFlagRepositories $roleFlag)
-    {
-        $this->roleService    = $roleService;
-        $this->roleRepository = $roleRepository;
-        $this->roleFlag       = $roleFlag;
+    /**
+     * @var RoleUserRepositories
+     */
+    protected $roleUserRepository;
+
+    function __construct(
+        RoleServiceInterface $roleService, 
+        RoleInterface $roleRepository, 
+        RoleFlagRepositories $roleFlag,
+        UserInterface $userRepository,
+        RoleUserRepositories $roleUserRepository
+    ){
+        $this->roleService        = $roleService;
+        $this->roleRepository     = $roleRepository;
+        $this->roleFlag           = $roleFlag;
+        $this->userRepository     = $userRepository;
+        $this->roleUserRepository = $roleUserRepository;
     }
 
     /**
@@ -148,6 +164,24 @@ class RoleController extends BaseAdminController
 
         return redirect()->route('admin.role.edit', $id)
             ->with('success_msg', trans('core-user::permissions.modified_success'));
+    }
+
+    /**
+     * @param Request $request
+     * @author TrinhLe
+     */
+    public function postAssignMember(PostAssignRoleRequest $request)
+    {
+        $user = $this->userRepository->findById($request->input('pk'));
+        $role = $this->roleRepository->findById($request->input('value'));
+        $this->roleUserRepository->deleteBy(['user_id' => $user->id]);
+
+        $this->roleUserRepository->createOrUpdate([
+            'user_id' => $user->id,
+            'role_id' => $role->id,
+        ]);
+
+        event(new RoleAssignmentEvent($role, $user));
     }
 
     /**

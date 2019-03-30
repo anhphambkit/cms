@@ -80,10 +80,9 @@ $router->group(['prefix' =>'role'], function (Router $router) {
         'middleware' => 'access:role.delete'
     ]);
 
-
-    $router->get('/roles/assign', [
+    $router->post('/roles/assign', [
         'as' => 'admin.roles.assign',
-        'uses' => 'RoleController@index',
+        'uses' => 'RoleController@postAssignMember',
         'middleware' => 'access:role.assign'
     ]);
 
@@ -92,7 +91,6 @@ $router->group(['prefix' =>'role'], function (Router $router) {
         'uses' => 'RoleController@getJson',
         'middleware' => 'access:role.list'
     ]);
-
 });
 
 

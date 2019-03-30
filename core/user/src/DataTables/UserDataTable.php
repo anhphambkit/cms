@@ -31,7 +31,7 @@ class UserDataTable extends DataTableAbstract
                 return view('core-user::users.partials.role', compact('item'))->render();
             })
             ->editColumn('status', function ($item) {
-                return table_status(acl_is_user_activated($item) ? 1 : 0);
+                return table_status(user_is_activated($item) ? 1 : 0);
             })
             ->addColumn('operations', function ($item) {
                 return table_actions('admin.user.create', 'admin.user.delete', $item);

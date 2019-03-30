@@ -1,9 +1,9 @@
 <?php
 
-namespace Botble\ACL\Listeners;
+namespace Core\User\Events\Listeners;
 
-use Botble\ACL\Events\RoleAssignmentEvent;
-use Botble\ACL\Repositories\Interfaces\UserInterface;
+use Core\User\Events\RoleAssignmentEvent;
+use Core\User\Repositories\Interfaces\UserInterface;
 
 class RoleAssignmentListener
 {
@@ -31,12 +31,11 @@ class RoleAssignmentListener
      */
     public function handle(RoleAssignmentEvent $event)
     {
-        info('Role ' . $event->role->name . ' assigned to user ' . $event->user->getFullName());
         $permissions = [];
         foreach ($event->role->flags()->get() as $flag) {
             $permissions[$flag->flag] = true;
         }
-        // Insert permission flag
+
         $user_permissions = [];
         if ($event->user->super_user) {
             $user_permissions['superuser'] = true;
