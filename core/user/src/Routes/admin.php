@@ -45,6 +45,12 @@ $router->group(['prefix' =>'user'], function (Router $router) {
         'uses' => 'UserController@search',
         'middleware' => 'access:user.search'
     ]);
+
+    $router->get('/profile/{id}', [
+        'as' => 'admin.user.profile',
+        'uses' => 'UserController@getUserProfile',
+        'middleware' => 'access:user.profile'
+    ]);
     
 });
 

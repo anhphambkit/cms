@@ -5,9 +5,8 @@ namespace Core\User\Services;
 use Core\User\Events\RoleAssignmentEvent;
 use Core\User\Models\User;
 use Core\User\Repositories\Interfaces\RoleInterface;
-use Core\User\Repositories\Interfaces\RoleUserInterface;
+use Core\User\Repositories\Interfaces\RoleUserRepositories;
 use Core\User\Repositories\Interfaces\UserInterface;
-use Botble\Support\Services\ProduceServiceInterface;
 use Core\Master\Services\CoreServiceAbstract;
 use Illuminate\Http\Request;
 use Sentinel;
@@ -25,7 +24,7 @@ class CreateUserService extends CoreServiceAbstract
     protected $roleRepository;
 
     /**
-     * @var RoleUserInterface
+     * @var RoleUserRepositories
      */
     protected $roleUserRepository;
 
@@ -33,9 +32,9 @@ class CreateUserService extends CoreServiceAbstract
      * CreateUserService constructor.
      * @param UserInterface $userRepository
      * @param RoleInterface $roleRepository
-     * @param RoleUserInterface $roleUserRepository
+     * @param RoleUserRepositories $roleUserRepository
      */
-    public function __construct(UserInterface $userRepository, RoleInterface $roleRepository, RoleUserInterface $roleUserRepository)
+    public function __construct(UserInterface $userRepository, RoleInterface $roleRepository, RoleUserRepositories $roleUserRepository)
     {
         $this->userRepository     = $userRepository;
         $this->roleRepository     = $roleRepository;

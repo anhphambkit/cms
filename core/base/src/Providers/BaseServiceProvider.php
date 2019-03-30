@@ -88,6 +88,7 @@ class BaseServiceProvider extends ServiceProvider
         add_filter(DASHBOARD_FILTER_MENU_NAME, [\Core\Dashboard\Hooks\DashboardMenuHook::class, 'renderMenuDashboard']);
         add_filter(BASE_FILTER_GET_LIST_DATA, [$this, 'addLanguageColumn'], 50, 2);
         
+        
         Event::listen(SessionStarted::class, function () {
             dashboard_menu()->loadRegisterMenus();
         });

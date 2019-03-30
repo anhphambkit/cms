@@ -33,6 +33,11 @@ class RoleController extends BaseAdminController
     protected $roleFlag;
 
     /**
+     * @var UserInterface
+     */
+    protected $userRepository;
+
+    /**
      * @var RoleUserRepositories
      */
     protected $roleUserRepository;

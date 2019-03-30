@@ -1,7 +1,8 @@
 @extends('layouts.master')
 @section('content')
+{!! Form::open() !!}
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-9">
 	    <div class="card">
 	        <div class="card-header">
 	            <h4 class="card-title" id="from-actions-bottom-right">{{ __('Create User') }}</h4>
@@ -16,7 +17,6 @@
 	        </div>
 	        <div class="card-content collpase show">
 	            <div class="card-body">
-	            	{!! Form::open() !!}
 	                	<div class="form-body">
 	                		<h4 class="form-section"><i class="la la-eye"></i> About User</h4>
 	                		<div class="row">
@@ -47,29 +47,29 @@
 	                        <div class="row">
 		                        <div class="form-group col-md-6 mb-2 @if ($errors->has('password')) has-error @endif">
 		                        	<label for="userinput3">Password</label>
-		                        	 {!! Form::password('password', ['class' => 'form-control', 'id' => 'password', 'data-counter' => 60]) !!}
+		                        	 {!! Form::password('password', ['class' => 'form-control', 'id' => 'password', 'data-counter' => 60, 'placeholder' => 'password']) !!}
                                 	 <div class="pwstrength_viewport_progress"></div>
                                 	 {!! Form::error('password', $errors) !!}
 		                        </div>
 		                        <div class="form-group col-md-6 mb-2">
 		                        	<label for="userinput4">Re-type password</label>
-		                        	{!! Form::password('password_confirmation', ['class' => 'form-control', 'id' => 'password_confirmation', 'data-counter' => 60]) !!}
+		                        	{!! Form::password('password_confirmation', ['class' => 'form-control', 'id' => 'password_confirmation', 'data-counter' => 60, 'placeholder' => 're-type']) !!}
                                 	{!! Form::error('password_confirmation', $errors) !!}
 		                        </div>
 	                        </div>
+	                        <div class="form-group">
+		                        <label class="control-label required" for="role">Role</label>
+		                        {!! Form::select('role_id', $roles, null, ['class' => 'form-control roles-list']) !!}
+		                    </div>
 						</div>
-	                    <div class="form-actions right">
-	                        <button type="button" class="btn btn-warning mr-1">
-	                        	<i class="ft-x"></i> Cancel
-	                        </button>
-	                        <button type="submit" class="btn btn-primary">
-	                            <i class="la la-check-square-o"></i> Save
-	                        </button>
-	                    </div>
-	                {!! Form::close() !!}
 	            </div>
 	        </div>
 	    </div>
 	</div>
+	<div class="col-md-3">
+		@include('core-base::elements.form-actions')
+		@include('core-base::elements.forms.status')
+	</div>
 </div>
+{!! Form::close() !!}
 @endsection

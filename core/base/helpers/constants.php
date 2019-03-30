@@ -39,6 +39,15 @@ if (!defined('HOME_ROUTE_BACKEND')) {
 if (!defined('SOURCE_ASSETS')) {
     define('SOURCE_ASSETS', '/../resources/app-assets');
 }
+
 if (!defined('BASE_FILTER_GET_LIST_DATA')) {
     define('BASE_FILTER_GET_LIST_DATA', 'get_list_data');
+}
+
+if (!defined('BASE_ACTION_FORM_ACTIONS')) {
+    define('BASE_ACTION_FORM_ACTIONS', 'base_form_actions');
+}
+
+if (!defined('BASE_ACTION_FORM_ACTIONS_TITLE')) {
+   define('BASE_ACTION_FORM_ACTIONS_TITLE', 'base_form_actions_title');
 }

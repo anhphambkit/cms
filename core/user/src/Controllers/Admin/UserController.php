@@ -4,6 +4,7 @@ use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Validation\ValidationException;
 use Core\User\DataTables\UserDataTable;
 use Core\User\Repositories\Interfaces\RoleInterface;
+use Core\User\Repositories\Interfaces\UserInterface;
 use Core\User\Requests\CreateUserRequest;
 use Core\User\Services\CreateUserService;
 use AssetManager;
@@ -11,6 +12,11 @@ use AssetPipeline;
 
 class UserController extends BaseAdminController{
     
+    /**
+     * @var UserInterface
+     */
+    protected $userRepository;
+
     /**
      * @var RoleInterface
      */
@@ -20,9 +26,10 @@ class UserController extends BaseAdminController{
      * UserController constructor.
      * @param RoleInterface $roleRepository
      */
-    public function __construct( RoleInterface $roleRepository ) 
+    public function __construct( RoleInterface $roleRepository, UserInterface $userRepository ) 
     {
         $this->roleRepository = $roleRepository;
+        $this->userRepository = $userRepository;
         parent::__construct();
     }
 
@@ -58,13 +65,36 @@ class UserController extends BaseAdminController{
      */
     public function postCreate(CreateUserRequest $request, CreateUserService $service)
     {
-        // $user = $service->execute($request);
+        $user = $service->execute($request);
 
         // do_action(BASE_ACTION_AFTER_CREATE_CONTENT, USER_MODULE_SCREEN_NAME, $request, $user);
 
-        // if ($request->input('submit') === 'save') {
-        //     return redirect()->route('users.list')->with('success_msg', trans('bases::notices.create_success_message'));
-        // }
-        // return redirect()->route('user.profile.view', $user->id)->with('success_msg', trans('bases::notices.create_success_message'));
+        if ($request->input('submit') === 'save') {
+            return redirect()->route('admin.user.index')->with('success_msg', trans('core-base::notices.create_success_message'));
+        }
+        return redirect()->route('admin.user.profile', $user->id)->with('success_msg', trans('core-base::notices.create_success_message'));
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View| \Illuminate\Http\RedirectResponse
+     * @author Sang Nguyen
+     */
+    public function getUserProfile($id)
+    {
+        // page_title()->setTitle('User profile # ' . $id);
+
+        // Assets::addJavascript(['cropper', 'bootstrap-pwstrength']);
+        // Assets::addAppModule(['profile']);
+
+        try {
+            $user = $this->userRepository->findById($id);
+        } catch (Exception $e) {
+            return redirect()->back()
+                ->with('error_msg', trans('core-user::users.not_found'));
+        }
+
+        return view('core-user::admin.user.profile')
+            ->with('user', $user);
     }
 }
