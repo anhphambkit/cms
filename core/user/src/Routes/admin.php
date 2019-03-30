@@ -24,6 +24,12 @@ $router->group(['prefix' =>'user'], function (Router $router) {
 
     $router->get('/create', [
         'as' => 'admin.user.create',
+        'uses' => 'UserController@getCreate',
+        'middleware' => 'access:user.create'
+    ]);
+
+    $router->get('/delete/{id}', [
+        'as' => 'admin.user.delete',
         'uses' => 'UserController@index',
         'middleware' => 'access:user.create'
     ]);
@@ -50,28 +56,40 @@ $router->group(['prefix' =>'role'], function (Router $router) {
         'middleware' => 'access:role.create'
     ]);
 
-    $router->get('/roles/assign', [
+    $router->post('/create', [
+        'as' => 'admin.role.create',
+        'uses' => 'RoleController@postCreate',
+        'middleware' => 'access:role.create'
+    ]);
+
+    $router->get('/edit/{id}', [
+        'as' => 'admin.role.edit',
+        'uses' => 'RoleController@getEdit',
+        'middleware' => 'access:role.edit'
+    ]);
+
+    $router->post('/edit/{id}', [
+        'as' => 'admin.role.edit',
+        'uses' => 'RoleController@postEdit',
+        'middleware' => 'access:role.edit'
+    ]);
+
+    $router->get('/delete/{id}', [
+        'as' => 'admin.role.delete',
+        'uses' => 'RoleController@getDelete',
+        'middleware' => 'access:role.delete'
+    ]);
+
+    $router->post('/roles/assign', [
         'as' => 'admin.roles.assign',
-        'uses' => 'RoleController@index',
+        'uses' => 'RoleController@postAssignMember',
         'middleware' => 'access:role.assign'
     ]);
 
     $router->get('/roles/list', [
         'as' => 'admin.roles.list.json',
-        'uses' => 'RoleController@index',
+        'uses' => 'RoleController@getJson',
         'middleware' => 'access:role.list'
-    ]);
-
-    $router->get('/edit', [
-        'as' => 'admin.role.edit',
-        'uses' => 'RoleController@index',
-        'middleware' => 'access:role.edit'
-    ]);
-
-    $router->delete('/delete', [
-        'as' => 'admin.role.delete',
-        'uses' => 'RoleController@index',
-        'middleware' => 'access:role.delete'
     ]);
 });
 

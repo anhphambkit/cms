@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 if (!function_exists('acl_get_current_user')) {
     /**
-     * @return \Botble\ACL\Models\User|bool|\Cartalyst\Sentinel\Users\UserInterface
      * @author TrinhLe
      */
     function acl_get_current_user() {
@@ -29,7 +28,6 @@ if (!function_exists('acl_get_current_user_id')) {
 
 if (!function_exists('acl_check_login')) {
     /**
-     * @return bool|\Cartalyst\Sentinel\Users\UserInterface
      * @author TrinhLe
      */
     function acl_check_login() {
@@ -39,7 +37,6 @@ if (!function_exists('acl_check_login')) {
 
 if (!function_exists('acl_activate_user')) {
     /**
-     * @param \Botble\ACL\Models\User $user
      * @return bool
      * @author TrinhLe
      */
@@ -57,7 +54,6 @@ if (!function_exists('acl_activate_user')) {
 
 if (!function_exists('acl_deactivate_user')) {
     /**
-     * @param \Botble\ACL\Models\User $user
      * @return bool
      * @author TrinhLe
      */
@@ -66,13 +62,12 @@ if (!function_exists('acl_deactivate_user')) {
     }
 }
 
-if (!function_exists('acl_is_user_activated')) {
+if (!function_exists('user_is_activated')) {
     /**
-     * @param \Botble\ACL\Models\User $user
      * @return bool
      * @author TrinhLe
      */
-    function acl_is_user_activated($user) {
+    function user_is_activated($user) {
         return Sentinel::getActivationRepository()->completed($user);
     }
 }

@@ -8,11 +8,11 @@
     };
 
     Lcms.languages = {
-        'tables': {!! json_encode(trans('bases::tables'), JSON_HEX_APOS) !!},
-        'notices_msg': {!! json_encode(trans('bases::notices'), JSON_HEX_APOS) !!},
-        'pagination': {!! json_encode(trans('pagination'), JSON_HEX_APOS) !!},
+        'tables': {!! json_encode(trans('core-base::tables'), JSON_HEX_APOS) !!},
+        'notices_msg': {!! json_encode(trans('core-base::notices'), JSON_HEX_APOS) !!},
+        'pagination': {!! json_encode(trans('core-base::pagination'), JSON_HEX_APOS) !!},
         'system': {
-            'character_remain': '{{ trans('bases::forms.character_remain') }}'
+            'character_remain': '{{ trans('core-base::forms.character_remain') }}'
         }
     };
 </script>

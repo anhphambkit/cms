@@ -36,7 +36,7 @@ export class MediaDetails {
                 if ((!_.contains(_self.externalTypes, data.type)) || (_.contains(_self.externalTypes, data.type) && !_.contains(['size', 'mime_type'], index))) {
                     description += _self.descriptionItemTemplate
                         .replace(/__title__/gi, RV_MEDIA_CONFIG.translations[index])
-                        .replace(/__url__/gi, val ? index === 'full_url' ? '<div class="input-group"><input id="file_details_url" type="text" value="' + val + '" class="form-control"><span class="input-group-btn"><button class="btn btn-default js-btn-copy-to-clipboard" type="button" data-clipboard-target="#file_details_url" title="Copied" data-trigger="click"><img class="clippy" src="' + Helpers.asset('/frontend/core/media/images/clippy.svg') + '" width="13" alt="Copy to clipboard"></button></span></div>' : '<span title="' + val + '">' + val + '</span>' : '');
+                        .replace(/__url__/gi, val ? index === 'full_url' ? '<div class="input-group"><input id="file_details_url" type="text" value="' + val + '" class="form-control"><span class="input-group-btn"><button class="btn btn-default js-btn-copy-to-clipboard" type="button" data-clipboard-target="#file_details_url" title="Copied" data-trigger="click"><img class="clippy" src="' + Helpers.asset('/backend/core/media/images/clippy.svg') + '" width="13" alt="Copy to clipboard"></button></span></div>' : '<span title="' + val + '">' + val + '</span>' : '');
                     if (index === 'full_url') {
                         useClipboard = true;
                     }

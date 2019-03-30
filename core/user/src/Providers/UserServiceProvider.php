@@ -58,7 +58,13 @@ class UserServiceProvider extends CoreServiceProvider
      */
     protected $listens = [
         \Core\User\Events\AuditHandlerEvent::class => [
-            \Core\User\Listeners\AuditHandlerListener::class,
+            \Core\User\Events\Listeners\AuditHandlerListener::class,
+        ],
+        \Core\User\Events\RoleUpdateEvent::class => [
+            \Core\User\Events\Listeners\RoleUpdateListener::class,
+        ],
+        \Core\User\Events\RoleAssignmentEvent::class => [
+            \Core\User\Events\Listeners\RoleAssignmentListener::class,
         ],
     ];
 

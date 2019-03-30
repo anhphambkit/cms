@@ -342,7 +342,7 @@ Lcms.initResources = function () {
         $('form').areYouSure();
     }
 
-    Lcms.callScroll($('.list-item-checkbox'));
+    // Lcms.callScroll($('.list-item-checkbox'));
 };
 
 Lcms.callScroll = function (obj) {
@@ -457,8 +457,10 @@ Lcms.initMediaIntegrate = function () {
 $(document).ready(function () {
     // Lcms.countCharacter();
     // Lcms.manageSidebar();
-    // Lcms.initResources();
+    Lcms.initResources();
     // Lcms.handleWaypoint();
-    // Lcms.handleCounterup();
+    Lcms.handleCounterup();
     Lcms.initMediaIntegrate();
 });
+
+window.Lcms = Lcms;

@@ -52,7 +52,6 @@ class RoleServiceExcute extends CoreServiceAbstract implements RoleServiceInterf
         return $newFlagArray;
     }
 
-
 	/**
 	 * Get flags
 	 * @param array $array 
@@ -61,19 +60,17 @@ class RoleServiceExcute extends CoreServiceAbstract implements RoleServiceInterf
 	 */
 	public function getFlagsPermission():array
 	{
-		$usableFlags = $this->permissionInterface->getVisiblePermissions(['id', 'name', 'parent_flag', 'is_feature']);
+		$usableFlags = $this->permissionInterface->getVisiblePermissions(['id', 'flag', 'name', 'parent_flag', 'is_feature']);
 
         $availableFeatures = $this->featureInterface->pluck('feature_id');
 
         $flags = [];
 
-        if ($usableFlags) {
-            foreach ($usableFlags as $usableFlag) {
-                if ($usableFlag->is_feature && in_array($usableFlag->id, $availableFeatures)) {
-                    $flags[$usableFlag->id] = $usableFlag;
-                } elseif ($usableFlag->is_feature == 0) {
-                    $flags[$usableFlag->id] = $usableFlag;
-                }
+        foreach ($usableFlags as $usableFlag) {
+            if ($usableFlag->is_feature && in_array($usableFlag->id, $availableFeatures)) {
+                $flags[$usableFlag->id] = $usableFlag;
+            } elseif ($usableFlag->is_feature == 0) {
+                $flags[$usableFlag->id] = $usableFlag;
             }
         }
 
