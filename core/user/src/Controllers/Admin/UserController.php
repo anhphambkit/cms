@@ -67,8 +67,6 @@ class UserController extends BaseAdminController{
     {
         $user = $service->execute($request);
 
-        // do_action(BASE_ACTION_AFTER_CREATE_CONTENT, USER_MODULE_SCREEN_NAME, $request, $user);
-
         if ($request->input('submit') === 'save') {
             return redirect()->route('admin.user.index')->with('success_msg', trans('core-base::notices.create_success_message'));
         }
@@ -82,10 +80,14 @@ class UserController extends BaseAdminController{
      */
     public function getUserProfile($id)
     {
-        // page_title()->setTitle('User profile # ' . $id);
-
-        // Assets::addJavascript(['cropper', 'bootstrap-pwstrength']);
-        // Assets::addAppModule(['profile']);
+        page_title()->setTitle('User profile # ' . $id);
+        
+        AssetManager::addAsset('cropper-js', '//cdnjs.cloudflare.com/ajax/libs/cropper/0.7.9/cropper.min.js');
+        AssetManager::addAsset('bootstrap-pwstrength-js', 'backend/core/user/packages/pwstrength-bootstrap/pwstrength-bootstrap.min.js');
+        AssetManager::addAsset('profile-js', 'backend/core/user/assets/js/profile.js');
+        AssetPipeline::requireJs('cropper-js');
+        AssetPipeline::requireJs('bootstrap-pwstrength-js');
+        AssetPipeline::requireJs('profile-js');
 
         try {
             $user = $this->userRepository->findById($id);
@@ -96,5 +98,52 @@ class UserController extends BaseAdminController{
 
         return view('core-user::admin.user.profile')
             ->with('user', $user);
+    }
+
+    /**
+     * @param $id
+     * @param UpdateProfileRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @author Sang Nguyen
+     */
+    public function postUpdateProfile($id, UpdateProfileRequest $request)
+    {
+        $user = $this->userRepository->findById($id);
+
+        /**
+         * @var User $currentUser
+         */
+        $currentUser = acl_get_current_user();
+        if (($currentUser->hasPermission('users.update-profile') && $currentUser->getUserId() === $user->id) || $currentUser->isSuperUser()) {
+            if ($user->email !== $request->input('email')) {
+                $users = $this->userRepository->count(['email' => $request->input('email')]);
+                if (!$users) {
+                    $user->email = $request->input('email');
+                } else {
+                    return redirect()->route('user.profile.view', [$id])
+                        ->with('error_msg', trans('acl::users.email.exist'))
+                        ->withInput();
+                }
+            }
+
+            if ($user->username !== $request->input('username')) {
+                $users = $this->userRepository->count(['username' => $request->input('username')]);
+                if (!$users) {
+                    $user->username = $request->input('username');
+                } else {
+                    return redirect()->route('user.profile.view', [$id])
+                        ->with('error_msg', trans('acl::users.username_exist'))
+                        ->withInput();
+                }
+            }
+        }
+
+        $user->fill($request->input());
+        $user->completed_profile = 1;
+        $this->userRepository->createOrUpdate($user);
+        do_action(USER_ACTION_AFTER_UPDATE_PROFILE, USER_MODULE_SCREEN_NAME, $request, $user);
+
+        return redirect()->route('user.profile.view', [$id])
+            ->with('success_msg', trans('acl::users.update_profile_success'));
     }
 }

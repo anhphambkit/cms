@@ -1,4 +1,6 @@
 {
-    "/backend/core/base/assets/js/script.js": "/backend/core/base/assets/js/script.js",
-    "/backend/core/base/assets/js/datatables.js": "/backend/core/base/assets/js/datatables.js"
+    "/frontend/core/user/assets/js/login.js": "/frontend/core/user/assets/js/login.js",
+    "/frontend/core/user/assets/css/login.css": "/frontend/core/user/assets/css/login.css",
+    "/backend/core/user/assets/js/profile.js": "/backend/core/user/assets/js/profile.js",
+    "/backend/core/user/assets/js/role.js": "/backend/core/user/assets/js/role.js"
 }

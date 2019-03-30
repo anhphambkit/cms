@@ -51,3 +51,7 @@ if (!defined('BASE_ACTION_FORM_ACTIONS')) {
 if (!defined('BASE_ACTION_FORM_ACTIONS_TITLE')) {
    define('BASE_ACTION_FORM_ACTIONS_TITLE', 'base_form_actions_title');
 }
+
+if (!defined('BASE_ACTION_REGISTER_BREADCRUMBS')) {
+    define('BASE_ACTION_REGISTER_BREADCRUMBS', 'register_breadcrumbs');
+}

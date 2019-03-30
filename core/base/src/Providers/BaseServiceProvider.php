@@ -79,6 +79,7 @@ class BaseServiceProvider extends ServiceProvider
 		$this->publishesAssetRegister();
 
 		$this->app->register(CommandServiceProvider::class);
+		$this->app->register(BreadcrumbsServiceProvider::class);
 		$this->app->register(RouteServiceProvider::class);
 		$this->app->register(ThemeServiceProvider::class);
 		$this->app->register(FormServiceProvider::class);

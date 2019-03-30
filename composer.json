@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.1.3",
         "cartalyst/sentinel": "^2.0",
+        "davejamesmiller/laravel-breadcrumbs": "5.x",
         "elasticquent/elasticquent": "dev-master",
         "fideloper/proxy": "^4.0",
         "floatingpoint/stylist": "^1.0",

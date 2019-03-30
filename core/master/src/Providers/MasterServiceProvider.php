@@ -8,6 +8,9 @@ use Core\Master\Facades\ActionFacade;
 use Core\Master\Facades\FilterFacade;
 use Core\Master\Facades\DashboardMenuFacade;
 
+use Core\Master\Facades\AdminBreadcrumbFacade;
+use Core\Master\Facades\PageTitleFacade;
+
 class MasterServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +26,8 @@ class MasterServiceProvider extends ServiceProvider
         $loader = AliasLoader::getInstance();
         $loader->alias('Action', ActionFacade::class);
         $loader->alias('Filter', FilterFacade::class);
+        $loader->alias('PageTitle', PageTitleFacade::class);
+        $loader->alias('AdminBreadcrumb', AdminBreadcrumbFacade::class);
         $loader->alias('DashboardMenu', DashboardMenuFacade::class);
     }
 }

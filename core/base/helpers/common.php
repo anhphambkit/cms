@@ -1,5 +1,7 @@
 <?php
 use Core\Master\Facades\DashboardMenuFacade;
+use Core\Master\Facades\PageTitleFacade;
+use Core\Master\Facades\AdminBreadcrumbFacade;
 
 if (!function_exists('parse_args')) {
     /**
@@ -19,6 +21,16 @@ if (!function_exists('parse_args')) {
             return array_merge($defaults, $result);
         }
         return $result;
+    }
+}
+
+if (!function_exists('page_title')) {
+    /**
+     * @return PageTitle
+     */
+    function page_title()
+    {
+        return PageTitleFacade::getFacadeRoot();
     }
 }
 
