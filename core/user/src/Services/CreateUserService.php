@@ -1,17 +1,18 @@
 <?php
 
-namespace Botble\ACL\Services;
+namespace Core\User\Services;
 
-use Botble\ACL\Events\RoleAssignmentEvent;
-use Botble\ACL\Models\User;
-use Botble\ACL\Repositories\Interfaces\RoleInterface;
-use Botble\ACL\Repositories\Interfaces\RoleUserInterface;
-use Botble\ACL\Repositories\Interfaces\UserInterface;
+use Core\User\Events\RoleAssignmentEvent;
+use Core\User\Models\User;
+use Core\User\Repositories\Interfaces\RoleInterface;
+use Core\User\Repositories\Interfaces\RoleUserInterface;
+use Core\User\Repositories\Interfaces\UserInterface;
 use Botble\Support\Services\ProduceServiceInterface;
+use Core\Master\Services\CoreServiceAbstract;
 use Illuminate\Http\Request;
 use Sentinel;
 
-class CreateUserService implements ProduceServiceInterface
+class CreateUserService extends CoreServiceAbstract
 {
     /**
      * @var UserInterface
@@ -36,8 +37,8 @@ class CreateUserService implements ProduceServiceInterface
      */
     public function __construct(UserInterface $userRepository, RoleInterface $roleRepository, RoleUserInterface $roleUserRepository)
     {
-        $this->userRepository = $userRepository;
-        $this->roleRepository = $roleRepository;
+        $this->userRepository     = $userRepository;
+        $this->roleRepository     = $roleRepository;
         $this->roleUserRepository = $roleUserRepository;
     }
 

@@ -455,7 +455,7 @@ Lcms.initMediaIntegrate = function () {
 };
 
 $(document).ready(function () {
-    // Lcms.countCharacter();
+    Lcms.countCharacter();
     // Lcms.manageSidebar();
     Lcms.initResources();
     // Lcms.handleWaypoint();

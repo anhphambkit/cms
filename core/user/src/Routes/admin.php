@@ -28,6 +28,12 @@ $router->group(['prefix' =>'user'], function (Router $router) {
         'middleware' => 'access:user.create'
     ]);
 
+    $router->post('/create', [
+        'as' => 'admin.user.create',
+        'uses' => 'UserController@postCreate',
+        'middleware' => 'access:user.create'
+    ]);
+
     $router->get('/delete/{id}', [
         'as' => 'admin.user.delete',
         'uses' => 'UserController@index',
