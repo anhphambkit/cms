@@ -51,6 +51,12 @@ $router->group(['prefix' =>'user'], function (Router $router) {
         'uses' => 'UserController@getUserProfile',
         'middleware' => 'access:user.profile'
     ]);
+
+    $router->get('/profile/image', [
+        'as' => 'users.profile.image',
+        'uses' => 'UserController@getUserProfile',
+        'middleware' => 'access:user.profile'
+    ]);
     
 });
 

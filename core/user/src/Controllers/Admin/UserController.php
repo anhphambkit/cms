@@ -5,6 +5,7 @@ use Illuminate\Validation\ValidationException;
 use Core\User\DataTables\UserDataTable;
 use Core\User\Repositories\Interfaces\RoleInterface;
 use Core\User\Repositories\Interfaces\UserInterface;
+use Core\User\Services\Interfaces\RoleServiceInterface;
 use Core\User\Requests\CreateUserRequest;
 use Core\User\Services\CreateUserService;
 use AssetManager;
@@ -23,11 +24,17 @@ class UserController extends BaseAdminController{
     protected $roleRepository;
 
     /**
+     * @var RoleServiceInterface
+     */
+    protected $roleService;
+
+    /**
      * UserController constructor.
      * @param RoleInterface $roleRepository
      */
-    public function __construct( RoleInterface $roleRepository, UserInterface $userRepository ) 
+    public function __construct( RoleServiceInterface $roleService, RoleInterface $roleRepository, UserInterface $userRepository ) 
     {
+        $this->roleService    = $roleService;
         $this->roleRepository = $roleRepository;
         $this->userRepository = $userRepository;
         parent::__construct();
@@ -53,7 +60,10 @@ class UserController extends BaseAdminController{
      */
     public function getCreate()
     {
+        page_title()->setTitle('Create User');
+
         $roles = $this->roleRepository->pluck('name', 'id');
+
         return view('core-user::admin.user.create', compact('roles'));
     }
 
@@ -81,20 +91,19 @@ class UserController extends BaseAdminController{
     public function getUserProfile($id)
     {
         page_title()->setTitle('User profile # ' . $id);
-        
-        AssetManager::addAsset('cropper-js', '//cdnjs.cloudflare.com/ajax/libs/cropper/0.7.9/cropper.min.js');
-        AssetManager::addAsset('bootstrap-pwstrength-js', 'backend/core/user/packages/pwstrength-bootstrap/pwstrength-bootstrap.min.js');
-        AssetManager::addAsset('profile-js', 'backend/core/user/assets/js/profile.js');
-        AssetPipeline::requireJs('cropper-js');
-        AssetPipeline::requireJs('bootstrap-pwstrength-js');
-        AssetPipeline::requireJs('profile-js');
+        $this->addAssets();
 
         try {
             $user = $this->userRepository->findById($id);
+
         } catch (Exception $e) {
             return redirect()->back()
                 ->with('error_msg', trans('core-user::users.not_found'));
         }
+
+        if(!$user)
+            return redirect()->route('admin.user.index')
+                ->with('error_msg', trans('core-user::users.not_found'));
 
         return view('core-user::admin.user.profile')
             ->with('user', $user);
@@ -121,7 +130,7 @@ class UserController extends BaseAdminController{
                     $user->email = $request->input('email');
                 } else {
                     return redirect()->route('user.profile.view', [$id])
-                        ->with('error_msg', trans('acl::users.email.exist'))
+                        ->with('error_msg', trans('core-user::users.email.exist'))
                         ->withInput();
                 }
             }
@@ -132,7 +141,7 @@ class UserController extends BaseAdminController{
                     $user->username = $request->input('username');
                 } else {
                     return redirect()->route('user.profile.view', [$id])
-                        ->with('error_msg', trans('acl::users.username_exist'))
+                        ->with('error_msg', trans('core-user::users.username_exist'))
                         ->withInput();
                 }
             }
@@ -144,6 +153,29 @@ class UserController extends BaseAdminController{
         do_action(USER_ACTION_AFTER_UPDATE_PROFILE, USER_MODULE_SCREEN_NAME, $request, $user);
 
         return redirect()->route('user.profile.view', [$id])
-            ->with('success_msg', trans('acl::users.update_profile_success'));
+            ->with('success_msg', trans('core-user::users.update_profile_success'));
+    }
+
+    /**
+     * Add frontend plugins for layout
+     * @author TrinhLe
+     */
+    private function addAssets()
+    {
+        AssetManager::addAsset('role-js', 'backend/core/user/assets/js/role.js');
+        AssetManager::addAsset('cropper-js', '//cdnjs.cloudflare.com/ajax/libs/cropper/0.7.9/cropper.min.js');
+        AssetManager::addAsset('bootstrap-pwstrength-js', 'backend/core/user/packages/pwstrength-bootstrap/pwstrength-bootstrap.min.js');
+        AssetManager::addAsset('profile-js', 'backend/core/user/assets/js/profile.js');
+        AssetManager::addAsset('cropper-css', 'backend/core/user/assets/css/cropper.css');
+        AssetManager::addAsset('profile-css', 'backend/core/user/assets/css/profile.css');
+
+        AssetPipeline::requireCss('jquery-tree-css');
+        AssetPipeline::requireCss('cropper-css');
+        AssetPipeline::requireCss('profile-css');
+        AssetPipeline::requireJs('jquery-tree-js');
+        AssetPipeline::requireJs('role-js');
+        AssetPipeline::requireJs('cropper-js');
+        AssetPipeline::requireJs('bootstrap-pwstrength-js');
+        AssetPipeline::requireJs('profile-js');
     }
 }

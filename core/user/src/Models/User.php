@@ -115,7 +115,7 @@ class User extends EloquentUser implements AuthenticatableContract
     public function getProfileImage()
     {
         if (empty($this->profile_image)) {
-            return config('core-user.acl.avatar.default');
+            return '/storage/' . config('core-user.acl.avatar.default');
         } else {
             return $this->profile_image;
         }
