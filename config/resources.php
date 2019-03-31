@@ -3,14 +3,16 @@
 return [
 	'admin-assets' => [
 		/* js */
-		'vendors-js'     => ['theme' => 'app-assets/vendors/js/vendors.min.js'],
-		'app-menu-js'    => ['theme' => 'app-assets/js/core/app-menu.js'],
-		'app-js'         => ['theme' => 'app-assets/js/core/app.js'],
-		'jquery-tree-js' => ['theme' => 'plugins/jquery-tree/jquery.tree.min.js'],
-		'toastr-js'      => ['theme' => 'plugins/toastr/toastr.min.js'],
-		'jquery-ui-js'   => ['theme' => 'plugins/jquery-ui/jquery-ui.min.js'],
-		'uniform-js'     => ['theme' => 'plugins/uniform/jquery.uniform.min.js'],
-		'editable-js'    => ['theme' => 'plugins/bootstrap-editable/bootstrap-editable.min.js'],
+		'vendors-js'              => ['theme' => 'app-assets/vendors/js/vendors.min.js'],
+		'app-menu-js'             => ['theme' => 'app-assets/js/core/app-menu.js'],
+		'app-js'                  => ['theme' => 'app-assets/js/core/app.js'],
+		'jquery-tree-js'          => ['theme' => 'plugins/jquery-tree/jquery.tree.min.js'],
+		'toastr-js'               => ['theme' => 'plugins/toastr/toastr.min.js'],
+		'jquery-ui-js'            => ['theme' => 'plugins/jquery-ui/jquery-ui.min.js'],
+		'uniform-js'              => ['theme' => 'plugins/uniform/jquery.uniform.min.js'],
+		'editable-js'             => ['theme' => 'plugins/bootstrap-editable/bootstrap-editable.min.js'],
+		'bootstrap-datepicker-js' => ['theme' => 'plugins/bootstrap-datepicker/bootstrap-datepicker.min.js'],
+		'jquery-mask-js'          => ['theme' => 'plugins/jquery-mask-js/jquery.mask.js'],
 
 		/* css */
 		'vendors-css'              => ['theme' => 'app-assets/css/vendors.css'],
@@ -23,6 +25,7 @@ return [
 		'toastr-css'               => ['theme' => 'plugins/toastr/toastr.min.css'],
 		'jquery-ui-css'            => ['theme' => 'plugins/jquery-ui/jquery-ui.min.css'],
 		'editable-css'             => ['theme' => 'plugins/bootstrap-editable/bootstrap-editable.css'],
+		'bootstrap-datepicker-css'             => ['theme' => 'plugins/bootstrap-datepicker/bootstrap-datepicker.min.css'],
 	],
 
 	'frontend-assets' => [
@@ -111,7 +114,7 @@ return [
 			'cms-style-css',
 			'toastr-css',
 			'jquery-ui-css',
-			'cms-core-css'          
+			'cms-core-css',        
 		],
 		'js' => [
 			'vendors-js' ,
@@ -119,7 +122,8 @@ return [
 			'app-js'   ,
 			'toastr-js',
 			'jquery-ui-js',
-			'uniform-js'
+			'uniform-js',
+			'jquery-mask-js'
 		]
 	]
 

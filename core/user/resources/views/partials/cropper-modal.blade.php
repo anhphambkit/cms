@@ -1,7 +1,7 @@
 <div class="modal fade text-left" tabindex="-1" role="dialog" id="avatar-modal" aria-labelledby="myModalLabel18" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
-            <form class="avatar-form" method="post" action="{{ route('users.profile.image') }}" enctype="multipart/form-data">
+            <form class="avatar-form" method="post" action="{{ route('admin.profile.image') }}" enctype="multipart/form-data">
                 <div class="modal-header bg-info white">
                     <h4 class="modal-title white" id="myModalLabel18"><i class="fab fa-windows"></i> {{ trans('core-user::users.change_profile_image') }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="{{ trans('core-media::media.close') }}" data-dismiss-modal="#avatar-modal">

@@ -1,14 +1,14 @@
 <?php
 
-namespace Botble\ACL\Services;
+namespace Core\User\Services;
 
-use Botble\ACL\Repositories\Interfaces\UserInterface;
-use Botble\Support\Services\ProduceServiceInterface;
+use Core\User\Repositories\Interfaces\UserInterface;
+use Core\Master\Services\CoreServiceAbstract;
 use Exception;
 use Illuminate\Http\Request;
 use Sentinel;
 
-class ResetPasswordService implements ProduceServiceInterface
+class ResetPasswordService extends CoreServiceAbstract
 {
     /**
      * @var UserInterface
@@ -33,7 +33,7 @@ class ResetPasswordService implements ProduceServiceInterface
     {
         $user = $this->userRepository->getFirstBy(['username' => $request->input('user')]);
         if (!$user) {
-            return new Exception(trans('acl::auth.reset.user_not_found'));
+            return new Exception(trans('core-user::auth.reset.user_not_found'));
         }
 
         if (Sentinel::getReminderRepository()->complete($user, $request->input('token'), $request->input('password'))) {

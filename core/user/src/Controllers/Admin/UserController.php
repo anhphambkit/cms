@@ -7,7 +7,10 @@ use Core\User\Repositories\Interfaces\RoleInterface;
 use Core\User\Repositories\Interfaces\UserInterface;
 use Core\User\Services\Interfaces\RoleServiceInterface;
 use Core\User\Requests\CreateUserRequest;
-use Core\User\Services\CreateUserService;
+use Core\User\Requests\UpdateProfileRequest;
+use Core\User\Requests\UpdatePasswordRequest;
+use Core\User\Services\Interfaces\ChangePasswordServiceInterface;
+use Core\User\Services\Interfaces\CreateUserServiceInterface;
 use AssetManager;
 use AssetPipeline;
 
@@ -73,7 +76,7 @@ class UserController extends BaseAdminController{
      * @return \Illuminate\Http\RedirectResponse
      * @author TrinhLe
      */
-    public function postCreate(CreateUserRequest $request, CreateUserService $service)
+    public function postCreate(CreateUserRequest $request, CreateUserServiceInterface $service)
     {
         $user = $service->execute($request);
 
@@ -86,7 +89,7 @@ class UserController extends BaseAdminController{
     /**
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View| \Illuminate\Http\RedirectResponse
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getUserProfile($id)
     {
@@ -104,7 +107,7 @@ class UserController extends BaseAdminController{
         if(!$user)
             return redirect()->route('admin.user.index')
                 ->with('error_msg', trans('core-user::users.not_found'));
-
+            
         return view('core-user::admin.user.profile')
             ->with('user', $user);
     }
@@ -113,7 +116,7 @@ class UserController extends BaseAdminController{
      * @param $id
      * @param UpdateProfileRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function postUpdateProfile($id, UpdateProfileRequest $request)
     {
@@ -122,15 +125,16 @@ class UserController extends BaseAdminController{
         /**
          * @var User $currentUser
          */
-        $currentUser = acl_get_current_user();
+        $currentUser = auth()->user();
+       
         if (($currentUser->hasPermission('users.update-profile') && $currentUser->getUserId() === $user->id) || $currentUser->isSuperUser()) {
             if ($user->email !== $request->input('email')) {
                 $users = $this->userRepository->count(['email' => $request->input('email')]);
                 if (!$users) {
                     $user->email = $request->input('email');
                 } else {
-                    return redirect()->route('user.profile.view', [$id])
-                        ->with('error_msg', trans('core-user::users.email.exist'))
+                    return redirect()->route('admin.user.profile', [$id])
+                        ->with('error_msg', trans('core-user::users.email_exist'))
                         ->withInput();
                 }
             }
@@ -140,20 +144,73 @@ class UserController extends BaseAdminController{
                 if (!$users) {
                     $user->username = $request->input('username');
                 } else {
-                    return redirect()->route('user.profile.view', [$id])
+                    return redirect()->route('admin.user.profile', [$id])
                         ->with('error_msg', trans('core-user::users.username_exist'))
                         ->withInput();
                 }
             }
         }
-
+        
         $user->fill($request->input());
         $user->completed_profile = 1;
         $this->userRepository->createOrUpdate($user);
         do_action(USER_ACTION_AFTER_UPDATE_PROFILE, USER_MODULE_SCREEN_NAME, $request, $user);
 
-        return redirect()->route('user.profile.view', [$id])
+        return redirect()->route('admin.user.profile', [$id])
             ->with('success_msg', trans('core-user::users.update_profile_success'));
+    }
+
+    /**
+     * @param ChangeProfileImageRequest $request
+     * @param UpdateProfileImageService $service
+     * @return array
+     * @author TrinhLe
+     */
+    public function postModifyProfileImage(ChangeProfileImageRequest $request, UpdateProfileImageService $service)
+    {
+        try {
+
+            $result = $service->execute($request);
+
+            if ($result instanceof  Exception) {
+                return [
+                    'error' => false,
+                    'message' => $result->getMessage(),
+                ];
+            }
+
+            return [
+                'error' => false,
+                'message' => trans('acl::users.update_avatar_success'),
+                'result' => $result,
+            ];
+
+        } catch (Exception $ex) {
+            return  [
+                'error' => true,
+                'message' => $ex->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * @param $id
+     * @param UpdatePasswordRequest $request
+     * @param ChangePasswordService $service
+     * @return \Illuminate\Http\RedirectResponse
+     * @author TrinhLe
+     */
+    public function postChangePassword($id, UpdatePasswordRequest $request, ChangePasswordServiceInterface $service)
+    {
+        $result = $service->execute($request);
+
+        if ($result instanceof Exception) {
+            return redirect()->back()
+                ->with('error_msg', $result->getMessage());
+        }
+
+        return redirect()->route('admin.user.profile', [$id])
+            ->with('success_msg', trans('core-user::users.password_update_success'));
     }
 
     /**

@@ -36,6 +36,10 @@ if (!defined('REDIRECT_AFTER_LOGIN')) {
     define('REDIRECT_AFTER_LOGIN', 'admin.dashboard.index');
 }
 
-if (!defined('TEST_ACTION')) {
-    define('TEST_ACTION', 'action_test');
+if (!defined('USER_ACTION_AFTER_UPDATE_PROFILE')) {
+    define('USER_ACTION_AFTER_UPDATE_PROFILE', 'action_after_update_profile');
+}
+
+if (!defined('USER_ACTION_AFTER_UPDATE_PASSWORD')) {
+    define('USER_ACTION_AFTER_UPDATE_PASSWORD', 'action_after_update_password');
 }

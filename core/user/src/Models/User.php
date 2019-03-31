@@ -193,7 +193,7 @@ class User extends EloquentUser implements AuthenticatableContract
      */
     public function setDobAttribute($date)
     {
-        $this->attributes['dob'] = Carbon::createFromFormat(config('cms.date_format.date'), $date)->toDateTimeString();
+        $this->attributes['dob'] = Carbon::createFromFormat(config('core-base.cms.date_format.date'), $date)->toDateTimeString();
     }
 
     /**
@@ -203,7 +203,7 @@ class User extends EloquentUser implements AuthenticatableContract
      */
     public function getDobAttribute($date)
     {
-        return date_from_database($date, config('cms.date_format.date'));
+        return date_from_database($date, config('core-base.cms.date_format.date'));
     }
 
     /**

@@ -257,14 +257,13 @@ Lcms.manageSidebar = function () {
 };
 
 Lcms.initDatepicker = function (element) {
-    if (jQuery().bootstrapDP) {
-        $(document).find(element).bootstrapDP({
-            maxDate: 0,
-            changeMonth: true,
-            changeYear: true,
-            autoclose: true,
-        });
-    }
+    $(document).find(element).datepicker({
+        format: 'yyyy-mm-dd',
+        maxDate: 0,
+        changeMonth: true,
+        changeYear: true,
+        autoclose: true,
+    });
 };
 
 Lcms.initResources = function () {
@@ -378,6 +377,10 @@ Lcms.handleWaypoint = function () {
     }
 };
 
+Lcms.handlerMaskInput = function () {
+    $('.us-phone-mask-input').mask('(000) 000-0000');
+}
+
 // Handles counterup plugin wrapper
 Lcms.handleCounterup = function () {
     if (!$().counterUp) {
@@ -461,6 +464,7 @@ $(document).ready(function () {
     // Lcms.handleWaypoint();
     Lcms.handleCounterup();
     Lcms.initMediaIntegrate();
+    Lcms.handlerMaskInput();
 });
 
 window.Lcms = Lcms;

@@ -52,9 +52,21 @@ $router->group(['prefix' =>'user'], function (Router $router) {
         'middleware' => 'access:user.profile'
     ]);
 
+    $router->post('/update-profile/{id}', [
+        'as' => 'admin.user.update-profile',
+        'uses' => 'UserController@postUpdateProfile',
+        'middleware' => 'access:user.profile'
+    ]);
+
     $router->get('/profile/image', [
-        'as' => 'users.profile.image',
+        'as' => 'admin.profile.image',
         'uses' => 'UserController@getUserProfile',
+        'middleware' => 'access:user.profile'
+    ]);
+
+    $router->post('/change-password/{id}', [
+        'as' => 'admin.user.change-password',
+        'uses' => 'UserController@postChangePassword',
         'middleware' => 'access:user.profile'
     ]);
     

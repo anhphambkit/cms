@@ -14,8 +14,6 @@ use Core\User\Repositories\Eloquent\UserRepository;
 use Core\User\Repositories\Interfaces\RoleInterface;
 use Core\User\Repositories\Caches\RoleCacheDecorator;
 use Core\User\Repositories\Eloquent\RoleRepository;
-use Core\User\Services\Excute\RoleServiceExcute;
-use Core\User\Services\Interfaces\RoleServiceInterface;
 
 #Feature
 use Core\User\Repositories\Interfaces\FeatureRepositories;
@@ -85,10 +83,21 @@ class UserServiceProvider extends CoreServiceProvider
      * Register list services
      * @return type
      */
-    protected function reigsterServices(){
-        $this->app->bind(
-            RoleServiceInterface::class,
-            RoleServiceExcute::class
+    protected function reigsterServices()
+    {
+        $this->app->singleton(
+            \Core\User\Services\Interfaces\RoleServiceInterface::class,
+            \Core\User\Services\Excute\RoleServiceExcute::class
+        );
+
+        $this->app->singleton(
+            \Core\User\Services\Interfaces\CreateUserServiceInterface::class,
+            \Core\User\Services\Excute\CreateUserServiceExcute::class
+        );
+
+        $this->app->singleton(
+            \Core\User\Services\Interfaces\ChangePasswordServiceInterface::class,
+            \Core\User\Services\Excute\ChangePasswordServiceExcute::class
         );
     }
 
