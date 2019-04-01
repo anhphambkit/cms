@@ -9,8 +9,10 @@ use Core\User\Services\Interfaces\RoleServiceInterface;
 use Core\User\Requests\CreateUserRequest;
 use Core\User\Requests\UpdateProfileRequest;
 use Core\User\Requests\UpdatePasswordRequest;
+use Core\User\Requests\ChangeProfileImageRequest;
 use Core\User\Services\Interfaces\ChangePasswordServiceInterface;
 use Core\User\Services\Interfaces\CreateUserServiceInterface;
+use Core\User\Services\Interfaces\UpdateProfileImageServiceInterface;
 use AssetManager;
 use AssetPipeline;
 
@@ -166,7 +168,7 @@ class UserController extends BaseAdminController{
      * @return array
      * @author TrinhLe
      */
-    public function postModifyProfileImage(ChangeProfileImageRequest $request, UpdateProfileImageService $service)
+    public function postModifyProfileImage(ChangeProfileImageRequest $request, UpdateProfileImageServiceInterface $service)
     {
         try {
 
@@ -181,7 +183,7 @@ class UserController extends BaseAdminController{
 
             return [
                 'error' => false,
-                'message' => trans('acl::users.update_avatar_success'),
+                'message' => trans('core-user::users.update_avatar_success'),
                 'result' => $result,
             ];
 

@@ -58,9 +58,9 @@ $router->group(['prefix' =>'user'], function (Router $router) {
         'middleware' => 'access:user.profile'
     ]);
 
-    $router->get('/profile/image', [
+    $router->post('/profile/image', [
         'as' => 'admin.profile.image',
-        'uses' => 'UserController@getUserProfile',
+        'uses' => 'UserController@postModifyProfileImage',
         'middleware' => 'access:user.profile'
     ]);
 

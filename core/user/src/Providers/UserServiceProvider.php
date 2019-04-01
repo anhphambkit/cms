@@ -99,6 +99,11 @@ class UserServiceProvider extends CoreServiceProvider
             \Core\User\Services\Interfaces\ChangePasswordServiceInterface::class,
             \Core\User\Services\Excute\ChangePasswordServiceExcute::class
         );
+
+        $this->app->singleton(
+            \Core\User\Services\Interfaces\UpdateProfileImageServiceInterface::class,
+            \Core\User\Services\Excute\UpdateProfileImageServiceExcute::class
+        );
     }
 
     /**

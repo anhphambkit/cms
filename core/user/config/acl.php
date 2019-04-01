@@ -3,6 +3,7 @@
 return [
     'avatar' => [
         'container_dir' => 'avatars',
+        'folder_upload' => '/avatars/',
         'default' => 'system/images/default-avatar.png',
     ],
     'logos' => [

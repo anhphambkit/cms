@@ -1,14 +1,13 @@
 <?php
 
-namespace Botble\ACL\Services;
+namespace Core\User\Services;
 
 use Storage;
 
 /**
  * Class CropAvatar
- * @package Botble\CropAvatar
+ * @package Core\User\CropAvatar
  * @author TrinhLe
- * @since 08/19/2015 07:50
  */
 class CropAvatar
 {
@@ -42,7 +41,6 @@ class CropAvatar
      * @param $data
      * @param $file
      * @author TrinhLe
-     * @since 08/19/2015
      */
     public function __construct($src, $data, $file)
     {
@@ -54,7 +52,6 @@ class CropAvatar
     /**
      * @param $data
      * @author TrinhLe
-     * @since 08/19/2015
      */
     protected function setData($data)
     {
@@ -68,7 +65,6 @@ class CropAvatar
      *
      * @param $data
      * @author TrinhLe
-     * @since 08/19/2015
      */
     protected function crop($data)
     {
@@ -93,7 +89,7 @@ class CropAvatar
             }
 
             if (!$src_img) {
-                $this->msg = trans('acl::users.read_image_failed');
+                $this->msg = trans('core-user::users.read_image_failed');
                 return;
             }
 
@@ -127,7 +123,7 @@ class CropAvatar
                 }
 
                 if (!$result) {
-                    $this->msg = trans('acl::profile.save_cropped_image_failed');
+                    $this->msg = trans('core-user::profile.save_cropped_image_failed');
                     return;
                 } else {
                     // cleanup
@@ -135,18 +131,18 @@ class CropAvatar
                     @unlink($tmpFile);
                     @unlink($tmpThumbFile);
 
-                    $this->dst =  str_replace(public_path(), '', config('cms.upload.base_dir')) . DIRECTORY_SEPARATOR . $this->props['realPath'];
+                    $this->dst =  str_replace(basename(public_path()), '', $this->props['realPath']);
                     $this->msg = 'success';
                 }
             } else {
-                $this->msg = trans('acl::profile.fail_to_crop_image');
+                $this->msg = trans('core-user::profile.fail_to_crop_image');
                 return;
             }
 
             imagedestroy($src_img);
             imagedestroy($dst_img);
         } else {
-            $this->msg = trans('acl::profile.failed_to_load_data');
+            $this->msg = trans('core-user::profile.failed_to_load_data');
             return;
         }
     }
@@ -155,7 +151,6 @@ class CropAvatar
      * Get avatar URL uploaded
      * @return string
      * @author TrinhLe
-     * @since 08/19/2015
      */
     public function getResult()
     {
@@ -166,7 +161,6 @@ class CropAvatar
      * Get crop message: failed or successfully
      * @return string
      * @author TrinhLe
-     * @since 08/19/2015
      */
     public function getMsg()
     {
