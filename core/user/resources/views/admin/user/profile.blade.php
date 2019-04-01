@@ -112,12 +112,12 @@
 					                        <div class="row">
 						                        <div class="form-group col-md-6 mb-2 @if ($errors->has('phone')) has-error @endif">
 						                        	<label for="userinput3">Phone</label>
-						                        	 {!! Form::text('phone', $user->phone, ['class' => 'form-control us-phone-mask-input', 'id' => 'phone', 'data-counter' => 15]) !!}
+						                        	 {!! Form::text('phone', $user->phone, ['class' => 'form-control us-phone-mask-input', 'id' => 'phone', 'data-counter' => 15, 'placeholder' => '(123) 456-7890']) !!}
 					                            	 {!! Form::error('phone', $errors) !!}
 						                        </div>
 						                        <div class="form-group col-md-6 mb-2 @if ($errors->has('secondary_phone')) has-error @endif">
 						                        	<label for="userinput4">Secondary Phone</label>
-						                        	{!! Form::text('secondary_phone', $user->secondary_phone, ['class' => 'form-control us-phone-mask-input', 'id' => 'secondary_phone', 'data-counter' => 15]) !!}
+						                        	{!! Form::text('secondary_phone', $user->secondary_phone, ['class' => 'form-control us-phone-mask-input', 'id' => 'secondary_phone', 'data-counter' => 15, 'placeholder' => '(123) 456-7890']) !!}
 					                            	{!! Form::error('secondary_phone', $errors) !!}
 						                        </div>
 					                        </div>
@@ -147,7 +147,7 @@
 					                        <div class="row">
 						                        <div class="form-group col-md-6 mb-2 @if ($errors->has('skype')) has-error @endif">
 						                        	<label for="userinput3">Skype</label>
-						                        	 {!! Form::text('skype', $user->skype, ['class' => 'form-control', 'id' => 'skype', 'data-counter' => 60]) !!}
+						                        	 {!! Form::text('skype', $user->skype, ['class' => 'form-control', 'id' => 'skype', 'data-counter' => 60, 'placeholder' => 'https://www.skype.com']) !!}
 					                            	 {!! Form::error('skype', $errors) !!}
 						                        </div>
 						                        <div class="form-group col-md-6 mb-2 @if ($errors->has('facebook')) has-error @endif">
@@ -170,10 +170,10 @@
 										<div class="form-body">
 											@if(!auth()->user()->isSuperUser())
 											<div class="row">
-					                        	<div class="form-group col-md-6 mb-2 @if ($errors->has('current-password')) has-error @endif">
+					                        	<div class="form-group col-md-6 mb-2 @if ($errors->has('old_password')) has-error @endif">
 						                        	<label for="userinput3">Old Password</label>
-						                        	 {!! Form::password('current-password', ['class' => 'form-control', 'id' => 'current-password', 'data-counter' => 60, 'placeholder' => 'old password', 'autocomplete' => true]) !!}
-					                            	 {!! Form::error('current-password', $errors) !!}
+						                        	 {!! Form::password('old_password', ['class' => 'form-control', 'id' => 'old_password', 'data-counter' => 60, 'placeholder' => 'old password', 'autocomplete' => true]) !!}
+					                            	 {!! Form::error('old_password', $errors) !!}
 						                        </div>
 					                        </div>
 					                        @endif
