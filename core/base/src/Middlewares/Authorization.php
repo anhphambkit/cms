@@ -55,6 +55,6 @@ class Authorization {
             return $this->redirect->route(HOME_ROUTE_FRONTEND);
         }
 
-        return $this->redirect->route(HOME_ROUTE_BACKEND);
+        return abort(404);
     }
 }

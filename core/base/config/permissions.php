@@ -3,7 +3,7 @@ return [
     # Base permission access admin
 	[
         'name' => 'Dashboard',
-        'flag' => 'dasboard.list',
+        'flag' => 'dashboard.index',
         'is_feature' => true,
     ],
     # Permission user
