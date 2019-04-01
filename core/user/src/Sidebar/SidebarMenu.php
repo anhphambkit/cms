@@ -37,6 +37,15 @@ class SidebarMenu extends CoreSidebar
 				'icon'        => 'fas fa-cogs',
 				'url'         => route('admin.role.index'),
 				'permissions' => ['role.index']
+            ],
+            [
+				'id'          => 'cms-core-super-user',
+				'priority'    => 3,
+				'parent_id'   => 'cms-core-administrator',
+				'name'        => __('Super Users'),
+				'icon'        => 'fas fa-cogs',
+				'url'         => route('admin.super-user.index'),
+				'permissions' => ['superuser']
             ]
 		];
 	}

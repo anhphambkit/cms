@@ -72,6 +72,27 @@ $router->group(['prefix' =>'user'], function (Router $router) {
     
 });
 
+$router->group(['prefix' =>'super-user'], function (Router $router) {
+   
+    $router->get('/users', [
+        'as' => 'admin.super-user.index',
+        'uses' => 'SuperUserController@index',
+        'middleware' => 'access:false'
+    ]);
+
+    $router->get('/create', [
+        'as' => 'admin.super-user.create',
+        'uses' => 'SuperUserController@getCreate',
+        'middleware' => 'access:false'
+    ]);
+
+    $router->post('/create', [
+        'as' => 'admin.super-user.create',
+        'uses' => 'SuperUserController@postCreate',
+        'middleware' => 'access:false'
+    ]);
+});
+
 $router->group(['prefix' =>'role'], function (Router $router) {
    
     $router->get('/roles', [

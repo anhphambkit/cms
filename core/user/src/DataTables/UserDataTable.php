@@ -66,7 +66,8 @@ class UserDataTable extends DataTableAbstract
                 'users.created_at',
             ])
             ->leftJoin('role_users', 'users.id', '=', 'role_users.user_id')
-            ->leftJoin('roles', 'roles.id', '=', 'role_users.role_id');
+            ->leftJoin('roles', 'roles.id', '=', 'role_users.role_id')
+            ->where('users.super_user', false);
         return $query;
     }
 

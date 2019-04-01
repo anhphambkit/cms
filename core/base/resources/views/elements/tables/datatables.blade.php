@@ -1,6 +1,7 @@
 <?php
     $urlCreate = empty($urlCreate) ? '#' : $urlCreate;
     $extend  = empty($extend) ? '#' : $extend;
+    $showBtnCreate  = isset($showBtnCreate) ? $showBtnCreate : false;
 ?>
 <div class="card">
     <div class="card-header">
@@ -15,9 +16,11 @@
     </div>
     <div class="card-content collapse show">
         <div class="card-body">
-            <a href="{{ $urlCreate }}" {{ $extend }} class="btn btn-social width-200 mb-1 mr-1 btn-outline-adn">
-                <span class="la la-adn font-medium-4"></span> {{ __('Create') }}
-            </a>
+            @if($showBtnCreate)
+                <a href="{{ $urlCreate }}" {{ $extend }} class="btn btn-social width-200 mb-1 mr-1 btn-outline-adn">
+                    <span class="la la-adn font-medium-4"></span> {{ __('Create') }}
+                </a>
+            @endif
             <div class="table-responsive">
                 {!! $dataTable->table(['class' => 'table table-striped table-bordered table-hover vertical-middle no-footer'], true) !!}
             </div>
