@@ -190,13 +190,14 @@ abstract class DataTableAbstract extends YajraTable
      */
     public function getActionsButton()
     {
-        return [
-            [
-                'extend' => 'collection',
-                'text' => '<span>' . __('Actions') . ' <span class="caret"></span></span>',
-                'buttons' => $this->getActions(),
-            ],
-        ];
+        return [];
+        // return [
+        //     [
+        //         'extend' => 'collection',
+        //         'text' => '<span>' . __('Actions') . ' <span class="caret"></span></span>',
+        //         'buttons' => $this->getActions(),
+        //     ],
+        // ];
     }
 
     /**
@@ -206,14 +207,14 @@ abstract class DataTableAbstract extends YajraTable
     public function getDefaultButtons()
     {
         return [
-            'export',
-            'print',
+            // 'export',
+            // 'print',
             [
                 'link' => '#',
                 'text' => view('core-base::elements.tables.filter')->render(),
             ],
             'reset',
-            'reload',
+            // 'reload',
         ];
     }
 

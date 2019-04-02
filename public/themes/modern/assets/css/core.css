@@ -594,3 +594,15 @@ input[type=password],input[type=text],select:not([multiple]),textarea {
     margin: 0;
     float: left
 }
+
+.dataTables_wrapper .dt-buttons {
+    float: right;
+    padding-bottom: 10px;
+}
+
+table.dataTable {
+    border-top: none;
+    margin-top: 0!important;
+    margin-bottom: 0!important;
+    width: 100%!important; 
+}

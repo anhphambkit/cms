@@ -113,7 +113,14 @@ class RoleDataTable extends DataTableAbstract
      */
     public function buttons()
     {
-        return [];
+        $buttons = [
+            'create' => [
+                'link' => route('admin.role.create'),
+                'text' => view('core-base::elements.tables.actions.create')->render(),
+            ]
+        ];
+
+        return $buttons;
     }
 
     /**

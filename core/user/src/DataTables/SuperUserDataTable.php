@@ -50,27 +50,27 @@ class SuperUserDataTable extends DataTableAbstract
     {
         return [
             'id' => [
-                'name' => 'users.id',
-                'title' => __('ID'),
-                'width' => '20px',
-                'class' => 'searchable searchable_id',
-                'footer' => __('ID')
+                'name'       => 'users.id',
+                'title'      => __('ID'),
+                'width'      => '20px',
+                'class'      => 'searchable searchable_id',
+                'footer'     => __('ID')
             ],
             'username' => [
-                'name' => 'users.username',
-                'title' => __('Username'),
-                'class' => 'text-left searchable',
+                'name'   => 'users.username',
+                'title'  => __('Username'),
+                'class'  => 'text-left searchable',
                 'footer' => __('Username')
             ],
             'email' => [
-                'name' => 'users.email',
-                'title' => __('Email'),
-                'class' => 'searchable',
+                'name'   => 'users.email',
+                'title'  => __('Email'),
+                'class'  => 'searchable',
                 'footer' => __('Email')
             ],
             'last_login' => [
-                'name' => 'users.last_login',
-                'title' => __('Last Login'),
+                'name'   => 'users.last_login',
+                'title'  => __('Last Login'),
                 'footer' => __('Last Login')
             ]
         ];
@@ -83,12 +83,11 @@ class SuperUserDataTable extends DataTableAbstract
     public function buttons()
     {
         $buttons = [
-            'create' => [
-                'link' => route('admin.user.create'),
-                'text' => view('core-base::elements.tables.actions.create')->render(),
-            ]
+            'add-supper' => [
+                'link' => '#',
+                'text' => view('core-user::partials.add-super')->render(),
+            ],
         ];
-
         return $buttons;
     }
 

@@ -1,4 +1,4 @@
-<div class="table-actions">
+<div class="table-actions row">
 	<a href="{{ route($edit, $item->id) }}" class="btn btn-icon btn-pure success mr-1 tip" data-original-title="{{ __('Edit') }}">
 		<i class="la la-pencil"></i>
 	</a>
