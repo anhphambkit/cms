@@ -31,7 +31,7 @@ abstract class DataTableAbstract extends YajraTable
         return $this->builder()
             ->columns($this->getColumns())
             ->parameters([
-                // 'dom' => "Brt<'datatables__info_wrap'pli<'clearfix'>>",
+                'dom' => "Brt<'datatables__info_wrap'pli<'clearfix'>>",
                 'buttons' => $this->getBuilderParameters(),
                 'initComplete' => $this->htmlInitComplete(),
                 'drawCallback' => $this->htmlDrawCallback(),
@@ -252,6 +252,7 @@ abstract class DataTableAbstract extends YajraTable
                 ];
             }
         }
+        
         return $buttons;
     }
 

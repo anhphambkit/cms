@@ -1,1 +1,1 @@
-<i class="fa fa-plus"></i> {{ trans('bases::forms.create') }}
+<i class="fas fa-plus"></i> {{ trans('core-base::forms.create') }}

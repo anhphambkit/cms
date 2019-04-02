@@ -10,7 +10,6 @@
     <meta name="author" content="PIXINVENT">
     <title>{{ page_title()->getTitle() }}</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
     <script src="{{ URL::asset('backend/core/media/packages/dropzone/dropzone.js') }}"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
@@ -56,8 +55,8 @@
     @foreach($jsFiles as $js)
         <script src="{{ URL::asset($js) }}" type="text/javascript"></script>
     @endforeach
+    @include('core-base::elements.common')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
     <script src="{{ URL::asset('backend/core/base/assets/js/datatables.js') }}"></script>
@@ -76,9 +75,7 @@
 
     @section('script-table')
     @show
-
-    @include('core-base::elements.common')
-
+    
     @section('script-media')
         @include('core-media::partials.media')
     @show

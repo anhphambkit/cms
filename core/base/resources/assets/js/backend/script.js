@@ -1,4 +1,4 @@
-var Lcms = Lcms || {};
+var Lcms = window.Lcms || {};
 
 Lcms.blockUI = function (options) {
     options = $.extend(true, {}, options);

@@ -69,7 +69,7 @@ class SuperUserDataTable extends DataTableAbstract
                 'footer' => __('Email')
             ],
             'last_login' => [
-                'name' => 'roles.last_login',
+                'name' => 'users.last_login',
                 'title' => __('Last Login'),
                 'footer' => __('Last Login')
             ]
