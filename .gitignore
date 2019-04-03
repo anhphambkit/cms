@@ -19,3 +19,4 @@ yarn-error.log
 docker/web/logs/access.log
 docker/web/logs/error.log
 docker/web/logs/error.log
+*.log
