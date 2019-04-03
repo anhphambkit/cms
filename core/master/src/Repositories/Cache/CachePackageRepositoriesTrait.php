@@ -1,5 +1,5 @@
 <?php
-namespace Core\Master\Repositories\Caches;
+namespace Core\Master\Repositories\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
@@ -260,26 +260,6 @@ trait CachePackageRepositoriesTrait
      * @author TrinhLe
      */
     public function insert(array $data)
-    {
-        return $this->flushCacheAndUpdateData(__FUNCTION__, func_get_args());
-    }
-
-    /**
-     * @param array $condition
-     * @return mixed
-     * @author Trinhle
-     */
-    public function forceDelete(array $condition = [])
-    {
-        return $this->flushCacheAndUpdateData(__FUNCTION__, func_get_args());
-    }
-
-    /**
-     * @param array $condition
-     * @return mixed
-     * @author Trinhle
-     */
-    public function restoreBy(array $condition = [])
     {
         return $this->flushCacheAndUpdateData(__FUNCTION__, func_get_args());
     }

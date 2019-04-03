@@ -21,7 +21,7 @@ $router->group(['prefix' => 'auth'], function (Router $router) {
     # Login
     $router->get('login', [
 		'as'         => 'login', 
-		'uses'       => 'WebController@showLoginForm',
+		'uses'       => 'LoginController@showLoginForm',
 		'middleware' => 'guest', 
     ]);
 

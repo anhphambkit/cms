@@ -19,6 +19,7 @@ class CacheProductRepositories extends CacheAbstractDecorator implements Product
      */
     public function __construct(ProductRepositories $repository)
     {
+        parent::__construct();
         $this->repository = $repository;
         $this->entityName = "Cache-Product"; # Please setup reference name of cache.
     }

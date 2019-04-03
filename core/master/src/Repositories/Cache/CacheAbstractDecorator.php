@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Master\Repositories\Caches;
+namespace Core\Master\Repositories\Cache;
 
 use Core\Master\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Support\Collection;
@@ -35,7 +35,7 @@ abstract class CacheAbstractDecorator implements RepositoryInterface
 
     public function __construct()
     {
-        $this->cache = app(Repository::class);
+        $this->cache     = app(Repository::class);
         $this->cacheTime = app(ConfigRepository::class)->get('cache.time', 60);
     }
 
@@ -72,7 +72,6 @@ abstract class CacheAbstractDecorator implements RepositoryInterface
             );
            
         } catch (Exception $ex) {
-            // ExceptionEmail::report($ex,"Error use cache repository: " . get_class($this));
             return $this->getDataWithoutCache($function, $args);
         }
     }
