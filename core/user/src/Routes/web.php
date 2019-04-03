@@ -27,7 +27,7 @@ $router->group(['prefix' => 'auth'], function (Router $router) {
 
     $router->post('login', [ 
 		'as'         => 'post.login', 
-		'uses'       => 'WebController@postLogin',
+		'uses'       => 'LoginController@login',
 		'middleware' => 'guest', 
     ]);
 

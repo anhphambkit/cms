@@ -88,7 +88,7 @@ class LoginController extends BasePublicController
             if (!AclManager::getActivationRepository()->completed($user)) {
                 return $this->response
                     ->setError()
-                    ->setMessage(trans('core/acl::auth.login.not_active'));
+                    ->setMessage(trans('core-user::auth.login.not_active'));
             }
         }
 
@@ -114,7 +114,7 @@ class LoginController extends BasePublicController
      */
     public function username()
     {
-        return 'username';
+        return 'email';
     }
 
     /**
@@ -133,6 +133,6 @@ class LoginController extends BasePublicController
 
         return $this->response
             ->setNextUrl(route('access.login'))
-            ->setMessage(trans('core/acl::auth.login.logout_success'));
+            ->setMessage(trans('core-user::auth.login.logout_success'));
     }
 }

@@ -3,32 +3,31 @@
 namespace Core\User;
 
 use Core\User\Models\User;
-use Core\User\Repositories\Interfaces\ActivationInterface;
+use Core\User\Repositories\Interfaces\ActivationRepositories as ActivationInterface; 
 use Core\User\Repositories\Interfaces\RoleInterface;
 use Core\User\Repositories\Interfaces\UserInterface;
 use InvalidArgumentException;
 
 class AclManager
 {
-
     /**
      * The User repository.
      *
-     * @var \Botble\ACL\Repositories\Interfaces\UserInterface
+     * @var \Core\User\Repositories\Interfaces\UserInterface
      */
     protected $users;
 
     /**
      * The Role repository.
      *
-     * @var \Botble\ACL\Repositories\Interfaces\RoleInterface
+     * @var \Core\User\Repositories\Interfaces\RoleInterface
      */
     protected $roles;
 
     /**
      * The Activations repository.
      *
-     * @var \Botble\ACL\Repositories\Interfaces\ActivationInterface
+     * @var \Core\User\Repositories\Interfaces\ActivationInterface
      */
     protected $activations;
 
@@ -38,16 +37,10 @@ class AclManager
      * @param RoleInterface $roles
      * @param ActivationInterface $activations
      */
-    public function __construct(
-        UserInterface $users,
-        RoleInterface $roles,
-        ActivationInterface $activations
-    )
+    public function __construct( UserInterface $users, RoleInterface $roles, ActivationInterface $activations )
     {
-        $this->users = $users;
-
-        $this->roles = $roles;
-
+        $this->users       = $users;
+        $this->roles       = $roles;
         $this->activations = $activations;
     }
 
@@ -86,7 +79,7 @@ class AclManager
     /**
      * Returns the role repository.
      *
-     * @return \Botble\ACL\Repositories\Interfaces\RoleInterface
+     * @return \Core\User\Repositories\Interfaces\RoleInterface
      */
     public function getRoleRepository()
     {
@@ -96,7 +89,7 @@ class AclManager
     /**
      * Sets the role repository.
      *
-     * @param  \Botble\ACL\Repositories\Interfaces\RoleInterface $roles
+     * @param  \Core\User\Repositories\Interfaces\RoleInterface $roles
      * @return void
      */
     public function setRoleRepository(RoleInterface $roles)
@@ -107,7 +100,7 @@ class AclManager
     /**
      * Returns the activations repository.
      *
-     * @return \Botble\ACL\Repositories\Interfaces\ActivationInterface
+     * @return \Core\User\Repositories\Interfaces\ActivationInterface
      */
     public function getActivationRepository()
     {
@@ -117,7 +110,7 @@ class AclManager
     /**
      * Sets the activations repository.
      *
-     * @param  \Botble\ACL\Repositories\Interfaces\ActivationInterface $activations
+     * @param  \Core\User\Repositories\Interfaces\ActivationInterface $activations
      * @return void
      */
     public function setActivationRepository(ActivationInterface $activations)

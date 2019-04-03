@@ -39,10 +39,10 @@ use Core\User\Guards\Sentinel;
 use Core\Base\Providers\CmsServiceProvider as CoreServiceProvider;
 
 use Illuminate\Foundation\AliasLoader;
+use Core\User\Facades\AclManagerFacade;
 
 use Core\User\Repositories\Interfaces\ActivationRepositories;
 use Core\User\Repositories\Eloquent\EloquentActivationRepositories;
-use Core\User\Repositories\Cache\CacheActivationRepositories;
 
 /**
  * Class UserServiceProvider
@@ -128,6 +128,10 @@ class UserServiceProvider extends CoreServiceProvider
             return new UserRepository(new \Core\User\Models\User());
         });
 
+        $this->app->singleton(ActivationRepositories::class, function () {
+            return new EloquentActivationRepositories(new \Core\User\Models\Activation());
+        });
+
         if (setting('enable_cache', true)) {
 
             $this->app->singleton(RoleInterface::class, function () {
@@ -148,10 +152,6 @@ class UserServiceProvider extends CoreServiceProvider
 
             $this->app->singleton(RoleUserRepositories::class, function () {
                 return new CacheRoleUserRepositories(new EloquentRoleUserRepositories(new \Core\User\Models\RoleUser()));
-            });
-
-            $this->app->singleton(ActivationRepositories::class, function () {
-                return new CacheActivationRepositories(new EloquentActivationRepositories(new \Core\User\Models\Activation()));
             });
             
         } else {
@@ -175,11 +175,9 @@ class UserServiceProvider extends CoreServiceProvider
             $this->app->singleton(RoleUserRepositories::class, function () {
                 return new EloquentRoleUserRepositories(new \Core\User\Models\RoleUser());
             });
-
-            $this->app->singleton(ActivationRepositories::class, function () {
-                return new EloquentActivationRepositories(new \Core\User\Models\Activation());
-            });
         }
+
+
     }
 
     /**
@@ -188,9 +186,9 @@ class UserServiceProvider extends CoreServiceProvider
     public function boot()
     {
         # Important register guard
-        Auth::extend('sentinel-guard', function () {
-            return new Sentinel();
-        });
+        // Auth::extend('sentinel-guard', function () {
+        //     return new Sentinel();
+        // });
 
         $loader = AliasLoader::getInstance();
         $loader->alias('AclManager', AclManagerFacade::class);
