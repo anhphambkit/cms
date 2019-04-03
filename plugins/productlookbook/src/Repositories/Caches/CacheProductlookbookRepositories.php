@@ -19,6 +19,7 @@ class CacheProductlookbookRepositories extends CacheAbstractDecorator implements
      */
     public function __construct(ProductlookbookRepositories $repository)
     {
+        parent::__construct();
         $this->repository = $repository;
         $this->entityName = "Cache-Productlookbook"; # Please setup reference name of cache.
     }

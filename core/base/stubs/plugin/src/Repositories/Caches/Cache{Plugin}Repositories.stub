@@ -19,6 +19,7 @@ class Cache{Plugin}Repositories extends CacheAbstractDecorator implements {Plugi
      */
     public function __construct({Plugin}Repositories $repository)
     {
+        parent::__construct();
         $this->repository = $repository;
         $this->entityName = "Cache-{Plugin}"; # Please setup reference name of cache.
     }

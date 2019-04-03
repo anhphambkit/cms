@@ -12,7 +12,7 @@ use Core\User\Repositories\Eloquent\UserRepository;
 
 #Role
 use Core\User\Repositories\Interfaces\RoleInterface;
-use Core\User\Repositories\Caches\RoleCacheDecorator;
+use Core\User\Repositories\Cache\RoleCacheDecorator;
 use Core\User\Repositories\Eloquent\RoleRepository;
 
 #Feature
@@ -37,6 +37,12 @@ use Core\User\Repositories\Cache\CacheRoleUserRepositories;
 
 use Core\User\Guards\Sentinel;
 use Core\Base\Providers\CmsServiceProvider as CoreServiceProvider;
+
+use Illuminate\Foundation\AliasLoader;
+
+use Core\User\Repositories\Interfaces\ActivationRepositories;
+use Core\User\Repositories\Eloquent\EloquentActivationRepositories;
+use Core\User\Repositories\Cache\CacheActivationRepositories;
 
 /**
  * Class UserServiceProvider
@@ -122,7 +128,7 @@ class UserServiceProvider extends CoreServiceProvider
             return new UserRepository(new \Core\User\Models\User());
         });
 
-        if (setting('enable_cache', false)) {
+        if (setting('enable_cache', true)) {
 
             $this->app->singleton(RoleInterface::class, function () {
                 return new RoleCacheDecorator(new RoleRepository(new \Core\User\Models\Role()));
@@ -142,6 +148,10 @@ class UserServiceProvider extends CoreServiceProvider
 
             $this->app->singleton(RoleUserRepositories::class, function () {
                 return new CacheRoleUserRepositories(new EloquentRoleUserRepositories(new \Core\User\Models\RoleUser()));
+            });
+
+            $this->app->singleton(ActivationRepositories::class, function () {
+                return new CacheActivationRepositories(new EloquentActivationRepositories(new \Core\User\Models\Activation()));
             });
             
         } else {
@@ -165,6 +175,10 @@ class UserServiceProvider extends CoreServiceProvider
             $this->app->singleton(RoleUserRepositories::class, function () {
                 return new EloquentRoleUserRepositories(new \Core\User\Models\RoleUser());
             });
+
+            $this->app->singleton(ActivationRepositories::class, function () {
+                return new EloquentActivationRepositories(new \Core\User\Models\Activation());
+            });
         }
     }
 
@@ -177,6 +191,9 @@ class UserServiceProvider extends CoreServiceProvider
         Auth::extend('sentinel-guard', function () {
             return new Sentinel();
         });
+
+        $loader = AliasLoader::getInstance();
+        $loader->alias('AclManager', AclManagerFacade::class);
 
         $this->app->register(HookServiceProvider::class);
     }

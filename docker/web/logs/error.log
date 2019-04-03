@@ -388,3 +388,143 @@ PHP message: PHP  36. Illuminate\Foundation\Application->make() /var/www/html/ve
 PHP message: PHP  37. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:734
 PHP message: PHP  38. Illuminate\Foundation\Application->resolve() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:601
 PHP message: PHP  39. Illuminate\Foundation\Application->build() /var/www/html/vendor/la
+2019/04/03 15:27:46 [error] 65#65: *47 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Cannot redeclare Core\Master\Repositories\Caches\CachePackageRepositoriesTrait::forceDelete() in /var/www/html/core/master/src/Repositories/Caches/CachePackageRepositoriesTrait.php on line 272
+PHP message: PHP Stack trace:
+PHP message: PHP   1. {main}() /var/www/html/public/index.php:0
+PHP message: PHP   2. App\Http\Kernel->handle() /var/www/html/public/index.php:55
+PHP message: PHP   3. App\Http\Kernel->sendRequestThroughRouter() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:116
+PHP message: PHP   4. Illuminate\Routing\Pipeline->then() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:151
+PHP message: PHP   5. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:104
+PHP message: PHP   6. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP   7. App\Http\Middleware\CheckForMaintenanceMode->handle() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP   8. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php:62
+PHP message: PHP   9. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  10. Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  11. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php:27
+PHP message: PHP  12. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vend
+2019/04/03 15:27:46 [error] 65#65: *47 FastCGI sent in stderr: "ge: PHP  26. Illuminate\Routing\Router->gatherRouteMiddleware() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php:658
+PHP message: PHP  27. Illuminate\Routing\Route->gatherMiddleware() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php:678
+PHP message: PHP  28. Illuminate\Routing\Route->controllerMiddleware() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php:757
+PHP message: PHP  29. Illuminate\Routing\Route->getController() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php:796
+PHP message: PHP  30. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php:226
+PHP message: PHP  31. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:734
+PHP message: PHP  32. Illuminate\Foundation\Application->resolve() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:601
+PHP message: PHP  33. Illuminate\Foundation\Application->build() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:646
+PHP message: PHP  34. Illuminate\Foundation\Application->resolveDependencies() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:795
+PHP message: PHP  35. Illuminate\Foundation\Application->resolveClass() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:828
+PHP message: PHP  36. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:900
+PHP message: PHP  37. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:734
+PHP message: PHP  38. Illuminate\Foundation\Application->resolve() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:601
+PHP message: PHP  39. Illuminate\Foundation\Application->build() /v
+2019/04/03 15:27:46 [error] 65#65: *47 FastCGI sent in stderr: "core/user/src/Providers/UserServiceProvider.php:134
+PHP message: PHP  54. Composer\Autoload\includeFile() /var/www/html/vendor/composer/ClassLoader.php:322
+PHP message: PHP  55. include() /var/www/html/vendor/composer/ClassLoader.php:444
+PHP message: PHP  56. spl_autoload_call() /var/www/html/core/user/src/Repositories/Cache/RoleCacheDecorator.php:8
+PHP message: PHP  57. Composer\Autoload\ClassLoader->loadClass() /var/www/html/core/user/src/Repositories/Cache/RoleCacheDecorator.php:8
+PHP message: PHP  58. Composer\Autoload\includeFile() /var/www/html/vendor/composer/ClassLoader.php:322
+PHP message: PHP  59. include() /var/www/html/vendor/composer/ClassLoader.php:444
+PHP message: PHP  60. spl_autoload_call() /var/www/html/core/master/src/Repositories/Caches/CacheAbstractDecorator.php:14
+PHP message: PHP  61. Composer\Autoload\ClassLoader->loadClass() /var/www/html/core/master/src/Repositories/Caches/CacheAbstractDecorator.php:14
+PHP message: PHP  62. Composer\Autoload\includeFile() /var/www/html/vendor/composer/ClassLoader.php:322" while reading response header from upstream, client: 174.23.0.1, server: _, request: "GET /admin/user/users HTTP/1.1", upstream: "fastcgi://unix:/var/run/php/php7.1-fpm.sock:", host: "localhost", referrer: "https://localhost/admin/dashboard"
+2019/04/03 15:28:49 [error] 65#65: *47 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Cannot redeclare Core\Master\Repositories\Caches\CachePackageRepositoriesTrait::restoreBy() in /var/www/html/core/master/src/Repositories/Caches/CachePackageRepositoriesTrait.php on line 272
+PHP message: PHP Stack trace:
+PHP message: PHP   1. {main}() /var/www/html/public/index.php:0
+PHP message: PHP   2. App\Http\Kernel->handle() /var/www/html/public/index.php:55
+PHP message: PHP   3. App\Http\Kernel->sendRequestThroughRouter() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:116
+PHP message: PHP   4. Illuminate\Routing\Pipeline->then() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:151
+PHP message: PHP   5. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:104
+PHP message: PHP   6. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP   7. App\Http\Middleware\CheckForMaintenanceMode->handle() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP   8. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php:62
+PHP message: PHP   9. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  10. Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  11. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php:27
+PHP message: PHP  12. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor
+2019/04/03 15:28:49 [error] 65#65: *47 FastCGI sent in stderr: ": PHP  26. Illuminate\Routing\Router->gatherRouteMiddleware() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php:658
+PHP message: PHP  27. Illuminate\Routing\Route->gatherMiddleware() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php:678
+PHP message: PHP  28. Illuminate\Routing\Route->controllerMiddleware() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php:757
+PHP message: PHP  29. Illuminate\Routing\Route->getController() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php:796
+PHP message: PHP  30. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php:226
+PHP message: PHP  31. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:734
+PHP message: PHP  32. Illuminate\Foundation\Application->resolve() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:601
+PHP message: PHP  33. Illuminate\Foundation\Application->build() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:646
+PHP message: PHP  34. Illuminate\Foundation\Application->resolveDependencies() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:795
+PHP message: PHP  35. Illuminate\Foundation\Application->resolveClass() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:828
+PHP message: PHP  36. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:900
+PHP message: PHP  37. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:734
+PHP message: PHP  38. Illuminate\Foundation\Application->resolve() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:601
+PHP message: PHP  39. Illuminate\Foundation\Application->build() /var
+2019/04/03 15:28:49 [error] 65#65: *47 FastCGI sent in stderr: "re/user/src/Providers/UserServiceProvider.php:134
+PHP message: PHP  54. Composer\Autoload\includeFile() /var/www/html/vendor/composer/ClassLoader.php:322
+PHP message: PHP  55. include() /var/www/html/vendor/composer/ClassLoader.php:444
+PHP message: PHP  56. spl_autoload_call() /var/www/html/core/user/src/Repositories/Cache/RoleCacheDecorator.php:8
+PHP message: PHP  57. Composer\Autoload\ClassLoader->loadClass() /var/www/html/core/user/src/Repositories/Cache/RoleCacheDecorator.php:8
+PHP message: PHP  58. Composer\Autoload\includeFile() /var/www/html/vendor/composer/ClassLoader.php:322
+PHP message: PHP  59. include() /var/www/html/vendor/composer/ClassLoader.php:444
+PHP message: PHP  60. spl_autoload_call() /var/www/html/core/master/src/Repositories/Caches/CacheAbstractDecorator.php:14
+PHP message: PHP  61. Composer\Autoload\ClassLoader->loadClass() /var/www/html/core/master/src/Repositories/Caches/CacheAbstractDecorator.php:14
+PHP message: PHP  62. Composer\Autoload\includeFile() /var/www/html/vendor/composer/ClassLoader.php:322" while reading response header from upstream, client: 174.23.0.1, server: _, request: "GET /admin/user/users HTTP/1.1", upstream: "fastcgi://unix:/var/run/php/php7.1-fpm.sock:", host: "localhost", referrer: "https://localhost/admin/dashboard"
+2019/04/03 15:29:05 [error] 65#65: *47 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 174.23.0.1, server: _, request: "GET /admin/user/users HTTP/1.1", upstream: "fastcgi://unix:/var/run/php/php7.1-fpm.sock:", host: "localhost", referrer: "https://localhost/admin/dashboard"
+2019/04/03 15:29:07 [error] 65#65: *47 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 174.23.0.1, server: _, request: "GET /admin/user/users HTTP/1.1", upstream: "fastcgi://unix:/var/run/php/php7.1-fpm.sock:", host: "localhost", referrer: "https://localhost/admin/dashboard"
+2019/04/03 15:29:13 [error] 65#65: *47 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Class 'Core\Master\Repositories\Cache\CacheAbstractDecorator' not found in /var/www/html/core/user/src/Repositories/Cache/CacheFeatureRepositories.php on line 6
+PHP message: PHP Stack trace:
+PHP message: PHP   1. {main}() /var/www/html/public/index.php:0
+PHP message: PHP   2. App\Http\Kernel->handle() /var/www/html/public/index.php:55
+PHP message: PHP   3. App\Http\Kernel->sendRequestThroughRouter() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:116
+PHP message: PHP   4. Illuminate\Routing\Pipeline->then() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:151
+PHP message: PHP   5. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:104
+PHP message: PHP   6. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP   7. App\Http\Middleware\CheckForMaintenanceMode->handle() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP   8. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php:62
+PHP message: PHP   9. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  10. Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  11. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php:27
+PHP message: PHP  12. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illumin
+2019/04/03 15:29:13 [error] 65#65: *47 FastCGI sent in stderr: "Router->gatherRouteMiddleware() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php:658
+PHP message: PHP  27. Illuminate\Routing\Route->gatherMiddleware() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php:678
+PHP message: PHP  28. Illuminate\Routing\Route->controllerMiddleware() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php:757
+PHP message: PHP  29. Illuminate\Routing\Route->getController() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php:796
+PHP message: PHP  30. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php:226
+PHP message: PHP  31. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:734
+PHP message: PHP  32. Illuminate\Foundation\Application->resolve() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:601
+PHP message: PHP  33. Illuminate\Foundation\Application->build() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:646
+PHP message: PHP  34. Illuminate\Foundation\Application->resolveDependencies() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:795
+PHP message: PHP  35. Illuminate\Foundation\Application->resolveClass() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:828
+PHP message: PHP  36. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:900
+PHP message: PHP  37. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:734
+PHP message: PHP  38. Illuminate\Foundation\Application->resolve() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:601
+PHP message: PHP  39. Illuminate\Foundation\Application->build() /var/www/html/vendor/laravel/frame
+2019/04/03 15:29:14 [error] 65#65: *47 FastCGI sent in stderr: "iceProvider.php:138
+PHP message: PHP  54. Composer\Autoload\includeFile() /var/www/html/vendor/composer/ClassLoader.php:322
+PHP message: PHP  55. include() /var/www/html/vendor/composer/ClassLoader.php:444" while reading response header from upstream, client: 174.23.0.1, server: _, request: "GET /admin/user/users HTTP/1.1", upstream: "fastcgi://unix:/var/run/php/php7.1-fpm.sock:", host: "localhost", referrer: "https://localhost/admin/dashboard"
+2019/04/03 15:33:38 [error] 65#65: *62 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Class 'Core\Master\Repositories\Caches\CacheAbstractDecorator' not found in /var/www/html/core/user/src/Repositories/Cache/RoleCacheDecorator.php on line 8
+PHP message: PHP Stack trace:
+PHP message: PHP   1. {main}() /var/www/html/public/index.php:0
+PHP message: PHP   2. App\Http\Kernel->handle() /var/www/html/public/index.php:55
+PHP message: PHP   3. App\Http\Kernel->sendRequestThroughRouter() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:116
+PHP message: PHP   4. Illuminate\Routing\Pipeline->then() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:151
+PHP message: PHP   5. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:104
+PHP message: PHP   6. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP   7. App\Http\Middleware\CheckForMaintenanceMode->handle() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP   8. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php:62
+PHP message: PHP   9. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  10. Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle() /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  11. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php:27
+PHP message: PHP  12. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/vendor/laravel/framework/src/Illuminate/R
+2019/04/03 15:33:38 [error] 65#65: *62 FastCGI sent in stderr: "r->gatherRouteMiddleware() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php:658
+PHP message: PHP  27. Illuminate\Routing\Route->gatherMiddleware() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php:678
+PHP message: PHP  28. Illuminate\Routing\Route->controllerMiddleware() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php:757
+PHP message: PHP  29. Illuminate\Routing\Route->getController() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php:796
+PHP message: PHP  30. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php:226
+PHP message: PHP  31. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:734
+PHP message: PHP  32. Illuminate\Foundation\Application->resolve() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:601
+PHP message: PHP  33. Illuminate\Foundation\Application->build() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:646
+PHP message: PHP  34. Illuminate\Foundation\Application->resolveDependencies() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:795
+PHP message: PHP  35. Illuminate\Foundation\Application->resolveClass() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:828
+PHP message: PHP  36. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:900
+PHP message: PHP  37. Illuminate\Foundation\Application->make() /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php:734
+PHP message: PHP  38. Illuminate\Foundation\Application->resolve() /var/www/html/vendor/laravel/framework/src/Illuminate/Container/Container.php:601
+PHP message: PHP  39. Illuminate\Foundation\Application->build() /var/www/html/vendor/laravel/framework/
+2019/04/03 15:33:38 [error] 65#65: *62 FastCGI sent in stderr: "ovider.php:134
+PHP message: PHP  54. Composer\Autoload\includeFile() /var/www/html/vendor/composer/ClassLoader.php:322
+PHP message: PHP  55. include() /var/www/html/vendor/composer/ClassLoader.php:444" while reading response header from upstream, client: 174.23.0.1, server: _, request: "GET /admin/user/users HTTP/1.1", upstream: "fastcgi://unix:/var/run/php/php7.1-fpm.sock:", host: "localhost", referrer: "https://localhost/admin/dashboard"

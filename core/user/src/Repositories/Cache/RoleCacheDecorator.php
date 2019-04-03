@@ -1,9 +1,9 @@
 <?php
 
-namespace Core\User\Repositories\Caches;
+namespace Core\User\Repositories\Cache;
 
 use Core\User\Repositories\Interfaces\RoleInterface;
-use Core\Master\Repositories\Caches\CacheAbstractDecorator;
+use Core\Master\Repositories\Cache\CacheAbstractDecorator;
 
 class RoleCacheDecorator extends CacheAbstractDecorator implements RoleInterface
 {
@@ -19,6 +19,7 @@ class RoleCacheDecorator extends CacheAbstractDecorator implements RoleInterface
      */
     public function __construct(RoleInterface $repository)
     {
+        parent::__construct();
         $this->repository = $repository;
         $this->entityName = 'user-role'; # Please setup reference name of cache.
     }

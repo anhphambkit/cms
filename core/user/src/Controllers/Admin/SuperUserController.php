@@ -61,6 +61,5 @@ class SuperUserController extends BaseAdminController{
         } catch (Exception $e) {
             return redirect()->route('admin.super-user.index')->with('error_msg', trans('core-base::system.cant_find_user_with_email'))->withInput();
         }
-
     }
 }

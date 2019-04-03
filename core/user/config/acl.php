@@ -10,4 +10,5 @@ return [
         'container_dir' => 'logos',
         'default' => 'system/images/default-logo.png',
     ],
+    'admin_dir' => '/admin/dashboard'
 ];
