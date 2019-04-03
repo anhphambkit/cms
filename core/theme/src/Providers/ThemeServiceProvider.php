@@ -59,7 +59,7 @@ class ThemeServiceProvider extends ServiceProvider
             return $this->app['stylist']->activate($themeName, true);
         }
 
-        $themeName = setting('theme_frontend', 'KOSMO');
+        $themeName = setting('theme_frontend', 'IFOSS');
         return $this->app['stylist']->activate($themeName, true);
     }
 

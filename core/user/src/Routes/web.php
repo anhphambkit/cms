@@ -13,7 +13,7 @@
 use Illuminate\Routing\Router;
 
 Route::get('/', function () {
-	return view('welcome');
+	return view('homepage');
 });
 
 /** @var Router $router */
