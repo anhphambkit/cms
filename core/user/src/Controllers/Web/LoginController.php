@@ -27,13 +27,6 @@ class LoginController extends BasePublicController
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo;
-
-    /**
      * @var BaseHttpResponse
      */
     protected $response;
@@ -45,9 +38,10 @@ class LoginController extends BasePublicController
      */
     public function __construct(BaseHttpResponse $response)
     {
+        parent::__construct();
+
         $this->middleware('guest', ['except' => 'logout']);
 
-        $this->redirectTo = config('core-user.acl.admin_dir');
         $this->response = $response;
     }
 
@@ -91,15 +85,13 @@ class LoginController extends BasePublicController
                     ->setError()
                     ->setMessage(trans('core-user::auth.login.not_active'));
             }
+        }
 
-            if ($this->attemptLogin($request)) {
-                AclManager::getUserRepository()->update(['id' => $user->id], ['last_login' => now(config('app.timezone'))]);
-                if (!session()->has('url.intended')) {
-                    session()->flash('url.intended', url()->current());
-                }
-                do_action(AUTH_ACTION_AFTER_LOGIN_SYSTEM, AUTH_MODULE_SCREEN_NAME, request(), Auth::user());
-                return $this->sendLoginResponse($request);
-            }
+        if ($this->attemptLogin($request)) {
+            AclManager::getUserRepository()->update(['id' => $user->id], ['last_login' => now(config('app.timezone'))]);
+
+            do_action(AUTH_ACTION_AFTER_LOGIN_SYSTEM, AUTH_MODULE_SCREEN_NAME, request(), Auth::user());
+            return $this->sendLoginResponse($request);
         }
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
@@ -107,6 +99,18 @@ class LoginController extends BasePublicController
         $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        return redirect()->route(HOME_ROUTE_BACKEND);
     }
 
     /**

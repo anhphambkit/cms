@@ -2,11 +2,11 @@
 
 namespace Core\Base\Middlewares;
 
-use Illuminate\Auth\Middleware\Authenticate as LaravelCoreAuthenticate;
+use Illuminate\Auth\Middleware\Authenticate as BaseAuthenticate;
 use Closure;
 use DashboardMenu;
 
-class Authenticate extends LaravelCoreAuthenticate
+class Authenticate extends BaseAuthenticate
 {
     /**
      * Handle an incoming request.

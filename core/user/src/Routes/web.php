@@ -22,13 +22,11 @@ $router->group(['prefix' => 'auth'], function (Router $router) {
     $router->get('login', [
 		'as'         => 'login', 
 		'uses'       => 'LoginController@showLoginForm',
-		'middleware' => 'guest', 
     ]);
 
     $router->post('login', [ 
 		'as'         => 'post.login', 
 		'uses'       => 'LoginController@login',
-		'middleware' => 'guest', 
     ]);
 
     $router->post('register', [ 

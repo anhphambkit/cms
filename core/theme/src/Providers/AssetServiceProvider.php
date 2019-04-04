@@ -11,8 +11,8 @@ use Illuminate\Foundation\AliasLoader;
 use Core\Theme\Facades\AssetManagerFacade;
 use Core\Theme\Facades\AssetPipelineFacade;
 use Core\Theme\Facades\AssetTypeFactoryFacade;
-use Core\Base\Events\SessionStarted;
 use Event;
+use Illuminate\Routing\Events\RouteMatched;
 
 class AssetServiceProvider extends ServiceProvider
 {
@@ -40,7 +40,7 @@ class AssetServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Event::listen(SessionStarted::class, function () {
+        Event::listen(RouteMatched::class, function () {
             $this->registerAssets();
         });
     }

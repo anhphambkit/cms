@@ -6,10 +6,12 @@ use Exception;
 use Elasticquent\ElasticquentTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Core\User\Traits\PermissionTrait;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use PermissionTrait,
+    use Notifiable,
+        PermissionTrait,
         ElasticquentTrait;
     /**
      * The database table used by the model.

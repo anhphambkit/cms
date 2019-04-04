@@ -11,10 +11,9 @@ use Core\Setting\Providers\SettingServiceProvider;
 use Core\Theme\Providers\AssetServiceProvider;
 use Core\Theme\Providers\ThemeServiceProvider;
 use Core\User\Providers\UserServiceProvider;
-use Core\Base\Middlewares\StartSession;
-use Core\Base\Events\SessionStarted;
 use Core\Media\Providers\MediaServiceProvider;
 use Event;
+use Illuminate\Routing\Events\RouteMatched;
 
 # Plugin 
 use Core\Base\Repositories\Interfaces\PluginRepositories;
@@ -42,8 +41,6 @@ class BaseServiceProvider extends ServiceProvider
          * @var Router $router
          */
         $router = $this->app['router'];
-
-        $router->pushMiddlewareToGroup('web', StartSession::class);
 
 		$this->app->register(AssetServiceProvider::class);
 		$this->app->register(StylistServiceProvider::class);
@@ -89,8 +86,7 @@ class BaseServiceProvider extends ServiceProvider
         add_filter(DASHBOARD_FILTER_MENU_NAME, [\Core\Dashboard\Hooks\DashboardMenuHook::class, 'renderMenuDashboard']);
         add_filter(BASE_FILTER_GET_LIST_DATA, [$this, 'addLanguageColumn'], 50, 2);
         
-        
-        Event::listen(SessionStarted::class, function () {
+        Event::listen(RouteMatched::class, function () {
             dashboard_menu()->loadRegisterMenus();
         });
 	}
