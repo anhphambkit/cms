@@ -176,10 +176,13 @@ class UserServiceProvider extends CoreServiceProvider
     }
 
     /**
+     * Boot provider
      * @author TrinhLe
      */
     public function boot()
     {
+        config()->set(['auth.providers.users.model' => \Core\User\Models\User::class]);
+
         $loader = AliasLoader::getInstance();
         $loader->alias('AclManager', AclManagerFacade::class);
 

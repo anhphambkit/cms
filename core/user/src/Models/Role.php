@@ -1,12 +1,13 @@
-<?php namespace Core\User\Models;
+<?php 
+namespace Core\User\Models;
 
-use Cartalyst\Sentinel\Roles\EloquentRole;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-class Role extends EloquentRole
+use Illuminate\Database\Eloquent\Model;
+use Core\User\Traits\PermissionTrait;
+class Role extends Model
 {
-
-    use SoftDeletes;
+    use SoftDeletes,
+        PermissionTrait;
 
     /**
      * The database table used by the model.

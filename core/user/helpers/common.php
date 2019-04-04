@@ -3,44 +3,6 @@
 use Core\User\Models\UserMeta;
 use Cartalyst\Sentinel\Activations\EloquentActivation;
 use Illuminate\Http\Request;
-
-if (!function_exists('acl_activate_user')) {
-    /**
-     * @return bool
-     * @author TrinhLe
-     */
-    function acl_activate_user($user) {
-        /**
-         * @var EloquentActivation $activation
-         */
-        $activation = Sentinel::getActivationRepository()->create($user);
-        if (Sentinel::getActivationRepository()->complete($user, $activation->code)) {
-            return true;
-        }
-        return false;
-    }
-}
-
-if (!function_exists('acl_deactivate_user')) {
-    /**
-     * @return bool
-     * @author TrinhLe
-     */
-    function acl_deactivate_user($user) {
-        return Sentinel::getActivationRepository()->remove($user);
-    }
-}
-
-if (!function_exists('user_is_activated')) {
-    /**
-     * @return bool
-     * @author TrinhLe
-     */
-    function user_is_activated($user) {
-        return Sentinel::getActivationRepository()->completed($user);
-    }
-}
-
 if (!function_exists('render_login_form')) {
     /**
      * @return string

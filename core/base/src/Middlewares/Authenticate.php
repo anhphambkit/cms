@@ -11,15 +11,22 @@ class Authenticate extends BaseAuthenticate
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Closure $next
-     * @param array $guards
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @param  string[]  ...$guards
      * @return mixed
+     *
      * @throws \Illuminate\Auth\AuthenticationException
      */
     public function handle($request, Closure $next, ...$guards)
     {
-        $guards = $this->authenticate($guards);
+        $this->authenticate($guards);
+
+        echo "<pre>"; 
+            print_r($request->user()); 
+        echo "</pre>"; die;
+
+        die;
         return $next($request);
     }
 }
