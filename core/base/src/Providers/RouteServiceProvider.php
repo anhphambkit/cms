@@ -47,7 +47,10 @@ class RouteServiceProvider extends ServiceProvider
          * @var Router $router
          */
         $router = $this->app['router'];
-        // $router->aliasMiddleware('auth', Authenticate::class);
+        
+        $router->aliasMiddleware('auth', Authenticate::class);
+
+        $this->registerMiddleware($router);
     }
 
     /**

@@ -1,15 +1,16 @@
-<?php namespace Core\User\Models;
+<?php 
+namespace Core\User\Models;
 
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Auth\Authenticatable;
 use Carbon\Carbon;
-use Cartalyst\Sentinel\Permissions\PermissionsTrait;
-use Cartalyst\Sentinel\Users\EloquentUser;
 use Exception;
 use Elasticquent\ElasticquentTrait;
-class User extends EloquentUser implements AuthenticatableContract
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Core\User\Traits\PermissionTrait;
+
+class User extends Authenticatable
 {
-    use Authenticatable, ElasticquentTrait;
+    use PermissionTrait,
+        ElasticquentTrait;
     /**
      * The database table used by the model.
      *
@@ -72,9 +73,9 @@ class User extends EloquentUser implements AuthenticatableContract
      * @var array
      */
     public static $invite_rules = [
-        'email' => 'required|email|unique:users',
+        'email'      => 'required|email|unique:users',
         'first_name' => 'required|min:2',
-        'last_name' => 'required|min:2',
+        'last_name'  => 'required|min:2',
     ];
 
     /**
