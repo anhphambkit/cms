@@ -4,37 +4,6 @@ use Core\User\Models\UserMeta;
 use Cartalyst\Sentinel\Activations\EloquentActivation;
 use Illuminate\Http\Request;
 
-if (!function_exists('acl_get_current_user')) {
-    /**
-     * @author TrinhLe
-     */
-    function acl_get_current_user() {
-        return Sentinel::getUser();
-    }
-}
-
-if (!function_exists('acl_get_current_user_id')) {
-    /**
-     * @return int|null
-     * @author TrinhLe
-     */
-    function acl_get_current_user_id() {
-        if ($user = Sentinel::check()) {
-            return $user->getUserId();
-        }
-        return null;
-    }
-}
-
-if (!function_exists('acl_check_login')) {
-    /**
-     * @author TrinhLe
-     */
-    function acl_check_login() {
-        return Sentinel::check();
-    }
-}
-
 if (!function_exists('acl_activate_user')) {
     /**
      * @return bool

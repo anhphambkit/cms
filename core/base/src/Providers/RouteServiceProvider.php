@@ -42,18 +42,14 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function register()
     {
-        parent::boot();
-
         /**
          * @var Router $router
          */
         $router = $this->app['router'];
 
         $router->aliasMiddleware('auth', Authenticate::class);
-
-        $this->registerMiddleware($router);
     }
 
     /**

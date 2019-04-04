@@ -55,7 +55,7 @@ class MediaFileController extends BaseAdminController
         $file->size = 0;
         $file->mime_type = $type;
         $file->folder_id = $request->input('folder_id');
-        $file->user_id = rv_media_get_current_user_id();
+        $file->user_id = auth()->id();
         $file->options = $request->input('options', []);
         $file->is_public = $request->input('view_in') == 'public' ? 1 : 0;
         $this->fileRepository->createOrUpdate($file);

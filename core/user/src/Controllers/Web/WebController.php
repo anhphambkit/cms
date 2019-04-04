@@ -44,7 +44,7 @@ class WebController extends BasePublicController{
                 $this->username => [$error],
             ]);
         }
-        do_action(AUTH_ACTION_AFTER_LOGIN_SYSTEM, AUTH_MODULE_SCREEN_NAME, request(), acl_get_current_user());
+        // do_action(AUTH_ACTION_AFTER_LOGIN_SYSTEM, AUTH_MODULE_SCREEN_NAME, request(), acl_get_current_user());
         return redirect()->intended(route(REDIRECT_AFTER_LOGIN))
                 ->withSuccess(__('Logged'));
     }
@@ -55,7 +55,7 @@ class WebController extends BasePublicController{
      */
     public function logout()
     {
-        do_action(AUTH_ACTION_AFTER_LOGOUT_SYSTEM, AUTH_MODULE_SCREEN_NAME, request(), acl_get_current_user());
+        // do_action(AUTH_ACTION_AFTER_LOGOUT_SYSTEM, AUTH_MODULE_SCREEN_NAME, request(), acl_get_current_user());
         $this->auth->logout();
         return redirect()->route('login');
     }

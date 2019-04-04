@@ -9,16 +9,17 @@ use DashboardMenu;
 class Authenticate extends LaravelCoreAuthenticate
 {
     /**
-     * Determine if the user is logged in to any of the given guards.
+     * Handle an incoming request.
      *
-     * @param  array  $guards
-     * @return void
-     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  Closure $next
+     * @param array $guards
+     * @return mixed
      * @throws \Illuminate\Auth\AuthenticationException
      */
-    protected function authenticate(array $guards)
+    public function handle($request, Closure $next, ...$guards)
     {
-        parent::authenticate($guards);
-        return DashboardMenu::init(request()->user());
+        $guards = $this->authenticate($guards);
+        return $next($request);
     }
 }

@@ -73,7 +73,6 @@ class LoginController extends BasePublicController
     public function login(Request $request)
     {
         $this->validateLogin($request);
-
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
@@ -84,22 +83,24 @@ class LoginController extends BasePublicController
         }
 
         $user = AclManager::getUserRepository()->getFirstBy(['username' => $request->input($this->username())]);
+
         if (!empty($user)) {
+
             if (!AclManager::getActivationRepository()->completed($user)) {
                 return $this->response
                     ->setError()
                     ->setMessage(trans('core-user::auth.login.not_active'));
             }
-        }
 
-        if ($this->attemptLogin($request)) {
-            AclManager::getUserRepository()->update(['id' => $user->id], ['last_login' => now(config('app.timezone'))]);
-            if (!session()->has('url.intended')) {
-                session()->flash('url.intended', url()->current());
+            if ($this->attemptLogin($request)) {
+                AclManager::getUserRepository()->update(['id' => $user->id], ['last_login' => now(config('app.timezone'))]);
+                if (!session()->has('url.intended')) {
+                    session()->flash('url.intended', url()->current());
+                }
+                do_action(AUTH_ACTION_AFTER_LOGIN_SYSTEM, AUTH_MODULE_SCREEN_NAME, request(), Auth::user());
+                return $this->sendLoginResponse($request);
             }
-            return $this->sendLoginResponse($request);
         }
-
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
@@ -114,7 +115,7 @@ class LoginController extends BasePublicController
      */
     public function username()
     {
-        return 'email';
+        return 'username';
     }
 
     /**

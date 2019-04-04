@@ -1,7 +1,6 @@
 <?php
 
 namespace Core\User\Providers;
-use Cartalyst\Sentinel\Laravel\SentinelServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Core\User\Repositories\Interfaces\Authentication;
 use Core\User\Repositories\Eloquent\EloquentAuthentication;
@@ -35,7 +34,6 @@ use Core\User\Repositories\Interfaces\RoleUserRepositories;
 use Core\User\Repositories\Eloquent\EloquentRoleUserRepositories;
 use Core\User\Repositories\Cache\CacheRoleUserRepositories;
 
-use Core\User\Guards\Sentinel;
 use Core\Base\Providers\CmsServiceProvider as CoreServiceProvider;
 
 use Illuminate\Foundation\AliasLoader;
@@ -77,9 +75,6 @@ class UserServiceProvider extends CoreServiceProvider
      */
     public function register()
     {
-        # reigster driver user # 
-        $this->app->register(SentinelServiceProvider::class);
-
         $this->reigsterServices();
         $this->reigsterRepositories();
         $this->registerEvents();
@@ -185,11 +180,6 @@ class UserServiceProvider extends CoreServiceProvider
      */
     public function boot()
     {
-        # Important register guard
-        // Auth::extend('sentinel-guard', function () {
-        //     return new Sentinel();
-        // });
-
         $loader = AliasLoader::getInstance();
         $loader->alias('AclManager', AclManagerFacade::class);
 

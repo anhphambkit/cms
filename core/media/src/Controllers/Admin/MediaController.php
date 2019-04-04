@@ -362,7 +362,7 @@ class MediaController extends BaseAdminController{
                     ],
                 ];
 
-                $favorite_items = $this->mediaSettingRepository->getFirstBy(['key' => 'favorites', 'user_id' => rv_media_get_current_user_id()]);
+                $favorite_items = $this->mediaSettingRepository->getFirstBy(['key' => 'favorites', 'user_id' => auth()->id()]);
                 if (!empty($favorite_items)) {
                     $file_ids = collect($favorite_items->value)->where('is_folder', 'false')->pluck('id')->all();
                     if (!empty($file_ids)) {
@@ -598,7 +598,7 @@ class MediaController extends BaseAdminController{
                         $folder = $old_folder->replicate();
                         $folder->slug = $this->folderRepository->createSlug($folder->name, $folder->parent_id);
                         $folder->name = $folder->name . '-(copy)';
-                        $folder->user_id = rv_media_get_current_user_id();
+                        $folder->user_id = auth()->id();
                         $folder = $this->folderRepository->createOrUpdate($folder);
 
                         $files = $this->fileRepository->getFilesByFolderId($id);
@@ -615,7 +615,7 @@ class MediaController extends BaseAdminController{
                                  */
                                 $folder = $this->folderRepository->getFirstBy(['id' => $parent_id]);
                                 $folder = $folder->replicate();
-                                $folder->user_id = rv_media_get_current_user_id();
+                                $folder->user_id = auth()->id();
                                 $folder->parent_id = $folder->id;
                                 $folder = $this->folderRepository->createOrUpdate($folder);
 
@@ -632,7 +632,7 @@ class MediaController extends BaseAdminController{
                                  * @var MediaFolder $sub
                                  */
                                 $sub = $sub->replicate();
-                                $sub->user_id = rv_media_get_current_user_id();
+                                $sub->user_id = auth()->id();
                                 $sub->parent_id = $folder->id;
                                 $sub = $this->folderRepository->createOrUpdate($sub);
                                 foreach ($sub_files as $sub_file) {
@@ -665,19 +665,19 @@ class MediaController extends BaseAdminController{
 
                         if ($request->input('share_option') == 'no_share') {
 
-                            $this->mediaShareRepository->forceDelete(['share_id' => $id, 'shared_by' => rv_media_get_current_user_id(), 'share_type' => 'file']);
-                            $this->fileRepository->update(['id' => $id, 'user_id' => rv_media_get_current_user_id()], ['is_public' => 0]);
+                            $this->mediaShareRepository->forceDelete(['share_id' => $id, 'shared_by' => auth()->id(), 'share_type' => 'file']);
+                            $this->fileRepository->update(['id' => $id, 'user_id' => auth()->id()], ['is_public' => 0]);
 
                         } elseif ($request->input('share_option') == 'user') {
                             foreach ($users as $user_id) {
                                 $this->mediaShareRepository->firstOrCreate([
                                     'share_type' => 'file',
                                     'share_id' => $id,
-                                    'shared_by' => rv_media_get_current_user_id(),
+                                    'shared_by' => auth()->id(),
                                     'user_id' => $user_id,
                                 ]);
                             }
-                            $this->fileRepository->update(['id' => $id, 'user_id' => rv_media_get_current_user_id()], ['is_public' => 0]);
+                            $this->fileRepository->update(['id' => $id, 'user_id' => auth()->id()], ['is_public' => 0]);
                         } else {
                             $this->fileRepository->update(['id' => $id], ['is_public' => 1]);
                         }
@@ -685,14 +685,14 @@ class MediaController extends BaseAdminController{
                     } else {
 
                         if ($request->input('share_option') == 'no_share') {
-                            $this->mediaShareRepository->forceDelete(['share_id' => $id, 'shared_by' => rv_media_get_current_user_id(), 'share_type' => 'folder']);
-                            $this->folderRepository->update(['id' => $id, 'user_id' => rv_media_get_current_user_id()], ['is_public' => 0]);
+                            $this->mediaShareRepository->forceDelete(['share_id' => $id, 'shared_by' => auth()->id(), 'share_type' => 'folder']);
+                            $this->folderRepository->update(['id' => $id, 'user_id' => auth()->id()], ['is_public' => 0]);
                         } elseif ($request->input('share_option') == 'user') {
                             foreach ($users as $user_id) {
                                 $this->mediaShareRepository->firstOrCreate([
                                     'share_type' => 'folder',
                                     'share_id' => $id,
-                                    'shared_by' => rv_media_get_current_user_id(),
+                                    'shared_by' => auth()->id(),
                                     'user_id' => $user_id,
                                 ]);
 
@@ -702,12 +702,12 @@ class MediaController extends BaseAdminController{
                                     $this->mediaShareRepository->firstOrCreate([
                                         'share_type' => 'file',
                                         'share_id' => $file->id,
-                                        'shared_by' => rv_media_get_current_user_id(),
+                                        'shared_by' => auth()->id(),
                                         'user_id' => $user_id,
                                     ]);
                                 }
                             }
-                            $this->folderRepository->update(['id' => $id, 'user_id' => rv_media_get_current_user_id()], ['is_public' => 0]);
+                            $this->folderRepository->update(['id' => $id, 'user_id' => auth()->id()], ['is_public' => 0]);
                         } else {
                             $this->folderRepository->update(['id' => $id], ['is_public' => 1]);
 
@@ -726,9 +726,9 @@ class MediaController extends BaseAdminController{
             case 'un_share':
                 foreach ($request->input('selected') as $item) {
                     if ($item['is_folder'] == 'false') {
-                        $this->mediaShareRepository->forceDelete(['id' => $item['id'], 'share_by' => rv_media_get_current_user_id(), 'share_type' => 'file']);
+                        $this->mediaShareRepository->forceDelete(['id' => $item['id'], 'share_by' => auth()->id(), 'share_type' => 'file']);
                     } else {
-                        $this->mediaShareRepository->forceDelete(['id' => $item['id'], 'share_by' => rv_media_get_current_user_id(), 'share_type' => 'folder']);
+                        $this->mediaShareRepository->forceDelete(['id' => $item['id'], 'share_by' => auth()->id(), 'share_type' => 'folder']);
                     }
                 }
 
@@ -739,9 +739,9 @@ class MediaController extends BaseAdminController{
             case 'remove_share':
                 foreach ($request->input('selected') as $item) {
                     if ($item['is_folder'] == 'false') {
-                        $this->mediaShareRepository->forceDelete(['share_id' => $item['id'], 'user_id' => rv_media_get_current_user_id(), 'share_type' => 'file']);
+                        $this->mediaShareRepository->forceDelete(['share_id' => $item['id'], 'user_id' => auth()->id(), 'share_type' => 'file']);
                     } else {
-                        $this->mediaShareRepository->forceDelete(['share_id' => $item['id'], 'user_id' => rv_media_get_current_user_id(), 'share_type' => 'folder']);
+                        $this->mediaShareRepository->forceDelete(['share_id' => $item['id'], 'user_id' => auth()->id(), 'share_type' => 'folder']);
                     }
                 }
 
@@ -784,7 +784,7 @@ class MediaController extends BaseAdminController{
 
                 break;
             case 'favorite':
-                $meta = $this->mediaSettingRepository->firstOrCreate(['key' => 'favorites', 'user_id' => rv_media_get_current_user_id()]);
+                $meta = $this->mediaSettingRepository->firstOrCreate(['key' => 'favorites', 'user_id' => auth()->id()]);
                 if (!empty($meta->value)) {
                     $meta->value = array_merge($meta->value, $request->input('selected', []));
                 } else {
@@ -797,7 +797,7 @@ class MediaController extends BaseAdminController{
                 break;
 
             case 'remove_favorite':
-                $meta = $this->mediaSettingRepository->firstOrCreate(['key' => 'favorites', 'user_id' => rv_media_get_current_user_id()]);
+                $meta = $this->mediaSettingRepository->firstOrCreate(['key' => 'favorites', 'user_id' => auth()->id()]);
                 if (!empty($meta)) {
                     $value = $meta->value;
                     if (!empty($value)) {

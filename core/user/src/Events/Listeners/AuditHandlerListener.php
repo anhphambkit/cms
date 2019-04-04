@@ -44,13 +44,13 @@ class AuditHandlerListener
             $this->auditHistory->request = json_encode(Request::all());
         }
 
-        $this->auditHistory->module = $event->module;
-        $this->auditHistory->action = $event->action;
-        $this->auditHistory->user_id = acl_get_current_user_id();
+        $this->auditHistory->module         = $event->module;
+        $this->auditHistory->action         = $event->action;
+        $this->auditHistory->user_id        = auth()->id();
         $this->auditHistory->reference_user = $event->reference_user;
-        $this->auditHistory->reference_id = $event->reference_id;
+        $this->auditHistory->reference_id   = $event->reference_id;
         $this->auditHistory->reference_name = $event->reference_name;
-        $this->auditHistory->type = $event->type;
+        $this->auditHistory->type           = $event->type;
 
         $this->auditHistory->save();
     }

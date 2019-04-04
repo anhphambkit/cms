@@ -30,13 +30,15 @@ class Authorization {
      */
     public function handle($request, Closure $next, string $permission) 
     {
-        if(!acl_check_login())
+        if(!auth()->check())
             return $this->handleUnauthorizedRequest($request, $permission);
 
-        if(!acl_get_current_user()->hasPermission($permission))
-        {
+        if(!auth()->user()->hasPermission($permission)){
+
             return $this->handleUnauthorizedRequest($request, $permission);
         }
+
+        \DashboardMenu::init(auth()->user());
 
         return $next($request);
     }

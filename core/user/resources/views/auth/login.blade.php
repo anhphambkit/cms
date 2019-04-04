@@ -39,7 +39,7 @@
                     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                 </div>
                 <span>or use your account</span>
-                <input type="email" placeholder="Email" name="email" maxlength="256" required/>
+                <input type="text" placeholder="Email" name="username" maxlength="256" required/>
                 {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
 
                 <input type="password" placeholder="Password" id="password" name="password" required/>

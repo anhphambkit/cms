@@ -52,7 +52,7 @@ class AuditHandlerEvent extends Event
     public function __construct($module, $action, $reference_id = 0, $reference_name, $type, $reference_user = 0)
     {
         if ($reference_user === 0) {
-            $reference_user = acl_get_current_user_id();
+            $reference_user = auth()->id();
         }
         $this->module         = $module;
         $this->action         = $action;
