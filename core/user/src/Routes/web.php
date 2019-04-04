@@ -40,7 +40,7 @@ $router->group(['prefix' => 'auth'], function (Router $router) {
     # Logout
     $router->get('logout', [
 		'as'         => 'logout', 
-		'uses'       => 'WebController@logout',
+		'uses'       => 'LoginController@logout',
 		'middleware' => 'auth', 
     ]);
 });

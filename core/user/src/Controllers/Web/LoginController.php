@@ -133,7 +133,7 @@ class LoginController extends BasePublicController
         $request->session()->invalidate();
 
         return $this->response
-            ->setNextUrl(route('access.login'))
+            ->setNextUrl(route('login'))
             ->setMessage(trans('core-user::auth.login.logout_success'));
     }
 }
