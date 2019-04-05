@@ -3,10 +3,7 @@ namespace Core\User\Controllers\Admin;
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Validation\ValidationException;
 use Core\User\DataTables\RoleDataTable;
-use Core\User\Services\Interfaces\RoleServiceInterface;
 use Core\User\Repositories\Interfaces\RoleInterface;
-use Core\User\Repositories\Interfaces\RoleFlagRepositories;
-use Core\User\Repositories\Interfaces\RoleUserRepositories;
 use Core\User\Repositories\Interfaces\UserInterface;
 use Core\User\Requests\RoleCreateRequest;
 use Core\User\Requests\PostAssignRoleRequest;
@@ -14,13 +11,13 @@ use Core\User\Events\RoleUpdateEvent;
 use Core\User\Events\RoleAssignmentEvent;
 use AssetManager;
 use AssetPipeline;
+use Core\User\Traits\RoleTrait;
+use Illuminate\Support\Str;
+use Auth;
 
 class RoleController extends BaseAdminController
 {
-    /**
-     * @var RoleServiceInterface
-     */
-    protected $roleService;
+    use RoleTrait;
 
     /**
      * @var RoleInterface
@@ -28,32 +25,16 @@ class RoleController extends BaseAdminController
     protected $roleRepository;
 
     /**
-     * @var RoleFlagRepositories
-     */
-    protected $roleFlag;
-
-    /**
      * @var UserInterface
      */
     protected $userRepository;
 
-    /**
-     * @var RoleUserRepositories
-     */
-    protected $roleUserRepository;
-
     function __construct(
-        RoleServiceInterface $roleService, 
         RoleInterface $roleRepository, 
-        RoleFlagRepositories $roleFlag,
-        UserInterface $userRepository,
-        RoleUserRepositories $roleUserRepository
+        UserInterface $userRepository
     ){
-        $this->roleService        = $roleService;
         $this->roleRepository     = $roleRepository;
-        $this->roleFlag           = $roleFlag;
         $this->userRepository     = $userRepository;
-        $this->roleUserRepository = $roleUserRepository;
     }
 
     /**
@@ -76,7 +57,7 @@ class RoleController extends BaseAdminController
     {
         $this->addAssets();
 
-        list( $flags, $children ) = $this->roleService->getFlagsPermission();
+        list( $flags, $children ) = $this->getFlagsPermission();
 
         $active = [];
 
@@ -90,23 +71,15 @@ class RoleController extends BaseAdminController
      */
     public function postCreate(RoleCreateRequest $request)
     {
-        $role = $this->roleRepository->create([
+        $role = $this->roleRepository->createOrUpdate([
             'name'        => $request->input('name'),
-            'slug'        => str_slug($request->input('name')),
+            'slug'        => Str::slug($request->input('name')),
+            'permissions' => $this->cleanPermission($request->input('flags')),
             'description' => $request->input('description'),
-            'is_staff'    => $request->input('is_staff') !== null ? 1 : 0,
             'is_default'  => $request->input('is_default') !== null ? 1 : 0,
-            'created_by'  => auth()->id(),
-            'updated_by'  => auth()->id(),
+            'created_by'  => Auth::user()->getKey(),
+            'updated_by'  => Auth::user()->getKey(),
         ]);
-
-        $this->roleFlag->deleteBy(['role_id' => $role->id]);
-
-        if (!empty($request->input('flags'))) {
-            foreach ($request->input('flags') as $flag) {
-                $this->roleFlag->firstOrCreate(['role_id' => $role->id, 'flag_id' => $flag]);
-            }
-        }
 
         return redirect()->route('admin.role.index')
             ->with('success_msg', trans('core-user::permissions.create_success'));
@@ -125,11 +98,11 @@ class RoleController extends BaseAdminController
 
         $this->addAssets();
 
-        list( $flags, $children ) = $this->roleService->getFlagsPermission();
+        list( $flags, $children ) = $this->getFlagsPermission();
 
         return view('core-user::admin.role.edit')
             ->with('role', $role)
-            ->with('active', $role->flags()->pluck('flag')->all())
+            ->with('active', $role->permissions)
             ->with('children', $children)
             ->with('flags', $flags);
     }
@@ -144,29 +117,15 @@ class RoleController extends BaseAdminController
     {
         $role = $this->roleRepository->findById((int)$id);
         if (!$role) return redirect()->route('admin.role.index')->with('error', __('Role not found'));
-       
+
         $role->name        = $request->input('name');
+        $role->permissions = $this->cleanPermission($request->input('flags'));
         $role->description = $request->input('description');
-        $role->updated_by  = auth()->id();
-        $role->is_staff    = $request->input('is_staff', 0);
+        $role->updated_by  = Auth::user()->getKey();
         $role->is_default  = $request->input('is_default', 0);
         $this->roleRepository->createOrUpdate($role);
 
-        $this->roleFlag->deleteBy(['role_id' => $role->id]);
-
-        if (!empty($request->input('flags'))) {
-            $role_flags = [];
-            foreach ($request->input('flags') as $flag) {
-                $role_flags[] = [
-                        'role_id' => $role->id,
-                        'flag_id' => (int) $flag,
-                    ];
-            }
-            $this->roleFlag->insert($role_flags);
-        }
-
         event(new RoleUpdateEvent($role));
-
         return redirect()->route('admin.role.edit', $id)
             ->with('success_msg', trans('core-user::permissions.modified_success'));
     }
@@ -177,14 +136,10 @@ class RoleController extends BaseAdminController
      */
     public function postAssignMember(PostAssignRoleRequest $request)
     {
-        $user = $this->userRepository->findById($request->input('pk'));
-        $role = $this->roleRepository->findById($request->input('value'));
-        $this->roleUserRepository->deleteBy(['user_id' => $user->id]);
+        $user = $this->userRepository->findOrFail($request->input('pk'));
+        $role = $this->roleRepository->findOrFail($request->input('value'));
 
-        $this->roleUserRepository->createOrUpdate([
-            'user_id' => $user->id,
-            'role_id' => $role->id,
-        ]);
+        $user->roles()->sync([$role->id]);
 
         event(new RoleAssignmentEvent($role, $user));
     }
@@ -236,10 +191,29 @@ class RoleController extends BaseAdminController
     }
 
     /**
+     * Return a correctly type casted permissions array
+     * @param array $permissions
+     * @return array
+     * @author TrinhLe
+     */
+    protected function cleanPermission($permissions)
+    {
+        if (!$permissions) {
+            return [];
+        }
+        $cleanedPermissions = [];
+        foreach ($permissions as $permissionName) {
+            $cleanedPermissions[$permissionName] = true;
+        }
+
+        return $cleanedPermissions;
+    }
+
+    /**
      * Add frontend plugins for layout
      * @author TrinhLe
      */
-    private function addAssets()
+    protected function addAssets()
     {
         AssetManager::addAsset('role-js', 'backend/core/user/assets/js/role.js');
         AssetPipeline::requireCss('jquery-tree-css');

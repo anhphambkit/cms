@@ -7,6 +7,7 @@ use Core\User\Models\User;
 use RuntimeException;
 use stdClass;
 use URL;
+use Auth;
 
 class DashboardMenu
 {
@@ -134,7 +135,7 @@ class DashboardMenu
     public function getAll()
     {
         if (config('core-base.cms.enable_cache_dashboard_menu')) {
-            $cache_key = md5('cache-dashboard-menu');
+            $cache_key = md5('cache-dashboard-menu-' . Auth::user()->getKey());
             if (!cache()->has($cache_key)) {
                 $links = collect($this->getChildren())->sortBy('priority');
                 cache()->forever($cache_key, $links);

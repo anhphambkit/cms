@@ -4,7 +4,7 @@ namespace Core\User\Events\Listeners;
 
 use Core\User\Events\RoleAssignmentEvent;
 use Core\User\Repositories\Interfaces\UserInterface;
-
+use Auth;
 class RoleAssignmentListener
 {
     /**
@@ -31,29 +31,16 @@ class RoleAssignmentListener
      */
     public function handle(RoleAssignmentEvent $event)
     {
-        $permissions = [];
-        foreach ($event->role->flags()->get() as $flag) {
-            $permissions[$flag->flag] = true;
-        }
-
-        $user_permissions = [];
-        if ($event->user->super_user) {
-            $user_permissions['superuser'] = true;
-        } else {
-            $user_permissions['superuser'] = false;
-        }
-        if ($event->user->manage_supers) {
-            $user_permissions['manage_supers'] = true;
-        } else {
-            $user_permissions['manage_supers'] = false;
-        }
+        $permissions = $event->role->permissions;
+        $permissions['superuser'] = $event->user->super_user;
+        $permissions['manage_supers'] = $event->user->manage_supers;
 
         $this->userRepository->update([
             'id' => $event->user->id,
         ], [
-            'permissions' => json_encode(array_merge($permissions, $user_permissions)),
+            'permissions' => json_encode($permissions),
         ]);
 
-        cache()->forget(md5('cache-dashboard-menu'));
+        cache()->forget(md5('cache-dashboard-menu-' . Auth::user()->getKey()));
     }
 }

@@ -5,7 +5,9 @@ namespace Core\Base\Commands\Scripts;
 use Illuminate\Console\Command;
 use Illuminate\Support\Composer;
 use Core\User\Repositories\Interfaces\UserInterface;
-
+use Validator;
+use Exception;
+use AclManager;
 class CreateUserCommand extends Command
 {
     /**
@@ -48,27 +50,78 @@ class CreateUserCommand extends Command
      */
     public function handle()
     {
+       $this->createSuperUser();
+    }
+
+    /**
+     * Create a superuser.
+     *
+     * @return bool
+     * @author Sang Nguyen
+     */
+    protected function createSuperUser()
+    {
         $this->info('Creating a Super User...');
-        $user                = app(UserInterface::class)->getModel();
-        $user->first_name    = $this->ask('Enter your first name');
-        $user->last_name     = $this->ask('Enter your last name');
-        $user->username      = $this->ask('Enter your username');
-        $user->email         = $this->ask('Enter your email address');
-        $user->super_user    = 1;
+
+        $user = app(UserInterface::class)->getModel();
+        $user->first_name = $this->askWithValidate('Enter first name', 'required|min:2|max:60');
+        $user->last_name = $this->askWithValidate('Enter last name', 'required|min:2|max:60');
+        $user->email = $this->askWithValidate('Enter email address', 'required|email|unique:users,email');
+        $user->username = $this->askWithValidate('Enter username', 'required|min:4|max:60|unique:users,username');
+        $user->password = bcrypt($this->askWithValidate('Enter password', 'required|min:6|max:60'));
+        $user->super_user = 1;
         $user->manage_supers = 1;
-        $user->password      = bcrypt($this->secret('Enter a password'));
         $user->profile_image = config('base-user.acl.avatar.default');
 
         try {
             app(UserInterface::class)->createOrUpdate($user);
-            if (acl_activate_user($user)) {
+            if (AclManager::activate($user)) {
                 $this->info('Super user is created.');
             }
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             $this->error('User could not be created.');
-            $this->error($e->getMessage());
+            $this->error($exception->getMessage());
         }
 
-        $this->line('------------------');
+        return true;
+    }
+
+    /**
+     * @param $message
+     * @param string $rules
+     * @author Sang Nguyen
+     */
+    protected function askWithValidate($message, string $rules)
+    {
+        do {
+            $input = $this->ask($message);
+            $validate = $this->validate(compact('input'), ['input' => $rules]);
+            if ($validate['error']) {
+                $this->error($validate['message']);
+            }
+        } while ($validate['error']);
+
+        return $input;
+    }
+
+    /**
+     * @param array $data
+     * @param array $rules
+     * @return array
+     * @author Sang Nguyen
+     */
+    protected function validate(array $data, array $rules)
+    {
+        $validator = Validator::make($data, $rules);
+        if ($validator->fails()) {
+            return [
+                'error'   => true,
+                'message' => $validator->messages()->first(),
+            ];
+        }
+
+        return [
+            'error' => false,
+        ];
     }
 }

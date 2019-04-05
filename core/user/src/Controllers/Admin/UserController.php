@@ -5,7 +5,6 @@ use Illuminate\Validation\ValidationException;
 use Core\User\DataTables\UserDataTable;
 use Core\User\Repositories\Interfaces\RoleInterface;
 use Core\User\Repositories\Interfaces\UserInterface;
-use Core\User\Services\Interfaces\RoleServiceInterface;
 use Core\User\Requests\CreateUserRequest;
 use Core\User\Requests\UpdateProfileRequest;
 use Core\User\Requests\UpdatePasswordRequest;
@@ -29,17 +28,11 @@ class UserController extends BaseAdminController{
     protected $roleRepository;
 
     /**
-     * @var RoleServiceInterface
-     */
-    protected $roleService;
-
-    /**
      * UserController constructor.
      * @param RoleInterface $roleRepository
      */
-    public function __construct( RoleServiceInterface $roleService, RoleInterface $roleRepository, UserInterface $userRepository ) 
+    public function __construct( RoleInterface $roleRepository, UserInterface $userRepository ) 
     {
-        $this->roleService    = $roleService;
         $this->roleRepository = $roleRepository;
         $this->userRepository = $userRepository;
         parent::__construct();

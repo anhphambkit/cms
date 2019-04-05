@@ -37,9 +37,7 @@ class Authorization {
 
             return $this->handleUnauthorizedRequest($request, $permission);
         }
-
-        \DashboardMenu::init(auth()->user());
-
+        
         return $next($request);
     }
 

@@ -247,13 +247,10 @@ if (!function_exists('getAllPlugins')) {
      */
     function getAllPlugins($status = null)
     {
-        if(checkDatabaseConnection() && Schema::hasTable('plugins'))
-        {
-            $condition = [];
-            if ($status !== null) {
+        if(checkDatabaseConnection() && Schema::hasTable('plugins')){
+            if ($status !== null)
                 $condition['status'] = $status;
-            }
-            return DB::table('plugins')->where($condition)->get();
+            return DB::table('plugins')->where($condition ?? [])->get();
         }
     }
 }

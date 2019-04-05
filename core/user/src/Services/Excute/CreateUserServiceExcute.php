@@ -1,14 +1,14 @@
 <?php 
 namespace Core\User\Services\Excute;
 use Core\User\Services\Interfaces\CreateUserServiceInterface;
-use Core\User\Repositories\Interfaces\RoleUserRepositories;
 use Core\User\Repositories\Interfaces\RoleInterface;
 use Core\User\Repositories\Interfaces\UserInterface;
 use Core\Master\Services\CoreServiceAbstract;
 use Core\User\Events\RoleAssignmentEvent;
 use Illuminate\Http\Request;
 use Core\User\Models\User;
-use Sentinel;
+use Illuminate\Support\Facades\Hash;
+use AclManager;
 
 class CreateUserServiceExcute extends CoreServiceAbstract implements CreateUserServiceInterface
 {
@@ -21,23 +21,15 @@ class CreateUserServiceExcute extends CoreServiceAbstract implements CreateUserS
      * @var RoleInterface
      */
     protected $roleRepository;
-
-    /**
-     * @var RoleUserRepositories
-     */
-    protected $roleUserRepository;
-
+  
     /**
      * CreateUserService constructor.
      * @param UserInterface $userRepository
      * @param RoleInterface $roleRepository
-     * @param RoleUserRepositories $roleUserRepository
      */
-    public function __construct(UserInterface $userRepository, RoleInterface $roleRepository, RoleUserRepositories $roleUserRepository)
-    {
+    public function __construct(UserInterface $userRepository, RoleInterface $roleRepository)
         $this->userRepository     = $userRepository;
         $this->roleRepository     = $roleRepository;
-        $this->roleUserRepository = $roleUserRepository;
     }
 
     /**
@@ -47,36 +39,28 @@ class CreateUserServiceExcute extends CoreServiceAbstract implements CreateUserS
      */
     public function execute(Request $request)
     {
+        /**
+         * @var User $user
+         */
         $user = $this->userRepository->createOrUpdate(array_merge($request->input(), [
-            'profile_image' => config('acl.avatar.default'),
+            'profile_image' => config('core-user.acl.avatar.default'),
         ]));
 
         if ($request->has('username') && $request->has('password')) {
-            $credentials = [
+            $this->userRepository->update(['id' => $user->id], [
                 'username' => $request->input('username'),
-                'password' => $request->input('password'),
-            ];
-            if (Sentinel::getUserRepository()->validForCreation($credentials)) {
+                'password' => Hash::make($request->input('password')),
+            ]);
 
-                /**
-                 * @var User $user
-                 */
-                $user = Sentinel::getUserRepository()->update($user, $credentials);
+            if (AclManager::activate($user) && $request->has('role_id')) {
+                $role = $this->roleRepository->getFirstBy([
+                    'id' => $request->input('role_id'),
+                ]);
 
-                if (acl_activate_user($user) && $request->has('role_id')) {
+                if (!empty($role)) {
+                    $role->users()->attach($user->id);
 
-                    $role = $this->roleRepository->getFirstBy([
-                        'id' => $request->input('role_id'),
-                    ]);
-
-                    if (!empty($role)) {
-                        $this->roleUserRepository->firstOrCreate([
-                            'user_id' => $user->id,
-                            'role_id' => $request->input('role_id'),
-                        ]);
-
-                        event(new RoleAssignmentEvent($role, $user));
-                    }
+                    event(new RoleAssignmentEvent($role, $user));
                 }
             }
         }

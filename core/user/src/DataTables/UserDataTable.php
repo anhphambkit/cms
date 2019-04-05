@@ -4,6 +4,7 @@ namespace Core\User\DataTables;
 
 use Core\User\Repositories\Interfaces\UserInterface;
 use Core\Base\DataTables\DataTableAbstract;
+use AclManager;
 
 class UserDataTable extends DataTableAbstract
 {
@@ -31,10 +32,12 @@ class UserDataTable extends DataTableAbstract
                 return view('core-user::users.partials.role', compact('item'))->render();
             })
             ->editColumn('status', function ($item) {
-                return table_status(user_is_activated($item) ? 1 : 0);
+                return table_status(AclManager::getActivationRepository()->completed($item) ? 1 : 0);
             })
             ->addColumn('operations', function ($item) {
-                return table_actions('admin.user.profile', 'admin.user.delete', $item);
+                if (auth()->user()->id !== $item->id) {
+                    return table_actions('admin.user.profile', 'admin.user.delete', $item);
+                }
             })
             ->removeColumn('role_id')
             ->escapeColumns([])

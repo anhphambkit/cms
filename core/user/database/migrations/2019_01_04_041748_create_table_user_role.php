@@ -20,9 +20,6 @@ class CreateTableUserRole extends Migration
         Schema::dropIfExists('role_users');
         Schema::dropIfExists('throttle');
         Schema::dropIfExists('users');
-        Schema::dropIfExists('role_flags');
-        Schema::dropIfExists('features');
-        Schema::dropIfExists('permission_flags');
         Schema::dropIfExists('invites');
         Schema::dropIfExists('user_meta');
 
@@ -125,33 +122,6 @@ class CreateTableUserRole extends Migration
             $table->engine = 'InnoDB';
         });
 
-        Schema::create('permission_flags', function ($table) {
-            $table->increments('id');
-            $table->string('flag', 100)->unique();
-            $table->string('name', 100);
-            $table->integer('parent_flag')->default(0);
-            $table->integer('is_feature')->default(0);
-            $table->integer('feature_visible')->default(1);
-            $table->integer('permission_visible')->default(1);
-
-            $table->engine = 'InnoDB';
-            $table->timestamps();
-        });
-
-        Schema::create('role_flags', function ($table) {
-            $table->increments('id');
-            $table->integer('role_id')->references('id')->on('roles')->unsigned()->index();
-            $table->integer('flag_id')->unsigned()->references('id')->on('permission_flags')->index();
-            $table->engine = 'InnoDB';
-        });
-
-        Schema::create('features', function ($table) {
-            $table->increments('id');
-            $table->integer('feature_id')->references('id')->on('permission_flags')->unsigned()->index();
-            $table->timestamps();
-            $table->engine = 'InnoDB';
-        });
-
         Schema::create('invites', function (Blueprint $table) {
             $table->increments('id');
             $table->string('token', 128);
@@ -189,9 +159,6 @@ class CreateTableUserRole extends Migration
         Schema::dropIfExists('role_users');
         Schema::dropIfExists('throttle');
         Schema::dropIfExists('users');
-        Schema::dropIfExists('role_flags');
-        Schema::dropIfExists('features');
-        Schema::dropIfExists('permission_flags');
         Schema::dropIfExists('invites');
         Schema::dropIfExists('user_meta');
     }

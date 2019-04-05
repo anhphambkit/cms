@@ -102,9 +102,8 @@ class InstallCommand extends Command
         $this->line('------------------');
 
         // Create a super user
-        $this->createSuperUser();
-        $this->createRoles();
-
+        $this->call("create:user");
+        
         $this->completed();
 
         Artisan::call('cache:clear');
@@ -216,81 +215,6 @@ class InstallCommand extends Command
     protected function getKeyFile()
     {
         return $this->files->exists('.env') ? $this->files->get('.env') : $this->files->get('.env.example');
-    }
-
-    /**
-     * Create a superuser.
-     *
-     * @return void
-     * @author TrinhLe
-     */
-    protected function createSuperUser()
-    {
-        $this->info('Creating a Super User...');
-
-        $user                = $this->userRepository->getModel();
-        $user->first_name    = $this->ask('Enter your first name');
-        $user->last_name     = $this->ask('Enter your last name');
-        $user->username      = $this->ask('Enter your username');
-        $user->email         = $this->ask('Enter your email address');
-        $user->super_user    = 1;
-        $user->manage_supers = 1;
-        $user->password      = bcrypt($this->secret('Enter a password'));
-        $user->profile_image = config('base-user.acl.avatar.default');
-
-        try {
-            $this->userRepository->createOrUpdate($user);
-            if (acl_activate_user($user)) {
-                $this->info('Super user is created.');
-            }
-        } catch (Exception $e) {
-            $this->error('User could not be created.');
-            $this->error($e->getMessage());
-        }
-
-        $this->line('------------------');
-    }
-
-    /**
-     * Create role default
-     * @return type
-     */
-    protected function createRoles()
-    {
-        $this->info('Creating Roles...');
-        Model::unguard();
-
-        $groups = Sentinel::getRoleRepository();
-
-        // Create an Admin group
-        $groups->createModel()->create(
-            [
-                'name' => 'Admin',
-                'slug' => 'admin',
-                'created_by' => 1,
-                'updated_by' => 1,
-            ]
-        );
-
-        // Create an Users group
-        $groups->createModel()->create(
-            [
-                'name' => 'User',
-                'slug' => 'user',
-                'created_by' => 1,
-                'updated_by' => 1,
-            ]
-        );
-
-        // Save the permissions
-        $group = Sentinel::findRoleBySlug('admin');
-        $group->permissions = [
-            /* Dashboard */
-            'dashboard.index' => true,
-        ];
-        $group->save();
-
-         $this->info('Roles are created.');
     }
 
     /**

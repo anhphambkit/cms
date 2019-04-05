@@ -29,11 +29,8 @@ class RoleDataTable extends DataTableAbstract
                 /**
                  * @var User $user
                  */
-                $user = app(UserInterface::class)->findById($item->created_by);
-                if (!empty($user)) {
+                if($user = $item->userCreated)
                     return $user->getFullName();
-                }
-
                 return null;
             });
 

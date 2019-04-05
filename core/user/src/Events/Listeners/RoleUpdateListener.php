@@ -4,7 +4,7 @@ namespace Core\User\Events\Listeners;
 
 use Core\User\Events\RoleUpdateEvent;
 use Core\User\Repositories\Interfaces\UserInterface;
-
+use Auth;
 class RoleUpdateListener
 {
     /**
@@ -31,28 +31,18 @@ class RoleUpdateListener
      */
     public function handle(RoleUpdateEvent $event)
     {
-        $permissions = [];
-        foreach ($event->role->flags()->get() as $flag) {
-            $permissions[$flag->flag] = true;
-        }
+        $permissions = $event->role->permissions;
         foreach ($event->role->users()->get() as $user) {
-            $user_permissions = [];
-            if ($user->super_user) {
-                $user_permissions['superuser'] = true;
-            } else {
-                $user_permissions['superuser'] = false;
-            }
-            if ($user->manage_supers) {
-                $user_permissions['manage_supers'] = true;
-            } else {
-                $user_permissions['manage_supers'] = false;
-            }
+            $permissions['superuser'] = $user->super_user;
+            $permissions['manage_supers'] = $user->manage_supers;
+
             $this->userRepository->update([
                 'id' => $user->id,
             ], [
-                'permissions' => json_encode(array_merge($permissions, $user_permissions)),
+                'permissions' => json_encode($permissions),
             ]);
         }
-        cache()->forget(md5('cache-dashboard-menu'));
+
+        cache()->forget(md5('cache-dashboard-menu-' . Auth::user()->getKey()));
     }
 }

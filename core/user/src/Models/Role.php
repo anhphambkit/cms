@@ -34,18 +34,8 @@ class Role extends Model
         'is_default',
         'created_by',
         'updated_by',
+        'permissions'
     ];
-
-    /**
-     * Returns the list of flags that belong to this role
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     * @author TrinhLe
-     */
-    public function flags()
-    {
-        return $this->belongsToMany(PermissionFlag::class, 'role_flags', 'role_id', 'flag_id');
-    }
 
     /**
      * @return mixed
@@ -54,5 +44,48 @@ class Role extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'role_users', 'role_id', 'user_id');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function delete()
+    {
+        if ($this->exists) {
+            $this->users()->detach();
+        }
+
+        return parent::delete();
+    }
+
+    /**
+     * Get mutator for the "permissions" attribute.
+     *
+     * @param  mixed $permissions
+     * @return array
+     */
+    public function getPermissionsAttribute($permissions)
+    {
+        return $permissions ? json_decode($permissions, true) : [];
+    }
+
+    /**
+     * Set mutator for the "permissions" attribute.
+     *
+     * @param  mixed $permissions
+     * @return void
+     */
+    public function setPermissionsAttribute(array $permissions)
+    {
+        $this->attributes['permissions'] = $permissions ? json_encode($permissions) : '';
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @author Sang Nguyen
+     */
+    public function userCreated()
+    {
+        return $this->belongsTo(User::class, 'created_by')->withDefault();
     }
 }

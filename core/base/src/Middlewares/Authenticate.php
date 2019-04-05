@@ -21,12 +21,7 @@ class Authenticate extends BaseAuthenticate
     public function handle($request, Closure $next, ...$guards)
     {
         $this->authenticate($guards);
-
-        echo "<pre>"; 
-            print_r($request->user()); 
-        echo "</pre>"; die;
-
-        die;
+        \DashboardMenu::init($request->user());
         return $next($request);
     }
 }

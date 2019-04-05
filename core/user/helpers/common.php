@@ -1,7 +1,6 @@
 <?php
 
 use Core\User\Models\UserMeta;
-use Cartalyst\Sentinel\Activations\EloquentActivation;
 use Illuminate\Http\Request;
 if (!function_exists('render_login_form')) {
     /**
