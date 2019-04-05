@@ -28,8 +28,9 @@ class CreateUserServiceExcute extends CoreServiceAbstract implements CreateUserS
      * @param RoleInterface $roleRepository
      */
     public function __construct(UserInterface $userRepository, RoleInterface $roleRepository)
-        $this->userRepository     = $userRepository;
-        $this->roleRepository     = $roleRepository;
+    {
+        $this->userRepository = $userRepository;
+        $this->roleRepository = $roleRepository;
     }
 
     /**
