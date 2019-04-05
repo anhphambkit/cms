@@ -17,8 +17,6 @@ class Kernel
         Scripts\MigrateSystemCommand::class,
         Scripts\PublishConfig::class,
         Scripts\PublishData::class,
-        Scripts\BuildPermissions::class,
-        Scripts\RebuildPermissionsCommand::class,
         Scripts\PluginCreateCommand::class,
         Scripts\PluginActivateCommand::class,
         Scripts\PluginDeactivateCommand::class,

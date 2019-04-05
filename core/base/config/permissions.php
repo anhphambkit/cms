@@ -27,6 +27,11 @@ return [
         'flag' => 'user.edit',
         'parent_flag' => 'user.index',
     ],
+    [
+        'name' => 'Update Profile',
+        'flag' => 'user.update-profile',
+        'parent_flag' => 'user.index',
+    ],
     #Permission role
     [
     	'name' => 'Role',

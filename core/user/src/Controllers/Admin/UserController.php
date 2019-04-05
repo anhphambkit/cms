@@ -122,7 +122,7 @@ class UserController extends BaseAdminController{
          */
         $currentUser = auth()->user();
        
-        if (($currentUser->hasPermission('users.update-profile') && $currentUser->getUserId() === $user->id) || $currentUser->isSuperUser()) {
+        if (($currentUser->hasPermission('user.update-profile') && $currentUser->getKey() === $user->id) || $currentUser->isSuperUser()) {
             if ($user->email !== $request->input('email')) {
                 $users = $this->userRepository->count(['email' => $request->input('email')]);
                 if (!$users) {

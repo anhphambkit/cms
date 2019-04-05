@@ -34,7 +34,7 @@ class UserMeta extends Eloquent
     public static function setMeta($key, $value = null, $user_id = 0)
     {
         if ($user_id == 0) {
-            $user_id = acl_get_current_user_id();
+            $user_id = auth()->id();
         }
 
         $meta = self::firstOrCreate([
@@ -54,7 +54,7 @@ class UserMeta extends Eloquent
     public static function getMeta($key, $default_value = null, $user_id = 0)
     {
         if ($user_id == 0) {
-            $user_id = acl_get_current_user_id();
+            $user_id = auth()->id();
         }
 
         $meta = self::where([

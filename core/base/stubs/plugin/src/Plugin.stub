@@ -7,43 +7,11 @@ use Core\Master\Supports\PermissionCommand;
 use Schema;
 class Plugin
 {
-
     /**
-     * @return array
      * @author TrinhLe
-     */
-    public static function permissions()
-    {
-        return [
-            [
-                'name' => '{Plugin}',
-                'flag' => '{plugin}.list',
-                'is_feature' => true,
-            ],
-            [
-                'name' => 'Create',
-                'flag' => '{plugin}.create',
-                'parent_flag' => '{plugin}.list',
-            ],
-            [
-                'name' => 'Edit',
-                'flag' => '{plugin}.edit',
-                'parent_flag' => '{plugin}.list',
-            ],
-            [
-                'name' => 'Delete',
-                'flag' => '{plugin}.delete',
-                'parent_flag' => '{plugin}.list',
-            ]
-        ];
-    }
-
-    /**
-     * @author Sang Nguyen
      */
     public static function activate()
     {
-        PermissionCommand::registerPermission(self::permissions());
         Artisan::call('migrate', [
             '--force' => true,
             '--path' => 'plugins/{plugin}/database/migrations',
@@ -51,7 +19,7 @@ class Plugin
     }
 
     /**
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public static function deactivate()
     {
@@ -59,11 +27,13 @@ class Plugin
     }
 
     /**
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public static function remove()
     {
-        PermissionCommand::removePermission(self::permissions());
-        Schema::dropIfExists('{plugin}');
+        Artisan::call('migrate:rollback', [
+            '--force' => true,
+            '--path' => 'plugins/{plugin}/database/migrations',
+        ]);
     }
 }
