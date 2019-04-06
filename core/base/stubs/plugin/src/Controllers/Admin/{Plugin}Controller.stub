@@ -34,7 +34,7 @@ class {Plugin}Controller extends BaseAdminController
     public function getList({Plugin}DataTable $dataTable)
     {
 
-        // page_title()->setTitle(trans('{plugin}::{plugin}.list'));
+        page_title()->setTitle(trans('plugins-{plugin}::{plugin}.list'));
 
         return $dataTable->renderTable(['title' => trans('plugins-{plugin}::{plugin}.list')]);
     }
@@ -46,9 +46,9 @@ class {Plugin}Controller extends BaseAdminController
      */
     public function getCreate()
     {
-        // page_title()->setTitle(trans('{plugin}::{plugin}.create'));
+        page_title()->setTitle(trans('plugins-{plugin}::{plugin}.create'));
 
-        return view('{plugin}::create');
+        return view('plugins-{plugin}::create');
     }
 
     /**
@@ -65,9 +65,9 @@ class {Plugin}Controller extends BaseAdminController
         do_action(BASE_ACTION_AFTER_CREATE_CONTENT, {PLUGIN}_MODULE_SCREEN_NAME, $request, ${plugin});
 
         if ($request->input('submit') === 'save') {
-            return redirect()->route('{plugin}.list')->with('success_msg', trans('bases::notices.create_success_message'));
+            return redirect()->route('admin.{plugin}.list')->with('success_msg', trans('core-base::notices.create_success_message'));
         } else {
-            return redirect()->route('{plugin}.edit', ${plugin}->id)->with('success_msg', trans('bases::notices.create_success_message'));
+            return redirect()->route('admin.{plugin}.edit', ${plugin}->id)->with('success_msg', trans('core-base::notices.create_success_message'));
         }
     }
 
@@ -85,9 +85,9 @@ class {Plugin}Controller extends BaseAdminController
             abort(404);
         }
 
-        // page_title()->setTitle(trans('{plugin}::{plugin}.edit') . ' #' . $id);
+        page_title()->setTitle(trans('plugins-{plugin}::{plugin}.edit') . ' #' . $id);
 
-        return view('{plugin}::edit', compact('{plugin}'));
+        return view('plugins-{plugin}::edit', compact('{plugin}'));
     }
 
     /**
@@ -109,9 +109,9 @@ class {Plugin}Controller extends BaseAdminController
         do_action(BASE_ACTION_AFTER_UPDATE_CONTENT, {PLUGIN}_MODULE_SCREEN_NAME, $request, ${plugin});
 
         if ($request->input('submit') === 'save') {
-            return redirect()->route('{plugin}.list')->with('success_msg', trans('bases::notices.update_success_message'));
+            return redirect()->route('admin.{plugin}.list')->with('success_msg', trans('core-base::notices.update_success_message'));
         } else {
-            return redirect()->route('{plugin}.edit', $id)->with('success_msg', trans('bases::notices.update_success_message'));
+            return redirect()->route('admin.{plugin}.edit', $id)->with('success_msg', trans('core-base::notices.update_success_message'));
         }
     }
 
@@ -134,12 +134,12 @@ class {Plugin}Controller extends BaseAdminController
 
             return [
                 'error' => false,
-                'message' => trans('bases::notices.deleted'),
+                'message' => trans('core-base::notices.deleted'),
             ];
         } catch (\Exception $e) {
             return [
                 'error' => true,
-                'message' => trans('bases::notices.cannot_delete'),
+                'message' => trans('core-base::notices.cannot_delete'),
             ];
         }
     }

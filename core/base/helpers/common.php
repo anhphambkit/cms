@@ -2,6 +2,7 @@
 use Core\Master\Facades\DashboardMenuFacade;
 use Core\Master\Facades\PageTitleFacade;
 use Core\Master\Facades\AdminBreadcrumbFacade;
+use Html;
 
 if (!function_exists('parse_args')) {
     /**
@@ -70,5 +71,18 @@ if (!function_exists('anchor_link')) {
     {
         $options = HTML::attributes($options);
         return view('core-base::elements.tables.link', compact('link', 'name', 'options'))->render();
+    }
+}
+
+if (!function_exists('table_checkbox')) {
+    /**
+     * @param $id
+     * @return string
+     * @author TrinhLe
+     * @throws Throwable
+     */
+    function table_checkbox($id)
+    {
+        return view('core-base::elements.tables.checkbox', compact('id'))->render();
     }
 }

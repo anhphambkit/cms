@@ -14,36 +14,36 @@
 use Illuminate\Routing\Router;
 /** @var Router $router */
 
-$router->group(['prefix' => '{plugin}'], function (Router $router) {
+$router->group(['prefix' => 'newsletter'], function (Router $router) {
     
     $router->get('/', [
-        'as' => 'admin.{plugin}.list',
-        'uses' => '{Plugin}Controller@getList',
+        'as' => 'admin.newsletter.list',
+        'uses' => 'NewsletterController@getList',
     ]);
 
     $router->get('/create', [
-        'as' => 'admin.{plugin}.create',
-        'uses' => '{Plugin}Controller@getCreate',
+        'as' => 'admin.newsletter.create',
+        'uses' => 'NewsletterController@getCreate',
     ]);
 
     $router->post('/create', [
-        'as' => 'admin.{plugin}.create',
-        'uses' => '{Plugin}Controller@postCreate',
+        'as' => 'admin.newsletter.create',
+        'uses' => 'NewsletterController@postCreate',
     ]);
 
     $router->get('/edit/{id}', [
-        'as' => 'admin.{plugin}.edit',
-        'uses' => '{Plugin}Controller@getEdit',
+        'as' => 'admin.newsletter.edit',
+        'uses' => 'NewsletterController@getEdit',
     ]);
 
     $router->post('/edit/{id}', [
-        'as' => 'admin.{plugin}.edit',
-        'uses' => '{Plugin}Controller@postEdit',
+        'as' => 'admin.newsletter.edit',
+        'uses' => 'NewsletterController@postEdit',
     ]);
 
     $router->get('/delete/{id}', [
-        'as' => 'admin.{plugin}.delete',
-        'uses' => '{Plugin}Controller@getDelete',
+        'as' => 'admin.newsletter.delete',
+        'uses' => 'NewsletterController@getDelete',
     ]);
 });
 

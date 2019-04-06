@@ -1,12 +1,12 @@
 @extends('layouts.master')
 @section('content')
-    {!! Form::open(['route' => ['admin.{plugin}.edit', ${plugin}->id]]) !!}
-        @php do_action(BASE_FILTER_BEFORE_RENDER_FORM, {PLUGIN}_MODULE_SCREEN_NAME, request(), ${plugin}) @endphp
+    {!! Form::open(['route' => 'admin.newsletter.create']) !!}
+        @php do_action(BASE_FILTER_BEFORE_RENDER_FORM, NEWSLETTER_MODULE_SCREEN_NAME, request(), null) @endphp
         <div class="row">
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-{plugin}::{plugin}.edit') }}</h4>
+                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-newsletter::newsletter.create') }}</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -20,23 +20,23 @@
                         <div class="card-body">
                             <div class="form-body">
                                 <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('name')) has-error @endif">
-                                        <label for="name">{{ trans('core-base::forms.name') }}</label>
-                                        {!! Form::text('name', ${plugin}->name, ['class' => 'form-control', 'id' => 'name', 'placeholder' => trans('bases::forms.name_placeholder'), 'data-counter' => 120]) !!}
-                                        {!! Form::error('name', $errors) !!}
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('email')) has-error @endif">
+                                        <label for="email">{{ trans('Email') }}</label>
+                                        {!! Form::text('email', old('email'), ['class' => 'form-control', 'id' => 'email', 'placeholder' => trans('email'), 'data-counter' => 120]) !!}
+                                        {!! Form::error('email', $errors) !!}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @php do_action(BASE_ACTION_META_BOXES, {PLUGIN}_MODULE_SCREEN_NAME, 'advanced') @endphp
+                    @php do_action(BASE_ACTION_META_BOXES, NEWSLETTER_MODULE_SCREEN_NAME, 'advanced') @endphp
                 </div>
             </div>
             <div class="col-md-3 right-sidebar">
                 @include('core-base::elements.form-actions')
-                @include('core-base::elements.forms.status', ['selected' => ${plugin}->status])
-                @php do_action(BASE_ACTION_META_BOXES, {PLUGIN}_MODULE_SCREEN_NAME, 'top', ${plugin}) @endphp
-                @php do_action(BASE_ACTION_META_BOXES, {PLUGIN}_MODULE_SCREEN_NAME, 'side', ${plugin}) @endphp
+                @include('core-base::elements.forms.status')
+                @php do_action(BASE_ACTION_META_BOXES, NEWSLETTER_MODULE_SCREEN_NAME, 'top') @endphp
+                @php do_action(BASE_ACTION_META_BOXES, NEWSLETTER_MODULE_SCREEN_NAME, 'side') @endphp
             </div>
         </div>
     {!! Form::close() !!}

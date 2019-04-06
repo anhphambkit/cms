@@ -90,7 +90,8 @@ class PluginDeactivateCommand extends Command
                 $this->line('<info>This plugin is deactivated already!</info>');
             }
         }
-        cache()->forget(md5('cache-dashboard-menu'));
+                
+        $this->call('cache:clear');
 
         if (!$this->files->isDirectory($location)) {
             $this->error('This plugin is not exists.');

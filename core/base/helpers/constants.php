@@ -55,3 +55,19 @@ if (!defined('BASE_ACTION_FORM_ACTIONS_TITLE')) {
 if (!defined('BASE_ACTION_REGISTER_BREADCRUMBS')) {
     define('BASE_ACTION_REGISTER_BREADCRUMBS', 'register_breadcrumbs');
 }
+
+if (!defined('BASE_FILTER_BEFORE_RENDER_FORM')) {
+    define('BASE_FILTER_BEFORE_RENDER_FORM', 'base_filter_before_render_form');
+}
+
+if (!defined('BASE_ACTION_META_BOXES')) {
+    define('BASE_ACTION_META_BOXES', 'meta_boxes');
+}
+
+if (!defined('BASE_ACTION_AFTER_CREATE_CONTENT')) {
+    define('BASE_ACTION_AFTER_CREATE_CONTENT', 'after_create_content');
+}
+
+if (!defined('BASE_ACTION_AFTER_UPDATE_CONTENT')) {
+   define('BASE_ACTION_AFTER_UPDATE_CONTENT', 'after_update_content');
+}

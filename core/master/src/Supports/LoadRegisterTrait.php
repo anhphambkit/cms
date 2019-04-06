@@ -33,7 +33,7 @@ trait LoadRegisterTrait
 	protected function cmsLoadTranslates()
     {
         $sources = $this->loadPackages(SOURCE_TRANSLATES);
-
+        
         foreach ($sources as $group => $dir) {
             # code...
             $this->loadTranslationsFrom($dir, $group);

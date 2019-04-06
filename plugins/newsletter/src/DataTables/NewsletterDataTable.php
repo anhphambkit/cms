@@ -1,11 +1,11 @@
 <?php
 
-namespace Plugins\{Plugin}\DataTables;
+namespace Plugins\Newsletter\DataTables;
 
 use Core\Base\DataTables\DataTableAbstract;
-use Plugins\{Plugin}\Repositories\Interfaces\{Plugin}Repositories;
+use Plugins\Newsletter\Repositories\Interfaces\NewsletterRepositories;
 
-class {Plugin}DataTable extends DataTableAbstract
+class NewsletterDataTable extends DataTableAbstract
 {
     /**
      * Display ajax response.
@@ -17,11 +17,8 @@ class {Plugin}DataTable extends DataTableAbstract
     {
         $data = $this->datatables
             ->eloquent($this->query())
-            ->editColumn('name', function ($item) {
-                return anchor_link(route('{plugin}.edit', $item->id), $item->name);
-            })
-            ->editColumn('checkbox', function ($item) {
-                return table_checkbox($item->id);
+            ->editColumn('email', function ($item) {
+                return anchor_link(route('admin.newsletter.edit', $item->id), $item->email);
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
@@ -30,9 +27,9 @@ class {Plugin}DataTable extends DataTableAbstract
                 return table_status($item->status);
             });
 
-        return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, {PLUGIN}_MODULE_SCREEN_NAME)
+        return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, NEWSLETTER_MODULE_SCREEN_NAME)
             ->addColumn('operations', function ($item) {
-                return table_actions('admin.{plugin}.edit', 'admin.{plugin}.delete', $item);
+                return table_actions('admin.newsletter.edit', 'admin.newsletter.delete', $item);
             })
             ->escapeColumns([])
             ->make(true);
@@ -46,11 +43,11 @@ class {Plugin}DataTable extends DataTableAbstract
      */
     public function query()
     {
-       $model = app({Plugin}Repositories::class)->getModel();
+       $model = app(NewsletterRepositories::class)->getModel();
        /**
         * @var \Eloquent $model
         */
-       $query = $model->select(['{plugin}.id', '{plugin}.name', '{plugin}.created_at', '{plugin}.status']);
+       $query = $model->select(['newsletter.id', 'newsletter.email', 'newsletter.created_at', 'newsletter.status']);
        return $query;
     }
 
@@ -63,27 +60,27 @@ class {Plugin}DataTable extends DataTableAbstract
     {
         return [
             'id' => [
-                'name' => '{plugin}.id',
+                'name' => 'newsletter.id',
                 'title' => trans('core-base::tables.id'),
                 'footer' => trans('core-base::tables.id'),
                 'width' => '20px',
                 'class' => 'searchable searchable_id',
             ],
-            'name' => [
-                'name' => '{plugin}.name',
-                'title' => trans('core-base::tables.name'),
-                'footer' => trans('core-base::tables.name'),
+            'email' => [
+                'name' => 'newsletter.email',
+                'title' => trans('Email'),
+                'footer' => trans('Email'),
                 'class' => 'text-left searchable',
             ],
             'created_at' => [
-                'name' => '{plugin}.created_at',
+                'name' => 'newsletter.created_at',
                 'title' => trans('core-base::tables.created_at'),
                 'footer' => trans('core-base::tables.created_at'),
                 'width' => '100px',
                 'class' => 'searchable',
             ],
             'status' => [
-                'name' => '{plugin}.status',
+                'name' => 'newsletter.status',
                 'title' => trans('core-base::tables.status'),
                 'footer' => trans('core-base::tables.status'),
                 'width' => '100px',
@@ -99,7 +96,7 @@ class {Plugin}DataTable extends DataTableAbstract
     {
         $buttons = [
             'create' => [
-                'link' => route('admin.{plugin}.create'),
+                'link' => route('admin.newsletter.create'),
                 'text' => view('core-base::elements.tables.actions.create')->render(),
             ],
         ];
@@ -123,6 +120,6 @@ class {Plugin}DataTable extends DataTableAbstract
      */
     protected function filename()
     {
-        return {PLUGIN}_MODULE_SCREEN_NAME;
+        return NEWSLETTER_MODULE_SCREEN_NAME;
     }
 }

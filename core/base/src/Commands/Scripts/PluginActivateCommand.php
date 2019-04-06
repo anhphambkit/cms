@@ -91,7 +91,7 @@ class PluginActivateCommand extends Command
                 call_user_func([$content['plugin'], 'activate']);
 
                 app(PluginRepositories::class)->createOrUpdate($plugin);
-                cache()->forget(md5('cache-dashboard-menu'));
+                $this->call('cache:clear');
                 $this->flushAllCacheProvider();
                 $this->line('<info>Activate plugin successfully!</info>');
             } else {

@@ -17,6 +17,7 @@
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "league/flysystem-aws-s3-v3": "^1.0",
+        "nette/utils": "^3.0",
         "predis/predis": "^1.1",
         "ramsey/uuid": "^3.8",
         "yajra/laravel-datatables-buttons": "^4.5",
@@ -45,7 +46,8 @@
             "Core\\Dashboard\\": "core/dashboard/src",
             "Plugins\\Productcategory\\": "plugins/productcategory/src",
             "Plugins\\Product\\": "plugins/product/src",
-            "Plugins\\Productlookbook\\": "plugins/productlookbook/src"
+            "Plugins\\Productlookbook\\": "plugins/productlookbook/src",
+            "Plugins\\Newsletter\\": "plugins/newsletter/src"
         },
         "files": [
             "helpers.php"

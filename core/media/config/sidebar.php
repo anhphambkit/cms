@@ -5,7 +5,7 @@ return [
 		'priority'    => 3,
 		'parent_id'   => null,
 		'name'        => 'core-media::sidebar.media',
-		'icon'        => 'la la-unlock',
+		'icon'        => 'far fa-images',
 		'url'         => 'media.index',
 		'permissions' => ['media.index']
     ],
