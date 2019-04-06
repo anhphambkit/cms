@@ -25,13 +25,6 @@
 
     @section('master-head')
     @show
-    <style type="text/css">
-        small.charcounter {
-            position: absolute;
-            top: 0;
-            right: 20px;
-        }
-    </style>
   </head>
   <body class="@yield('body-class') vertical-layout vertical-menu-modern 2-columns  menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" id="@yield('body-id', 'module')">
     @include('partials.header')

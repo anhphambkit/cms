@@ -36,19 +36,9 @@ class SettingController extends BaseController
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @author TrinhLe
      */
-    public function postSystems()
+    public function postSystems(Request $request)
     {
-       
-    }
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @author TrinhLe
-     */
-    public function postOptions(Request $request)
-    {
-        $settings = Setting::getConfig();
+       $settings = Setting::getConfig();
 
         foreach ($settings as $tab) {
             foreach ($tab['settings'] as $setting) {
@@ -58,10 +48,19 @@ class SettingController extends BaseController
         }
 
         Setting::save();
-        if ($request->input('submit') === 'save') {
-            return redirect()->route('settings.options')->with('success_msg', trans('bases::notices.update_success_message'));
-        } else {
-            return redirect()->back()->with('success_msg', trans('bases::notices.update_success_message'));
-        }
+
+        return redirect()
+                ->route('admin.setting.system')
+                ->with('success_msg', trans('core-base::notices.update_success_message'));
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @author TrinhLe
+     */
+    public function postOptions(Request $request)
+    {
+        
     }
 }

@@ -34,5 +34,11 @@ class FormServiceProvider extends ServiceProvider
             'name',
             'errors' => null,
         ]);
+
+        Form::component('onOff', 'core-base::elements.forms.on-off', [
+            'name',
+            'value' => false,
+            'attributes' => [],
+        ]);
     }
 }

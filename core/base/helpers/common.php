@@ -85,3 +85,48 @@ if (!function_exists('table_checkbox')) {
         return view('core-base::elements.tables.checkbox', compact('id'))->render();
     }
 }
+if (!function_exists('html_attribute_element')) {
+    /**
+     * @param $key
+     * @param $value
+     * @return string
+     * @author Trinh Le
+     */
+    function html_attribute_element($key, $value)
+    {
+        if (is_numeric($key)) {
+            return $value;
+        }
+
+        // Treat boolean attributes as HTML properties
+        if (is_bool($value) && $key != 'value') {
+            return $value ? $key : '';
+        }
+
+        if (!empty($value)) {
+            return $key . '="' . e($value) . '"';
+        }
+    }
+}
+
+if (!function_exists('html_attributes_builder')) {
+    /**
+     * @param array $attributes
+     * @return string
+     * @author Trinh Le
+     */
+    function html_attributes_builder(array $attributes)
+    {
+        $html = [];
+
+        foreach ((array)$attributes as $key => $value) {
+            $element = html_attribute_element($key, $value);
+
+            if (!empty($element)) {
+                $html[] = $element;
+            }
+        }
+
+        return count($html) > 0 ? ' ' . implode(' ', $html) : '';
+    }
+}

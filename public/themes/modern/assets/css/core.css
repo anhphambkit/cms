@@ -606,3 +606,8 @@ table.dataTable {
     margin-bottom: 0!important;
     width: 100%!important; 
 }
+small.charcounter {
+    position: absolute;
+    top: 0;
+    right: 20px;
+}

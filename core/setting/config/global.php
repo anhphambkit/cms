@@ -44,30 +44,6 @@ return [
                     ],
                 ],
             ],
-            [
-                'label' => trans('core-setting::setting.general.show_admin_bar'),
-                'type' => 'onOff',
-                'attributes' => [
-                    'name' => 'show_admin_bar',
-                    'value' => 1,
-                ],
-            ],
-            [
-                'label' => trans('core-setting::setting.general.enable_change_admin_theme'),
-                'type' => 'onOff',
-                'attributes' => [
-                    'name' => 'enable_change_admin_theme',
-                    'value' => 1,
-                ],
-            ],
-            [
-                'label' => trans('core-setting::setting.general.enable_multi_language_in_admin'),
-                'type' => 'onOff',
-                'attributes' => [
-                    'name' => 'enable_multi_language_in_admin',
-                    'value' => 1,
-                ],
-            ],
         ]
     ],
     'seo' => [
@@ -154,17 +130,6 @@ return [
     'cache' => [
         'name' => 'Cache',
         'settings' => [
-            [
-                'label' => trans('core-setting::setting.general.cache_time'),
-                'type' => 'number',
-                'attributes' => [
-                    'name' => 'cache_time',
-                    'value' => 10,
-                    'options' => [
-                        'class' => 'form-control',
-                    ],
-                ],
-            ],
             [
                 'label' => trans('core-setting::setting.general.cache_time_site_map'),
                 'type' => 'number',
