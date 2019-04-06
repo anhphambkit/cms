@@ -2,7 +2,6 @@
 use Core\Master\Facades\DashboardMenuFacade;
 use Core\Master\Facades\PageTitleFacade;
 use Core\Master\Facades\AdminBreadcrumbFacade;
-use Html;
 
 if (!function_exists('parse_args')) {
     /**
@@ -69,7 +68,7 @@ if (!function_exists('anchor_link')) {
      */
     function anchor_link($link, $name, array $options = [])
     {
-        $options = HTML::attributes($options);
+        $options = Html::attributes($options);
         return view('core-base::elements.tables.link', compact('link', 'name', 'options'))->render();
     }
 }

@@ -358,4 +358,13 @@ class Setting
             return 'This field type does not exist';
         }
     }
+
+    /**
+     * @return array
+     * @author TrinhLe
+     */
+    public static function getConfig()
+    {
+        return config("core-setting.global");
+    }
 }

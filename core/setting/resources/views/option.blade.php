@@ -1,4 +1,4 @@
-@extends('bases::layouts.master')
+@extends('layouts.master')
 @section('content')
     {!! Form::open(['route' => ['settings.edit']]) !!}
     <div class="tabbable-custom tabbable-tabdrop">

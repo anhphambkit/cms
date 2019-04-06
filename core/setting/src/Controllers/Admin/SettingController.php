@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Setting\Http\Controllers;
+namespace Core\Setting\Controllers\Admin;
 
-use Core\Base\Http\Controllers\BaseController;
+use Core\Base\Controllers\Admin\BaseAdminController as BaseController;
 use Illuminate\Http\Request;
 use Setting;
 
@@ -14,10 +14,31 @@ class SettingController extends BaseController
      */
     public function getOptions()
     {
-        page_title()->setTitle(trans('settings::setting.title'));
+        page_title()->setTitle(trans('core-setting::setting.title'));
 
         $settings = Setting::getConfig();
-        return view('settings::index', compact('settings'));
+        return view('core-setting::option', compact('settings'));
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @author TrinhLe
+     */
+    public function getSystems()
+    {
+        page_title()->setTitle(trans('core-setting::setting.title'));
+
+        $settings = Setting::getConfig();
+        return view('core-setting::system', compact('settings'));
+    }
+    
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @author TrinhLe
+     */
+    public function postSystems()
+    {
+       
     }
 
     /**
@@ -25,7 +46,7 @@ class SettingController extends BaseController
      * @return \Illuminate\Http\RedirectResponse
      * @author TrinhLe
      */
-    public function postEdit(Request $request)
+    public function postOptions(Request $request)
     {
         $settings = Setting::getConfig();
 

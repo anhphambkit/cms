@@ -68,9 +68,9 @@ class BaseServiceProvider extends ServiceProvider
 	public function boot()
 	{	
 		# load config important use helper.
+		$this->cmsLoadTranslates();
 		$this->cmsLoadConfigs();
 		$this->cmsLoadViews();
-		$this->cmsLoadTranslates();
 		$this->publishMigration();
 		$this->pushlishData();
 		$this->publishesAssetRegister();

@@ -1,7 +1,7 @@
 <?php
 namespace Core\Setting\Repositories\Cache;
 use Core\Master\Repositories\Cache\CacheAbstractDecorator;
-use Core\Setting\Repositories\SettingRepositories;
+use Core\Setting\Repositories\Interfaces\SettingRepositories;
 
 class CacheSettingRepositories extends CacheAbstractDecorator implements SettingRepositories
 {
@@ -19,6 +19,6 @@ class CacheSettingRepositories extends CacheAbstractDecorator implements Setting
     {
         parent::__construct();
         $this->repository = $repository;
-        $this->entityName = 'cms-setting'; # Please setup reference name of cache.
+        $this->entityName = 'default'; # Please setup reference name of cache.
     }
 }

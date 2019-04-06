@@ -94,7 +94,7 @@ class UserServiceProvider extends CoreServiceProvider
             return new EloquentActivationRepositories(new \Core\User\Models\Activation());
         });
 
-        if (setting('enable_cache', true)) {
+        if (setting('enable_cache', false)) {
 
             $this->app->singleton(RoleInterface::class, function () {
                 return new RoleCacheDecorator(new RoleRepository(new \Core\User\Models\Role()));

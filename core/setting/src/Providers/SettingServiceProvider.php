@@ -6,7 +6,7 @@ use Core\Setting\Facades\SettingFacade;
 use Core\Setting\Models\Setting as SettingModel;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use Core\Setting\Repositories\SettingRepositories;
+use Core\Setting\Repositories\Interfaces\SettingRepositories;
 use Core\Setting\Repositories\Eloquent\EloquentSettingRepositories;
 use Core\Setting\Repositories\Cache\CacheSettingRepositories;
 
@@ -24,14 +24,18 @@ class SettingServiceProvider extends ServiceProvider
     {
         AliasLoader::getInstance()->alias('Setting', SettingFacade::class);
 
-        // $this->app->singleton(SettingRepositories::class, function () {
-        //     $repository = new EloquentSettingRepositories();
+        if (setting('enable_cache', false)) {
 
-        //     if (! config("app.cache")) {
-        //         return $repository;
-        //     }
-        //     return new CacheSettingRepositories($repository);
-        // });
+            $this->app->singleton(SettingRepositories::class, function () {
+                return new CacheSettingRepositories(new EloquentSettingRepositories(new \Core\Setting\Models\Setting()));
+            });
+            
+        } else {
+
+            $this->app->singleton(SettingRepositories::class, function () {
+                return new EloquentSettingRepositories(new \Core\Setting\Models\Setting());
+            });
+        }
     }
 
     /**

@@ -1,10 +1,10 @@
 <?php
 return [
     'general' => [
-        'name' => trans('settings::setting.general.general_block'),
+        'name' => trans('core-setting::setting.general.general_block'),
         'settings' => [
             [
-                'label' => trans('settings::setting.general.rich_editor'),
+                'label' => trans('core-setting::setting.general.rich_editor'),
                 'type' => 'select',
                 'attributes' => [
                     'name' => 'rich_editor',
@@ -19,33 +19,33 @@ return [
                 ],
             ],
             [
-                'label' => trans('settings::setting.general.site_title'),
+                'label' => trans('core-setting::setting.general.site_title'),
                 'type' => 'text',
                 'attributes' => [
                     'name' => 'site_title',
                     'value' => null,
                     'options' => [
                         'class' => 'form-control',
-                        'placeholder' => trans('settings::setting.general.placeholder.site_title'),
+                        'placeholder' => trans('core-setting::setting.general.placeholder.site_title'),
                         'data-counter' => 120,
                     ],
                 ],
             ],
             [
-                'label' => trans('settings::setting.general.banner_homepage_content'),
+                'label' => trans('core-setting::setting.general.banner_homepage_content'),
                 'type' => 'text',
                 'attributes' => [
                     'name' => 'banner_homepage_content',
                     'value' => null,
                     'options' => [
                         'class' => 'form-control',
-                        'placeholder' => trans('settings::setting.general.placeholder.banner_homepage_content'),
+                        'placeholder' => trans('core-setting::setting.general.placeholder.banner_homepage_content'),
                         'data-counter' => 120,
                     ],
                 ],
             ],
             [
-                'label' => trans('settings::setting.general.show_admin_bar'),
+                'label' => trans('core-setting::setting.general.show_admin_bar'),
                 'type' => 'onOff',
                 'attributes' => [
                     'name' => 'show_admin_bar',
@@ -53,7 +53,7 @@ return [
                 ],
             ],
             [
-                'label' => trans('settings::setting.general.enable_change_admin_theme'),
+                'label' => trans('core-setting::setting.general.enable_change_admin_theme'),
                 'type' => 'onOff',
                 'attributes' => [
                     'name' => 'enable_change_admin_theme',
@@ -61,7 +61,7 @@ return [
                 ],
             ],
             [
-                'label' => trans('settings::setting.general.enable_multi_language_in_admin'),
+                'label' => trans('core-setting::setting.general.enable_multi_language_in_admin'),
                 'type' => 'onOff',
                 'attributes' => [
                     'name' => 'enable_multi_language_in_admin',
@@ -71,43 +71,43 @@ return [
         ]
     ],
     'seo' => [
-        'name' => trans('settings::setting.general.seo_block'),
+        'name' => trans('core-setting::setting.general.seo_block'),
         'settings' => [
             [
-                'label' => trans('settings::setting.general.seo_title'),
+                'label' => trans('core-setting::setting.general.seo_title'),
                 'type' => 'text',
                 'attributes' => [
                     'name' => 'seo_title',
                     'value' => null,
                     'options' => [
                         'class' => 'form-control',
-                        'placeholder' => trans('settings::setting.general.placeholder.seo_title'),
+                        'placeholder' => trans('core-setting::setting.general.placeholder.seo_title'),
                         'data-counter' => 120,
                     ],
                 ],
             ],
             [
-                'label' => trans('settings::setting.general.seo_description'),
+                'label' => trans('core-setting::setting.general.seo_description'),
                 'type' => 'text',
                 'attributes' => [
                     'name' => 'seo_description',
                     'value' => null,
                     'options' => [
                         'class' => 'form-control',
-                        'placeholder' => trans('settings::setting.general.placeholder.seo_description'),
+                        'placeholder' => trans('core-setting::setting.general.placeholder.seo_description'),
                         'data-counter' => 120,
                     ],
                 ],
             ],
             [
-                'label' => trans('settings::setting.general.seo_keywords'),
+                'label' => trans('core-setting::setting.general.seo_keywords'),
                 'type' => 'text',
                 'attributes' => [
                     'name' => 'seo_keywords',
                     'value' => null,
                     'options' => [
                         'class' => 'form-control',
-                        'placeholder' => trans('settings::setting.general.placeholder.seo_keywords'),
+                        'placeholder' => trans('core-setting::setting.general.placeholder.seo_keywords'),
                         'data-counter' => 60,
                     ],
                 ],
@@ -115,34 +115,34 @@ return [
         ]
     ],
     'webmaster_tools' => [
-        'name' => trans('settings::setting.general.webmaster_tools_block'),
+        'name' => trans('core-setting::setting.general.webmaster_tools_block'),
         'settings' => [
             [
-                'label' => trans('settings::setting.general.google_analytics'),
+                'label' => trans('core-setting::setting.general.google_analytics'),
                 'type' => 'text',
                 'attributes' => [
                     'name' => 'google_analytics',
                     'value' => null,
                     'options' => [
                         'class' => 'form-control',
-                        'placeholder' => trans('settings::setting.general.placeholder.google_analytics'),
+                        'placeholder' => trans('core-setting::setting.general.placeholder.google_analytics'),
                     ],
                 ],
             ],
             [
-                'label' => trans('settings::setting.general.google_site_verification'),
+                'label' => trans('core-setting::setting.general.google_site_verification'),
                 'type' => 'text',
                 'attributes' => [
                     'name' => 'google_site_verification',
                     'value' => null,
                     'options' => [
                         'class' => 'form-control',
-                        'placeholder' => trans('settings::setting.general.placeholder.google_site_verification'),
+                        'placeholder' => trans('core-setting::setting.general.placeholder.google_site_verification'),
                     ],
                 ],
             ],
             [
-                'label' => trans('settings::setting.general.enable_captcha'),
+                'label' => trans('core-setting::setting.general.enable_captcha'),
                 'type' => 'onOff',
                 'attributes' => [
                     'name' => 'enable_captcha',
@@ -155,7 +155,7 @@ return [
         'name' => 'Cache',
         'settings' => [
             [
-                'label' => trans('settings::setting.general.cache_time'),
+                'label' => trans('core-setting::setting.general.cache_time'),
                 'type' => 'number',
                 'attributes' => [
                     'name' => 'cache_time',
@@ -166,7 +166,7 @@ return [
                 ],
             ],
             [
-                'label' => trans('settings::setting.general.cache_time_site_map'),
+                'label' => trans('core-setting::setting.general.cache_time_site_map'),
                 'type' => 'number',
                 'attributes' => [
                     'name' => 'cache_time_site_map',
@@ -177,7 +177,7 @@ return [
                 ],
             ],
             [
-                'label' => trans('settings::setting.general.enable_cache'),
+                'label' => trans('core-setting::setting.general.enable_cache'),
                 'type' => 'onOff',
                 'attributes' => [
                     'name' => 'enable_cache',
