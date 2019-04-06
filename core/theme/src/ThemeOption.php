@@ -506,7 +506,7 @@ class ThemeOption
      */
     public function setOption($key, $value = '')
     {
-        Setting::set($this->opt_name . '-' . $privateKey . '-' . $key, $value);
+        Setting::set($this->opt_name . '-' . $this->privateKey . '-' . $key, $value);
     }
 
     /**
@@ -537,7 +537,7 @@ class ThemeOption
      */
     public function hasOption($key)
     {
-        return setting()->has($this->opt_name . '-' . $privateKey . '-' . $key);
+        return setting()->has($this->opt_name . '-' . $this->privateKey . '-' . $key);
     }
 
     /**
@@ -547,7 +547,7 @@ class ThemeOption
      */
     public function getOption($key = '', $default = '')
     {
-        $data = setting($this->opt_name . '-' . $privateKey . '-' . $key);
+        $data = setting($this->opt_name . '-' . $this->privateKey . '-' . $key);
         if (!empty($data)) {
             return $data;
         }

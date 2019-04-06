@@ -5,6 +5,7 @@ namespace Core\Setting\Controllers\Admin;
 use Core\Base\Controllers\Admin\BaseAdminController as BaseController;
 use Illuminate\Http\Request;
 use Setting;
+use ThemeOption;
 
 class SettingController extends BaseController
 {
@@ -48,7 +49,6 @@ class SettingController extends BaseController
         }
 
         Setting::save();
-
         return redirect()
                 ->route('admin.setting.system')
                 ->with('success_msg', trans('core-base::notices.update_success_message'));
@@ -61,6 +61,16 @@ class SettingController extends BaseController
      */
     public function postOptions(Request $request)
     {
-        
+        $sections = ThemeOption::constructSections();
+        foreach ($sections as $section) {
+            foreach ($section['fields'] as $field) {
+                $key = $field['attributes']['name'];
+                ThemeOption::setOption($key, $request->input($key, 0));
+            }
+        }
+        Setting::save();
+        return redirect()
+                ->back()
+                ->with('success_msg', trans('core-base::notices.update_success_message'));
     }
 }
