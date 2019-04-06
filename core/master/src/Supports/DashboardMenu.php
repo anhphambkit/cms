@@ -167,14 +167,20 @@ class DashboardMenu
     public function loadRegisterMenus()
     {
         $sources =  Cache::tags('loadPackages')->remember("allPackages", 120, function(){
-            return loadPackages('', false);
+            return loadPackages('');
         });
 
         foreach ($sources as $namespace => $value) {
-            $sidebarClass = "{$namespace}Sidebar\\SidebarMenu";
-            if(class_exists($sidebarClass)){
-                call_user_func_array([app($sidebarClass), 'register'],[]);
+            # code...
+            if($menus = config("{$namespace}.sidebar")){
+                foreach ($menus as $menu) {
+                    # code...
+                    if($menu['url'] ?? false) $menu['url'] = route($menu['url']);
+                    $menu['name'] = trans($menu['name'] ?? '');
+                    $this->registerItem($menu);
+                }
             }
+
         }
     }
 }
