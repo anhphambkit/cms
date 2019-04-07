@@ -2,6 +2,7 @@
 use Core\Master\Facades\DashboardMenuFacade;
 use Core\Master\Facades\PageTitleFacade;
 use Core\Master\Facades\AdminBreadcrumbFacade;
+use Core\Master\Supports\Editor;
 
 if (!function_exists('parse_args')) {
     /**
@@ -128,5 +129,23 @@ if (!function_exists('html_attributes_builder')) {
         }
 
         return count($html) > 0 ? ' ' . implode(' ', $html) : '';
+    }
+}
+
+if (!function_exists('render_editor')) {
+    /**
+     * @param $name
+     * @param null $value
+     * @param bool $with_short_code
+     * @param array $attributes
+     * @return string
+     * @author Trinh Le
+     * @throws Throwable
+     */
+    function render_editor($name, $value = null, $with_short_code = false, array $attributes = [])
+    {
+        $editor = new Editor;
+
+        return $editor->render($name, $value, $with_short_code, $attributes);
     }
 }

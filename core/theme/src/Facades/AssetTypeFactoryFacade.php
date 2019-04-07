@@ -4,6 +4,7 @@ namespace Core\Theme\Facades;
 
 use Core\Theme\Foundation\Asset\Types\AssetTypeFactory;
 use Illuminate\Support\Facades\Facade;
+
 class AssetTypeFactoryFacade extends Facade
 {
     /**

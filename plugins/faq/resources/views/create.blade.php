@@ -1,12 +1,12 @@
 @extends('layouts.master')
 @section('content')
-    {!! Form::open(['route' => 'admin.{plugin}.create']) !!}
-        @php do_action(BASE_FILTER_BEFORE_RENDER_FORM, {PLUGIN}_MODULE_SCREEN_NAME, request(), null) @endphp
+    {!! Form::open(['route' => 'admin.faq.create']) !!}
+        @php do_action(BASE_FILTER_BEFORE_RENDER_FORM, FAQ_MODULE_SCREEN_NAME, request(), null) @endphp
         <div class="row">
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-{plugin}::{plugin}.create') }}</h4>
+                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-faq::faq.create') }}</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -26,17 +26,25 @@
                                         {!! Form::error('name', $errors) !!}
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('content')) has-error @endif">
+                                        <label for="content">{{ trans('plugins-faq::faq.forms.content') }}</label>
+                                        {!! render_editor('content', old('content'), true) !!}
+                                        {!! Form::error('content', $errors) !!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    @php do_action(BASE_ACTION_META_BOXES, {PLUGIN}_MODULE_SCREEN_NAME, 'advanced') @endphp
+                    @php do_action(BASE_ACTION_META_BOXES, FAQ_MODULE_SCREEN_NAME, 'advanced') @endphp
                 </div>
             </div>
             <div class="col-md-3 right-sidebar">
                 @include('core-base::elements.form-actions')
                 @include('core-base::elements.forms.status')
-                @php do_action(BASE_ACTION_META_BOXES, {PLUGIN}_MODULE_SCREEN_NAME, 'top') @endphp
-                @php do_action(BASE_ACTION_META_BOXES, {PLUGIN}_MODULE_SCREEN_NAME, 'side') @endphp
+                @php do_action(BASE_ACTION_META_BOXES, FAQ_MODULE_SCREEN_NAME, 'top') @endphp
+                @php do_action(BASE_ACTION_META_BOXES, FAQ_MODULE_SCREEN_NAME, 'side') @endphp
             </div>
         </div>
     {!! Form::close() !!}

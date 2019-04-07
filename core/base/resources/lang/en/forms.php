@@ -43,5 +43,7 @@ return [
     'add'                     => 'Add',
     'link'                    => 'Link',
     'tab'                     => 'Tab',
-    'status'                  => 'Status'
+    'status'                  => 'Status',
+    'show_hide_editor'        => 'Show/Hide Editor',
+    'basic_info_title'        => 'Basic information',
 ];

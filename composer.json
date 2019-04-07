@@ -47,7 +47,8 @@
             "Plugins\\Productcategory\\": "plugins/productcategory/src",
             "Plugins\\Product\\": "plugins/product/src",
             "Plugins\\Productlookbook\\": "plugins/productlookbook/src",
-            "Plugins\\Newsletter\\": "plugins/newsletter/src"
+            "Plugins\\Newsletter\\": "plugins/newsletter/src",
+            "Plugins\\Faq\\": "plugins/faq/src"
         },
         "files": [
             "helpers.php"

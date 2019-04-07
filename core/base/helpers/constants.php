@@ -71,3 +71,11 @@ if (!defined('BASE_ACTION_AFTER_CREATE_CONTENT')) {
 if (!defined('BASE_ACTION_AFTER_UPDATE_CONTENT')) {
    define('BASE_ACTION_AFTER_UPDATE_CONTENT', 'after_update_content');
 }
+
+if (!defined('BASE_FILTER_FORM_EDITOR_BUTTONS')) {
+    define('BASE_FILTER_FORM_EDITOR_BUTTONS', 'base_filter_form_editor_buttons');
+}
+
+if (!defined('BASE_ACTION_AFTER_DELETE_CONTENT')) {
+   define('BASE_ACTION_AFTER_DELETE_CONTENT', 'after_delete_content');
+}

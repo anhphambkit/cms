@@ -13,8 +13,11 @@ return [
 		'editable-js'             => ['theme' => 'plugins/bootstrap-editable/bootstrap-editable.min.js'],
 		'bootstrap-datepicker-js' => ['theme' => 'plugins/bootstrap-datepicker/bootstrap-datepicker.min.js'],
 		'jquery-mask-js'          => ['theme' => 'plugins/jquery-mask-js/jquery.mask.js'],
-		'datatable-js'          => ['theme' => 'app-assets/vendors/js/tables/datatable/datatables.min.js'],
-		'datatable-button-js'          => ['theme' => 'app-assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js'],
+		'datatable-js'            => ['theme' => 'app-assets/vendors/js/tables/datatable/datatables.min.js'],
+		'datatable-button-js'     => ['theme' => 'app-assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js'],
+		'editor-js'               => ['cdn' => 'backend/core/base/assets/js/editor.js'],
+		'ckeditor-js'             => ['theme' => 'app-assets/vendors/js/editors/ckeditor/ckeditor.js'],
+		'tinymce-js'              => ['theme' => 'app-assets/vendors/js/editors/tinymce/tinymce.js'],
 
 		/* css */
 		'vendors-css'              => ['theme' => 'app-assets/css/vendors.css'],
@@ -27,9 +30,9 @@ return [
 		'toastr-css'               => ['theme' => 'plugins/toastr/toastr.min.css'],
 		'jquery-ui-css'            => ['theme' => 'plugins/jquery-ui/jquery-ui.min.css'],
 		'editable-css'             => ['theme' => 'plugins/bootstrap-editable/bootstrap-editable.css'],
-		'bootstrap-datepicker-css'             => ['theme' => 'plugins/bootstrap-datepicker/bootstrap-datepicker.min.css'],
-		'datatable-css'          => ['theme' => 'app-assets/vendors/css/tables/datatable/datatables.min.css'],
-		'datatable-button-css'          => ['theme' => 'app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css'],
+		'bootstrap-datepicker-css' => ['theme' => 'plugins/bootstrap-datepicker/bootstrap-datepicker.min.css'],
+		'datatable-css'            => ['theme' => 'app-assets/vendors/css/tables/datatable/datatables.min.css'],
+		'datatable-button-css'     => ['theme' => 'app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css'],
 	],
 
 	'frontend-assets' => [
@@ -131,7 +134,8 @@ return [
 			'uniform-js',
 			'jquery-mask-js',
 			'datatable-js',
-			'datatable-button-js'
+			'datatable-button-js',
+			'editor-js'
 		]
 	]
 

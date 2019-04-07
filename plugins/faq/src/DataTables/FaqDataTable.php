@@ -1,11 +1,11 @@
 <?php
 
-namespace Plugins\{Plugin}\DataTables;
+namespace Plugins\Faq\DataTables;
 
 use Core\Base\DataTables\DataTableAbstract;
-use Plugins\{Plugin}\Repositories\Interfaces\{Plugin}Repositories;
+use Plugins\Faq\Repositories\Interfaces\FaqRepositories;
 
-class {Plugin}DataTable extends DataTableAbstract
+class FaqDataTable extends DataTableAbstract
 {
     /**
      * Display ajax response.
@@ -18,7 +18,7 @@ class {Plugin}DataTable extends DataTableAbstract
         $data = $this->datatables
             ->eloquent($this->query())
             ->editColumn('name', function ($item) {
-                return anchor_link(route('admin.{plugin}.edit', $item->id), $item->name);
+                return anchor_link(route('admin.faq.edit', $item->id), $item->name);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
@@ -30,9 +30,9 @@ class {Plugin}DataTable extends DataTableAbstract
                 return table_status($item->status);
             });
 
-        return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, {PLUGIN}_MODULE_SCREEN_NAME)
+        return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, FAQ_MODULE_SCREEN_NAME)
             ->addColumn('operations', function ($item) {
-                return table_actions('admin.{plugin}.edit', 'admin.{plugin}.delete', $item);
+                return table_actions('admin.faq.edit', 'admin.faq.delete', $item);
             })
             ->escapeColumns([])
             ->make(true);
@@ -46,11 +46,11 @@ class {Plugin}DataTable extends DataTableAbstract
      */
     public function query()
     {
-       $model = app({Plugin}Repositories::class)->getModel();
+       $model = app(FaqRepositories::class)->getModel();
        /**
         * @var \Eloquent $model
         */
-       $query = $model->select(['{plugin}.id', '{plugin}.name', '{plugin}.created_at', '{plugin}.status']);
+       $query = $model->select(['faq.id', 'faq.name', 'faq.created_at', 'faq.status']);
        return $query;
     }
 
@@ -63,27 +63,27 @@ class {Plugin}DataTable extends DataTableAbstract
     {
         return [
             'id' => [
-                'name' => '{plugin}.id',
+                'name' => 'faq.id',
                 'title' => trans('core-base::tables.id'),
                 'footer' => trans('core-base::tables.id'),
                 'width' => '20px',
                 'class' => 'searchable searchable_id',
             ],
             'name' => [
-                'name' => '{plugin}.name',
+                'name' => 'faq.name',
                 'title' => trans('core-base::tables.name'),
                 'footer' => trans('core-base::tables.name'),
                 'class' => 'text-left searchable',
             ],
             'created_at' => [
-                'name' => '{plugin}.created_at',
+                'name' => 'faq.created_at',
                 'title' => trans('core-base::tables.created_at'),
                 'footer' => trans('core-base::tables.created_at'),
                 'width' => '100px',
                 'class' => 'searchable',
             ],
             'status' => [
-                'name' => '{plugin}.status',
+                'name' => 'faq.status',
                 'title' => trans('core-base::tables.status'),
                 'footer' => trans('core-base::tables.status'),
                 'width' => '100px',
@@ -99,7 +99,7 @@ class {Plugin}DataTable extends DataTableAbstract
     {
         $buttons = [
             'create' => [
-                'link' => route('admin.{plugin}.create'),
+                'link' => route('admin.faq.create'),
                 'text' => view('core-base::elements.tables.actions.create')->render(),
             ],
         ];
@@ -123,6 +123,6 @@ class {Plugin}DataTable extends DataTableAbstract
      */
     protected function filename()
     {
-        return {PLUGIN}_MODULE_SCREEN_NAME;
+        return FAQ_MODULE_SCREEN_NAME;
     }
 }

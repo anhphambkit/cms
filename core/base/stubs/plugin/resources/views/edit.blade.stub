@@ -22,7 +22,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-12 mb-2 @if ($errors->has('name')) has-error @endif">
                                         <label for="name">{{ trans('core-base::forms.name') }}</label>
-                                        {!! Form::text('name', ${plugin}->name, ['class' => 'form-control', 'id' => 'name', 'placeholder' => trans('bases::forms.name_placeholder'), 'data-counter' => 120]) !!}
+                                        {!! Form::text('name', ${plugin}->name, ['class' => 'form-control', 'id' => 'name', 'placeholder' => trans('core-base::forms.name_placeholder'), 'data-counter' => 120]) !!}
                                         {!! Form::error('name', $errors) !!}
                                     </div>
                                 </div>

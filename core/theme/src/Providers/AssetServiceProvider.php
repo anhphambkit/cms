@@ -92,6 +92,9 @@ class AssetServiceProvider extends ServiceProvider
                 $jsRequired  = config('resources.admin-required-assets.js');
             }
 
+            $editor = setting('rich_editor', config('core-base.cms.editor.primary'));
+            $jsRequired[] = "{$editor}-js";
+            
             foreach ($assets as $assetName => $path) {
                 $path = asset_type_factory()->make($path)->url();
                 asset_manager()->addAsset($assetName, $path);

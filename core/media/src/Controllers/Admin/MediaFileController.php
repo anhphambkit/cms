@@ -88,17 +88,18 @@ class MediaFileController extends BaseAdminController
      */
     public function postUploadFromEditor(MediaFileRequest $request)
     {
-        $result = BMedia::handleUpload($request->file('upload'));
+        $result = BMedia::handleUpload($request->file('upload'), 0);
 
         if ($result['error'] == false) {
             $file = $result['data'];
             if ($request->input('upload_type') == 'tinymce') {
                 return response('<script>parent.setImageValue("' . url($file->url) . '"); </script>')->header('Content-Type', 'text/html');
-            } else {
-                return response('<script type="text/javascript">window.parent.CKEDITOR.tools.callFunction("' . $request->input('CKEditorFuncNum') . '", "' . url($file->url) . '", "");</script>')->header('Content-Type', 'text/html');
             }
+
+            return response('<script type="text/javascript">window.parent.CKEDITOR.tools.callFunction("' . $request->input('CKEditorFuncNum') . '", "' . (config('filesystems.default') === 'local' ? '/' . ltrim($file->url, '/') : $file->url) . '", "");</script>')->header('Content-Type', 'text/html');
         }
-        return response('<script>alert("' . array_get($result, 'message') . '")</script>')->header('Content-Type', 'text/html');
+
+        return response('<script>alert("' . Arr::get($result, 'message') . '")</script>')->header('Content-Type', 'text/html');
     }
    
 }
