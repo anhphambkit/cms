@@ -84,16 +84,14 @@ class AssetServiceProvider extends ServiceProvider
                 $assets      = config('resources.frontend-assets');
                 $cssRequired = config('resources.frontend-required-assets.css');
                 $jsRequired  = config('resources.frontend-required-assets.js');
-                
             }else
             {
                 $assets      = config('resources.admin-assets');
                 $cssRequired = config('resources.admin-required-assets.css');
                 $jsRequired  = config('resources.admin-required-assets.js');
+                 $editor = setting('rich_editor', config('core-base.cms.editor.primary'));
+                $jsRequired[] = "{$editor}-js";
             }
-
-            $editor = setting('rich_editor', config('core-base.cms.editor.primary'));
-            $jsRequired[] = "{$editor}-js";
             
             foreach ($assets as $assetName => $path) {
                 $path = asset_type_factory()->make($path)->url();
