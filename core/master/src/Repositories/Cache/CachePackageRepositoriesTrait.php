@@ -49,6 +49,14 @@ trait CachePackageRepositoriesTrait
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function findOrFail($id, array $with = [])
+    {
+        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
+    }
+
+    /**
      * Find a single entity by key value.
      *
      * @param array $condition

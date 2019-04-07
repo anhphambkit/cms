@@ -19,11 +19,43 @@
                     <div class="card-content collpase show">
                         <div class="card-body">
                             <div class="form-body">
+                                <h4 class="form-section"><i class="la la-eye"></i> About Customer</h4>
                                 <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('name')) has-error @endif">
-                                        <label for="name">{{ trans('core-base::forms.name') }}</label>
-                                        {!! Form::text('name', old('name'), ['class' => 'form-control', 'id' => 'name', 'placeholder' => trans('core-base::forms.name_placeholder'), 'data-counter' => 120]) !!}
-                                        {!! Form::error('name', $errors) !!}
+                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('first_name')) has-error @endif">
+                                        <label for="userinput1">Fist Name</label>
+                                        {!! Form::text('first_name', old('first_name'), ['class' => 'form-control', 'id' => 'first_name', 'data-counter' => 30, 'placeholder' => 'first name']) !!}
+                                        {!! Form::error('first_name', $errors) !!}
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('last_name')) has-error @endif">
+                                        <label for="userinput2">Last Name</label>
+                                        {!! Form::text('last_name', old('last_name'), ['class' => 'form-control', 'id' => 'last_name', 'data-counter' => 30, 'placeholder' => 'last name']) !!}
+                                        {!! Form::error('last_name', $errors) !!}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('username')) has-error @endif">
+                                        <label for="userinput3">Username</label>
+                                         {!! Form::text('username', old('username'), ['class' => 'form-control', 'id' => 'username', 'data-counter' => 30, 'placeholder' => 'username']) !!}
+                                         {!! Form::error('username', $errors) !!}
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('email')) has-error @endif">
+                                        <label for="userinput4">Email</label>
+                                        {!! Form::text('email', old('email'), ['class' => 'form-control', 'id' => 'email', 'data-counter' => 30, 'placeholder' => 'email']) !!}
+                                        {!! Form::error('email', $errors) !!}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('password')) has-error @endif">
+                                        <label for="userinput3">Password</label>
+                                         {!! Form::password('password', ['class' => 'form-control', 'id' => 'password', 'data-counter' => 60, 'placeholder' => 'password']) !!}
+                                         <div class="pwstrength_viewport_progress"></div>
+                                         {!! Form::error('password', $errors) !!}
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2">
+                                        <label for="userinput4">Re-type password</label>
+                                        {!! Form::password('password_confirmation', ['class' => 'form-control', 'id' => 'password_confirmation', 'data-counter' => 60, 'placeholder' => 're-type']) !!}
+                                        {!! Form::error('password_confirmation', $errors) !!}
                                     </div>
                                 </div>
                             </div>

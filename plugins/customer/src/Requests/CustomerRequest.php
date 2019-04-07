@@ -15,7 +15,11 @@ class CustomerRequest extends CoreRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'first_name' => 'required|max:120|min:2',
+            'last_name'  => 'required|max:120|min:2',
+            'email'      => 'required|max:60|min:6|email|unique:customers',
+            'username'   => 'required|max:60|min:6|unique:customers',
+            'password'   => 'required|min:6|confirmed',
         ];
     }
 }

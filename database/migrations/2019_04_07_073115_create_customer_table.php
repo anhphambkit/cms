@@ -25,9 +25,24 @@ class CreateCustomerTable extends Migration
             $table->date('dob')->nullable();
             $table->string('phone', 50)->nullable();
             $table->dateTime('confirmed_at')->nullable();
+            $table->string('address', 255)->nullable();
+            $table->string('secondary_address', 255)->nullable();
+            $table->string('job_position', 60)->nullable();
+            $table->string('secondary_phone', 20)->nullable();
+            $table->string('secondary_email', 60)->nullable();
+            $table->string('website', 120)->nullable();
+            $table->string('skype', 60)->nullable();
+            $table->string('facebook', 120)->nullable();
+            $table->string('twitter', 120)->nullable();
+            $table->string('google_plus', 120)->nullable();
+            $table->string('youtube', 120)->nullable();
+            $table->string('github', 120)->nullable();
+            $table->string('interest', 255)->nullable();
+            $table->string('about', 400)->nullable();
             $table->tinyInteger('status')->unsigned()->default(1);
             $table->rememberToken();
             $table->timestamps();
+            
             $table->engine = 'InnoDB';
         });
 

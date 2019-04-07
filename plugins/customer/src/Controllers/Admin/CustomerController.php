@@ -4,9 +4,11 @@ namespace Plugins\Customer\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Plugins\Customer\Requests\CustomerRequest;
+use Plugins\Customer\Requests\UpdateCustomerRequest;
 use Plugins\Customer\Repositories\Interfaces\CustomerRepositories;
 use Plugins\Customer\DataTables\CustomerDataTable;
 use Core\Base\Controllers\Admin\BaseAdminController;
+use Core\Base\Responses\BaseHttpResponse;
 
 class CustomerController extends BaseAdminController
 {
@@ -58,17 +60,17 @@ class CustomerController extends BaseAdminController
      * @return \Illuminate\Http\RedirectResponse
      * @author TrinhLe
      */
-    public function postCreate(CustomerRequest $request)
+    public function postCreate(CustomerRequest $request, BaseHttpResponse $response)
     {
+        $request->merge(['password' => bcrypt($request->input('password'))]);
         $customer = $this->customerRepository->createOrUpdate($request->input());
 
         do_action(BASE_ACTION_AFTER_CREATE_CONTENT, CUSTOMER_MODULE_SCREEN_NAME, $request, $customer);
 
-        if ($request->input('submit') === 'save') {
-            return redirect()->route('admin.customer.list')->with('success_msg', trans('core-base::notices.create_success_message'));
-        } else {
-            return redirect()->route('admin.customer.edit', $customer->id)->with('success_msg', trans('core-base::notices.create_success_message'));
-        }
+        return $response
+            ->setPreviousUrl(route('admin.customer.list'))
+            ->setNextUrl(route('admin.customer.edit', $customer->id))
+            ->setMessage(trans('core-base::notices.create_success_message'));
     }
 
     /**
@@ -80,11 +82,8 @@ class CustomerController extends BaseAdminController
      */
     public function getEdit($id)
     {
-        $customer = $this->customerRepository->findById($id);
-        if (empty($customer)) {
-            abort(404);
-        }
-
+        $customer = $this->customerRepository->findOrFail($id);
+       
         page_title()->setTitle(trans('plugins-customer::customer.edit') . ' #' . $id);
 
         return view('plugins-customer::edit', compact('customer'));
@@ -96,23 +95,27 @@ class CustomerController extends BaseAdminController
      * @return \Illuminate\Http\RedirectResponse
      * @author TrinhLe
      */
-    public function postEdit($id, CustomerRequest $request)
+    public function postEdit($id, UpdateCustomerRequest $request, BaseHttpResponse $response)
     {
-        $customer = $this->customerRepository->findById($id);
-        if (empty($customer)) {
-            abort(404);
+        if ($request->input('is_change_password') == 1) {
+            $request->merge(['password' => bcrypt($request->input('password'))]);
+            $data = $request->input();
+        } else {
+            $data = $request->except('password');
         }
-        $customer->fill($request->input());
+
+        $customer = $this->customerRepository->findOrFail($id);
+
+        $customer->fill($data);
 
         $this->customerRepository->createOrUpdate($customer);
 
         do_action(BASE_ACTION_AFTER_UPDATE_CONTENT, CUSTOMER_MODULE_SCREEN_NAME, $request, $customer);
 
-        if ($request->input('submit') === 'save') {
-            return redirect()->route('admin.customer.list')->with('success_msg', trans('core-base::notices.update_success_message'));
-        } else {
-            return redirect()->route('admin.customer.edit', $id)->with('success_msg', trans('core-base::notices.update_success_message'));
-        }
+        return $response
+            ->setPreviousUrl(route('admin.customer.list'))
+            ->setNextUrl(route('admin.customer.edit', $customer->id))
+            ->setMessage(trans('core-base::notices.create_success_message'));
     }
 
     /**

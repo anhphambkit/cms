@@ -44,6 +44,14 @@ interface RepositoryInterface
     public function findById($id, array $with = []);
 
     /**
+     * @param $id
+     * @param array $with
+     * @return mixed
+     * @author Trinh Le
+     */
+    public function findOrFail($id, array $with = []);
+
+    /**
      * @param string $column
      * @param string $key
      * @return mixed

@@ -3,6 +3,7 @@ namespace Core\Master\Repositories\Eloquent;
 use Core\Master\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class RepositoriesAbstract implements RepositoryInterface
 {
@@ -78,6 +79,24 @@ abstract class RepositoriesAbstract implements RepositoryInterface
         $this->resetModel();
 
         return $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findOrFail($id, array $with = [])
+    {
+        $data = $this->make($with)->where('id', $id);
+        $result = $data->first();
+        $this->resetModel();
+
+        if (!empty($result)) {
+            return $result;
+        }
+
+        throw (new ModelNotFoundException)->setModel(
+            get_class($this->originalModel), $id
+        );
     }
 
     /**
