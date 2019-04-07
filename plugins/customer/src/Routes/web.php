@@ -14,7 +14,7 @@ use Illuminate\Routing\Router;
 
 
 /** @var Router $router */
-$router->group(['prefix' => 'customer'], function (Router $router) {
+$router->group(['prefix' => 'customer', 'middleware' => ['customer.guest']], function (Router $router) {
     # Login
     $router->get('login', [
 		'as'         => 'public.customer.login', 
@@ -29,23 +29,24 @@ $router->group(['prefix' => 'customer'], function (Router $router) {
     $router->post('register', [ 
 		'as'         => 'public.customer.register', 
 		'uses'       => 'WebController@showRegisterForm',
-		'middleware' => 'guest', 
     ]);
    
-    # Logout
-    $router->get('logout', [
-		'as'         => 'public.customer.logout', 
-		'uses'       => 'LoginController@logout',
-		'middleware' => 'auth', 
+    $router->get('resend-confirmation/{id}', [
+        'as'         => 'public.customer.resend_confirmation', 
+        'uses'       => 'LoginController@logout',
     ]);
 });
 
-
-$router->group(['prefix' => 'customer'], function (Router $router) {
+$router->group(['prefix' => 'account', 'middleware' => ['customer']], function (Router $router) {
     
+    $router->get('logout', [
+        'as'         => 'public.customer.logout', 
+        'uses'       => 'LoginController@logout',
+    ]);
+
     $router->get('/', [
         'as' => 'public.customer.dashboard',
-        'uses' => 'CustomerController@dashboard',
+        'uses' => 'CustomerController@myAccount',
     ]);
 
 });

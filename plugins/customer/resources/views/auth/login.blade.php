@@ -27,7 +27,7 @@
             </form>
         </div>
         <div class="form-container sign-in-container">
-            {!! Form::open(['route' => 'post.login', 'method' => 'post']) !!}
+            {!! Form::open(['route' => 'public.customer.login', 'method' => 'post']) !!}
                 @csrf
                 <h1>Sign in</h1>
                 <div class="social-container">
@@ -36,7 +36,7 @@
                     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                 </div>
                 <span>or use your account</span>
-                <input type="text" placeholder="Email" name="username" maxlength="256" required/>
+                <input type="email" placeholder="Email" name="email" maxlength="256" required/>
                 {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
 
                 <input type="password" placeholder="Password" id="password" name="password" required/>
