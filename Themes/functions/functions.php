@@ -1,11 +1,25 @@
 <?php
 theme_option()->setSection([
-    'title' => __('General'),
-    'desc' => __('General settings'),
-    'id' => 'opt-text-subsection-general',
+    'title'      => __('General'),
+    'desc'       => __('General settings'),
+    'id'         => 'opt-text-subsection-general',
     'subsection' => true,
-    'icon' => 'fa fa-home',
+    'icon'       => 'fa fa-home',
     'fields' => [
+        [
+            'id' => 'header',
+            'type' => 'text',
+            'label' => __('Header'),
+            'attributes' => [
+                'name' => 'header',
+                'value' => null,
+                'options' => [
+                    'class' => 'form-control',
+                    'placeholder' => '',
+                    'data-counter' => 500,
+                ]
+            ],
+        ],
         [
             'id' => 'name',
             'type' => 'text',
