@@ -4,13 +4,11 @@ return [
 	[
         'name' => 'Dashboard',
         'flag' => 'dashboard.index',
-        'is_feature' => true,
     ],
     # Permission user
     [
     	'name' => 'User',
         'flag' => 'user.index',
-        'is_feature' => true,
     ],
     [
         'name' => 'Create',
@@ -36,7 +34,6 @@ return [
     [
     	'name' => 'Role',
         'flag' => 'role.index',
-        'is_feature' => true,
     ],
     [
         'name' => 'Create',
@@ -57,7 +54,6 @@ return [
     [
         'name' => 'Media',
         'flag' => 'media.index',
-        'is_feature' => true,
     ],
     [
         'name' => 'Folders Create',

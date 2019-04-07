@@ -99,10 +99,9 @@ class RoleController extends BaseAdminController
         $this->addAssets();
 
         list( $flags, $children ) = $this->getFlagsPermission();
-
         return view('core-user::admin.role.edit')
             ->with('role', $role)
-            ->with('active', $role->permissions)
+            ->with('active', array_keys($role->permissions))
             ->with('children', $children)
             ->with('flags', $flags);
     }
