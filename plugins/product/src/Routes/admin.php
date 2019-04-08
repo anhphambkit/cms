@@ -50,32 +50,32 @@ $router->group(['prefix' => 'product'], function (Router $router) {
 
         $router->get('/', [
             'as' => 'admin.product.brand.list',
-            'uses' => 'ProductController@getList',
+            'uses' => 'BrandController@getList',
         ]);
 
         $router->get('/create', [
             'as' => 'admin.product.brand.create',
-            'uses' => 'ProductController@getCreate',
+            'uses' => 'BrandController@getCreate',
         ]);
 
         $router->post('/create', [
             'as' => 'admin.product.brand.create',
-            'uses' => 'ProductController@postCreate',
+            'uses' => 'BrandController@postCreate',
         ]);
 
         $router->get('/edit/{id}', [
             'as' => 'admin.product.brand.edit',
-            'uses' => 'ProductController@getEdit',
+            'uses' => 'BrandController@getEdit',
         ]);
 
         $router->post('/edit/{id}', [
             'as' => 'admin.product.brand.edit',
-            'uses' => 'ProductController@postEdit',
+            'uses' => 'BrandController@postEdit',
         ]);
 
         $router->get('/delete/{id}', [
             'as' => 'admin.product.brand.delete',
-            'uses' => 'ProductController@getDelete',
+            'uses' => 'BrandController@getDelete',
         ]);
 
     });

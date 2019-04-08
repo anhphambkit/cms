@@ -18,7 +18,7 @@ class CreateProductTable extends Migration
             $table->increments('id');
             $table->string('name', 120)->unique();
             $table->string('brand_image', 255)->nullable();
-            $table->string('description')->nullable();
+            $table->string('description', 255)->nullable();
             $table->boolean('status')->unsigned()->default(1);
             $table->softDeletes();
             $table->timestamps();

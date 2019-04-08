@@ -44,12 +44,10 @@
             "Core\\Theme\\": "core/theme/src",
             "Core\\User\\": "core/user/src",
             "Core\\Dashboard\\": "core/dashboard/src",
-            "Plugins\\Productcategory\\": "plugins/productcategory/src",
-            "Plugins\\Product\\": "plugins/product/src",
-            "Plugins\\Productlookbook\\": "plugins/productlookbook/src",
             "Plugins\\Newsletter\\": "plugins/newsletter/src",
             "Plugins\\Faq\\": "plugins/faq/src",
-            "Plugins\\Customer\\": "plugins/customer/src"
+            "Plugins\\Customer\\": "plugins/customer/src",
+            "Plugins\\Product\\": "plugins/product/src"
         },
         "files": [
             "helpers.php"

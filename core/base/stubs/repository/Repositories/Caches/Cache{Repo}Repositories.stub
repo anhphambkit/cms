@@ -1,5 +1,5 @@
 <?php
-namespace {CoreNamespace}\{Package}\Repositories\Cache;
+namespace {CoreNamespace}\{Package}\Repositories\Caches;
 use Core\Master\Repositories\Cache\CacheAbstractDecorator;
 use {CoreNamespace}\{Package}\Repositories\Interfaces\{Repo}Repositories;
 
