@@ -84,32 +84,32 @@ $router->group(['prefix' => 'product'], function (Router $router) {
 
         $router->get('/', [
             'as' => 'admin.product.color.list',
-            'uses' => 'ProductController@getList',
+            'uses' => 'ProductColorController@getList',
         ]);
 
         $router->get('/create', [
             'as' => 'admin.product.color.create',
-            'uses' => 'ProductController@getCreate',
+            'uses' => 'ProductColorController@getCreate',
         ]);
 
         $router->post('/create', [
             'as' => 'admin.product.color.create',
-            'uses' => 'ProductController@postCreate',
+            'uses' => 'ProductColorController@postCreate',
         ]);
 
         $router->get('/edit/{id}', [
             'as' => 'admin.product.color.edit',
-            'uses' => 'ProductController@getEdit',
+            'uses' => 'ProductColorController@getEdit',
         ]);
 
         $router->post('/edit/{id}', [
             'as' => 'admin.product.color.edit',
-            'uses' => 'ProductController@postEdit',
+            'uses' => 'ProductColorController@postEdit',
         ]);
 
         $router->get('/delete/{id}', [
             'as' => 'admin.product.color.delete',
-            'uses' => 'ProductController@getDelete',
+            'uses' => 'ProductColorController@getDelete',
         ]);
 
     });

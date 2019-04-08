@@ -101,7 +101,7 @@ $(document).ready(function() {
         });
     });
 
-    // Brand
+    // ProductBrand
     $("#brandInput").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $("#brands *").filter(function() {

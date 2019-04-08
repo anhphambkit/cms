@@ -1,6 +1,6 @@
 <?php
 /**
- * Brand repository implemented
+ * ProductBrand repository implemented
  */
 namespace Plugins\Product\Repositories\Eloquent;
 use Plugins\Product\Repositories\Interfaces\BrandRepositories;
