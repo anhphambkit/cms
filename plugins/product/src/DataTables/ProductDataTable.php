@@ -18,7 +18,7 @@ class ProductDataTable extends DataTableAbstract
         $data = $this->datatables
             ->eloquent($this->query())
             ->editColumn('name', function ($item) {
-                return anchor_link(route('product.edit', $item->id), $item->name);
+                return anchor_link(route('admin.product.edit', $item->id), $item->name);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
@@ -32,7 +32,7 @@ class ProductDataTable extends DataTableAbstract
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, PRODUCT_MODULE_SCREEN_NAME)
             ->addColumn('operations', function ($item) {
-                return table_actions('product.edit', 'product.delete', $item);
+                return table_actions('admin.product.edit', 'admin.product.delete', $item);
             })
             ->escapeColumns([])
             ->make(true);
@@ -99,7 +99,7 @@ class ProductDataTable extends DataTableAbstract
     {
         $buttons = [
             'create' => [
-                'link' => route('product.create'),
+                'link' => route('admin.product.create'),
                 'text' => view('core-base::elements.tables.actions.create')->render(),
             ],
         ];
@@ -113,20 +113,6 @@ class ProductDataTable extends DataTableAbstract
     public function actions()
     {
         return [];
-        return [
-            'delete' => [
-                'link' => route('product.delete.many'),
-                'text' => view('core-base::elements.tables.actions.delete')->render(),
-            ],
-            'activate' => [
-                'link' => route('product.change.status', ['status' => 1]),
-                'text' => view('core-base::elements.tables.actions.activate')->render(),
-            ],
-            'deactivate' => [
-                'link' => route('product.change.status', ['status' => 0]),
-                'text' => view('core-base::elements.tables.actions.deactivate')->render(),
-            ]
-        ];
     }
 
     /**

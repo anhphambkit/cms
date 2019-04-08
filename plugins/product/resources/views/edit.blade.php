@@ -1,23 +1,40 @@
-@extends('bases::layouts.master')
+@extends('layouts.master')
 @section('content')
-    {!! Form::open(['route' => ['product.edit', $product->id]]) !!}
-        @php do_action(BASE_ACTION_EDIT_CONTENT_NOTIFICATION, PRODUCT_MODULE_SCREEN_NAME, request(), $product) @endphp
+    {!! Form::open(['route' => ['admin.product.edit', $product->id]]) !!}
+        @php do_action(BASE_FILTER_BEFORE_RENDER_FORM, PRODUCT_MODULE_SCREEN_NAME, request(), $product) @endphp
         <div class="row">
             <div class="col-md-9">
-                <div class="main-form">
-                    <div class="form-body">
-                        <div class="form-group @if ($errors->has('name')) has-error @endif">
-                            <label for="name" class="control-label required">{{ trans('bases::forms.name') }}</label>
-                            {!! Form::text('name', $product->name, ['class' => 'form-control', 'id' => 'name', 'placeholder' => trans('bases::forms.name_placeholder'), 'data-counter' => 120]) !!}
-                            {!! Form::error('name', $errors) !!}
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-product::product.edit') }}</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                            </ul>
                         </div>
                     </div>
+                    <div class="card-content collpase show">
+                        <div class="card-body">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('name')) has-error @endif">
+                                        <label for="name">{{ trans('core-base::forms.name') }}</label>
+                                        {!! Form::text('name', $product->name, ['class' => 'form-control', 'id' => 'name', 'placeholder' => trans('core-base::forms.name_placeholder'), 'data-counter' => 120]) !!}
+                                        {!! Form::error('name', $errors) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'advanced') @endphp
                 </div>
-                @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'advanced', $product) @endphp
             </div>
             <div class="col-md-3 right-sidebar">
-                @include('bases::elements.form-actions')
-                @include('bases::elements.forms.status', ['selected' => $product->status])
+                @include('core-base::elements.form-actions')
+                @include('core-base::elements.forms.status', ['selected' => $product->status])
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'top', $product) @endphp
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'side', $product) @endphp
             </div>

@@ -34,7 +34,7 @@ class ProductController extends BaseAdminController
     public function getList(ProductDataTable $dataTable)
     {
 
-        // page_title()->setTitle(trans('product::product.list'));
+        page_title()->setTitle(trans('plugins-product::product.list'));
 
         return $dataTable->renderTable(['title' => trans('plugins-product::product.list')]);
     }
@@ -46,9 +46,9 @@ class ProductController extends BaseAdminController
      */
     public function getCreate()
     {
-        // page_title()->setTitle(trans('product::product.create'));
+        page_title()->setTitle(trans('plugins-product::product.create'));
 
-        return view('product::create');
+        return view('plugins-product::create');
     }
 
     /**
@@ -65,9 +65,9 @@ class ProductController extends BaseAdminController
         do_action(BASE_ACTION_AFTER_CREATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $product);
 
         if ($request->input('submit') === 'save') {
-            return redirect()->route('product.list')->with('success_msg', trans('bases::notices.create_success_message'));
+            return redirect()->route('admin.product.list')->with('success_msg', trans('core-base::notices.create_success_message'));
         } else {
-            return redirect()->route('product.edit', $product->id)->with('success_msg', trans('bases::notices.create_success_message'));
+            return redirect()->route('admin.product.edit', $product->id)->with('success_msg', trans('core-base::notices.create_success_message'));
         }
     }
 
@@ -85,9 +85,9 @@ class ProductController extends BaseAdminController
             abort(404);
         }
 
-        // page_title()->setTitle(trans('product::product.edit') . ' #' . $id);
+        page_title()->setTitle(trans('plugins-product::product.edit') . ' #' . $id);
 
-        return view('product::edit', compact('product'));
+        return view('plugins-product::edit', compact('product'));
     }
 
     /**
@@ -109,9 +109,9 @@ class ProductController extends BaseAdminController
         do_action(BASE_ACTION_AFTER_UPDATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $product);
 
         if ($request->input('submit') === 'save') {
-            return redirect()->route('product.list')->with('success_msg', trans('bases::notices.update_success_message'));
+            return redirect()->route('admin.product.list')->with('success_msg', trans('core-base::notices.update_success_message'));
         } else {
-            return redirect()->route('product.edit', $id)->with('success_msg', trans('bases::notices.update_success_message'));
+            return redirect()->route('admin.product.edit', $id)->with('success_msg', trans('core-base::notices.update_success_message'));
         }
     }
 
@@ -134,12 +134,12 @@ class ProductController extends BaseAdminController
 
             return [
                 'error' => false,
-                'message' => trans('bases::notices.deleted'),
+                'message' => trans('core-base::notices.deleted'),
             ];
         } catch (\Exception $e) {
             return [
                 'error' => true,
-                'message' => trans('bases::notices.cannot_delete'),
+                'message' => trans('core-base::notices.cannot_delete'),
             ];
         }
     }
