@@ -31,3 +31,6 @@
         SetOutputFilter DEFLATE
     </filesmatch>
 </ifmodule>
+
+# Speed up caching
+FileETag MTime Size
