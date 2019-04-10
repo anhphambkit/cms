@@ -446,7 +446,7 @@ class MediaController extends BaseAdminController{
             'name'       => $file->real_filename,
             'basename'   => File::basename($file->url),
             'url'        => \BFileService::getMediaUrl($file), // value insert from modal
-            'full_url'   => \BFileService::getMediaUrl($file),
+            'full_url'   => url(\BFileService::getMediaUrl($file)),
             'type'       => $file->type,
             'icon'       => $file->icon,
             'thumb'      => $file->type == 'image' ? app('imagy')->getThumbnail($file, 'mediumThumb') : null,
