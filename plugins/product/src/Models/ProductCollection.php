@@ -20,7 +20,7 @@ class ProductCollection extends Model
      *
      * @var string
      */
-    protected $table = 'product_materials';
+    protected $table = 'product_collections';
 
     protected $fillable = [
         'name',
