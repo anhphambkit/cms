@@ -48,12 +48,10 @@ const parseFiles = (files) => {
 
 /**
  * Bundle js and css for developer
- * @param  {Object} configs [description]
- * @param  {String} dir     [description]
- * @return {[type]}         [description]
+ * @param configs
+ * @param dir
  */
 const bundleDevelopment = (configs = {}, dir = 'frontend') => {
-
     let dirscan = undefined;
     let allFiles = [];
     Object.keys(configs).forEach(function (key) {
@@ -81,23 +79,30 @@ let env            = argv.env;
 let packageName    = env.pkg;
 let basedir        = env.dir || "core";
 let resourcePath   = `./${basedir}/${packageName}/resources/assets`;
+let libsPath   = `./${basedir}/${packageName}/resources/libs`;
 let configs = [
     {
         config: {
             js : `${resourcePath}/js/frontend`,
             scss : `${resourcePath}/scss/frontend`
         },
-        key : 'frontend'
+        key : 'frontend',
+        is_lib: false
     },
     {
         config: {
             js : `${resourcePath}/js/backend`,
             scss : `${resourcePath}/scss/backend`
         },
-        key : 'backend'
+        key : 'backend',
+        is_lib: false
     },
 ];
 
+if (fs.existsSync(libsPath))
+    mix.copyDirectory(libsPath, `public/libs/${basedir}/${packageName.toLowerCase()}/`);
+
 configs.forEach((item) => {
-    bundleDevelopment(item.config, item.key);
+    bundleDevelopment(item.config, item.key, item.is_lib);
 })
+

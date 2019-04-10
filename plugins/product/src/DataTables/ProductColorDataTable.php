@@ -57,7 +57,7 @@ class ProductColorDataTable extends DataTableAbstract
          * @var \Eloquent $model
          */
         $query = $model->select(['product_colors.id',
-//            'product_colors.code',
+            'product_colors.code',
             'product_colors.name', 'product_colors.created_at', 'product_colors.status']);
         return $query;
     }
@@ -77,24 +77,19 @@ class ProductColorDataTable extends DataTableAbstract
                 'width' => '20px',
                 'class' => 'searchable searchable_id',
             ],
-//            'color_image' => [
-//                'name' => 'product.colors.color_image',
-//                'title' => trans('core-base::tables.name'),
-//                'footer' => trans('core-base::tables.name'),
-//                'class' => 'text-left',
-//            ],
             'name' => [
                 'name' => 'product_colors.name',
                 'title' => trans('core-base::tables.name'),
                 'footer' => trans('core-base::tables.name'),
                 'class' => 'text-left searchable',
             ],
-//            'code' => [
-//                'name' => 'product_colors.code',
-//                'title' => trans('plugins-product::color.tables.code'),
-//                'footer' => trans('plugins-product::color.tables.code'),
-//                'class' => 'text-left searchable',
-//            ],
+            'code' => [
+                'name' => 'product_colors.code',
+                'title' => trans('core-base::tables.code'),
+                'footer' => trans('core-base::tables.code'),
+                'class' => 'text-left searchable',
+                'render' => '"<span class=\"minicolor-preview\"><span class=\"minicolor-square-box\" style=\"background-color: " + data + ";\"></span></span><span class=\"product-color-attr\">" + data + "</span> "'
+            ],
             'created_at' => [
                 'name' => 'product_colors.created_at',
                 'title' => trans('core-base::tables.created_at'),

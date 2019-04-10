@@ -27,6 +27,14 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('name')) has-error @endif">
+                                        <label for="code">{{ trans('core-base::forms.code') }}</label>
+                                        {!! Form::text('code', $color->code, ['class' => 'form-control minicolors color-picker-custom', 'id' => 'code',
+                                            'placeholder' => trans('core-base::forms.code_placeholder'), 'data-counter' => 10, 'data-control' => "hue"]) !!}
+                                        {!! Form::error('code', $errors) !!}
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="form-group col-md-12 mb-2 @if ($errors->has('description')) has-error @endif">
                                         <label for="name">{{ trans('core-base::forms.description') }}</label>
                                         {!! render_editor('description', $color->description, true) !!}

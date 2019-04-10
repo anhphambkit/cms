@@ -57,7 +57,7 @@ class BrandDataTable extends DataTableAbstract
          * @var \Eloquent $model
          */
         $query = $model->select(['product_brands.id',
-//            'product_brands.brand_image',
+            'product_brands.brand_image',
             'product_brands.name', 'product_brands.created_at', 'product_brands.status']);
         return $query;
     }
@@ -78,10 +78,12 @@ class BrandDataTable extends DataTableAbstract
                 'class' => 'searchable searchable_id',
             ],
 //            'brand_image' => [
-//                'name' => 'product.brands.brand_image',
-//                'title' => trans('core-base::tables.name'),
-//                'footer' => trans('core-base::tables.name'),
+//                'name' => 'product_brands.brand_image',
+//                'title' => trans('core-base::tables.image'),
+//                'footer' => trans('core-base::tables.image'),
 //                'class' => 'text-left',
+//                'width' => '60px',
+//                "render" => '"<img src=\"" + data + "\" height=\"50\"/>"',
 //            ],
             'name' => [
                 'name' => 'product_brands.name',

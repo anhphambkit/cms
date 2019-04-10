@@ -9,6 +9,8 @@
 namespace Plugins\Product\Controllers\Admin;
 
 use Core\Base\Controllers\Admin\BaseAdminController;
+use AssetManager;
+use AssetPipeline;
 use Illuminate\Http\Request;
 use Plugins\Product\DataTables\ProductColorDataTable;
 use Plugins\Product\Repositories\Interfaces\ProductColorRepositories;
@@ -28,6 +30,7 @@ class ProductColorController extends BaseAdminController
     public function __construct(ProductColorRepositories $productColorRepository)
     {
         $this->productColorRepository = $productColorRepository;
+        parent::__construct();
     }
 
     /**
@@ -40,7 +43,7 @@ class ProductColorController extends BaseAdminController
     {
 
         page_title()->setTitle(trans('plugins-product::color.list'));
-
+        $this->addManageAssets();
         return $dataTable->renderTable(['title' => trans('plugins-product::color.list')]);
     }
 
@@ -52,7 +55,7 @@ class ProductColorController extends BaseAdminController
     public function getCreate()
     {
         page_title()->setTitle(trans('plugins-product::color.create'));
-
+        $this->addDetailAssets();
         return view('plugins-product::color.create');
     }
 
@@ -65,7 +68,6 @@ class ProductColorController extends BaseAdminController
     public function postCreate(Request $request)
     {
         $data = $request->input();
-        $data['code'] = '#0000';
 
         $color = $this->productColorRepository->createOrUpdate($data);
 
@@ -93,7 +95,7 @@ class ProductColorController extends BaseAdminController
         }
 
         page_title()->setTitle(trans('plugins-product::color.edit') . ' #' . $id);
-
+        $this->addDetailAssets();
         return view('plugins-product::color.edit', compact('color'));
     }
 
@@ -148,5 +150,35 @@ class ProductColorController extends BaseAdminController
                 'message' => trans('core-base::notices.cannot_delete'),
             ];
         }
+    }
+
+    /**
+     * Add frontend plugins for layout
+     * @author AnhPham
+     */
+    private function addDetailAssets()
+    {
+        AssetManager::addAsset('product-color-css', 'backend/plugins/product/assets/css/product-color.css');
+        AssetManager::addAsset('mini-colors-css', 'libs/plugins/product/css/miniColors/jquery.minicolors.css');
+        AssetManager::addAsset('mini-colors-js', 'libs/plugins/product/js/miniColors/jquery.minicolors.min.js');
+        AssetManager::addAsset('spectrum-js', 'libs/plugins/product/js/spectrum/spectrum.js');
+        AssetManager::addAsset('picker-color-js', 'libs/plugins/product/js/colorpicker/picker-color.min.js');
+
+        AssetPipeline::requireCss('mini-colors-css');
+        AssetPipeline::requireCss('product-color-css');
+        AssetPipeline::requireJs('mini-colors-js');
+        AssetPipeline::requireJs('spectrum-js');
+        AssetPipeline::requireJs('picker-color-js');
+    }
+
+    /**
+     * Add frontend plugins for layout
+     * @author AnhPham
+     */
+    private function addManageAssets()
+    {
+        AssetManager::addAsset('product-color-css', 'backend/plugins/product/assets/css/product-color.css');
+
+        AssetPipeline::requireCss('product-color-css');
     }
 }

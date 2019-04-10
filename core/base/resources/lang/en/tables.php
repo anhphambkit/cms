@@ -61,4 +61,5 @@ return [
 	'last_login'         => 'Last login',
 	'shortcode'          => 'Shortcode',
 	'image'              => 'Image',
+	'code'              => 'Code',
 ];

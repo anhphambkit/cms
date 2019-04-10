@@ -41,6 +41,8 @@ class BrandController extends BaseAdminController
 
         page_title()->setTitle(trans('plugins-product::brand.list'));
 
+//        $dataTable->addColumn(['data' => 'brand_image', 'name' => 'brand_image', 'title' => 'Image']);
+
         return $dataTable->renderTable(['title' => trans('plugins-product::brand.list')]);
     }
 
