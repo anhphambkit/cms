@@ -1,9 +1,9 @@
 <?php
 namespace Plugins\Product\Repositories\Caches;
 use Core\Master\Repositories\Cache\CacheAbstractDecorator;
-use Plugins\Product\Repositories\Interfaces\BrandRepositories;
+use Plugins\Product\Repositories\Interfaces\ProductCollectionRepositories;
 
-class CacheBrandRepositories extends CacheAbstractDecorator implements BrandRepositories
+class CacheProductCollectionRepositories extends CacheAbstractDecorator implements ProductCollectionRepositories
 {
     /**
      * @var ApplicationInterface
@@ -15,10 +15,10 @@ class CacheBrandRepositories extends CacheAbstractDecorator implements BrandRepo
      * @param ApplicationInterface $repository
      * @author AnhPham
      */
-    public function __construct(BrandRepositories $repository)
+    public function __construct(ProductCollectionRepositories $repository)
     {
         parent::__construct();
         $this->repository = $repository;
-        $this->entityName = 'product_brands'; # Please setup reference name of cache.
+        $this->entityName = 'default'; # Please setup reference name of cache.
     }
 }

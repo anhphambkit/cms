@@ -4,13 +4,19 @@ namespace Plugins\Product\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Plugins\Product\Repositories\Caches\CacheBrandRepositories;
+use Plugins\Product\Repositories\Caches\CacheProductCollectionRepositories;
 use Plugins\Product\Repositories\Caches\CacheProductColorRepositories;
+use Plugins\Product\Repositories\Caches\CacheProductMaterialRepositories;
 use Plugins\Product\Repositories\Caches\CacheProductRepositories;
 use Plugins\Product\Repositories\Eloquent\EloquentBrandRepositories;
+use Plugins\Product\Repositories\Eloquent\EloquentProductCollectionRepositories;
 use Plugins\Product\Repositories\Eloquent\EloquentProductColorRepositories;
+use Plugins\Product\Repositories\Eloquent\EloquentProductMaterialRepositories;
 use Plugins\Product\Repositories\Eloquent\EloquentProductRepositories;
 use Plugins\Product\Repositories\Interfaces\BrandRepositories;
+use Plugins\Product\Repositories\Interfaces\ProductCollectionRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductColorRepositories;
+use Plugins\Product\Repositories\Interfaces\ProductMaterialRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductRepositories;
 
 class ProductServiceProvider extends ServiceProvider
@@ -21,7 +27,7 @@ class ProductServiceProvider extends ServiceProvider
     protected $app;
 
     /**
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function register()
     {
@@ -37,6 +43,14 @@ class ProductServiceProvider extends ServiceProvider
             $this->app->singleton(ProductColorRepositories::class, function () {
                 return new CacheProductColorRepositories(new EloquentProductColorRepositories(new \Plugins\Product\Models\ProductColor()));
             });
+
+            $this->app->singleton(ProductCollectionRepositories::class, function () {
+                return new CacheProductCollectionRepositories(new EloquentProductCollectionRepositories(new \Plugins\Product\Models\ProductCollection()));
+            });
+
+            $this->app->singleton(ProductMaterialRepositories::class, function () {
+                return new CacheProductMaterialRepositories(new EloquentProductMaterialRepositories(new \Plugins\Product\Models\ProductMaterial()));
+            });
         } else {
             $this->app->singleton(ProductRepositories::class, function () {
                 return new EloquentProductRepositories(new \Plugins\Product\Models\Product());
@@ -49,11 +63,19 @@ class ProductServiceProvider extends ServiceProvider
             $this->app->singleton(ProductColorRepositories::class, function () {
                 return new EloquentProductColorRepositories(new \Plugins\Product\Models\ProductColor());
             });
+
+            $this->app->singleton(ProductCollectionRepositories::class, function () {
+                return new EloquentProductCollectionRepositories(new \Plugins\Product\Models\ProductCollection());
+            });
+
+            $this->app->singleton(ProductMaterialRepositories::class, function () {
+                return new EloquentProductMaterialRepositories(new \Plugins\Product\Models\ProductMaterial());
+            });
         }
     }
 
     /**
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function boot()
     {

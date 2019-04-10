@@ -5,5 +5,6 @@ return [
     'brand' => 'Manage Brands',
     'color' => 'Color Attributes',
     'business-type' => 'Manage Business Type',
-    'collection' => 'Collection Products'
+    'collection' => 'Collection Products',
+    'material' => 'Material Products'
 ];

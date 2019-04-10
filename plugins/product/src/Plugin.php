@@ -8,7 +8,7 @@ use Schema;
 class Plugin
 {
     /**
-     * @author TrinhLe
+     * @author AnhPham
      */
     public static function activate()
     {
@@ -19,7 +19,7 @@ class Plugin
     }
 
     /**
-     * @author TrinhLe
+     * @author AnhPham
      */
     public static function deactivate()
     {
@@ -27,7 +27,7 @@ class Plugin
     }
 
     /**
-     * @author TrinhLe
+     * @author AnhPham
      */
     public static function remove()
     {

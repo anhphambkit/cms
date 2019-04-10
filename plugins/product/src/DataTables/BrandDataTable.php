@@ -17,7 +17,7 @@ class BrandDataTable extends DataTableAbstract
      * Display ajax response.
      *
      * @return \Illuminate\Http\JsonResponse
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function ajax()
     {
@@ -48,7 +48,7 @@ class BrandDataTable extends DataTableAbstract
      * Get the query object to be processed by datatables.
      *
      * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function query()
     {
@@ -64,7 +64,7 @@ class BrandDataTable extends DataTableAbstract
 
     /**
      * @return array
-     * @author TrinhLe
+     * @author AnhPham
      * @since 2.1
      */
     public function columns()
@@ -109,7 +109,7 @@ class BrandDataTable extends DataTableAbstract
 
     /**
      * @return array
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function buttons()
     {
@@ -124,7 +124,7 @@ class BrandDataTable extends DataTableAbstract
 
     /**
      * @return array
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function actions()
     {
@@ -135,7 +135,7 @@ class BrandDataTable extends DataTableAbstract
      * Get filename for export.
      *
      * @return string
-     * @author TrinhLe
+     * @author AnhPham
      */
     protected function filename()
     {

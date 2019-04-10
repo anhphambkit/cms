@@ -13,7 +13,7 @@ class CacheProductColorRepositories extends CacheAbstractDecorator implements Pr
     /**
      * ApplicationCacheDecorator constructor.
      * @param ApplicationInterface $repository
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function __construct(ProductColorRepositories $repository)
     {

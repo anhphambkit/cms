@@ -55,4 +55,13 @@ return [
         'url'         => 'admin.product.collection.list',
         'permissions' => ['product.index']
     ],
+    [
+        'id'          => 'menu-product-materials',
+        'priority'    => 6,
+        'parent_id'   => 'menu-product-administrator',
+        'name'        => 'plugins-product::sidebar.material',
+        'icon'        => 'fas fa-users-cog',
+        'url'         => 'admin.product.material.list',
+        'permissions' => ['product.index']
+    ],
 ];

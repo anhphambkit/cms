@@ -18,7 +18,7 @@ class ProductController extends BaseAdminController
     /**
      * ProductController constructor.
      * @param ProductRepositories $productRepository
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function __construct(ProductRepositories $productRepository)
     {
@@ -29,7 +29,7 @@ class ProductController extends BaseAdminController
      * Display all product
      * @param ProductDataTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function getList(ProductDataTable $dataTable)
     {
@@ -42,7 +42,7 @@ class ProductController extends BaseAdminController
     /**
      * Show create form
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function getCreate()
     {
@@ -56,7 +56,7 @@ class ProductController extends BaseAdminController
      *
      * @param ProductRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function postCreate(ProductRequest $request)
     {
@@ -76,7 +76,7 @@ class ProductController extends BaseAdminController
      *
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function getEdit($id)
     {
@@ -94,7 +94,7 @@ class ProductController extends BaseAdminController
      * @param $id
      * @param ProductRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function postEdit($id, ProductRequest $request)
     {
@@ -119,7 +119,7 @@ class ProductController extends BaseAdminController
      * @param Request $request
      * @param $id
      * @return array
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function getDelete(Request $request, $id)
     {

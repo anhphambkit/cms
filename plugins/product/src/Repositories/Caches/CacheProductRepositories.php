@@ -15,7 +15,7 @@ class CacheProductRepositories extends CacheAbstractDecorator implements Product
     /**
      * ProductCacheDecorator constructor.
      * @param ProductRepositories $repository
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function __construct(ProductRepositories $repository)
     {

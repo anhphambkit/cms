@@ -2,16 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: AnhPham
- * Date: 2019-04-09
- * Time: 00:25
+ * Date: 2019-04-11
+ * Time: 02:28
  */
 
 namespace Plugins\Product\DataTables;
 
-use Plugins\Product\Repositories\Interfaces\ProductColorRepositories;
 use Core\Base\DataTables\DataTableAbstract;
+use Plugins\Product\Repositories\Interfaces\ProductCollectionRepositories;
 
-class ProductColorDataTable extends DataTableAbstract
+class ProductCollectionDataTable extends DataTableAbstract
 {
     /**
      * Display ajax response.
@@ -24,7 +24,7 @@ class ProductColorDataTable extends DataTableAbstract
         $data = $this->datatables
             ->eloquent($this->query())
             ->editColumn('name', function ($item) {
-                return anchor_link(route('admin.product.color.edit', $item->id), $item->name);
+                return anchor_link(route('admin.product.collection.edit', $item->id), $item->name);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
@@ -38,7 +38,7 @@ class ProductColorDataTable extends DataTableAbstract
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, CUSTOMER_MODULE_SCREEN_NAME)
             ->addColumn('operations', function ($item) {
-                return table_actions('admin.product.color.edit', 'admin.product.color.delete', $item);
+                return table_actions('admin.product.collection.edit', 'admin.product.collection.delete', $item);
             })
             ->escapeColumns([])
             ->make(true);
@@ -52,13 +52,12 @@ class ProductColorDataTable extends DataTableAbstract
      */
     public function query()
     {
-        $model = app(ProductColorRepositories::class)->getModel();
+        $model = app(ProductCollectionRepositories::class)->getModel();
         /**
          * @var \Eloquent $model
          */
-        $query = $model->select(['product_colors.id',
-            'product_colors.code',
-            'product_colors.name', 'product_colors.created_at', 'product_colors.status']);
+        $query = $model->select(['product_collections.id',
+            'product_collections.name', 'product_collections.created_at', 'product_collections.status']);
         return $query;
     }
 
@@ -71,34 +70,27 @@ class ProductColorDataTable extends DataTableAbstract
     {
         return [
             'id' => [
-                'name' => 'product_colors.id',
+                'name' => 'product_collections.id',
                 'title' => trans('core-base::tables.id'),
                 'footer' => trans('core-base::tables.id'),
                 'width' => '20px',
                 'class' => 'searchable searchable_id',
             ],
             'name' => [
-                'name' => 'product_colors.name',
+                'name' => 'product_collections.name',
                 'title' => trans('core-base::tables.name'),
                 'footer' => trans('core-base::tables.name'),
                 'class' => 'text-left searchable',
             ],
-            'code' => [
-                'name' => 'product_colors.code',
-                'title' => trans('core-base::tables.code'),
-                'footer' => trans('core-base::tables.code'),
-                'class' => 'text-left searchable',
-                'render' => '"<span class=\"minicolor-preview\"><span class=\"minicolor-square-box\" style=\"background-color: " + data + ";\"></span></span><span class=\"product-color-attr\">" + data + "</span> "'
-            ],
             'created_at' => [
-                'name' => 'product_colors.created_at',
+                'name' => 'product_collections.created_at',
                 'title' => trans('core-base::tables.created_at'),
                 'footer' => trans('core-base::tables.created_at'),
                 'width' => '100px',
                 'class' => 'searchable',
             ],
             'status' => [
-                'name' => 'product_colors.status',
+                'name' => 'product_collections.status',
                 'title' => trans('core-base::tables.status'),
                 'footer' => trans('core-base::tables.status'),
                 'width' => '100px',
@@ -114,7 +106,7 @@ class ProductColorDataTable extends DataTableAbstract
     {
         $buttons = [
             'create' => [
-                'link' => route('admin.product.color.create'),
+                'link' => route('admin.product.collection.create'),
                 'text' => view('core-base::elements.tables.actions.create')->render(),
             ],
         ];

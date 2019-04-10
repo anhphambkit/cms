@@ -23,7 +23,7 @@ class BrandController extends BaseAdminController
     /**
      * ProductController constructor.
      * @param BrandRepositories $brandRepository
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function __construct(BrandRepositories $brandRepository)
     {
@@ -34,14 +34,12 @@ class BrandController extends BaseAdminController
      * Display all brand
      * @param BrandDataTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function getList(BrandDataTable $dataTable)
     {
 
         page_title()->setTitle(trans('plugins-product::brand.list'));
-
-//        $dataTable->addColumn(['data' => 'brand_image', 'name' => 'brand_image', 'title' => 'Image']);
 
         return $dataTable->renderTable(['title' => trans('plugins-product::brand.list')]);
     }
@@ -49,7 +47,7 @@ class BrandController extends BaseAdminController
     /**
      * Show create form
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function getCreate()
     {
@@ -62,7 +60,7 @@ class BrandController extends BaseAdminController
      * Insert new Product into database
      *
      * @return \Illuminate\Http\RedirectResponse
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function postCreate(Request $request)
     {
@@ -82,7 +80,7 @@ class BrandController extends BaseAdminController
      *
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function getEdit($id)
     {
@@ -99,7 +97,7 @@ class BrandController extends BaseAdminController
     /**
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function postEdit($id, Request $request)
     {
@@ -124,7 +122,7 @@ class BrandController extends BaseAdminController
      * @param Request $request
      * @param $id
      * @return array
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function getDelete(Request $request, $id)
     {

@@ -25,7 +25,7 @@ class ProductColorController extends BaseAdminController
     /**
      * ProductController constructor.
      * @param ProductColorRepositories $productColorRepository
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function __construct(ProductColorRepositories $productColorRepository)
     {
@@ -37,7 +37,7 @@ class ProductColorController extends BaseAdminController
      * Display all color
      * @param ProductColorDataTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function getList(ProductColorDataTable $dataTable)
     {
@@ -50,7 +50,7 @@ class ProductColorController extends BaseAdminController
     /**
      * Show create form
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function getCreate()
     {
@@ -63,7 +63,7 @@ class ProductColorController extends BaseAdminController
      * Insert new Product into database
      *
      * @return \Illuminate\Http\RedirectResponse
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function postCreate(Request $request)
     {
@@ -85,7 +85,7 @@ class ProductColorController extends BaseAdminController
      *
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function getEdit($id)
     {
@@ -102,7 +102,7 @@ class ProductColorController extends BaseAdminController
     /**
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function postEdit($id, Request $request)
     {
@@ -127,7 +127,7 @@ class ProductColorController extends BaseAdminController
      * @param Request $request
      * @param $id
      * @return array
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function getDelete(Request $request, $id)
     {

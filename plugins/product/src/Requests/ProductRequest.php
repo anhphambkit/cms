@@ -10,7 +10,7 @@ class ProductRequest extends CoreRequest
      * Get the validation rules that apply to the request.
      *
      * @return array
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function rules()
     {

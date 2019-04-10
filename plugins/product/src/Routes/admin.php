@@ -152,32 +152,66 @@ $router->group(['prefix' => 'product'], function (Router $router) {
 
         $router->get('/', [
             'as' => 'admin.product.collection.list',
-            'uses' => 'ProductController@getList',
+            'uses' => 'ProductCollectionController@getList',
         ]);
 
         $router->get('/create', [
             'as' => 'admin.product.collection.create',
-            'uses' => 'ProductController@getCreate',
+            'uses' => 'ProductCollectionController@getCreate',
         ]);
 
         $router->post('/create', [
             'as' => 'admin.product.collection.create',
-            'uses' => 'ProductController@postCreate',
+            'uses' => 'ProductCollectionController@postCreate',
         ]);
 
         $router->get('/edit/{id}', [
             'as' => 'admin.product.collection.edit',
-            'uses' => 'ProductController@getEdit',
+            'uses' => 'ProductCollectionController@getEdit',
         ]);
 
         $router->post('/edit/{id}', [
             'as' => 'admin.product.collection.edit',
-            'uses' => 'ProductController@postEdit',
+            'uses' => 'ProductCollectionController@postEdit',
         ]);
 
         $router->get('/delete/{id}', [
             'as' => 'admin.product.collection.delete',
-            'uses' => 'ProductController@getDelete',
+            'uses' => 'ProductCollectionController@getDelete',
+        ]);
+
+    });
+
+    $router->group(['prefix' => 'material'], function (Router $router) {
+
+        $router->get('/', [
+            'as' => 'admin.product.material.list',
+            'uses' => 'ProductMaterialController@getList',
+        ]);
+
+        $router->get('/create', [
+            'as' => 'admin.product.material.create',
+            'uses' => 'ProductMaterialController@getCreate',
+        ]);
+
+        $router->post('/create', [
+            'as' => 'admin.product.material.create',
+            'uses' => 'ProductMaterialController@postCreate',
+        ]);
+
+        $router->get('/edit/{id}', [
+            'as' => 'admin.product.material.edit',
+            'uses' => 'ProductMaterialController@getEdit',
+        ]);
+
+        $router->post('/edit/{id}', [
+            'as' => 'admin.product.material.edit',
+            'uses' => 'ProductMaterialController@postEdit',
+        ]);
+
+        $router->get('/delete/{id}', [
+            'as' => 'admin.product.material.delete',
+            'uses' => 'ProductMaterialController@getDelete',
         ]);
 
     });
