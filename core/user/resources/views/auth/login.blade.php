@@ -30,18 +30,17 @@
             {!! Form::open(['route' => 'post.login', 'method' => 'post']) !!}
                 @csrf
                 <h1>Sign in</h1>
-                <div class="social-container">
+                <!-- <div class="social-container">
                     <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
                     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                 </div>
-                <span>or use your account</span>
+                <span>or use your account</span> -->
                 <input type="text" placeholder="Email" name="username" maxlength="256" required/>
                 {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
 
                 <input type="password" placeholder="Password" id="password" name="password" required/>
                 {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
-
                 <a href="#">Forgot your password?</a>
                 <button type="submit" id="login">Log in</button>
             {!! Form::close() !!}                
@@ -55,20 +54,20 @@
                 </div>
                 <div class="overlay-panel overlay-right">
                     <h1>Hello, Friend!</h1>
-                    <p>Enter your personal details and start journey with us</p>
-                    <button class="ghost" id="signUp">Sign Up</button>
+                    <p>Welcome to iFoss Inc Custom E-Commerce Platform, please log in and start the journey with us</p>
+                    <img src="{{ theme_option('logo') }}">
                 </div>
             </div>
         </div>
     </div>
     <script type="text/javascript">
-        const signUpButton = document.getElementById('signUp');
+        // const signUpButton = document.getElementById('signUp');
         const signInButton = document.getElementById('signIn');
         const container = document.getElementById('container');
 
-        signUpButton.addEventListener('click', () => {
-            container.classList.add('right-panel-active');
-        });
+        // signUpButton.addEventListener('click', () => {
+        //     container.classList.add('right-panel-active');
+        // });
 
         signInButton.addEventListener('click', () => {
             container.classList.remove('right-panel-active');
