@@ -20,8 +20,17 @@ return [
         'permissions' => ['product.list']
     ],
     [
-        'id'          => 'menu-product-brands',
+        'id'          => 'menu-product-categories',
         'priority'    => 2,
+        'parent_id'   => 'menu-product-administrator',
+        'name'        => 'plugins-product::sidebar.category',
+        'icon'        => 'fas fa-users-cog',
+        'url'         => 'admin.product.category.list',
+        'permissions' => ['product.index']
+    ],
+    [
+        'id'          => 'menu-product-brands',
+        'priority'    => 3,
         'parent_id'   => 'menu-product-administrator',
         'name'        => 'plugins-product::sidebar.brand',
         'icon'        => 'fas fa-users-cog',
@@ -30,7 +39,7 @@ return [
     ],
     [
         'id'          => 'menu-product-colors',
-        'priority'    => 3,
+        'priority'    => 4,
         'parent_id'   => 'menu-product-administrator',
         'name'        => 'plugins-product::sidebar.color',
         'icon'        => 'fas fa-users-cog',
@@ -39,16 +48,34 @@ return [
     ],
     [
         'id'          => 'menu-product-business-types',
-        'priority'    => 4,
+        'priority'    => 5,
         'parent_id'   => 'menu-product-administrator',
         'name'        => 'plugins-product::sidebar.business-type',
         'icon'        => 'fas fa-users-cog',
         'url'         => 'admin.product.business-type.list',
         'permissions' => ['product.index']
     ],
+//    [
+//        'id'          => 'menu-product-primary-business-types',
+//        'priority'    => 1,
+//        'parent_id'   => 'menu-product-business-types',
+//        'name'        => 'plugins-product::sidebar.primary-business-type',
+//        'icon'        => 'fas fa-users-cog',
+//        'url'         => 'admin.product.business-type.list',
+//        'permissions' => ['product.index']
+//    ],
+//    [
+//        'id'          => 'menu-product-sub-business-types',
+//        'priority'    => 2,
+//        'parent_id'   => 'menu-product-business-types',
+//        'name'        => 'plugins-product::sidebar.sub-business-type',
+//        'icon'        => 'fas fa-users-cog',
+//        'url'         => 'admin.product.business-type.sub-business-type.list',
+//        'permissions' => ['product.index']
+//    ],
     [
         'id'          => 'menu-product-collections',
-        'priority'    => 5,
+        'priority'    => 6,
         'parent_id'   => 'menu-product-administrator',
         'name'        => 'plugins-product::sidebar.collection',
         'icon'        => 'fas fa-users-cog',
@@ -57,7 +84,7 @@ return [
     ],
     [
         'id'          => 'menu-product-materials',
-        'priority'    => 6,
+        'priority'    => 7,
         'parent_id'   => 'menu-product-administrator',
         'name'        => 'plugins-product::sidebar.material',
         'icon'        => 'fas fa-users-cog',

@@ -93,7 +93,6 @@ class ProductColorController extends BaseAdminController
         if (empty($color)) {
             abort(404);
         }
-
         page_title()->setTitle(trans('plugins-product::color.edit') . ' #' . $id);
         $this->addDetailAssets();
         return view('plugins-product::color.edit', compact('color'));
@@ -162,7 +161,7 @@ class ProductColorController extends BaseAdminController
         AssetManager::addAsset('mini-colors-css', 'libs/plugins/product/css/miniColors/jquery.minicolors.css');
         AssetManager::addAsset('mini-colors-js', 'libs/plugins/product/js/miniColors/jquery.minicolors.min.js');
         AssetManager::addAsset('spectrum-js', 'libs/plugins/product/js/spectrum/spectrum.js');
-        AssetManager::addAsset('picker-color-js', 'libs/plugins/product/js/colorpicker/picker-color.min.js');
+        AssetManager::addAsset('picker-color-js', 'backend/plugins/product/assets/scripts/picker-color.min.js');
 
         AssetPipeline::requireCss('mini-colors-css');
         AssetPipeline::requireCss('product-color-css');

@@ -66,6 +66,7 @@ class CreateProductTable extends Migration
             $table->string('description')->nullable();
             $table->integer('order')->default(0)->comment('Order of this business type (Just on the same level).');
             $table->boolean('status')->unsigned()->default(1);
+            $table->boolean('is_root')->default(1);
             $table->softDeletes();
             $table->timestamps();
             $table->engine = 'InnoDB';

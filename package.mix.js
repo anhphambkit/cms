@@ -50,8 +50,9 @@ const parseFiles = (files) => {
  * Bundle js and css for developer
  * @param configs
  * @param dir
+ * @param isScript
  */
-const bundleDevelopment = (configs = {}, dir = 'frontend') => {
+const bundleDevelopment = (configs = {}, dir = 'frontend', isScript = false) => {
     let dirscan = undefined;
     let allFiles = [];
     Object.keys(configs).forEach(function (key) {
@@ -60,16 +61,17 @@ const bundleDevelopment = (configs = {}, dir = 'frontend') => {
             allFiles = klawSync(dirscan);
             allFiles = parseFiles(allFiles);
             allFiles.forEach(function (file) {
-                let prefix   = key == 'js' ? key : 'css';
+                let prefix   = (isScript) ? 'scripts' : (key == 'js' ? key : 'css');
+                let extension   = (isScript || key == 'js') ? 'js' : 'css';
                 let tempArr  = file.fileName.split('.').slice(0, -1);
                 let fileName = [];
                 Object.keys(tempArr).map(function(index) {
                   fileName.push(tempArr[index]);
                 });
-                fileName.push(prefix);
+                fileName.push(extension);
                 fileName = fileName.join('.');
                 let fileBuild = path.resolve(`public/${dir}/${basedir}`, packageName.toLowerCase(), `assets/${prefix}`, fileName);
-                prefix == 'js' ? mix.js(file.filePath, fileBuild).sourceMaps() : mix.sass(file.filePath, fileBuild).sourceMaps();
+                (prefix == 'js' || prefix == 'scripts') ? mix.js(file.filePath, fileBuild).sourceMaps() : mix.sass(file.filePath, fileBuild).sourceMaps();
             });
         }
     });
@@ -87,7 +89,7 @@ let configs = [
             scss : `${resourcePath}/scss/frontend`
         },
         key : 'frontend',
-        is_lib: false
+        is_script: false
     },
     {
         config: {
@@ -95,7 +97,14 @@ let configs = [
             scss : `${resourcePath}/scss/backend`
         },
         key : 'backend',
-        is_lib: false
+        is_script: false
+    },
+    {
+        config: {
+            js : `${resourcePath}/scripts/backend`,
+        },
+        key : 'backend',
+        is_script: true
     },
 ];
 
@@ -103,6 +112,6 @@ if (fs.existsSync(libsPath))
     mix.copyDirectory(libsPath, `public/libs/${basedir}/${packageName.toLowerCase()}/`);
 
 configs.forEach((item) => {
-    bundleDevelopment(item.config, item.key, item.is_lib);
+    bundleDevelopment(item.config, item.key, item.is_script);
 })
 

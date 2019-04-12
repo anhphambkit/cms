@@ -2,9 +2,10 @@
 return [
     'administrator' => 'Products',
     'product' => 'Manage Products',
-    'brand' => 'Manage Brands',
+    'brand' => 'Brands',
     'color' => 'Color Attributes',
-    'business-type' => 'Manage Business Type',
+    'business-type' => 'Business Type',
     'collection' => 'Collection Products',
-    'material' => 'Material Products'
+    'material' => 'Material Products',
+    'category' => 'Product Categories',
 ];

@@ -3,17 +3,23 @@
 namespace Plugins\Product\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Plugins\Product\Repositories\Caches\CacheProductCategoryRepositories;
+use Plugins\Product\Repositories\Eloquent\EloquentProductCategoryRepositories;
+use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
 use Plugins\Product\Repositories\Caches\CacheBrandRepositories;
+use Plugins\Product\Repositories\Caches\CacheBusinessTypeRepositories;
 use Plugins\Product\Repositories\Caches\CacheProductCollectionRepositories;
 use Plugins\Product\Repositories\Caches\CacheProductColorRepositories;
 use Plugins\Product\Repositories\Caches\CacheProductMaterialRepositories;
 use Plugins\Product\Repositories\Caches\CacheProductRepositories;
 use Plugins\Product\Repositories\Eloquent\EloquentBrandRepositories;
+use Plugins\Product\Repositories\Eloquent\EloquentBusinessTypeRepositories;
 use Plugins\Product\Repositories\Eloquent\EloquentProductCollectionRepositories;
 use Plugins\Product\Repositories\Eloquent\EloquentProductColorRepositories;
 use Plugins\Product\Repositories\Eloquent\EloquentProductMaterialRepositories;
 use Plugins\Product\Repositories\Eloquent\EloquentProductRepositories;
 use Plugins\Product\Repositories\Interfaces\BrandRepositories;
+use Plugins\Product\Repositories\Interfaces\BusinessTypeRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCollectionRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductColorRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductMaterialRepositories;
@@ -51,6 +57,15 @@ class ProductServiceProvider extends ServiceProvider
             $this->app->singleton(ProductMaterialRepositories::class, function () {
                 return new CacheProductMaterialRepositories(new EloquentProductMaterialRepositories(new \Plugins\Product\Models\ProductMaterial()));
             });
+
+            $this->app->singleton(BusinessTypeRepositories::class, function () {
+                return new CacheBusinessTypeRepositories(new EloquentBusinessTypeRepositories(new \Plugins\Product\Models\ProductBusinessType()));
+            });
+
+            $this->app->singleton(ProductCategoryRepositories::class, function () {
+                return new CacheProductCategoryRepositories(new EloquentProductCategoryRepositories(new \Plugins\Product\Models\ProductCategory()));
+            });
+
         } else {
             $this->app->singleton(ProductRepositories::class, function () {
                 return new EloquentProductRepositories(new \Plugins\Product\Models\Product());
@@ -70,6 +85,14 @@ class ProductServiceProvider extends ServiceProvider
 
             $this->app->singleton(ProductMaterialRepositories::class, function () {
                 return new EloquentProductMaterialRepositories(new \Plugins\Product\Models\ProductMaterial());
+            });
+
+            $this->app->singleton(BusinessTypeRepositories::class, function () {
+                return new EloquentBusinessTypeRepositories(new \Plugins\Product\Models\ProductBusinessType());
+            });
+
+            $this->app->singleton(ProductCategoryRepositories::class, function () {
+                return new EloquentProductCategoryRepositories(new \Plugins\Product\Models\ProductCategory());
             });
         }
     }

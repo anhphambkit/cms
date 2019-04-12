@@ -118,33 +118,67 @@ $router->group(['prefix' => 'product'], function (Router $router) {
 
         $router->get('/', [
             'as' => 'admin.product.business-type.list',
-            'uses' => 'ProductController@getList',
+            'uses' => 'ProductBusinessTypeController@getList',
         ]);
 
         $router->get('/create', [
             'as' => 'admin.product.business-type.create',
-            'uses' => 'ProductController@getCreate',
+            'uses' => 'ProductBusinessTypeController@getCreate',
         ]);
 
         $router->post('/create', [
             'as' => 'admin.product.business-type.create',
-            'uses' => 'ProductController@postCreate',
+            'uses' => 'ProductBusinessTypeController@postCreate',
         ]);
 
         $router->get('/edit/{id}', [
             'as' => 'admin.product.business-type.edit',
-            'uses' => 'ProductController@getEdit',
+            'uses' => 'ProductBusinessTypeController@getEdit',
         ]);
 
         $router->post('/edit/{id}', [
             'as' => 'admin.product.business-type.edit',
-            'uses' => 'ProductController@postEdit',
+            'uses' => 'ProductBusinessTypeController@postEdit',
         ]);
 
         $router->get('/delete/{id}', [
             'as' => 'admin.product.business-type.delete',
-            'uses' => 'ProductController@getDelete',
+            'uses' => 'ProductBusinessTypeController@getDelete',
         ]);
+
+//        $router->group(['prefix' => 'sub-business-type'], function (Router $router) {
+//
+//            $router->get('/', [
+//                'as' => 'admin.product.business-type.sub-business-type.list',
+//                'uses' => 'ProductBusinessTypeController@getList',
+//            ]);
+//
+//            $router->get('/create', [
+//                'as' => 'admin.product.business-type.sub-business-type.create',
+//                'uses' => 'ProductBusinessTypeController@getCreate',
+//            ]);
+//
+//            $router->post('/create', [
+//                'as' => 'admin.product.business-type.sub-business-type.create',
+//                'uses' => 'ProductBusinessTypeController@postCreate',
+//            ]);
+//
+//            $router->get('/edit/{id}', [
+//                'as' => 'admin.product.business-type.sub-business-type.edit',
+//                'uses' => 'ProductBusinessTypeController@getEdit',
+//            ]);
+//
+//            $router->post('/edit/{id}', [
+//                'as' => 'admin.product.business-type.sub-business-type.edit',
+//                'uses' => 'ProductBusinessTypeController@postEdit',
+//            ]);
+//
+//            $router->get('/delete/{id}', [
+//                'as' => 'admin.product.business-type.sub-business-type.delete',
+//                'uses' => 'ProductBusinessTypeController@getDelete',
+//            ]);
+//
+//        });
 
     });
 
@@ -213,6 +247,74 @@ $router->group(['prefix' => 'product'], function (Router $router) {
             'as' => 'admin.product.material.delete',
             'uses' => 'ProductMaterialController@getDelete',
         ]);
+
+    });
+
+    $router->group(['prefix' => 'category'], function (Router $router) {
+
+        $router->get('/', [
+            'as' => 'admin.product.category.list',
+            'uses' => 'ProductCategoryController@getList',
+        ]);
+
+        $router->get('/create', [
+            'as' => 'admin.product.category.create',
+            'uses' => 'ProductCategoryController@getCreate',
+        ]);
+
+        $router->post('/create', [
+            'as' => 'admin.product.category.create',
+            'uses' => 'ProductCategoryController@postCreate',
+        ]);
+
+        $router->get('/edit/{id}', [
+            'as' => 'admin.product.category.edit',
+            'uses' => 'ProductCategoryController@getEdit',
+        ]);
+
+        $router->post('/edit/{id}', [
+            'as' => 'admin.product.category.edit',
+            'uses' => 'ProductCategoryController@postEdit',
+        ]);
+
+        $router->get('/delete/{id}', [
+            'as' => 'admin.product.category.delete',
+            'uses' => 'ProductCategoryController@getDelete',
+        ]);
+
+//        $router->group(['prefix' => 'sub-category'], function (Router $router) {
+//
+////            $router->get('/', [
+////                'as' => 'admin.product.category.sub-category.list',
+////                'uses' => 'ProductCategoryController@getList',
+////            ]);
+//
+//            $router->get('/create', [
+//                'as' => 'admin.product.category.sub-category.create',
+//                'uses' => 'ProductCategoryController@getSubCreate',
+//            ]);
+//
+//            $router->post('/create', [
+//                'as' => 'admin.product.category.sub-category.create',
+//                'uses' => 'ProductCategoryController@postSubCreate',
+//            ]);
+//
+//            $router->get('/edit/{id}', [
+//                'as' => 'admin.product.category.sub-category.edit',
+//                'uses' => 'ProductCategoryController@getSubEdit',
+//            ]);
+//
+//            $router->post('/edit/{id}', [
+//                'as' => 'admin.product.category.sub-category.edit',
+//                'uses' => 'ProductCategoryController@postSubEdit',
+//            ]);
+//
+//            $router->get('/delete/{id}', [
+//                'as' => 'admin.product.category.sub-category.delete',
+//                'uses' => 'ProductCategoryController@getDelete',
+//            ]);
+//
+//        });
 
     });
 });
