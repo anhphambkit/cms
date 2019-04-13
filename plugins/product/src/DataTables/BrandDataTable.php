@@ -77,14 +77,14 @@ class BrandDataTable extends DataTableAbstract
                 'width' => '20px',
                 'class' => 'searchable searchable_id',
             ],
-//            'brand_image' => [
-//                'name' => 'product_brands.brand_image',
-//                'title' => trans('core-base::tables.image'),
-//                'footer' => trans('core-base::tables.image'),
-//                'class' => 'text-left',
-//                'width' => '60px',
-//                "render" => '"<img src=\"" + data + "\" height=\"50\"/>"',
-//            ],
+            'brand_image' => [
+                'name' => 'product_brands.brand_image',
+                'title' => trans('core-base::tables.image'),
+                'footer' => trans('core-base::tables.image'),
+                'class' => 'text-left',
+                'width' => '60px',
+                "render" => '"<img src=\"" + data + "\" height=\"50\"/>"',
+            ],
             'name' => [
                 'name' => 'product_brands.name',
                 'title' => trans('core-base::tables.name'),

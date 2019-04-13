@@ -27,6 +27,12 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('brand_image')) has-error @endif">
+                                        <label class="control-label required" for="role">{{ trans('plugins-product::brand.form.brand_image') }}</label>
+                                        {!! Form::mediaImage('brand_image', $brand->brand_image, [ 'action' => 'select-image' ]) !!}
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="form-group col-md-12 mb-2 @if ($errors->has('description')) has-error @endif">
                                         <label for="name">{{ trans('core-base::forms.description') }}</label>
                                         {!! render_editor('description', $brand->description, true) !!}

@@ -140,6 +140,8 @@ class ProductController extends BaseAdminController
     {
         $data = $request->input();
 
+//        dd($data);
+
         $data['slug'] = str_slug($data['name']);
 
         $data['sku'] = "{$data['brand_id']}{$data['sku']}{$data['brand_id']}";
@@ -164,6 +166,30 @@ class ProductController extends BaseAdminController
      */
     public function getEdit($id)
     {
+        $categories = $this->productCategoryRepositories->pluck('name', 'id');
+
+//        $categories = array_merge([ 0 => "Please select parent product category" ], $categories);
+
+        $brand = $this->brandRepositories->pluck('name', 'id');
+
+//        $brand = array_merge([ 0 => "Please select a brand" ], $brand);
+
+        $colors = $this->productColorRepositories->pluck('name', 'id');
+
+//        $colors = array_merge([ 0 => "Please select a color" ], $colors);
+
+        $businessTypes = $this->businessTypeRepositories->pluck('name', 'id');
+
+//        $businessTypes = array_merge([ 0 => "Please select a business type" ], $businessTypes);
+
+        $collections = $this->productCollectionRepositories->pluck('name', 'id');
+
+//        $collections = array_merge([ 0 => "Please select a collection" ], $collections);
+
+        $materials = $this->productMaterialRepositories->pluck('name', 'id');
+
+//        $materials = array_merge([ 0 => "Please select a material" ], $materials);
+
         $product = $this->productRepository->findById($id);
         if (empty($product)) {
             abort(404);
@@ -171,7 +197,9 @@ class ProductController extends BaseAdminController
 
         page_title()->setTitle(trans('plugins-product::product.edit') . ' #' . $id);
 
-        return view('plugins-product::edit', compact('product'));
+        $this->addDetailAssets();
+
+        return view('plugins-product::product.edit', compact('product', 'categories', 'brand', 'colors', 'businessTypes', 'collections', 'materials'));
     }
 
     /**
@@ -186,7 +214,14 @@ class ProductController extends BaseAdminController
         if (empty($product)) {
             abort(404);
         }
-        $product->fill($request->input());
+
+        $data = $request->input();
+
+        $data['slug'] = str_slug($data['name']);
+
+        $data['sku'] = "{$data['brand_id']}{$data['sku']}{$product->id}";
+
+        $product->fill($data);
 
         $this->productRepository->createOrUpdate($product);
 

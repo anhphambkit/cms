@@ -11,4 +11,7 @@ return [
     'create' => 'New product brand',
     'edit' => 'Edit product brand',
     'list' => 'List product brand',
+    'form' => [
+        'brand_image' => 'Brand Image',
+    ]
 ];
