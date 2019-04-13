@@ -4,7 +4,7 @@ return [
     'avatar' => [
         'container_dir' => 'avatars',
         'folder_upload' => '/avatars/',
-        'default' => 'system/images/default-avatar.png',
+        'default' => '/storage/system/images/default-avatar.png',
     ],
     'logos' => [
         'container_dir' => 'logos',

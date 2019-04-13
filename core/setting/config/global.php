@@ -19,6 +19,21 @@ return [
                 ],
             ],
             [
+                'label' => trans('core-setting::setting.general.paypal_mode'),
+                'type' => 'select',
+                'attributes' => [
+                    'name' => 'paypal_mode',
+                    'list' => [
+                        'sanbox' => 'Sanbox',
+                        'live' => 'Live',
+                    ],
+                    'value' => 'sanbox',
+                    'options' => [
+                        'class' => 'form-control',
+                    ],
+                ],
+            ],
+            [
                 'label' => trans('core-setting::setting.general.site_title'),
                 'type' => 'text',
                 'attributes' => [

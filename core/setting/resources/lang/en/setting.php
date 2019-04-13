@@ -4,6 +4,7 @@ return [
     'title' => 'Settings',
     'general' =>
         [
+            'paypal_mode' => 'PayPal Mode',
             'theme' => 'Theme',
             'description' => 'Setting site information',
             'title' => 'General',
