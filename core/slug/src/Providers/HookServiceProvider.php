@@ -1,8 +1,7 @@
 <?php
 
-namespace core\Slug\Providers;
+namespace Core\Slug\Providers;
 
-use Assets;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
@@ -18,13 +17,13 @@ class HookServiceProvider extends ServiceProvider
 
     /**
      * Boot the service provider.
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function boot()
     {
-        // add_filter(BASE_FILTER_SLUG_AREA, [$this, 'addSlugBox'], 17, 3);
+        add_filter(BASE_FILTER_SLUG_AREA, [$this, 'addSlugBox'], 17, 3);
 
-        // add_filter(BASE_FILTER_BEFORE_GET_FRONT_PAGE_ITEM, [$this, 'getItemSlug'], 3, 3);
+        add_filter(BASE_FILTER_BEFORE_GET_FRONT_PAGE_ITEM, [$this, 'getItemSlug'], 3, 3);
     }
 
     /**
@@ -33,14 +32,13 @@ class HookServiceProvider extends ServiceProvider
      * @param null $prefix
      * @return null|string
      * @throws \Throwable
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function addSlugBox($screen, $object = null)
     {
-        if (in_array($screen, config('packages.slug.general.supported'))) {
-            Assets::addAppModule(['slug']);
-            $prefix = Arr::get(config('packages.slug.general.prefixes', []), $screen, '');
-            return view('packages.slug::partials.slug', compact('object', 'screen', 'prefix'))->render();
+        if (in_array($screen, config('core-slug.general.supported'))) {
+            $prefix = Arr::get(config('core-slug.general.prefixes', []), $screen, '');
+            return view('core-slug::partials.slug', compact('object', 'screen', 'prefix'))->render();
         }
         return null;
     }
@@ -50,12 +48,12 @@ class HookServiceProvider extends ServiceProvider
      * @param Model $model
      * @param string $screen
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function getItemSlug($data, $model, $screen = null)
     {
         if (!empty($screen) &&
-            in_array($screen, config('packages.slug.general.supported')) &&
+            in_array($screen, config('core-slug.general.supported')) &&
             method_exists($model, 'getScreen') &&
             $screen == $model->getScreen()
         ) {

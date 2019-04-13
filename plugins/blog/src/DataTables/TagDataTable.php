@@ -27,7 +27,7 @@ class TagDataTable extends DataTableAbstract
                 return table_status($item->status);
             });
 
-        return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, TAG_MODULE_SCREEN_NAME)
+        return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, BLOG_TAG_MODULE_SCREEN_NAME)
             ->addColumn('operations', function ($item) {
                 return table_actions('admin.blog.tag.edit', 'admin.blog.tag.delete', $item);
             })
@@ -128,6 +128,6 @@ class TagDataTable extends DataTableAbstract
      */
     protected function filename()
     {
-        return TAG_MODULE_SCREEN_NAME;
+        return BLOG_TAG_MODULE_SCREEN_NAME;
     }
 }

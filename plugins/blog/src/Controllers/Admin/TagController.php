@@ -17,6 +17,7 @@ use Core\Base\Events\CreatedContentEvent;
 use Core\Base\Events\DeletedContentEvent;
 use Core\Base\Events\UpdatedContentEvent;
 use Plugins\Blog\DataTables\TagDataTable;
+use Plugins\Blog\Requests\TagRequest;
 
 class TagController extends BaseAdminController
 {
@@ -68,12 +69,13 @@ class TagController extends BaseAdminController
     {
         $tag = $this->tagRepository->createOrUpdate(array_merge($request->input(),
             ['author_id' => Auth::user()->getKey()]));
-        event(new CreatedContentEvent(TAG_MODULE_SCREEN_NAME, $request, $tag));
+
+        event(new CreatedContentEvent(BLOG_TAG_MODULE_SCREEN_NAME, $request, $tag));
 
         return $response
-            ->setPreviousUrl(route('tags.list'))
-            ->setNextUrl(route('tags.edit', $tag->id))
-            ->setMessage(trans('core/base::notices.create_success_message'));
+            ->setPreviousUrl(route('admin.blog.tag.list'))
+            ->setNextUrl(route('admin.blog.tag.edit', $tag->id))
+            ->setMessage(trans('core-base::notices.create_success_message'));
     }
 
     /**
@@ -87,11 +89,9 @@ class TagController extends BaseAdminController
     {
         $tag = $this->tagRepository->findOrFail($id);
 
-        event(new BeforeEditContentEvent(TAG_MODULE_SCREEN_NAME, $request, $tag));
+        page_title()->setTitle(trans('plugins-blog::tags.edit') . ' #' . $id);
 
-        page_title()->setTitle(trans('plugins/blog::tags.edit') . ' #' . $id);
-
-        return $formBuilder->create(TagForm::class, ['model' => $tag])->renderForm();
+        return view('plugins-blog::tag.edit',compact('tag'));
     }
 
     /**
@@ -107,7 +107,7 @@ class TagController extends BaseAdminController
         $tag->fill($request->input());
 
         $this->tagRepository->createOrUpdate($tag);
-        event(new UpdatedContentEvent(TAG_MODULE_SCREEN_NAME, $request, $tag));
+        event(new UpdatedContentEvent(BLOG_TAG_MODULE_SCREEN_NAME, $request, $tag));
 
         return $response
             ->setPreviousUrl(route('tags.list'))
@@ -127,7 +127,7 @@ class TagController extends BaseAdminController
             $tag = $this->tagRepository->findOrFail($id);
             $this->tagRepository->delete($tag);
 
-            event(new DeletedContentEvent(TAG_MODULE_SCREEN_NAME, $request, $tag));
+            event(new DeletedContentEvent(BLOG_TAG_MODULE_SCREEN_NAME, $request, $tag));
 
             return $response->setMessage(trans('plugins/blog::tags.deleted'));
         } catch (Exception $exception) {

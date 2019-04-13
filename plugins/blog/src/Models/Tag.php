@@ -41,7 +41,7 @@ class Tag extends Eloquent
     /**
      * @var string
      */
-    protected $screen = TAG_MODULE_SCREEN_NAME;
+    protected $screen = BLOG_TAG_MODULE_SCREEN_NAME;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

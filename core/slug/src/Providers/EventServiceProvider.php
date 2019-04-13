@@ -5,9 +5,9 @@ namespace Core\Slug\Providers;
 use Core\Base\Events\CreatedContentEvent;
 use Core\Base\Events\DeletedContentEvent;
 use Core\Base\Events\UpdatedContentEvent;
-use Core\Slug\Listeners\CreatedContentListener;
-use Core\Slug\Listeners\DeletedContentListener;
-use Core\Slug\Listeners\UpdatedContentListener;
+use Core\Slug\Events\Listeners\CreatedContentListener;
+use Core\Slug\Events\Listeners\DeletedContentListener;
+use Core\Slug\Events\Listeners\UpdatedContentListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider

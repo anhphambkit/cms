@@ -1,10 +1,10 @@
 <?php
 
-namespace Core\Slug\Requests;
+namespace Plugins\Blog\Requests;
 
 use Core\Master\Requests\CoreRequest;
 
-class SlugRequest extends CoreRequest
+class TagRequest extends CoreRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,7 +15,9 @@ class SlugRequest extends CoreRequest
     public function rules()
     {
         return [
-            'name'    => 'required',
+            'name'        => 'required|max:120',
+            'slug'        => 'required|max:120',
+            'description' => 'max:400',
         ];
     }
 }

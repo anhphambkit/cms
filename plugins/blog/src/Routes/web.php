@@ -16,7 +16,7 @@ use Illuminate\Routing\Router;
 
 $router->group(['prefix' => 'blog'], function (Router $router) {
     
-    $router->get('/tag/{slug}', [
+    $router->get('tag/{slug?}', [
         'as' => 'public.blog.tag',
         'uses' => 'BlogController@getTag',
     ]);

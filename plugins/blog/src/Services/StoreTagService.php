@@ -54,7 +54,7 @@ class StoreTagService
 
                     $request->merge(['slug' => $tagName]);
 
-                    event(new CreatedContentEvent(TAG_MODULE_SCREEN_NAME, $request, $tag));
+                    event(new CreatedContentEvent(BLOG_TAG_MODULE_SCREEN_NAME, $request, $tag));
                 }
 
                 if (!empty($tag)) {
