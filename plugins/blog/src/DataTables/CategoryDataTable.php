@@ -3,9 +3,9 @@
 namespace Plugins\Blog\DataTables;
 
 use Core\Base\DataTables\DataTableAbstract;
-use Plugins\Blog\Repositories\Interfaces\PostRepositories;
+use Plugins\Blog\Repositories\Interfaces\CategoryRepositories as CategoryInterface;
 
-class PostDataTable extends DataTableAbstract
+class CategoryDataTable extends DataTableAbstract
 {
     /**
      * Display ajax response.
@@ -16,18 +16,12 @@ class PostDataTable extends DataTableAbstract
     public function ajax()
     {
         $data = $this->datatables
-            ->eloquent($this->query())
+            ->of($this->query())
             ->editColumn('name', function ($item) {
-                return anchor_link(route('admin.blog.post.edit', $item->id), $item->name);
-            })
-            ->editColumn('checkbox', function ($item) {
-                return table_checkbox($item->id);
+                return anchor_link(route('admin.blog.category.edit', $item->id), $item->name);
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
-            })
-            ->editColumn('author_id', function ($item) {
-                return $item->author ? $item->author->getFullName() : null;
             })
             ->editColumn('status', function ($item) {
                 return table_status($item->status);
@@ -35,7 +29,7 @@ class PostDataTable extends DataTableAbstract
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, BLOG_MODULE_SCREEN_NAME)
             ->addColumn('operations', function ($item) {
-                return table_actions('admin.blog.post.edit', 'admin.blog.post.delete', $item);
+                return table_actions('admin.blog.category.edit', 'admin.blog.category.delete', $item);
             })
             ->escapeColumns([])
             ->make(true);
@@ -49,24 +43,7 @@ class PostDataTable extends DataTableAbstract
      */
     public function query()
     {
-        /**
-        * @var \Eloquent $model
-        */
-       $model = app(PostRepositories::class)->getModel();
-
-       $query = $model
-            ->with(['categories'])
-            ->select([
-                'posts.id',
-                'posts.name',
-                'posts.image',
-                'posts.created_at',
-                'posts.status',
-                'posts.updated_at',
-                'posts.author_id',
-            ]);
-      
-       return $query;
+       return collect(get_categories([]));
     }
 
     /**
@@ -78,35 +55,27 @@ class PostDataTable extends DataTableAbstract
     {
         return [
             'id' => [
-                'name' => 'posts.id',
+                'name' => 'id',
                 'title' => trans('core-base::tables.id'),
                 'footer' => trans('core-base::tables.id'),
                 'width' => '20px',
                 'class' => 'searchable searchable_id',
             ],
             'name' => [
-                'name' => 'posts.name',
+                'name' => 'name',
                 'title' => trans('core-base::tables.name'),
                 'footer' => trans('core-base::tables.name'),
                 'class' => 'text-left searchable',
             ],
-            'author_id'  => [
-                'name'      => 'posts.author_id',
-                'title'     => trans('plugins-blog::posts.author'),
-                'footer'     => trans('plugins-blog::posts.author'),
-                'width'     => '150px',
-                'class'     => 'no-sort',
-                'orderable' => false,
-            ],
             'created_at' => [
-                'name' => 'posts.created_at',
+                'name' => 'created_at',
                 'title' => trans('core-base::tables.created_at'),
                 'footer' => trans('core-base::tables.created_at'),
                 'width' => '100px',
                 'class' => 'searchable',
             ],
             'status' => [
-                'name' => 'posts.status',
+                'name' => 'status',
                 'title' => trans('core-base::tables.status'),
                 'footer' => trans('core-base::tables.status'),
                 'width' => '100px',
@@ -122,7 +91,7 @@ class PostDataTable extends DataTableAbstract
     {
         $buttons = [
             'create' => [
-                'link' => route('admin.blog.post.create'),
+                'link' => route('admin.blog.category.create'),
                 'text' => view('core-base::elements.tables.actions.create')->render(),
             ],
         ];
@@ -146,6 +115,6 @@ class PostDataTable extends DataTableAbstract
      */
     protected function filename()
     {
-        return BLOG_MODULE_SCREEN_NAME;
+        return BLOG_CATEGORY_MODULE_SCREEN_NAME;
     }
 }

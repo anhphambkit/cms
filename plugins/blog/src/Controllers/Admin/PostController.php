@@ -1,29 +1,22 @@
 <?php
 
-namespace Core\Blog\Controllers\Admin;
+namespace Plugins\Blog\Controllers\Admin;
 
 use Core\Base\Controllers\Admin\BaseAdminController;
-
-use Botble\Base\Events\BeforeEditContentEvent;
-use Botble\Base\Forms\FormBuilder;
-use Botble\Base\Http\Controllers\BaseController;
-use Botble\Base\Http\Responses\BaseHttpResponse;
-use Botble\Blog\Forms\PostForm;
-use Botble\Blog\Http\Requests\PostRequest;
-use Botble\Blog\Models\Post;
-use Botble\Blog\Repositories\Interfaces\CategoryInterface;
-use Botble\Blog\Repositories\Interfaces\PostInterface;
-use Botble\Blog\Tables\PostTable;
-use Botble\Blog\Repositories\Interfaces\TagInterface;
-use Botble\Blog\Services\StoreCategoryService;
-use Botble\Blog\Services\StoreTagService;
-
+use Core\Base\Responses\BaseHttpResponse;
+use Plugins\Blog\Models\Post;
+use Plugins\Blog\Repositories\Interfaces\PostRepositories as PostInterface;
+use Plugins\Blog\Repositories\Interfaces\CategoryRepositories as CategoryInterface;
+use Plugins\Blog\Repositories\Interfaces\TagRepositories as TagInterface;
+use Plugins\Blog\Services\StoreCategoryService;
+use Plugins\Blog\Services\StoreTagService;
 use Exception;
 use Illuminate\Http\Request;
 use Auth;
 use Core\Base\Events\CreatedContentEvent;
 use Core\Base\Events\DeletedContentEvent;
 use Core\Base\Events\UpdatedContentEvent;
+use Plugins\Blog\DataTables\PostDataTable;
 
 class PostController extends BaseAdminController
 {
@@ -65,11 +58,11 @@ class PostController extends BaseAdminController
      * @author TrinhLe
      * @throws \Throwable
      */
-    public function getList(PostTable $dataTable)
+    public function getList(PostDataTable $dataTable)
     {
-        page_title()->setTitle(trans('plugins/blog::posts.menu_name'));
+        page_title()->setTitle(trans('plugins-blog::posts.menu_name'));
 
-        return $dataTable->renderTable();
+        return $dataTable->renderTable(['title' => trans('plugins-blog::posts.models')]);
     }
 
     /**
@@ -79,7 +72,7 @@ class PostController extends BaseAdminController
      */
     public function getCreate(FormBuilder $formBuilder)
     {
-        page_title()->setTitle(trans('plugins/blog::posts.create'));
+        page_title()->setTitle(trans('plugins-blog::posts.create'));
 
         return $formBuilder->create(PostForm::class)->renderForm();
     }
@@ -131,7 +124,7 @@ class PostController extends BaseAdminController
 
         event(new BeforeEditContentEvent(POST_MODULE_SCREEN_NAME, $request, $post));
 
-        page_title()->setTitle(trans('plugins/blog::posts.edit') . ' #' . $id);
+        page_title()->setTitle(trans('plugins-blog::posts.edit') . ' #' . $id);
 
         return $formBuilder->create(PostForm::class, ['model' => $post])->renderForm();
     }

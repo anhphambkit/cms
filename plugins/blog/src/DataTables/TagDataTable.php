@@ -3,9 +3,9 @@
 namespace Plugins\Blog\DataTables;
 
 use Core\Base\DataTables\DataTableAbstract;
-use Plugins\Blog\Repositories\Interfaces\PostRepositories;
+use Plugins\Blog\Repositories\Interfaces\TagRepositories as TagInterface;
 
-class PostDataTable extends DataTableAbstract
+class TagDataTable extends DataTableAbstract
 {
     /**
      * Display ajax response.
@@ -18,24 +18,18 @@ class PostDataTable extends DataTableAbstract
         $data = $this->datatables
             ->eloquent($this->query())
             ->editColumn('name', function ($item) {
-                return anchor_link(route('admin.blog.post.edit', $item->id), $item->name);
-            })
-            ->editColumn('checkbox', function ($item) {
-                return table_checkbox($item->id);
+                return anchor_link(route('admin.blog.tag.edit', $item->id), $item->name);
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
-            })
-            ->editColumn('author_id', function ($item) {
-                return $item->author ? $item->author->getFullName() : null;
             })
             ->editColumn('status', function ($item) {
                 return table_status($item->status);
             });
 
-        return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, BLOG_MODULE_SCREEN_NAME)
+        return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, TAG_MODULE_SCREEN_NAME)
             ->addColumn('operations', function ($item) {
-                return table_actions('admin.blog.post.edit', 'admin.blog.post.delete', $item);
+                return table_actions('admin.blog.tag.edit', 'admin.blog.tag.delete', $item);
             })
             ->escapeColumns([])
             ->make(true);
@@ -52,18 +46,14 @@ class PostDataTable extends DataTableAbstract
         /**
         * @var \Eloquent $model
         */
-       $model = app(PostRepositories::class)->getModel();
+       $model = app(TagInterface::class)->getModel();
 
        $query = $model
-            ->with(['categories'])
             ->select([
-                'posts.id',
-                'posts.name',
-                'posts.image',
-                'posts.created_at',
-                'posts.status',
-                'posts.updated_at',
-                'posts.author_id',
+                'tags.id',
+                'tags.name',
+                'tags.created_at',
+                'tags.status',
             ]);
       
        return $query;
@@ -78,35 +68,27 @@ class PostDataTable extends DataTableAbstract
     {
         return [
             'id' => [
-                'name' => 'posts.id',
+                'name' => 'tags.id',
                 'title' => trans('core-base::tables.id'),
                 'footer' => trans('core-base::tables.id'),
                 'width' => '20px',
                 'class' => 'searchable searchable_id',
             ],
             'name' => [
-                'name' => 'posts.name',
+                'name' => 'tags.name',
                 'title' => trans('core-base::tables.name'),
                 'footer' => trans('core-base::tables.name'),
                 'class' => 'text-left searchable',
             ],
-            'author_id'  => [
-                'name'      => 'posts.author_id',
-                'title'     => trans('plugins-blog::posts.author'),
-                'footer'     => trans('plugins-blog::posts.author'),
-                'width'     => '150px',
-                'class'     => 'no-sort',
-                'orderable' => false,
-            ],
             'created_at' => [
-                'name' => 'posts.created_at',
+                'name' => 'tags.created_at',
                 'title' => trans('core-base::tables.created_at'),
                 'footer' => trans('core-base::tables.created_at'),
                 'width' => '100px',
                 'class' => 'searchable',
             ],
             'status' => [
-                'name' => 'posts.status',
+                'name' => 'tags.status',
                 'title' => trans('core-base::tables.status'),
                 'footer' => trans('core-base::tables.status'),
                 'width' => '100px',
@@ -122,7 +104,7 @@ class PostDataTable extends DataTableAbstract
     {
         $buttons = [
             'create' => [
-                'link' => route('admin.blog.post.create'),
+                'link' => route('admin.blog.tag.create'),
                 'text' => view('core-base::elements.tables.actions.create')->render(),
             ],
         ];
@@ -146,6 +128,6 @@ class PostDataTable extends DataTableAbstract
      */
     protected function filename()
     {
-        return BLOG_MODULE_SCREEN_NAME;
+        return TAG_MODULE_SCREEN_NAME;
     }
 }

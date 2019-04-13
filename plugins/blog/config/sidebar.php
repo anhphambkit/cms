@@ -17,7 +17,7 @@ return [
 		'parent_id'   => 'cms-plugins-blog',
 		'name'        => 'plugins-blog::sidebar.post',
 		'icon'        => null,
-		'url'         => 'admin.blog.list',
+		'url'         => 'admin.blog.post.list',
 		'permissions' => ['posts.list']
 	],
 	[

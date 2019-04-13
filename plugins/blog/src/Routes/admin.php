@@ -17,33 +17,33 @@ use Illuminate\Routing\Router;
 $router->group(['prefix' => 'blog/post'], function (Router $router) {
     
     $router->get('/', [
-        'as' => 'admin.blog.list',
-        'uses' => 'BlogController@getList',
+        'as' => 'admin.blog.post.list',
+        'uses' => 'PostController@getList',
     ]);
 
     $router->get('/create', [
-        'as' => 'admin.blog.create',
-        'uses' => 'BlogController@getCreate',
+        'as' => 'admin.blog.post.create',
+        'uses' => 'PostController@getCreate',
     ]);
 
     $router->post('/create', [
-        'as' => 'admin.blog.create',
-        'uses' => 'BlogController@postCreate',
+        'as' => 'admin.blog.post.create',
+        'uses' => 'PostController@postCreate',
     ]);
 
     $router->get('/edit/{id}', [
-        'as' => 'admin.blog.edit',
-        'uses' => 'BlogController@getEdit',
+        'as' => 'admin.blog.post.edit',
+        'uses' => 'PostController@getEdit',
     ]);
 
     $router->post('/edit/{id}', [
-        'as' => 'admin.blog.edit',
-        'uses' => 'BlogController@postEdit',
+        'as' => 'admin.blog.post.edit',
+        'uses' => 'PostController@postEdit',
     ]);
 
     $router->get('/delete/{id}', [
-        'as' => 'admin.blog.delete',
-        'uses' => 'BlogController@getDelete',
+        'as' => 'admin.blog.post.delete',
+        'uses' => 'PostController@getDelete',
     ]);
 });
 
@@ -51,66 +51,66 @@ $router->group(['prefix' => 'blog/category'], function (Router $router) {
     
     $router->get('/', [
         'as' => 'admin.blog.category.list',
-        'uses' => 'BlogController@getList',
+        'uses' => 'CategoryController@getList',
     ]);
 
-    // $router->get('/create', [
-    //     'as' => 'admin.blog.create',
-    //     'uses' => 'BlogController@getCreate',
-    // ]);
+    $router->get('/create', [
+        'as' => 'admin.blog.category.create',
+        'uses' => 'CategoryController@getCreate',
+    ]);
 
-    // $router->post('/create', [
-    //     'as' => 'admin.blog.create',
-    //     'uses' => 'BlogController@postCreate',
-    // ]);
+    $router->post('/create', [
+        'as' => 'admin.blog.category.create',
+        'uses' => 'CategoryController@postCreate',
+    ]);
 
-    // $router->get('/edit/{id}', [
-    //     'as' => 'admin.blog.edit',
-    //     'uses' => 'BlogController@getEdit',
-    // ]);
+    $router->get('/edit/{id}', [
+        'as' => 'admin.blog.category.edit',
+        'uses' => 'CategoryController@getEdit',
+    ]);
 
-    // $router->post('/edit/{id}', [
-    //     'as' => 'admin.blog.edit',
-    //     'uses' => 'BlogController@postEdit',
-    // ]);
+    $router->post('/edit/{id}', [
+        'as' => 'admin.blog.category.edit',
+        'uses' => 'CategoryController@postEdit',
+    ]);
 
-    // $router->get('/delete/{id}', [
-    //     'as' => 'admin.blog.delete',
-    //     'uses' => 'BlogController@getDelete',
-    // ]);
+    $router->get('/delete/{id}', [
+        'as' => 'admin.blog.category.delete',
+        'uses' => 'CategoryController@getDelete',
+    ]);
 });
 
 $router->group(['prefix' => 'blog/tag'], function (Router $router) {
     
     $router->get('/', [
         'as' => 'admin.blog.tag.list',
-        'uses' => 'BlogController@getList',
+        'uses' => 'TagController@getList',
     ]);
 
-    // $router->get('/create', [
-    //     'as' => 'admin.blog.create',
-    //     'uses' => 'BlogController@getCreate',
-    // ]);
+    $router->get('/create', [
+        'as' => 'admin.blog.tag.create',
+        'uses' => 'TagController@getCreate',
+    ]);
 
-    // $router->post('/create', [
-    //     'as' => 'admin.blog.create',
-    //     'uses' => 'BlogController@postCreate',
-    // ]);
+    $router->post('/create', [
+        'as' => 'admin.blog.tag.create',
+        'uses' => 'TagController@postCreate',
+    ]);
 
-    // $router->get('/edit/{id}', [
-    //     'as' => 'admin.blog.edit',
-    //     'uses' => 'BlogController@getEdit',
-    // ]);
+    $router->get('/edit/{id}', [
+        'as' => 'admin.blog.tag.edit',
+        'uses' => 'TagController@getEdit',
+    ]);
 
-    // $router->post('/edit/{id}', [
-    //     'as' => 'admin.blog.edit',
-    //     'uses' => 'BlogController@postEdit',
-    // ]);
+    $router->post('/edit/{id}', [
+        'as' => 'admin.blog.tag.edit',
+        'uses' => 'TagController@postEdit',
+    ]);
 
-    // $router->get('/delete/{id}', [
-    //     'as' => 'admin.blog.delete',
-    //     'uses' => 'BlogController@getDelete',
-    // ]);
+    $router->get('/delete/{id}', [
+        'as' => 'admin.blog.tag.delete',
+        'uses' => 'TagController@getDelete',
+    ]);
 });
 
 	

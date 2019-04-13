@@ -1,16 +1,13 @@
 <?php
 
-namespace Botble\Blog\Models;
+namespace Plugins\Blog\Models;
 
-use Botble\Base\Traits\EnumCastable;
-use Botble\Base\Enums\BaseStatusEnum;
-use Botble\Slug\Traits\SlugTrait;
+use Core\Slug\Traits\SlugTrait;
 use Eloquent;
 
 class Category extends Eloquent
 {
     use SlugTrait;
-    use EnumCastable;
 
     /**
      * The database table used by the model.
@@ -52,20 +49,13 @@ class Category extends Eloquent
     ];
 
     /**
-     * @var array
-     */
-    protected $casts = [
-        'status' => BaseStatusEnum::class,
-    ];
-
-    /**
      * @var string
      */
-    protected $screen = CATEGORY_MODULE_SCREEN_NAME;
+    protected $screen = BLOG_CATEGORY_MODULE_SCREEN_NAME;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function posts()
     {
@@ -74,7 +64,7 @@ class Category extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function parent()
     {
@@ -83,7 +73,7 @@ class Category extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function children()
     {

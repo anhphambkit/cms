@@ -3,17 +3,12 @@
 namespace Plugins\Blog\Models;
 
 use Core\User\Models\User;
-use Botble\Base\Traits\EnumCastable;
-use Botble\Base\Enums\BaseStatusEnum;
-use Botble\Revision\RevisionableTrait;
-use Botble\Slug\Traits\SlugTrait;
+use Core\Slug\Traits\SlugTrait;
 use Eloquent;
 
 class Post extends Eloquent
 {
-    use RevisionableTrait;
     use SlugTrait;
-    use EnumCastable;
 
     /**
      * The database table used by the model.
@@ -21,29 +16,6 @@ class Post extends Eloquent
      * @var string
      */
     protected $table = 'posts';
-
-    /**
-     * @var mixed
-     */
-    protected $revisionEnabled = true;
-
-    /**
-     * @var mixed
-     */
-    protected $revisionCleanup = true;
-
-    /**
-     * @var int
-     */
-    protected $historyLimit = 20;
-
-    /**
-     * @var array
-     */
-    protected $dontKeepRevisionOf = [
-        'content',
-        'views',
-    ];
 
     /**
      * The date fields for the model.clear
@@ -73,20 +45,13 @@ class Post extends Eloquent
     ];
 
     /**
-     * @var array
-     */
-    protected $casts = [
-        'status' => BaseStatusEnum::class,
-    ];
-
-    /**
      * @var string
      */
     protected $screen = POST_MODULE_SCREEN_NAME;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function user()
     {
@@ -95,7 +60,7 @@ class Post extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function tags()
     {
@@ -104,7 +69,7 @@ class Post extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function categories()
     {
@@ -117,7 +82,7 @@ class Post extends Eloquent
     }
 
     /**
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     protected static function boot()
     {

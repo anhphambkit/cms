@@ -21,6 +21,6 @@ class CacheBlogRepositories extends CacheAbstractDecorator implements BlogReposi
     {
         parent::__construct();
         $this->repository = $repository;
-        $this->entityName = "Cache-Blog"; # Please setup reference name of cache.
+        $this->entityName = "Plugin-Blog"; # Please setup reference name of cache.
     }
 }

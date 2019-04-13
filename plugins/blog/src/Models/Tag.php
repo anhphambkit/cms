@@ -1,16 +1,13 @@
 <?php
 
-namespace Botble\Blog\Models;
+namespace Plugins\Blog\Models;
 
-use Botble\Base\Traits\EnumCastable;
-use Botble\Base\Enums\BaseStatusEnum;
-use Botble\Slug\Traits\SlugTrait;
+use Core\Slug\Traits\SlugTrait;
 use Eloquent;
 
 class Tag extends Eloquent
 {
     use SlugTrait;
-    use EnumCastable;
 
     /**
      * The database table used by the model.
@@ -42,20 +39,13 @@ class Tag extends Eloquent
     ];
 
     /**
-     * @var array
-     */
-    protected $casts = [
-        'status' => BaseStatusEnum::class,
-    ];
-
-    /**
      * @var string
      */
     protected $screen = TAG_MODULE_SCREEN_NAME;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function posts()
     {
