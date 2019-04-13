@@ -4,6 +4,7 @@ namespace Core\Base\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Core\Base\Middlewares\Authenticate;
+use Core\Base\Middlewares\RedirectIfAuthenticated;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use File;
@@ -49,6 +50,7 @@ class RouteServiceProvider extends ServiceProvider
         $router = $this->app['router'];
         
         $router->aliasMiddleware('auth', Authenticate::class);
+        $router->aliasMiddleware('guest', RedirectIfAuthenticated::class);
         
         $this->registerMiddleware($router);
 
