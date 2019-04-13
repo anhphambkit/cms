@@ -118,7 +118,7 @@ class User extends Authenticatable
     public function getProfileImage()
     {
         if (empty($this->profile_image)) {
-            return '/storage/' . config('core-user.acl.avatar.default');
+            return config('core-user.acl.avatar.default');
         } else {
             return $this->profile_image;
         }
