@@ -56,5 +56,6 @@ return [
         'web'   => '',
         'api'   => 'api',
         'ajax'  => 'ajax',
-    ]   
+    ],
+    'public_single_ending_url' => env('PUBLIC_SINGLE_ENDING_URL', null), 
 ];

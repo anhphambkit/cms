@@ -12,6 +12,7 @@ use Core\Theme\Providers\AssetServiceProvider;
 use Core\Theme\Providers\ThemeServiceProvider;
 use Core\User\Providers\UserServiceProvider;
 use Core\Media\Providers\MediaServiceProvider;
+use Core\Slug\Providers\SlugServiceProvider;
 use Event;
 use Illuminate\Routing\Events\RouteMatched;
 
@@ -82,6 +83,7 @@ class BaseServiceProvider extends ServiceProvider
 		$this->app->register(FormServiceProvider::class);
 		$this->app->register(UserServiceProvider::class);
 		$this->app->register(MediaServiceProvider::class);
+		$this->app->register(SlugServiceProvider::class);
 		
         add_filter(DASHBOARD_FILTER_MENU_NAME, [\Core\Dashboard\Hooks\DashboardMenuHook::class, 'renderMenuDashboard']);
         add_filter(BASE_FILTER_GET_LIST_DATA, [$this, 'addLanguageColumn'], 50, 2);

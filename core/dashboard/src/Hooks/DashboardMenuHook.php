@@ -13,7 +13,7 @@ class DashboardMenuHook
     {
         $active = false;
         $route = 'admin.dashboard.index';
-        $title = __('LCMS DASHBOARD');
+        $title = __('IFOSS DASHBOARD');
 
         if ($currentRoute == $route) {
             $active = true;
