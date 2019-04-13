@@ -51,11 +51,11 @@ class TagController extends BaseAdminController
      * @return string
      * @author TrinhLe
      */
-    public function getCreate(FormBuilder $formBuilder)
+    public function getCreate()
     {
-        page_title()->setTitle(trans('plugins/blog::tags.create'));
+        page_title()->setTitle(trans('plugins-blog::tags.create'));
 
-        return $formBuilder->create(TagForm::class)->renderForm();
+        return view('plugins-blog::tag.create');
     }
 
     /**

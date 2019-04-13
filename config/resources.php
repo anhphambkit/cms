@@ -18,6 +18,7 @@ return [
 		'editor-js'               => ['cdn' => 'backend/core/base/assets/js/editor.js'],
 		'ckeditor-js'             => ['theme' => 'app-assets/vendors/js/editors/ckeditor/ckeditor.js'],
 		'tinymce-js'              => ['theme' => 'app-assets/vendors/js/editors/tinymce/tinymce.js'],
+		'slug-js'              => ['cdn' => 'backend/core/slug/assets/js/slug.js'],
 
 		/* css */
 		'vendors-css'              => ['theme' => 'app-assets/css/vendors.css'],
@@ -75,7 +76,8 @@ return [
 			'jquery-mask-js',
 			'datatable-js',
 			'datatable-button-js',
-			'editor-js'
+			'editor-js',
+			'slug-js'
 		]
 	]
 

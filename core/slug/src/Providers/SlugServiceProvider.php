@@ -30,6 +30,8 @@ class SlugServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+        $this->app->register(FormServiceProvider::class);
+        $this->app->register(HookServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
     }
 }

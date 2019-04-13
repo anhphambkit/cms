@@ -16,7 +16,7 @@ class FormServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->booted(function () {
-            Form::component('permalink', 'packages.slug::permalink', [
+            Form::component('permalink', 'core-slug::permalink', [
                 'name',
                 'value'      => null,
                 'id'         => null,

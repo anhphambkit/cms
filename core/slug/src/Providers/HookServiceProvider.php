@@ -22,9 +22,9 @@ class HookServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        add_filter(BASE_FILTER_SLUG_AREA, [$this, 'addSlugBox'], 17, 3);
+        // add_filter(BASE_FILTER_SLUG_AREA, [$this, 'addSlugBox'], 17, 3);
 
-        add_filter(BASE_FILTER_BEFORE_GET_FRONT_PAGE_ITEM, [$this, 'getItemSlug'], 3, 3);
+        // add_filter(BASE_FILTER_BEFORE_GET_FRONT_PAGE_ITEM, [$this, 'getItemSlug'], 3, 3);
     }
 
     /**

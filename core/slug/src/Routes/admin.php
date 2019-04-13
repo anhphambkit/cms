@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Admin Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -14,10 +14,14 @@
 use Illuminate\Routing\Router;
 /** @var Router $router */
 
-$router->group(['prefix' => 'blog'], function (Router $router) {
-    
-    $router->get('/tag/{slug}', [
-        'as' => 'public.blog.tag',
-        'uses' => 'BlogController@getTag',
+$router->group(['prefix' =>'slug'], function (Router $router) {
+   
+    $router->post('/create', [
+		'as'         => 'admin.slug.create',
+		'uses'       => 'SlugController@postCreate',
     ]);
 });
+
+
+
+	

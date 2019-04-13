@@ -111,6 +111,11 @@ $router->group(['prefix' => 'blog/tag'], function (Router $router) {
         'as' => 'admin.blog.tag.delete',
         'uses' => 'TagController@getDelete',
     ]);
+
+    $router->post('create-slug', [
+        'as' => 'admin.blog.tag.create.slug',
+        'uses' => 'TagController@postCreateSlug',
+    ]);
 });
 
 	
