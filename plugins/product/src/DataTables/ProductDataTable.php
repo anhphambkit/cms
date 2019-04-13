@@ -11,14 +11,14 @@ class ProductDataTable extends DataTableAbstract
      * Display ajax response.
      *
      * @return \Illuminate\Http\JsonResponse
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function ajax()
     {
         $data = $this->datatables
             ->eloquent($this->query())
             ->editColumn('name', function ($item) {
-                return anchor_link(route('product.edit', $item->id), $item->name);
+                return anchor_link(route('admin.product.edit', $item->id), $item->name);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
@@ -32,7 +32,7 @@ class ProductDataTable extends DataTableAbstract
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, PRODUCT_MODULE_SCREEN_NAME)
             ->addColumn('operations', function ($item) {
-                return table_actions('product.edit', 'product.delete', $item);
+                return table_actions('admin.product.edit', 'admin.product.delete', $item);
             })
             ->escapeColumns([])
             ->make(true);
@@ -42,7 +42,7 @@ class ProductDataTable extends DataTableAbstract
      * Get the query object to be processed by datatables.
      *
      * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function query()
     {
@@ -50,40 +50,61 @@ class ProductDataTable extends DataTableAbstract
        /**
         * @var \Eloquent $model
         */
-       $query = $model->select(['product.id', 'product.name', 'product.created_at', 'product.status']);
+       $query = $model->select([
+           'products.id',
+           'products.image_feature',
+           'products.name',
+           'products.sku',
+           'products.created_at',
+           'products.status'
+       ]);
        return $query;
     }
 
     /**
      * @return array
-     * @author TrinhLe
+     * @author AnhPham
      * @since 2.1
      */
     public function columns()
     {
         return [
             'id' => [
-                'name' => 'product.id',
+                'name' => 'products.id',
                 'title' => trans('core-base::tables.id'),
                 'footer' => trans('core-base::tables.id'),
                 'width' => '20px',
                 'class' => 'searchable searchable_id',
             ],
+            'image_feature' => [
+                'name' => 'product_brands.brand_image',
+                'title' => trans('core-base::tables.image'),
+                'footer' => trans('core-base::tables.image'),
+                'class' => 'text-left',
+                'width' => '60px',
+                "render" => '"<img src=\"" + data + "\" height=\"50\"/>"',
+            ],
             'name' => [
-                'name' => 'product.name',
+                'name' => 'products.name',
                 'title' => trans('core-base::tables.name'),
                 'footer' => trans('core-base::tables.name'),
                 'class' => 'text-left searchable',
             ],
+            'sku' => [
+                'name' => 'products.sku',
+                'title' => trans('plugins-product::product.form.sku'),
+                'footer' => trans('plugins-product::product.form.sku'),
+                'class' => 'text-left searchable',
+            ],
             'created_at' => [
-                'name' => 'product.created_at',
+                'name' => 'products.created_at',
                 'title' => trans('core-base::tables.created_at'),
                 'footer' => trans('core-base::tables.created_at'),
                 'width' => '100px',
                 'class' => 'searchable',
             ],
             'status' => [
-                'name' => 'product.status',
+                'name' => 'products.status',
                 'title' => trans('core-base::tables.status'),
                 'footer' => trans('core-base::tables.status'),
                 'width' => '100px',
@@ -93,13 +114,13 @@ class ProductDataTable extends DataTableAbstract
 
     /**
      * @return array
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function buttons()
     {
         $buttons = [
             'create' => [
-                'link' => route('product.create'),
+                'link' => route('admin.product.create'),
                 'text' => view('core-base::elements.tables.actions.create')->render(),
             ],
         ];
@@ -108,32 +129,18 @@ class ProductDataTable extends DataTableAbstract
 
     /**
      * @return array
-     * @author TrinhLe
+     * @author AnhPham
      */
     public function actions()
     {
         return [];
-        return [
-            'delete' => [
-                'link' => route('product.delete.many'),
-                'text' => view('core-base::elements.tables.actions.delete')->render(),
-            ],
-            'activate' => [
-                'link' => route('product.change.status', ['status' => 1]),
-                'text' => view('core-base::elements.tables.actions.activate')->render(),
-            ],
-            'deactivate' => [
-                'link' => route('product.change.status', ['status' => 0]),
-                'text' => view('core-base::elements.tables.actions.deactivate')->render(),
-            ]
-        ];
     }
 
     /**
      * Get filename for export.
      *
      * @return string
-     * @author TrinhLe
+     * @author AnhPham
      */
     protected function filename()
     {

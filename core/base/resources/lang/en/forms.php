@@ -10,6 +10,7 @@ return [
     'create'                  => 'Create',
     'edit'                    => 'Edit',
     'permalink'               => 'Permalink',
+    'parent_category'         => 'Parent Category',
     'ok'                      => 'OK',
     'cancel'                  => 'Cancel',
     'character_remain'        => 'character(s) remain',
@@ -46,4 +47,6 @@ return [
     'status'                  => 'Status',
     'show_hide_editor'        => 'Show/Hide Editor',
     'basic_info_title'        => 'Basic information',
+    'code_placeholder'        => 'Code',
+    'code'        => 'Code',
 ];

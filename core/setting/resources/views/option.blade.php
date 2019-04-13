@@ -16,6 +16,9 @@
                 <div class="card-body">
                     <div class="nav-vertical">
                         <ul class="nav nav-tabs nav-linetriangle nav-justified">
+                            <?php
+//                                dd(ThemeOption::constructSections());
+                            ?>
                             @foreach(ThemeOption::constructSections() as $section)
                                 <li class="nav-item">
                                     <a class="nav-link @if ($loop->first) active @endif" id="{{ $section['id'] }}-tab" data-toggle="tab" aria-controls="tab_{{ $section['id'] }}" href="#tab_{{ $section['id'] }}" aria-expanded="true">

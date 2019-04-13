@@ -3,11 +3,12 @@
 namespace Plugins\Product;
 
 use Artisan;
+use Core\Master\Supports\PermissionCommand;
 use Schema;
 class Plugin
 {
     /**
-     * @author Trinh Le
+     * @author AnhPham
      */
     public static function activate()
     {
@@ -18,7 +19,7 @@ class Plugin
     }
 
     /**
-     * @author Trinh Le
+     * @author AnhPham
      */
     public static function deactivate()
     {
@@ -26,7 +27,7 @@ class Plugin
     }
 
     /**
-     * @author Trinh Le
+     * @author AnhPham
      */
     public static function remove()
     {
