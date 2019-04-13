@@ -50,7 +50,14 @@ class ProductDataTable extends DataTableAbstract
        /**
         * @var \Eloquent $model
         */
-       $query = $model->select(['product.id', 'product.name', 'product.created_at', 'product.status']);
+       $query = $model->select([
+           'products.id',
+           'products.image_feature',
+           'products.name',
+           'products.sku',
+           'products.created_at',
+           'products.status'
+       ]);
        return $query;
     }
 
@@ -63,27 +70,41 @@ class ProductDataTable extends DataTableAbstract
     {
         return [
             'id' => [
-                'name' => 'product.id',
+                'name' => 'products.id',
                 'title' => trans('core-base::tables.id'),
                 'footer' => trans('core-base::tables.id'),
                 'width' => '20px',
                 'class' => 'searchable searchable_id',
             ],
+            'image_feature' => [
+                'name' => 'product_brands.brand_image',
+                'title' => trans('core-base::tables.image'),
+                'footer' => trans('core-base::tables.image'),
+                'class' => 'text-left',
+                'width' => '60px',
+                "render" => '"<img src=\"" + data + "\" height=\"50\"/>"',
+            ],
             'name' => [
-                'name' => 'product.name',
+                'name' => 'products.name',
                 'title' => trans('core-base::tables.name'),
                 'footer' => trans('core-base::tables.name'),
                 'class' => 'text-left searchable',
             ],
+            'sku' => [
+                'name' => 'products.sku',
+                'title' => trans('plugins-product::product.form.sku'),
+                'footer' => trans('plugins-product::product.form.sku'),
+                'class' => 'text-left searchable',
+            ],
             'created_at' => [
-                'name' => 'product.created_at',
+                'name' => 'products.created_at',
                 'title' => trans('core-base::tables.created_at'),
                 'footer' => trans('core-base::tables.created_at'),
                 'width' => '100px',
                 'class' => 'searchable',
             ],
             'status' => [
-                'name' => 'product.status',
+                'name' => 'products.status',
                 'title' => trans('core-base::tables.status'),
                 'footer' => trans('core-base::tables.status'),
                 'width' => '100px',

@@ -107,6 +107,7 @@ class CreateProductTable extends Migration
             $table->string('slug', 150);
             $table->string('upc', 150)->unique();
             $table->string('sku', 30);
+            $table->text('image_feature');
             $table->string('short_description', 255)->nullable();
             $table->text('long_desc')->nullable();
             $table->boolean('is_feature')->default(false)->comment('Product feature');
