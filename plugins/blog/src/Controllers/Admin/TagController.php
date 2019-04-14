@@ -130,11 +130,11 @@ class TagController extends BaseAdminController
 
             event(new DeletedContentEvent(BLOG_TAG_MODULE_SCREEN_NAME, $request, $tag));
 
-            return $response->setMessage(trans('plugins/blog::tags.deleted'));
+            return $response->setMessage(trans('plugins-blog::tags.deleted'));
         } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage(trans('plugins/blog::tags.cannot_delete'));
+                ->setMessage(trans('plugins-blog::tags.cannot_delete'));
         }
     }
 }

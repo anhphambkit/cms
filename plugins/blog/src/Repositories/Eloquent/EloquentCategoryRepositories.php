@@ -19,7 +19,7 @@ class EloquentCategoryRepositories extends RepositoriesAbstract implements Categ
             ->select('categories.*')
             ->orderBy('categories.created_at', 'desc');
 
-        return $data;
+        return $data->get();
     }
 
     /**
@@ -41,7 +41,7 @@ class EloquentCategoryRepositories extends RepositoriesAbstract implements Categ
             ->select('categories.*')
             ->limit($limit);
 
-        return $data;
+        return $data->get();
     }
 
     /**
@@ -56,7 +56,7 @@ class EloquentCategoryRepositories extends RepositoriesAbstract implements Categ
 
         $data = $data->orderBy('categories.order', 'DESC');
 
-        return $data;
+        return $data->get();
     }
 
     /**
@@ -69,7 +69,7 @@ class EloquentCategoryRepositories extends RepositoriesAbstract implements Categ
             'categories.status' => true,
         ]);
 
-        return $data;
+        return $data->get();
     }
 
     /**
@@ -82,7 +82,7 @@ class EloquentCategoryRepositories extends RepositoriesAbstract implements Categ
             $data = $data->orderBy($by, $direction);
         }
 
-        return $data;
+        return $data->get();
     }
 
     /**
@@ -122,6 +122,6 @@ class EloquentCategoryRepositories extends RepositoriesAbstract implements Categ
             ->with($with)
             ->select($select);
 
-        return $data;
+        return $data->get();
     }
 }

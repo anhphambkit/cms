@@ -202,7 +202,7 @@ if (!function_exists('get_categories')) {
         ]);
 
         $categories = sort_item_with_children($categories);
-
+        
         foreach ($categories as $category) {
             $indentText = '';
             $depth = (int)$category->depth;

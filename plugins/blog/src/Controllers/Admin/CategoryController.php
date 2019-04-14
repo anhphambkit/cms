@@ -17,6 +17,9 @@ use Core\Base\Events\CreatedContentEvent;
 use Core\Base\Events\DeletedContentEvent;
 use Core\Base\Events\UpdatedContentEvent;
 use Plugins\Blog\DataTables\CategoryDataTable;
+use Plugins\Blog\Requests\CategoryRequest;
+use AssetManager;
+use AssetPipeline;
 
 class CategoryController extends BaseAdminController
 {
@@ -50,18 +53,26 @@ class CategoryController extends BaseAdminController
 
     /**
      * @param FormBuilder $formBuilder
-     * @return string
+     * @return Illuminate\View\View
      * @author TrinhLe
      */
-    public function getCreate(FormBuilder $formBuilder)
+    public function getCreate()
     {
-        page_title()->setTitle(trans('plugins-blog::posts.create'));
+        page_title()->setTitle(trans('plugins-blog::categories.create'));
 
-        return $formBuilder->create(PostForm::class)->renderForm();
+        $list = get_categories();
+
+        $categories = [];
+        foreach ($list as $row) {
+            $categories[$row->id] = $row->indent_text . ' ' . $row->name;
+        }
+        $categories = [0 => trans('plugins-blog::categories.none')] + $categories;
+
+        return view('plugins-blog::category.create', compact('categories'));
     }
 
     /**
-     * @param PostRequest $request
+     * @param CategoryRequest $request
      * @param StoreTagService $tagService
      * @param StoreCategoryService $categoryService
      * @param BaseHttpResponse $response
@@ -69,29 +80,22 @@ class CategoryController extends BaseAdminController
      * @author TrinhLe
      */
     public function postCreate(
-        PostRequest $request,
-        StoreTagService $tagService,
-        StoreCategoryService $categoryService,
+        CategoryRequest $request,
         BaseHttpResponse $response
     ) {
-        /**
-         * @var Post $post
-         */
-        $post = $this->postRepository->createOrUpdate(array_merge($request->input(), [
+
+        $category = $this->categoryRepository->createOrUpdate(array_merge($request->input(), [
             'author_id'   => Auth::user()->getKey(),
-            'is_featured' => $request->input('is_featured', false),
+            'is_featured' => filter_var($request->input('is_featured', false), FILTER_VALIDATE_BOOLEAN),
+            'is_default'  => filter_var($request->input('is_default', false), FILTER_VALIDATE_BOOLEAN),
         ]));
 
-        event(new CreatedContentEvent(POST_MODULE_SCREEN_NAME, $request, $post));
-
-        $tagService->execute($request, $post);
-
-        $categoryService->execute($request, $post);
+        event(new CreatedContentEvent(BLOG_CATEGORY_MODULE_SCREEN_NAME, $request, $category));
 
         return $response
-            ->setPreviousUrl(route('posts.list'))
-            ->setNextUrl(route('posts.edit', $post->id))
-            ->setMessage(trans('core/base::notices.create_success_message'));
+            ->setPreviousUrl(route('admin.blog.category.list'))
+            ->setNextUrl(route('admin.blog.category.edit', $category->id))
+            ->setMessage(trans('core-base::notices.create_success_message'));
     }
 
     /**
@@ -101,20 +105,26 @@ class CategoryController extends BaseAdminController
      * @return string
      * @author TrinhLe
      */
-    public function getEdit($id, FormBuilder $formBuilder, Request $request)
+    public function getEdit($id, Request $request)
     {
-        $post = $this->postRepository->findOrFail($id);
+        $category = $this->categoryRepository->findOrFail($id);
 
-        event(new BeforeEditContentEvent(POST_MODULE_SCREEN_NAME, $request, $post));
+        page_title()->setTitle(trans('plugins-blog::categories.edit') . ' #' . $id);
 
-        page_title()->setTitle(trans('plugins-blog::posts.edit') . ' #' . $id);
+        $list = get_categories();
 
-        return $formBuilder->create(PostForm::class, ['model' => $post])->renderForm();
+        $categories = [];
+        foreach ($list as $row) {
+            $categories[$row->id] = $row->indent_text . ' ' . $row->name;
+        }
+        $categories = [0 => trans('plugins-blog::categories.none')] + $categories;
+
+        return view('plugins-blog::category.edit', compact('categories', 'category'));
     }
 
     /**
      * @param int $id
-     * @param PostRequest $request
+     * @param CategoryRequest $request
      * @param StoreTagService $tagService
      * @param StoreCategoryService $categoryService
      * @param BaseHttpResponse $response
@@ -123,27 +133,22 @@ class CategoryController extends BaseAdminController
      */
     public function postEdit(
         $id,
-        PostRequest $request,
-        StoreTagService $tagService,
-        StoreCategoryService $categoryService,
+        CategoryRequest $request,
         BaseHttpResponse $response
     ) {
-        $post = $this->postRepository->findOrFail($id);
+        $category = $this->categoryRepository->findOrFail($id);
 
-        $post->fill($request->input());
-        $post->is_featured = $request->input('is_featured', false);
+        $category->fill($request->input());
+        $category->is_featured = filter_var($request->input('is_featured', false), FILTER_VALIDATE_BOOLEAN);
+        $category->is_default = filter_var($request->input('is_default', false), FILTER_VALIDATE_BOOLEAN);
 
-        $this->postRepository->createOrUpdate($post);
+        $this->categoryRepository->createOrUpdate($category);
 
-        event(new UpdatedContentEvent(POST_MODULE_SCREEN_NAME, $request, $post));
-
-        $tagService->execute($request, $post);
-
-        $categoryService->execute($request, $post);
+        event(new UpdatedContentEvent(BLOG_CATEGORY_MODULE_SCREEN_NAME, $request, $category));
 
         return $response
-            ->setPreviousUrl(route('posts.list'))
-            ->setMessage(trans('core/base::notices.update_success_message'));
+            ->setPreviousUrl(route('admin.blog.category.list'))
+            ->setMessage(trans('core-base::notices.update_success_message'));
     }
 
     /**
@@ -155,17 +160,20 @@ class CategoryController extends BaseAdminController
     public function getDelete(Request $request, $id, BaseHttpResponse $response)
     {
         try {
-            $post = $this->postRepository->findOrFail($id);
-            $this->postRepository->delete($post);
+            $category = $this->categoryRepository->findOrFail($id);
 
-            event(new DeletedContentEvent(POST_MODULE_SCREEN_NAME, $request, $post));
+            if (!$category->is_default) {
+                $this->categoryRepository->delete($category);
+                event(new DeletedContentEvent(BLOG_CATEGORY_MODULE_SCREEN_NAME, $request, $category));
+                return $response->setMessage(trans('core-base::notices.delete_success_message'));
+            }
 
-            return $response
-                ->setMessage(trans('core/base::notices.delete_success_message'));
-        } catch (Exception $exception) {
+            return $response->setError()
+                            ->setMessage(trans('Category is default'));
+        } catch (Exception $ex) {
             return $response
                 ->setError()
-                ->setMessage(trans('core/base::notices.cannot_delete'));
+                ->setMessage(trans('core-base::notices.cannot_delete'));
         }
     }
 }

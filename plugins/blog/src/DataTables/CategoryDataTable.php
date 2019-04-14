@@ -18,7 +18,7 @@ class CategoryDataTable extends DataTableAbstract
         $data = $this->datatables
             ->of($this->query())
             ->editColumn('name', function ($item) {
-                return anchor_link(route('admin.blog.category.edit', $item->id), $item->name);
+                return anchor_link(route('admin.blog.category.edit', $item->id), $item->indent_text . ' ' . $item->name);
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
@@ -59,20 +59,20 @@ class CategoryDataTable extends DataTableAbstract
                 'title' => trans('core-base::tables.id'),
                 'footer' => trans('core-base::tables.id'),
                 'width' => '20px',
-                'class' => 'searchable searchable_id',
+                // 'class' => 'searchable searchable_id',
             ],
             'name' => [
                 'name' => 'name',
                 'title' => trans('core-base::tables.name'),
                 'footer' => trans('core-base::tables.name'),
-                'class' => 'text-left searchable',
+                // 'class' => 'text-left searchable',
             ],
             'created_at' => [
                 'name' => 'created_at',
                 'title' => trans('core-base::tables.created_at'),
                 'footer' => trans('core-base::tables.created_at'),
                 'width' => '100px',
-                'class' => 'searchable',
+                // 'class' => 'searchable',
             ],
             'status' => [
                 'name' => 'status',
