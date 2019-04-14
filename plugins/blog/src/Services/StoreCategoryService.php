@@ -16,7 +16,7 @@ class StoreCategoryService
     /**
      * StoreCategoryServiceAbstract constructor.
      * @param CategoryInterface $categoryRepository
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function __construct(CategoryInterface $categoryRepository)
     {

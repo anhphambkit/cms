@@ -40,5 +40,21 @@ class FormServiceProvider extends ServiceProvider
             'value' => false,
             'attributes' => [],
         ]);
+
+        /**
+         * Custom checkbox
+         * Every checkbox will not have the same name
+         */
+        Form::component('customCheckbox', 'core-base::elements.custom-checkbox', [
+            /**
+             * @var array $values
+             * @template: [
+             *      [string $name, string $value, string $label, bool $selected, bool $disabled],
+             *      [string $name, string $value, string $label, bool $selected, bool $disabled],
+             *      [string $name, string $value, string $label, bool $selected, bool $disabled],
+             * ]
+             */
+            'values',
+        ]);
     }
 }

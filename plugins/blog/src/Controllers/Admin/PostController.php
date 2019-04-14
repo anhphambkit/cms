@@ -17,6 +17,7 @@ use Core\Base\Events\CreatedContentEvent;
 use Core\Base\Events\DeletedContentEvent;
 use Core\Base\Events\UpdatedContentEvent;
 use Plugins\Blog\DataTables\PostDataTable;
+use Plugins\Blog\Requests\PostRequest;
 
 class PostController extends BaseAdminController
 {
@@ -67,14 +68,16 @@ class PostController extends BaseAdminController
 
     /**
      * @param FormBuilder $formBuilder
-     * @return string
+     * @return Illuminate\View\View
      * @author TrinhLe
      */
-    public function getCreate(FormBuilder $formBuilder)
+    public function getCreate()
     {
         page_title()->setTitle(trans('plugins-blog::posts.create'));
 
-        return $formBuilder->create(PostForm::class)->renderForm();
+        $categories = get_categories_with_children();
+
+        return view('plugins-blog::post.create', compact('categories'));
     }
 
     /**
@@ -99,16 +102,16 @@ class PostController extends BaseAdminController
             'is_featured' => $request->input('is_featured', false),
         ]));
 
-        event(new CreatedContentEvent(POST_MODULE_SCREEN_NAME, $request, $post));
+        event(new CreatedContentEvent(BLOG_POST_MODULE_SCREEN_NAME, $request, $post));
 
         $tagService->execute($request, $post);
 
         $categoryService->execute($request, $post);
 
         return $response
-            ->setPreviousUrl(route('posts.list'))
-            ->setNextUrl(route('posts.edit', $post->id))
-            ->setMessage(trans('core/base::notices.create_success_message'));
+            ->setPreviousUrl(route('admin.blog.post.list'))
+            ->setNextUrl(route('admin.blog.post.edit', $post->id))
+            ->setMessage(trans('core-base::notices.create_success_message'));
     }
 
     /**
@@ -122,7 +125,7 @@ class PostController extends BaseAdminController
     {
         $post = $this->postRepository->findOrFail($id);
 
-        event(new BeforeEditContentEvent(POST_MODULE_SCREEN_NAME, $request, $post));
+        event(new BeforeEditContentEvent(BLOG_POST_MODULE_SCREEN_NAME, $request, $post));
 
         page_title()->setTitle(trans('plugins-blog::posts.edit') . ' #' . $id);
 
@@ -152,7 +155,7 @@ class PostController extends BaseAdminController
 
         $this->postRepository->createOrUpdate($post);
 
-        event(new UpdatedContentEvent(POST_MODULE_SCREEN_NAME, $request, $post));
+        event(new UpdatedContentEvent(BLOG_POST_MODULE_SCREEN_NAME, $request, $post));
 
         $tagService->execute($request, $post);
 
@@ -175,7 +178,7 @@ class PostController extends BaseAdminController
             $post = $this->postRepository->findOrFail($id);
             $this->postRepository->delete($post);
 
-            event(new DeletedContentEvent(POST_MODULE_SCREEN_NAME, $request, $post));
+            event(new DeletedContentEvent(BLOG_POST_MODULE_SCREEN_NAME, $request, $post));
 
             return $response
                 ->setMessage(trans('core/base::notices.delete_success_message'));

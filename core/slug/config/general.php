@@ -3,12 +3,7 @@
 return [
     'pattern'   => '--slug--',
     'supported' => [
-        'page',
-        'blog-tag',
-        'blog-category'
+        'page'
     ],
-    'prefixes'  => [
-    	'blog-tag' => '/blog/tag/',
-    	'blog-category' => '/blog/category/'
-    ],
+    'prefixes'  => [],
 ];

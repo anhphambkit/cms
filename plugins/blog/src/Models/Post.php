@@ -47,7 +47,7 @@ class Post extends Eloquent
     /**
      * @var string
      */
-    protected $screen = POST_MODULE_SCREEN_NAME;
+    protected $screen = BLOG_POST_MODULE_SCREEN_NAME;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

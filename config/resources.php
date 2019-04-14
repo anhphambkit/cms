@@ -19,6 +19,7 @@ return [
 		'ckeditor-js'             => ['theme' => 'app-assets/vendors/js/editors/ckeditor/ckeditor.js'],
 		'tinymce-js'              => ['theme' => 'app-assets/vendors/js/editors/tinymce/tinymce.js'],
 		'slug-js'              => ['cdn' => 'backend/core/slug/assets/js/slug.js'],
+		'inputtag-js'              => ['cdn' => 'backend/core/base/packages/bootstrap-tagsinput/bootstrap-tagsinput.min.js'],
 
 		/* css */
 		'vendors-css'              => ['theme' => 'app-assets/css/vendors.css'],
@@ -34,6 +35,7 @@ return [
 		'bootstrap-datepicker-css' => ['theme' => 'plugins/bootstrap-datepicker/bootstrap-datepicker.min.css'],
 		'datatable-css'            => ['theme' => 'app-assets/vendors/css/tables/datatable/datatables.min.css'],
 		'datatable-button-css'     => ['theme' => 'app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css'],
+		'inputtag-css'              => ['cdn' => 'backend/core/base/packages/bootstrap-tagsinput/bootstrap-tagsinput.css'],
 	],
 
 	'frontend-assets' => [
@@ -64,7 +66,8 @@ return [
 			'toastr-css',
 			'jquery-ui-css',
 			'cms-core-css',
-			'datatable-button-css'     
+			'datatable-button-css',
+			'inputtag-css',
 		],
 		'js' => [
 			'vendors-js' ,
@@ -77,7 +80,8 @@ return [
 			'datatable-js',
 			'datatable-button-js',
 			'editor-js',
-			'slug-js'
+			'slug-js',
+			'inputtag-js',
 		]
 	]
 

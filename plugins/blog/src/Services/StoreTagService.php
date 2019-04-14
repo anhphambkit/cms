@@ -18,7 +18,7 @@ class StoreTagService
     /**
      * StoreTagService constructor.
      * @param TagInterface $tagRepository
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function __construct(TagInterface $tagRepository)
     {

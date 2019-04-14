@@ -71,6 +71,22 @@ class BlogServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+        $screens = [BLOG_POST_MODULE_SCREEN_NAME, BLOG_CATEGORY_MODULE_SCREEN_NAME, BLOG_TAG_MODULE_SCREEN_NAME];
+        $prefixes = [
+            BLOG_POST_MODULE_SCREEN_NAME     => '/blog/post/',
+            BLOG_CATEGORY_MODULE_SCREEN_NAME => 'blog/category/',
+            BLOG_TAG_MODULE_SCREEN_NAME      => '/blog/tag/'
+        ];
+
+
+        $this->app->booted(function () use ($screens, $prefixes){
+            config([
+                'core-slug.general.supported' => array_merge(config('core-slug.general.supported'), $screens),
+            ]);
+
+            config([
+                'core-slug.general.prefixes' => array_merge(config('core-slug.general.prefixes'), $prefixes),
+            ]);
+        });
     }
 }
