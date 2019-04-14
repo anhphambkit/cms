@@ -52,6 +52,8 @@ class HookServiceProvider extends ServiceProvider
      */
     public function getItemSlug($data, $model, $screen = null)
     {
+        return $data;
+        
         if (!empty($screen) &&
             in_array($screen, config('core-slug.general.supported')) &&
             method_exists($model, 'getScreen') &&

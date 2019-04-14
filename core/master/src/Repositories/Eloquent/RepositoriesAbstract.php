@@ -18,6 +18,11 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     protected $model;
 
     /**
+     * @var String
+     */
+    protected $screen = '';
+
+    /**
      * UserRepository constructor.
      * @param Model|Eloquent $model
      * @author TrinhLe
@@ -26,6 +31,28 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     {
         $this->model = $model;
         $this->originalModel = $model;
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getScreen(): string
+    {
+        return $this->screen;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function applyBeforeExecuteQuery($data, $screen, $is_single = false)
+    {
+        if($is_single)
+            $data = apply_filters(BASE_FILTER_BEFORE_GET_FRONT_PAGE_ITEM, $data, $this->originalModel, $screen);
+
+        $this->resetModel();
+
+        return $data;
     }
 
     /**
@@ -86,7 +113,8 @@ abstract class RepositoriesAbstract implements RepositoryInterface
      */
     public function findOrFail($id, array $with = [])
     {
-        $data = $this->make($with)->where('id', $id);
+        $data = $this->make($with)->where($this->originalModel->getTable().'.id', $id);
+        $data = $this->applyBeforeExecuteQuery($data, $this->screen, true);
         $result = $data->first();
         $this->resetModel();
 

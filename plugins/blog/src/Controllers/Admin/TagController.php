@@ -85,10 +85,10 @@ class TagController extends BaseAdminController
      * @return string
      * @author TrinhLe
      */
-    public function getEdit($id, Request $request, FormBuilder $formBuilder)
+    public function getEdit($id, Request $request)
     {
         $tag = $this->tagRepository->findOrFail($id);
-
+        
         page_title()->setTitle(trans('plugins-blog::tags.edit') . ' #' . $id);
 
         return view('plugins-blog::tag.edit',compact('tag'));
@@ -110,8 +110,9 @@ class TagController extends BaseAdminController
         event(new UpdatedContentEvent(BLOG_TAG_MODULE_SCREEN_NAME, $request, $tag));
 
         return $response
-            ->setPreviousUrl(route('tags.list'))
-            ->setMessage(trans('core/base::notices.update_success_message'));
+            ->setPreviousUrl(route('admin.blog.tag.list'))
+            ->setNextUrl(route('admin.blog.tag.edit', $tag->id))
+            ->setMessage(trans('core-base::notices.create_success_message'));
     }
 
     /**

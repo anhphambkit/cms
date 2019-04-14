@@ -36,6 +36,22 @@ trait CachePackageRepositoriesTrait
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getScreen(): string
+    {
+        return $this->repository->getScreen();
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function applyBeforeExecuteQuery($data, $screen, $is_single = false)
+    {
+        return $this->repository->applyBeforeExecuteQuery($data, $screen, $is_single);
+    }
+
+    /**
      * Retrieve model by id regardless of status.
      *
      * @param int $id model ID

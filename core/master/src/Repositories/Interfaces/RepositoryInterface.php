@@ -15,6 +15,20 @@ interface RepositoryInterface
     public function getModel();
 
     /**
+     * @param $data
+     * @param $screen
+     * @param bool $is_single
+     * @return Builder
+     * @author TrinhLe
+     */
+    public function applyBeforeExecuteQuery($data, $screen, $is_single = false);
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getScreen();
+
+    /**
      * Get table name.
      *
      * @return string
