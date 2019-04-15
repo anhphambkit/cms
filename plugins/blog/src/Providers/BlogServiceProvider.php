@@ -9,15 +9,15 @@ use Plugins\Blog\Repositories\Interfaces\BlogRepositories;
 
 use Plugins\Blog\Repositories\Interfaces\PostRepositories;
 use Plugins\Blog\Repositories\Eloquent\EloquentPostRepositories;
-use Plugins\Blog\Repositories\Cache\CachePostRepositories;
+use Plugins\Blog\Repositories\Caches\CachePostRepositories;
 
 use Plugins\Blog\Repositories\Interfaces\CategoryRepositories;
 use Plugins\Blog\Repositories\Eloquent\EloquentCategoryRepositories;
-use Plugins\Blog\Repositories\Cache\CacheCategoryRepositories;
+use Plugins\Blog\Repositories\Caches\CacheCategoryRepositories;
 
 use Plugins\Blog\Repositories\Interfaces\TagRepositories;
 use Plugins\Blog\Repositories\Eloquent\EloquentTagRepositories;
-use Plugins\Blog\Repositories\Cache\CacheTagRepositories;
+use Plugins\Blog\Repositories\Caches\CacheTagRepositories;
 
 class BlogServiceProvider extends ServiceProvider
 {

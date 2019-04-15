@@ -46,7 +46,7 @@ class MakeBindContentRepository extends Command
         return [
             "use {$coreNamespace}\\{$package}\Repositories\\Interfaces\\{$repo}Repositories;",
             "use {$coreNamespace}\\{$package}\Repositories\Eloquent\Eloquent{$repo}Repositories;",
-            "use {$coreNamespace}\\{$package}\Repositories\Cache\Cache{$repo}Repositories;",
+            "use {$coreNamespace}\\{$package}\Repositories\Caches\Cache{$repo}Repositories;",
         ];
     }
 
