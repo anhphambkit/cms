@@ -76,6 +76,10 @@ class Post extends Eloquent
         return $this->belongsToMany(Category::class, 'post_categories');
     }
 
+    /**
+     * Description
+     * @return type
+     */
     public function author()
     {
         return $this->morphTo();

@@ -64,6 +64,7 @@ class PostDataTable extends DataTableAbstract
                 'posts.status',
                 'posts.updated_at',
                 'posts.author_id',
+                'posts.author_type',
             ]);
       
        return $query;

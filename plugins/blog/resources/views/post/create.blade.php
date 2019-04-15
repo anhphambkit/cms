@@ -79,15 +79,6 @@
                         {!! Form::error('image', $errors) !!}
                     </div>
                 </div>
-                <div class="widget meta-boxes">
-                    <div class="widget-title">
-                        <h4><span class="required">Banner</span></h4>
-                    </div>
-                    <div class="widget-body">
-                        {!! Form::mediaImage('banner', old('banner')) !!}
-                        {!! Form::error('banner', $errors) !!}
-                    </div>
-                </div>
 
                 @php do_action(BASE_ACTION_META_BOXES, BLOG_POST_MODULE_SCREEN_NAME, 'top') @endphp
                 @php do_action(BASE_ACTION_META_BOXES, BLOG_POST_MODULE_SCREEN_NAME, 'side') @endphp

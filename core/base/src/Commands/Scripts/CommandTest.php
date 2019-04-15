@@ -7,6 +7,7 @@ use Illuminate\Support\Composer;
 use Core\Media\Models\MediaFile;
 use Core\Media\Models\MediaFolder;
 use Illuminate\Contracts\Filesystem\Factory;
+use Core\User\Models\User;
 
 class CommandTest extends Command
 {
@@ -50,6 +51,6 @@ class CommandTest extends Command
      */
     public function handle()
     {
-       
+        
     }
 }
