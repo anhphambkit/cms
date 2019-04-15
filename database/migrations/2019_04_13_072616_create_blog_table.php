@@ -18,7 +18,7 @@ class CreateBlogTable extends Migration
             $table->string('name', 120);
             $table->integer('parent_id')->unsigned()->default(0);
             $table->string('description', 400)->nullable();
-            $table->string('status', 60)->default('publish');
+            $table->boolean('status')->default(true);
             $table->integer('author_id');
             $table->string('author_type', 255)->default(User::class);
             $table->string('icon', 60)->nullable();
@@ -35,7 +35,7 @@ class CreateBlogTable extends Migration
             $table->string('author_type', 255)->default(User::class);
             $table->string('description', 400)->nullable()->default('');
             $table->integer('parent_id')->unsigned()->default(0);
-            $table->string('status', 60)->default('publish');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
 
@@ -44,7 +44,7 @@ class CreateBlogTable extends Migration
             $table->string('name', 255);
             $table->string('description', 400)->nullable();
             $table->text('content')->nullable();
-            $table->string('status', 60)->default('publish');
+            $table->boolean('status')->default(true);
             $table->integer('author_id');
             $table->string('author_type', 255)->default(User::class);
             $table->tinyInteger('is_featured')->unsigned()->default(0);

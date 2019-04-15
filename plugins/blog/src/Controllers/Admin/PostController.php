@@ -118,18 +118,25 @@ class PostController extends BaseAdminController
      * @param int $id
      * @param FormBuilder $formBuilder
      * @param Request $request
-     * @return string
+     * @return Illuminate\View\View
      * @author TrinhLe
      */
-    public function getEdit($id, FormBuilder $formBuilder, Request $request)
+    public function getEdit($id, Request $request)
     {
         $post = $this->postRepository->findOrFail($id);
 
-        event(new BeforeEditContentEvent(BLOG_POST_MODULE_SCREEN_NAME, $request, $post));
-
         page_title()->setTitle(trans('plugins-blog::posts.edit') . ' #' . $id);
 
-        return $formBuilder->create(PostForm::class, ['model' => $post])->renderForm();
+        $selected_categories = [];
+        if ($post->categories != null) {
+            $selected_categories = $post->categories->pluck('id')->all();
+        }
+
+        $tags       = $post->tags->pluck('name')->all();
+        $tags       = implode(',', $tags);
+        $categories = get_categories_with_children();
+        
+        return view('plugins-blog::post.edit', compact('post', 'selected_categories', 'categories', 'tags'));
     }
 
     /**
@@ -162,8 +169,8 @@ class PostController extends BaseAdminController
         $categoryService->execute($request, $post);
 
         return $response
-            ->setPreviousUrl(route('posts.list'))
-            ->setMessage(trans('core/base::notices.update_success_message'));
+            ->setPreviousUrl(route('admin.blog.post.list'))
+            ->setMessage(trans('core-base::notices.update_success_message'));
     }
 
     /**
@@ -181,11 +188,11 @@ class PostController extends BaseAdminController
             event(new DeletedContentEvent(BLOG_POST_MODULE_SCREEN_NAME, $request, $post));
 
             return $response
-                ->setMessage(trans('core/base::notices.delete_success_message'));
+                ->setMessage(trans('core-base::notices.delete_success_message'));
         } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage(trans('core/base::notices.cannot_delete'));
+                ->setMessage(trans('core-base::notices.cannot_delete'));
         }
     }
 }
