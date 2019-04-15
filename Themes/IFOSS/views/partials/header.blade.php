@@ -46,12 +46,30 @@
 
     <div class="submenu-navigation bg-white">
         <div class="container">
-            <ul>
-                <?php $menuNavigation = array('furniture','outdoor','lighting','decor','rugs','bed & bath','type business');
+            <ul class="submenu-navigation--wrapper">
+                <?php $menuNavigation = array('furniture','outdoor','lighting','decor','rugs','bed & bath');
                 foreach ($menuNavigation as $key => $value) {
                     ?>
                     <li><a href="#"><?php echo $value; ?></a></li>
                 <?php } ?>
+
+                <li class="has-megamenu">
+                    <a href="#">type business</a>
+                    <ul class="mega-menu">
+                        <?php for ($j=0; $j < 2; $j++) { ?>
+                        <li class="col-md-3">
+                            <span class="mega-menu-title">Business Categories</span>
+                            <ul class="sub-menu">
+                                <?php for ($i=0; $i < 4; $i++) { ?>
+                                <li>
+                                    <a href="#">Caterory <?php echo $i+1; ?></a>
+                                </li>
+                                <?php } ?>
+                            </ul>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

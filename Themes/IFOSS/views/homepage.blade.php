@@ -27,10 +27,10 @@
                 <div class="col-lg-9">
                     <div class="row">
                         <div class="col-lg-4 px-0 small-thumbnail">
-                            <img src="{{ URL::asset('themes/ifoss/assets/images/banner/banner3.jpg') }}"/>
+                            <img src="{{ URL::asset('themes/ifoss/assets/images/banner/banner3.jpg') }} "/>
                         </div>
                         <div class="col-lg-8 banner-advertisement--item horizontal-layout">
-                            <img src="{{ URL::asset('themes/ifoss/assets/images/banner/banner4.jpg') }}"/>
+                            <img src="{{ URL::asset('themes/ifoss/assets/images/banner/banner4.jpg') }} "/>
                             <div class="banner-advertisement--item--content">
                                 <div class="banner-advertisement--item--tag">furniture</div>
                                 <div class="banner-advertisement--item--title" style="max-width: 190px;">the living room’s</div>
@@ -39,7 +39,7 @@
                         </div>
 
                         <div class="col-lg-8 banner-advertisement--item horizontal-layout">
-                            <img src="{{ URL::asset('themes/ifoss/assets/images/banner/banner5.jpg') }}"/>
+                            <img src="{{ URL::asset('themes/ifoss/assets/images/banner/banner5.jpg') }} "/>
                             <div class="banner-advertisement--item--content">
                                 <div class="banner-advertisement--item--tag">Decor</div>
                                 <div class="banner-advertisement--item--title">new arrivals off 20%</div>
@@ -47,13 +47,14 @@
                             </div>
                         </div>
                         <div class="col-lg-4 px-0 small-thumbnail">
-                            <img src="{{ URL::asset('themes/ifoss/assets/images/banner/banner6.jpg') }}"/>
+                            <img src="{{ URL::asset('themes/ifoss/assets/images/banner/banner6.jpg') }} "/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
 
     <section class="banner-feature">
         <div class="container">
