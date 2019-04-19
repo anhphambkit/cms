@@ -210,7 +210,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @return array
      */
     public function getPermissionsAttribute($value)
@@ -221,4 +221,37 @@ class User extends Authenticatable
             return [];
         }
     }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
+    /**
+     * Returns the activations relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activations()
+    {
+        return $this->hasMany(Activation::class, 'user_id');
+    }
+
+    /**
+     * Set mutator for the "permissions" attribute.
+     *
+     * @param array $permissions
+     * @return void
+     */
+    public function setPermissionsAttribute(array $permissions)
+    {
+        $this->attributes['permissions'] = $permissions ? json_encode($permissions) : '';
+    }
+
 }
