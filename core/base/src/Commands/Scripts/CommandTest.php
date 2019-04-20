@@ -8,6 +8,7 @@ use Core\Media\Models\MediaFile;
 use Core\Media\Models\MediaFolder;
 use Illuminate\Contracts\Filesystem\Factory;
 use Core\User\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class CommandTest extends Command
 {
@@ -51,6 +52,8 @@ class CommandTest extends Command
      */
     public function handle()
     {
-        
+        $content = view('core-user::emails.reminder', ['link' => route('auth.reset.complete', ['token' => 123])])->render();
+        print_r($content);
+        print_r("\n");
     }
 }

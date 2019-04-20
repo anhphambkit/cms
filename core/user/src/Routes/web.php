@@ -41,4 +41,28 @@ $router->group(['prefix' => 'auth'], function (Router $router) {
 		'uses'       => 'LoginController@logout',
 		'middleware' => 'auth', 
     ]);
+
+    $router->get('reset', [
+		'as'         => 'auth.reset', 
+		'uses'       => 'ForgotPasswordController@showLinkRequestForm',
+		'middleware' => 'guest', 
+    ]);
+
+    $router->post('reset', [
+		'as'         => 'auth.reset', 
+		'uses'       => 'ForgotPasswordController@sendResetLinkEmail',
+		'middleware' => 'guest', 
+    ]);
+
+    $router->get('password/reset/{token}', [
+		'as'         => 'auth.reset.complete', 
+		'uses'       => 'ResetPasswordController@showResetForm',
+		'middleware' => 'guest', 
+    ]);
+
+    $router->post('password/reset', [
+		'as'         => 'auth.reset.complete.post', 
+		'uses'       => 'ResetPasswordController@reset',
+		'middleware' => 'guest', 
+    ]);
 });

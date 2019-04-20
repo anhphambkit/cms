@@ -7,6 +7,7 @@ use Elasticquent\ElasticquentTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Core\User\Traits\PermissionTrait;
 use Illuminate\Notifications\Notifiable;
+use Core\User\Events\ResetPasswordNotification;
 
 class User extends Authenticatable
 {

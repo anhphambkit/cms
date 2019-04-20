@@ -38,8 +38,8 @@ task('deploy:upload', function(){ //
     $folders = [
         // 'app',
         // 'config',
-        // 'core',
-        'plugins//blog',
+        'core//user',
+        // 'plugins//blog',
         // 'public//themes',
         // 'public//backend',
         // 'public//frontend',

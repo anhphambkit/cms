@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'admin_dir'          => env('ADMIN_DIR', 'admin'),
+    'admin_dir'          => env('ADMIN_DIR', 'admin/dashboard'),
     'version'            => env('VERSION', '2.3'),
     'plugin-default-img' => '/vendor/core/images/plugin.png',
     'plugin_path'        => base_path() . '/plugins',

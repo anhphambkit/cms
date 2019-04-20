@@ -10,6 +10,7 @@ use Core\Master\Facades\DashboardMenuFacade;
 
 use Core\Master\Facades\AdminBreadcrumbFacade;
 use Core\Master\Facades\PageTitleFacade;
+use Core\Master\Facades\MailVariableFacade;
 
 class MasterServiceProvider extends ServiceProvider
 {
@@ -29,5 +30,6 @@ class MasterServiceProvider extends ServiceProvider
         $loader->alias('PageTitle', PageTitleFacade::class);
         $loader->alias('AdminBreadcrumb', AdminBreadcrumbFacade::class);
         $loader->alias('DashboardMenu', DashboardMenuFacade::class);
+        $loader->alias('MailVariable', MailVariableFacade::class);
     }
 }
