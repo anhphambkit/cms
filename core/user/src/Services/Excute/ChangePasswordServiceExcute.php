@@ -38,13 +38,15 @@ class ChangePasswordServiceExcute extends CoreServiceAbstract implements ChangeP
             }
         }
 
-        $user = $this->userRepository->findById($request->input('id', Auth::user()->getKey()));
+        $userId = $request->input('id', Auth::user()->getKey());
+        $user   = $this->userRepository->findById($userId);
+        
         $this->userRepository->update(['id' => $user->id], [
             'password' => Hash::make($request->input('password')),
         ]);
 
-        Auth::logoutOtherDevices($request->input('password'));
-        // do_action(USER_ACTION_AFTER_UPDATE_PASSWORD, USER_MODULE_SCREEN_NAME, $request, $user);
+        if($userId === Auth::user()->getKey())
+            Auth::logoutOtherDevices($request->input('password'));
 
         return $user;
     }
