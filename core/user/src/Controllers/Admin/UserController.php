@@ -197,6 +197,8 @@ class UserController extends BaseAdminController{
      */
     public function postChangePassword($id, UpdatePasswordRequest $request, ChangePasswordServiceInterface $service)
     {
+        $request->merge(['id' => $id]);
+        
         $result = $service->execute($request);
 
         if ($result instanceof Exception) {
