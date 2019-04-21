@@ -45,12 +45,7 @@ $router->group(['prefix' => 'customer'], function (Router $router) {
         'as' => 'admin.customer.delete',
         'uses' => 'CustomerController@getDelete',
     ]);
-
-    $router->post('/change-password/{id}', [
-        'as' => 'admin.customer.change-password',
-        'uses' => 'UserController@postChangePassword',
-        'middleware' => 'access:customer.edit'
-    ]);
+    
 });
 
 	
