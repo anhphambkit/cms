@@ -18,7 +18,7 @@ return [
     [
         'name' => 'Delete',
         'flag' => 'user.delete',
-        'parent_flag' => 'role.index',
+        'parent_flag' => 'user.index',
     ],
     [
         'name' => 'Edit',
@@ -38,7 +38,7 @@ return [
     [
         'name' => 'Create',
         'flag' => 'role.create',
-        'parent_flag' => 'user.index',
+        'parent_flag' => 'role.index',
     ],
     [
         'name' => 'Edit',

@@ -62,6 +62,7 @@ abstract class CoreRequest extends FormRequest
      * @author TrinhLe
      */
     protected function afterPasses(){}
+    
     /**
      * Determine if the user is authorized to make this request.
      *

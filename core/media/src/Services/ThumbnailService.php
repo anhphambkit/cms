@@ -61,7 +61,7 @@ class ThumbnailService
 
     /**
      * ThumbnailService constructor.
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function __construct()
     {
@@ -84,7 +84,7 @@ class ThumbnailService
     /**
      * @param string $imagePath
      * @return ThumbnailService
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function setImage($imagePath)
     {
@@ -95,7 +95,7 @@ class ThumbnailService
 
     /**
      * @return string $imagePath
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function getImage()
     {
@@ -105,7 +105,7 @@ class ThumbnailService
     /**
      * @param double $rate
      * @return ThumbnailService
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function setRate($rate)
     {
@@ -116,7 +116,7 @@ class ThumbnailService
 
     /**
      * @return double $thumbRate
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function getRate()
     {
@@ -127,7 +127,7 @@ class ThumbnailService
      * @param $width
      * @param null $height
      * @return ThumbnailService
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function setSize($width, $height = null)
     {
@@ -143,7 +143,7 @@ class ThumbnailService
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function getSize()
     {
@@ -153,7 +153,7 @@ class ThumbnailService
     /**
      * @param string $destPath
      * @return ThumbnailService
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function setDestPath($destPath)
     {
@@ -164,7 +164,7 @@ class ThumbnailService
 
     /**
      * @return string $destPath
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function getDestPath()
     {
@@ -175,7 +175,7 @@ class ThumbnailService
      * @param integer $xCoord
      * @param integer $yCoord
      * @return ThumbnailService
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function setCoordinates($xCoord, $yCoord)
     {
@@ -187,7 +187,7 @@ class ThumbnailService
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function getCoordinates()
     {
@@ -197,7 +197,7 @@ class ThumbnailService
     /**
      * @param string $position
      * @return ThumbnailService
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function setFitPosition($position)
     {
@@ -208,7 +208,7 @@ class ThumbnailService
 
     /**
      * @return string $fitPosition
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function getFitPosition()
     {
@@ -218,7 +218,7 @@ class ThumbnailService
     /**
      * @param string $fileName
      * @return ThumbnailService
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function setFileName($fileName)
     {
@@ -229,7 +229,7 @@ class ThumbnailService
 
     /**
      * @return string $fileName
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function getFileName()
     {
@@ -240,7 +240,7 @@ class ThumbnailService
      * @param string $type
      * @param integer $quality
      * @return mixed
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function save($type = 'fit', $quality = 80)
     {

@@ -3,6 +3,7 @@
 namespace Plugins\Blog\Requests;
 
 use Core\Master\Requests\CoreRequest;
+use Plugins\Blog\Models\Category;
 
 class CategoryRequest extends CoreRequest
 {
@@ -14,10 +15,26 @@ class CategoryRequest extends CoreRequest
      */
     public function rules()
     {
+        $model = Category::class;
+        $id    = $this->route()->parameter('id');
+
         return [
             'name'        => 'required|max:120',
             'description' => 'max:400',
-            'slug'        => 'required'
+            'slug'        => 'required',
+            'parent_id'   => "mutiple_level_parent:{$id},{$model}"
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'parent_id.mutiple_level_parent' => 'Test custom message'
         ];
     }
 }

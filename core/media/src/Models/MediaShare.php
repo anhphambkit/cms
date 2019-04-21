@@ -16,7 +16,7 @@ class MediaShare extends Eloquent
      * The database table used by the model.
      *
      * @var string
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     protected $table = 'media_shares';
 
@@ -24,7 +24,7 @@ class MediaShare extends Eloquent
      * The date fields for the model.clear
      *
      * @var array
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
@@ -35,7 +35,7 @@ class MediaShare extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function user()
     {
@@ -47,7 +47,7 @@ class MediaShare extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function folder()
     {
@@ -59,7 +59,7 @@ class MediaShare extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function file()
     {

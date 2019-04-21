@@ -28,7 +28,7 @@ class MediaFolder extends Eloquent
 
     /**
      * @return int
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function isShared()
     {
@@ -37,7 +37,7 @@ class MediaFolder extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function files()
     {
@@ -49,7 +49,7 @@ class MediaFolder extends Eloquent
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function parentFolder()
     {
@@ -60,7 +60,7 @@ class MediaFolder extends Eloquent
     }
 
     /**
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     protected static function boot()
     {
@@ -123,7 +123,7 @@ class MediaFolder extends Eloquent
     }
 
     /**
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function __wakeup()
     {

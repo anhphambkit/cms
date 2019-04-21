@@ -25,11 +25,6 @@ $router->group(['prefix' => 'customer', 'middleware' => ['customer.guest']], fun
 		'as'         => 'public.customer.login', 
 		'uses'       => 'LoginController@login',
     ]);
-
-    $router->post('register', [ 
-		'as'         => 'public.customer.register', 
-		'uses'       => 'WebController@showRegisterForm',
-    ]);
    
     $router->get('resend-confirmation/{id}', [
         'as'         => 'public.customer.resend_confirmation', 

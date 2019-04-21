@@ -57,7 +57,7 @@ class CreateUserCommand extends Command
      * Create a superuser.
      *
      * @return bool
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     protected function createSuperUser()
     {
@@ -89,7 +89,7 @@ class CreateUserCommand extends Command
     /**
      * @param $message
      * @param string $rules
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     protected function askWithValidate($message, string $rules)
     {
@@ -108,7 +108,7 @@ class CreateUserCommand extends Command
      * @param array $data
      * @param array $rules
      * @return array
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     protected function validate(array $data, array $rules)
     {
