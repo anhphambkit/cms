@@ -2,6 +2,7 @@
 
 namespace Plugins\Product\Models;
 
+use Core\User\Models\User;
 use Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -93,5 +94,22 @@ class Product extends Eloquent
     public function productMaterials()
     {
         return $this->belongsToMany(ProductMaterial::class, 'product_materials_relation');
+    }
+
+    /**
+     * Get the gallery for the product.
+     */
+    public function galleries()
+    {
+        return $this->hasMany(ProductGallery::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @author AnhPham
+     */
+    public function createdByUser()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

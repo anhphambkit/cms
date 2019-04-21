@@ -10,8 +10,10 @@ namespace Plugins\Product\Controllers\Admin;
 
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Plugins\Product\DataTables\ManufacturerDataTable;
 use Plugins\Product\Repositories\Interfaces\ManufacturerRepositories;
+use Plugins\Product\Requests\ManufacturerRequest;
 
 class ManufacturerController extends BaseAdminController
 {
@@ -57,14 +59,12 @@ class ManufacturerController extends BaseAdminController
     }
 
     /**
-     * Insert new Product into database
-     *
+     * @param ManufacturerRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postCreate(Request $request)
+    public function postCreate(ManufacturerRequest $request)
     {
-        $manufacturer = $this->manufacturerRepository->createOrUpdate($request->input());
+        $manufacturer = $this->manufacturerRepository->createOrUpdate(array_merge($request->input(), ['created_by' => Auth::id()]));
 
         do_action(BASE_ACTION_AFTER_CREATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $manufacturer);
 
@@ -96,16 +96,16 @@ class ManufacturerController extends BaseAdminController
 
     /**
      * @param $id
+     * @param ManufacturerRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postEdit($id, Request $request)
+    public function postEdit($id, ManufacturerRequest $request)
     {
         $manufacturer = $this->manufacturerRepository->findById($id);
         if (empty($manufacturer)) {
             abort(404);
         }
-        $manufacturer->fill($request->input());
+        $manufacturer->fill(array_merge($request->input(), ['updated_by' => Auth::id()]));
 
         $this->manufacturerRepository->createOrUpdate($manufacturer);
 

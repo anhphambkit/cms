@@ -1,10 +1,17 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: AnhPham
+ * Date: 2019-04-22
+ * Time: 00:16
+ */
 
 namespace Plugins\Product\Requests;
 
+
 use Core\Master\Requests\CoreRequest;
 
-class ProductRequest extends CoreRequest
+class ProductMaterialRequest extends CoreRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -16,13 +23,6 @@ class ProductRequest extends CoreRequest
     {
         return [
             'name' => 'required',
-            'upc' => 'required',
-            'sku' => 'required',
-            'category_id' => 'required',
-            'manufacturer_id' => 'required',
-            'image_gallery' => 'required',
-            'price' => 'required',
-            'inventory' => 'required',
         ];
     }
 }

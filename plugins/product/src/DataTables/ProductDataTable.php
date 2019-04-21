@@ -20,11 +20,11 @@ class ProductDataTable extends DataTableAbstract
             ->editColumn('name', function ($item) {
                 return anchor_link(route('admin.product.edit', $item->id), $item->name);
             })
-            ->editColumn('checkbox', function ($item) {
-                return table_checkbox($item->id);
-            })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
+            })
+            ->editColumn('created_by', function ($item) {
+                return $item->createdByUser ? $item->createdByUser->getFullName() : null;
             })
             ->editColumn('status', function ($item) {
                 return table_status($item->status);
@@ -55,6 +55,7 @@ class ProductDataTable extends DataTableAbstract
            'products.image_feature',
            'products.name',
            'products.sku',
+           'products.created_by',
            'products.created_at',
            'products.status'
        ]);
@@ -94,6 +95,12 @@ class ProductDataTable extends DataTableAbstract
                 'name' => 'products.sku',
                 'title' => trans('plugins-product::product.form.sku'),
                 'footer' => trans('plugins-product::product.form.sku'),
+                'class' => 'text-left searchable',
+            ],
+            'created_by' => [
+                'name' => 'products.created_by',
+                'title' => trans('core-base::tables.created_by'),
+                'footer' => trans('core-base::tables.created_by'),
                 'class' => 'text-left searchable',
             ],
             'created_at' => [

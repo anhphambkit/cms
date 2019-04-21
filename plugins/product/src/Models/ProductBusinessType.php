@@ -8,6 +8,7 @@
 
 namespace Plugins\Product\Models;
 
+use Core\User\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
@@ -41,5 +42,14 @@ class ProductBusinessType extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_business_types_relation');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @author AnhPham
+     */
+    public function createdByUser()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

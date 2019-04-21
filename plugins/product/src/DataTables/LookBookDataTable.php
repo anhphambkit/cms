@@ -26,8 +26,8 @@ class LookBookDataTable extends DataTableAbstract
             ->editColumn('name', function ($item) {
                 return anchor_link(route('admin.product.look_book.edit', $item->id), $item->name);
             })
-            ->editColumn('checkbox', function ($item) {
-                return table_checkbox($item->id);
+            ->editColumn('created_by', function ($item) {
+                return $item->createdByUser ? $item->createdByUser->getFullName() : null;
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
@@ -56,9 +56,14 @@ class LookBookDataTable extends DataTableAbstract
         /**
          * @var \Eloquent $model
          */
-        $query = $model->select(['look_books.id',
-            'look_books.image',
-            'look_books.name', 'look_books.created_at']);
+        $query = $model->select(
+            [
+                'look_books.id',
+                'look_books.image',
+                'look_books.name',
+                'look_books.created_by',
+                'look_books.created_at'
+            ]);
         return $query;
     }
 
@@ -89,6 +94,12 @@ class LookBookDataTable extends DataTableAbstract
                 'name' => 'look_books.name',
                 'title' => trans('core-base::tables.name'),
                 'footer' => trans('core-base::tables.name'),
+                'class' => 'text-left searchable',
+            ],
+            'created_by' => [
+                'name' => 'products.created_by',
+                'title' => trans('core-base::tables.created_by'),
+                'footer' => trans('core-base::tables.created_by'),
                 'class' => 'text-left searchable',
             ],
             'created_at' => [

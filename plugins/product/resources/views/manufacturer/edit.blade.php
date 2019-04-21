@@ -27,14 +27,8 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('manufacturer_image')) has-error @endif">
-                                        <label class="control-label required" for="role">{{ trans('plugins-product::manufacturer.form.manufacturer_image') }}</label>
-                                        {!! Form::mediaImage('manufacturer_image', $manufacturer->manufacturer_image, [ 'action' => 'select-image' ]) !!}
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="form-group col-md-12 mb-2 @if ($errors->has('policy')) has-error @endif">
-                                        <label for="name">{{ trans('core-base::forms.policy') }}</label>
+                                        <label for="name">{{ trans('plugins-product::manufacturer.form.policy') }}</label>
                                         {!! render_editor('policy', $manufacturer->policy, true) !!}
                                         {!! Form::error('policy', $errors) !!}
                                     </div>
@@ -48,6 +42,21 @@
             <div class="col-md-3 right-sidebar">
                 @include('core-base::elements.form-actions')
                 @include('core-base::elements.forms.status', ['selected' => $manufacturer->status])
+                {{-- Image--}}
+                <div class="widget meta-boxes">
+                    <div class="widget-title">
+                        <h4>
+                            <span class="required @if ($errors->has('manufacturer_image')) has-error @endif">
+                                <label class="control-label required" for="role">{{ trans('plugins-product::manufacturer.form.manufacturer_image') }}</label>
+                            </span>
+                        </h4>
+                    </div>
+                    <div class="widget-body">
+                        {!! Form::mediaImage('manufacturer_image', $manufacturer->manufacturer_image, [ 'action' => 'select-image' ]) !!}
+                        {!! Form::error('manufacturer_image', $errors) !!}
+                    </div>
+                </div>
+                {{--End Image--}}
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'top', $manufacturer) @endphp
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'side', $manufacturer) @endphp
             </div>

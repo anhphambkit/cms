@@ -26,8 +26,8 @@ class ProductColorDataTable extends DataTableAbstract
             ->editColumn('name', function ($item) {
                 return anchor_link(route('admin.product.color.edit', $item->id), $item->name);
             })
-            ->editColumn('checkbox', function ($item) {
-                return table_checkbox($item->id);
+            ->editColumn('created_by', function ($item) {
+                return $item->createdByUser ? $item->createdByUser->getFullName() : null;
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
@@ -56,9 +56,15 @@ class ProductColorDataTable extends DataTableAbstract
         /**
          * @var \Eloquent $model
          */
-        $query = $model->select(['product_colors.id',
-            'product_colors.code',
-            'product_colors.name', 'product_colors.created_at', 'product_colors.status']);
+        $query = $model->select(
+            [
+                'product_colors.id',
+                'product_colors.code',
+                'product_colors.name',
+                'product_colors.created_by',
+                'product_colors.created_at',
+                'product_colors.status'
+            ]);
         return $query;
     }
 
@@ -89,6 +95,12 @@ class ProductColorDataTable extends DataTableAbstract
                 'footer' => trans('core-base::tables.code'),
                 'class' => 'text-left searchable',
                 'render' => '"<span class=\"minicolor-preview\"><span class=\"minicolor-square-box\" style=\"background-color: " + data + ";\"></span></span><span class=\"product-color-attr\">" + data + "</span> "'
+            ],
+            'created_by' => [
+                'name' => 'products.created_by',
+                'title' => trans('core-base::tables.created_by'),
+                'footer' => trans('core-base::tables.created_by'),
+                'class' => 'text-left searchable',
             ],
             'created_at' => [
                 'name' => 'product_colors.created_at',

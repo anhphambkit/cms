@@ -26,8 +26,8 @@ class ProductBusinessTypeDataTable extends DataTableAbstract
             ->editColumn('name', function ($item) {
                 return anchor_link(route('admin.product.business-type.edit', $item->id), $item->name);
             })
-            ->editColumn('checkbox', function ($item) {
-                return table_checkbox($item->id);
+            ->editColumn('created_by', function ($item) {
+                return $item->createdByUser ? $item->createdByUser->getFullName() : null;
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
@@ -56,9 +56,15 @@ class ProductBusinessTypeDataTable extends DataTableAbstract
         /**
          * @var \Eloquent $model
          */
-        $query = $model->select(['product_business_types.id',
-            'product_business_types.order',
-            'product_business_types.name', 'product_business_types.created_at', 'product_business_types.status']);
+        $query = $model->select(
+            [
+                'product_business_types.id',
+                'product_business_types.order',
+                'product_business_types.name',
+                'product_business_types.created_by',
+                'product_business_types.created_at',
+                'product_business_types.status'
+            ]);
         return $query;
     }
 
@@ -83,10 +89,10 @@ class ProductBusinessTypeDataTable extends DataTableAbstract
                 'footer' => trans('core-base::tables.name'),
                 'class' => 'text-left searchable',
             ],
-            'order' => [
-                'name' => 'product_business_types.order',
-                'title' => trans('core-base::tables.order'),
-                'footer' => trans('core-base::tables.order'),
+            'created_by' => [
+                'name' => 'products.created_by',
+                'title' => trans('core-base::tables.created_by'),
+                'footer' => trans('core-base::tables.created_by'),
                 'class' => 'text-left searchable',
             ],
             'created_at' => [

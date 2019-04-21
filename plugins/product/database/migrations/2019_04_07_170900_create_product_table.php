@@ -136,9 +136,7 @@ class CreateProductTable extends Migration
         Schema::create('product_tags', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 120);
-            $table->integer('author_id');
-            $table->string('author_type', 255)->default(addslashes(User::class));
-            $table->string('description', 400)->nullable()->default('');
+            $table->string('description', 400)->nullable();
             $table->integer('parent_id')->unsigned()->default(0);
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

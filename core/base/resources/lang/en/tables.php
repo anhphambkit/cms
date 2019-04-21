@@ -6,6 +6,7 @@ return [
 	'slug'               => 'Slug',
 	'title'              => 'Title',
 	'order_by'           => 'Order By',
+	'created_by'         => 'Created By',
 	'order'              => 'Order',
 	'status'             => 'Status',
 	'created_at'         => 'Created At',

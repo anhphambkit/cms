@@ -10,8 +10,10 @@ namespace Plugins\Product\Controllers\Admin;
 
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Plugins\Product\DataTables\ProductMaterialDataTable;
 use Plugins\Product\Repositories\Interfaces\ProductMaterialRepositories;
+use Plugins\Product\Requests\ProductMaterialRequest;
 
 class ProductMaterialController extends BaseAdminController
 {
@@ -57,16 +59,15 @@ class ProductMaterialController extends BaseAdminController
     }
 
     /**
-     * Insert new Product into database
-     *
+     * @param ProductMaterialRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postCreate(Request $request)
+    public function postCreate(ProductMaterialRequest $request)
     {
         $data = $request->input();
 
         $data['slug'] = str_slug($data['name']);
+        $data['created_by'] = Auth::id();
 
         $material = $this->productMaterialRepository->createOrUpdate($data);
 
@@ -100,10 +101,10 @@ class ProductMaterialController extends BaseAdminController
 
     /**
      * @param $id
+     * @param ProductMaterialRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postEdit($id, Request $request)
+    public function postEdit($id, ProductMaterialRequest $request)
     {
         $material = $this->productMaterialRepository->findById($id);
         if (empty($material)) {
@@ -113,6 +114,7 @@ class ProductMaterialController extends BaseAdminController
         $data = $request->input();
 
         $data['slug'] = str_slug($data['name']);
+        $data['updated_by'] = Auth::id();
 
         $material->fill($data);
 
