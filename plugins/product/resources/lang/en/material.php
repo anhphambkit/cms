@@ -7,8 +7,8 @@
  */
 
 return [
-    'name' => 'Product Material',
-    'create' => 'New product material',
-    'edit' => 'Edit product material',
-    'list' => 'List product material',
+    'name' => 'Material',
+    'create' => 'New material',
+    'edit' => 'Edit material',
+    'list' => 'List material',
 ];

@@ -1,7 +1,7 @@
 /*------------------------------------------------------------------
 [Table of contents]
 
-1. Logo / .ks-navbar > .navbar-brand > .ks-logo
+1. Logo / .ks-navbar > .navbar-manufacturer > .ks-logo
 2. Grid navigation / .ks-navbar > .ks-dropdown-grid
 3. Navbar Menu / .ks-navbar-menu
 4. Navbar Actions / .ks-navbar-actions
@@ -21,7 +21,7 @@
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   /* Styles for navigation items in navbar */
   /* For all nav-link in navbar */
-  /* Logo or brand name customization */
+  /* Logo or manufacturer name customization */
   /* Grid navigation */ }
   .ks-navbar .dropdown-menu {
     position: absolute; }

@@ -14,6 +14,7 @@ use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Http\Request;
 use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
 use Plugins\Product\DataTables\ProductCategoryDataTable;
+use Illuminate\Support\Facades\DB;
 
 class ProductCategoryController extends BaseAdminController
 {

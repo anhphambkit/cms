@@ -34,20 +34,20 @@
                                     </div>
                                     <div class="form-group col-md-6 mb-2 @if ($errors->has('sku')) has-error @endif">
                                         <label for="name">{{ trans('plugins-product::product.form.sku') }}</label>
-                                        {!! Form::text('sku', $product->sku, ['class' => 'form-control', 'id' => 'sku', 'placeholder' => trans('plugins-product::product.form.sku_placeholder'), 'data-counter' => 2]) !!}
+                                        {!! Form::text('sku', substr(substr($product->sku, strlen((string)$product->manufacturer_id)), 0, -strlen((string)$product->id)), ['class' => 'form-control', 'id' => 'sku', 'placeholder' => trans('plugins-product::product.form.sku_placeholder'), 'data-counter' => 2]) !!}
                                         {!! Form::error('sku', $errors) !!}
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6 mb-2 @if ($errors->has('category_id')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('core-base::forms.parent_category') }}</label>
-                                        {!! Form::select('category_id', $categories, null, ['class' => 'select2-placeholder-multiple form-control category-list', "id" => "select-category-list", "multiple" => "multiple" ]) !!}
+                                        {!! Form::select('category_id[]', $categories, $selectedProductCategories, ['class' => 'select2-placeholder-multiple form-control category-list', "id" => "select-category-list", "multiple" => "multiple" ]) !!}
                                         {!! Form::error('category_id', $errors) !!}
                                     </div>
-                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('brand_id')) has-error @endif">
-                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.form.brand') }}</label>
-                                        {!! Form::select('brand_id', $brand, null, ['class' => 'select2-placeholder-multiple form-control brand-list', "id" => "select-brand-list" ]) !!}
-                                        {!! Form::error('brand_id', $errors) !!}
+                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('manufacturer_id')) has-error @endif">
+                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.form.manufacturer') }}</label>
+                                        {!! Form::select('manufacturer_id', $manufacturer, $product->manufacturer_id, ['class' => 'select2-placeholder-multiple form-control manufacturer-list', "id" => "select-manufacturer-list" ]) !!}
+                                        {!! Form::error('manufacturer_id', $errors) !!}
                                     </div>
                                 </div>
                                 {{-- Image--}}
@@ -69,22 +69,22 @@
                                         {!! Form::number('sale_price', $product->sale_price, ['class' => 'form-control', 'id' => 'sale_price', 'type' => 'number', 'min' => 0, 'placeholder' => trans('plugins-product::product.form.sale_price_placeholder')]) !!}
                                         {!! Form::error('sale_price', $errors) !!}
                                     </div>
-                                    <div class="form-group col-md-4 mb-2 @if ($errors->has('in_stock')) has-error @endif">
-                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.form.in_stock') }}</label>
-                                        {!! Form::number('in_stock', $product->in_stock, ['class' => 'form-control', 'id' => 'in_stock', 'type' => 'number', 'min' => 0, 'placeholder' => trans('plugins-product::product.form.in_stock_placeholder')]) !!}
-                                        {!! Form::error('in_stock', $errors) !!}
+                                    <div class="form-group col-md-4 mb-2 @if ($errors->has('inventory')) has-error @endif">
+                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.form.inventory') }}</label>
+                                        {!! Form::number('inventory', $product->inventory, ['class' => 'form-control', 'id' => 'inventory', 'type' => 'number', 'min' => 0, 'placeholder' => trans('plugins-product::product.form.inventory_placeholder')]) !!}
+                                        {!! Form::error('inventory', $errors) !!}
                                     </div>
                                 </div>
                                 {{--category--}}
                                 <div class="row">
                                     <div class="form-group col-md-6 mb-2 @if ($errors->has('business_type_id')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.business_type') }}</label>
-                                        {!! Form::select('business_type_id', $businessTypes, null, ['class' => 'select2-placeholder-multiple form-control business_type-list', "id" => "select-business_type-list", "multiple" => "multiple" ]) !!}
+                                        {!! Form::select('business_type_id[]', $businessTypes, $selectedProductBusinessTypes, ['class' => 'select2-placeholder-multiple form-control business_type-list', "id" => "select-business_type-list", "multiple" => "multiple" ]) !!}
                                         {!! Form::error('business_type_id', $errors) !!}
                                     </div>
                                     <div class="form-group col-md-6 mb-2 @if ($errors->has('collection_id')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.collection') }}</label>
-                                        {!! Form::select('collection_id', $collections, null, ['class' => 'select2-placeholder-multiple form-control collection-list', "id" => "select-collection-list", "multiple" => "multiple" ]) !!}
+                                        {!! Form::select('collection_id[]', $collections, $selectedProductCollections, ['class' => 'select2-placeholder-multiple form-control collection-list', "id" => "select-collection-list", "multiple" => "multiple" ]) !!}
                                         {!! Form::error('collection_id', $errors) !!}
                                     </div>
                                 </div>
@@ -92,12 +92,12 @@
                                 <div class="row">
                                     <div class="form-group col-md-6 mb-2 @if ($errors->has('material_id')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.material') }}</label>
-                                        {!! Form::select('material_id', $materials, null, ['class' => 'select2-placeholder-multiple form-control material-list', "id" => "select-material-list", "multiple" => "multiple" ]) !!}
+                                        {!! Form::select('material_id[]', $materials, $selectedProductMaterials, ['class' => 'select2-placeholder-multiple form-control material-list', "id" => "select-material-list", "multiple" => "multiple" ]) !!}
                                         {!! Form::error('material_id', $errors) !!}
                                     </div>
                                     <div class="form-group col-md-6 mb-2 @if ($errors->has('color_id')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.color') }}</label>
-                                        {!! Form::select('color_id', $colors, null, ['class' => 'select2-placeholder-multiple form-control color-list', "id" => "select-color-list", "multiple" => "multiple" ]) !!}
+                                        {!! Form::select('color_id[]', $colors, $selectedProductColors, ['class' => 'select2-placeholder-multiple form-control color-list', "id" => "select-color-list", "multiple" => "multiple" ]) !!}
                                         {!! Form::error('color_id', $errors) !!}
                                     </div>
                                 </div>
@@ -139,20 +139,25 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-4 mb-2 @if ($errors->has('is_best_seller')) has-error @endif">
+                                    <div class="form-group col-md-3 mb-2 @if ($errors->has('is_best_seller')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.is_best_seller') }}</label>
-                                        {!! Form::checkbox('is_best_seller', $product->is_best_seller, false, ['class' => 'form-control switchery', 'id' => 'is_best_seller', 'placeholder' => trans('plugins-product::product.form.is_best_seller_placeholder')]) !!}
+                                        {!! Form::checkbox('is_best_seller', true, $product->is_best_seller, ['class' => 'form-control switchery', 'id' => 'is_best_seller', 'placeholder' => trans('plugins-product::product.form.is_best_seller_placeholder')]) !!}
                                         {!! Form::error('is_best_seller', $errors) !!}
                                     </div>
-                                    <div class="form-group col-md-4 mb-2 @if ($errors->has('has_design')) has-error @endif">
-                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.form.has_design') }}</label>
-                                        {!! Form::checkbox('has_design', $product->has_design, true, ['class' => 'form-control switchery', 'id' => 'has_design', 'placeholder' => trans('plugins-product::product.form.has_design_placeholder')]) !!}
-                                        {!! Form::error('has_design', $errors) !!}
+                                    <div class="form-group col-md-3 mb-2 @if ($errors->has('available_3d')) has-error @endif">
+                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.form.available_3d') }}</label>
+                                        {!! Form::checkbox('available_3d', true, $product->available_3d, ['class' => 'form-control switchery', 'id' => 'available_3d', 'placeholder' => trans('plugins-product::product.form.available_3d_placeholder')]) !!}
+                                        {!! Form::error('available_3d', $errors) !!}
                                     </div>
-                                    <div class="form-group col-md-4 mb-2 @if ($errors->has('has_assembly')) has-error @endif">
+                                    <div class="form-group col-md-3 mb-2 @if ($errors->has('has_assembly')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.has_assembly') }}</label>
-                                        {!! Form::checkbox('has_assembly', $product->has_assembly, true, ['class' => 'form-control switchery', 'id' => 'has_assembly', 'placeholder' => trans('plugins-product::product.form.has_assembly_placeholder')]) !!}
+                                        {!! Form::checkbox('has_assembly', true, $product->has_assembly, ['class' => 'form-control switchery', 'id' => 'has_assembly', 'placeholder' => trans('plugins-product::product.form.has_assembly_placeholder')]) !!}
                                         {!! Form::error('has_assembly', $errors) !!}
+                                    </div>
+                                    <div class="form-group col-md-3 mb-2 @if ($errors->has('is_outdoor')) has-error @endif">
+                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.form.is_outdoor') }}</label>
+                                        {!! Form::checkbox('is_outdoor', true, $product->is_outdoor, ['class' => 'form-control switchery', 'id' => 'is_outdoor', 'placeholder' => trans('plugins-product::product.form.is_outdoor_placeholder')]) !!}
+                                        {!! Form::error('is_outdoor', $errors) !!}
                                     </div>
                                 </div>
                             </div>

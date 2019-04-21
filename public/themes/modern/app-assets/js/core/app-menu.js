@@ -225,15 +225,15 @@
         });
       }
 
-      // Added data attribute brand-center for navbar-brand-center
+      // Added data attribute manufacturer-center for navbar-manufacturer-center
       // TODO:AJ: Shift this feature in PUG.
       if($('.header-navbar').hasClass('navbar-brand-center')){
-        $('.header-navbar').attr('data-nav','brand-center');
+        $('.header-navbar').attr('data-nav','manufacturer-center');
       }
       if(currentBreakpoint.name == 'sm' || currentBreakpoint.name == 'xs'){
-        $('.header-navbar[data-nav=brand-center]').removeClass('navbar-brand-center');
+        $('.header-navbar[data-nav=manufacturer-center]').removeClass('navbar-brand-center');
       }else{
-        $('.header-navbar[data-nav=brand-center]').addClass('navbar-brand-center');
+        $('.header-navbar[data-nav=manufacturer-center]').addClass('navbar-brand-center');
       }
 
       // Dropdown submenu on small screen on click
@@ -321,8 +321,8 @@
     },
 
     /*changeLogo: function(menuType){
-      var logo = $('.brand-logo');
-      var logoText = $('.brand-text');
+      var logo = $('.manufacturer-logo');
+      var logoText = $('.manufacturer-text');
       if(menuType == 'expand'){
         // logo.attr('src',logo.data('expand'));
         logoText.delay(100).fadeIn(200);

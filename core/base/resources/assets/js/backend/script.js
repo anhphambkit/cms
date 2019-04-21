@@ -445,6 +445,11 @@ Lcms.initMediaIntegrate = function () {
                         $el.closest('.attachment-wrapper').find('.attachment-id').val(firstItem.id);
                         $('.attachment-details').html('<a href="' + firstItem.url + '" target="_blank">' + firstItem.name + '</a>');
                         break;
+                    case 'look-book-image':
+                        var firstItem = _.first(files);
+                        $el.closest('.image-look-book').find('.image-data').val(firstItem.url);
+                        $el.closest('.image-look-book').find('.preview_image').attr('src', firstItem.url).show();
+                        break;
                 }
             }
         });
@@ -453,6 +458,12 @@ Lcms.initMediaIntegrate = function () {
             event.preventDefault();
             $(this).closest('.image-box').find('img').hide();
             $(this).closest('.image-box').find('input').val('');
+        });
+
+        $('.btn_remove_look_book_image').on('click', function (event) {
+            event.preventDefault();
+            $(this).closest('.image-look-book').find('img').hide();
+            $(this).closest('.image-look-book').find('input').val('');
         });
     }
 };

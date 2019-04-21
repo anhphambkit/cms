@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: AnhPham
- * Date: 2019-04-08
- * Time: 22:07
+ * Date: 2019-04-20
+ * Time: 08:28
  */
 
 namespace Plugins\Product\Models;
@@ -11,7 +11,7 @@ namespace Plugins\Product\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ProductBrand extends Model
+class LookBookTag extends Model
 {
     use SoftDeletes;
 
@@ -20,12 +20,14 @@ class ProductBrand extends Model
      *
      * @var string
      */
-    protected $table = 'product_brands';
+    protected $table = 'look_book_tags';
 
     protected $fillable = [
-        'name',
-        'brand_image',
-        'description',
-        'status',
+        'look_book_id',
+        'product_id',
+        'left',
+        'top',
+        'created_by',
+        'updated_by',
     ];
 }

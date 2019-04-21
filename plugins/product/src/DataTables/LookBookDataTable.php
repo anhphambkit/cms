@@ -2,16 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: AnhPham
- * Date: 2019-04-08
- * Time: 23:01
+ * Date: 2019-04-20
+ * Time: 08:31
  */
 
 namespace Plugins\Product\DataTables;
 
-use Plugins\Product\Repositories\Interfaces\BrandRepositories;
 use Core\Base\DataTables\DataTableAbstract;
+use Plugins\Product\Repositories\Interfaces\LookBookRepositories;
 
-class BrandDataTable extends DataTableAbstract
+class LookBookDataTable extends DataTableAbstract
 {
     /**
      * Display ajax response.
@@ -24,7 +24,7 @@ class BrandDataTable extends DataTableAbstract
         $data = $this->datatables
             ->eloquent($this->query())
             ->editColumn('name', function ($item) {
-                return anchor_link(route('admin.product.brand.edit', $item->id), $item->name);
+                return anchor_link(route('admin.product.look_book.edit', $item->id), $item->name);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
@@ -38,7 +38,7 @@ class BrandDataTable extends DataTableAbstract
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, CUSTOMER_MODULE_SCREEN_NAME)
             ->addColumn('operations', function ($item) {
-                return table_actions('admin.product.brand.edit', 'admin.product.brand.delete', $item);
+                return table_actions('admin.product.look_book.edit', 'admin.product.look_book.delete', $item);
             })
             ->escapeColumns([])
             ->make(true);
@@ -52,13 +52,13 @@ class BrandDataTable extends DataTableAbstract
      */
     public function query()
     {
-        $model = app(BrandRepositories::class)->getModel();
+        $model = app(LookBookRepositories::class)->getModel();
         /**
          * @var \Eloquent $model
          */
-        $query = $model->select(['product_brands.id',
-            'product_brands.brand_image',
-            'product_brands.name', 'product_brands.created_at', 'product_brands.status']);
+        $query = $model->select(['look_books.id',
+            'look_books.image',
+            'look_books.name', 'look_books.created_at']);
         return $query;
     }
 
@@ -71,14 +71,14 @@ class BrandDataTable extends DataTableAbstract
     {
         return [
             'id' => [
-                'name' => 'product_brands.id',
+                'name' => 'look_books.id',
                 'title' => trans('core-base::tables.id'),
                 'footer' => trans('core-base::tables.id'),
                 'width' => '20px',
                 'class' => 'searchable searchable_id',
             ],
-            'brand_image' => [
-                'name' => 'product_brands.brand_image',
+            'image' => [
+                'name' => 'look_books.image',
                 'title' => trans('core-base::tables.image'),
                 'footer' => trans('core-base::tables.image'),
                 'class' => 'text-left',
@@ -86,23 +86,17 @@ class BrandDataTable extends DataTableAbstract
                 "render" => '"<img src=\"" + data + "\" height=\"50\"/>"',
             ],
             'name' => [
-                'name' => 'product_brands.name',
+                'name' => 'look_books.name',
                 'title' => trans('core-base::tables.name'),
                 'footer' => trans('core-base::tables.name'),
                 'class' => 'text-left searchable',
             ],
             'created_at' => [
-                'name' => 'product_brands.created_at',
+                'name' => 'look_books.created_at',
                 'title' => trans('core-base::tables.created_at'),
                 'footer' => trans('core-base::tables.created_at'),
                 'width' => '100px',
                 'class' => 'searchable',
-            ],
-            'status' => [
-                'name' => 'product_brands.status',
-                'title' => trans('core-base::tables.status'),
-                'footer' => trans('core-base::tables.status'),
-                'width' => '100px',
             ],
         ];
     }
@@ -115,7 +109,7 @@ class BrandDataTable extends DataTableAbstract
     {
         $buttons = [
             'create' => [
-                'link' => route('admin.product.brand.create'),
+                'link' => route('admin.product.look_book.create'),
                 'text' => view('core-base::elements.tables.actions.create')->render(),
             ],
         ];

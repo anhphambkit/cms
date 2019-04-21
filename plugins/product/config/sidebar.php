@@ -29,12 +29,12 @@ return [
         'permissions' => ['product.index']
     ],
     [
-        'id'          => 'menu-product-brands',
+        'id'          => 'menu-product-manufacturers',
         'priority'    => 3,
         'parent_id'   => 'menu-product-administrator',
-        'name'        => 'plugins-product::sidebar.brand',
+        'name'        => 'plugins-product::sidebar.manufacturer',
         'icon'        => 'fas fa-users-cog',
-        'url'         => 'admin.product.brand.list',
+        'url'         => 'admin.product.manufacturer.list',
         'permissions' => ['product.index']
     ],
     [
@@ -55,24 +55,6 @@ return [
         'url'         => 'admin.product.business-type.list',
         'permissions' => ['product.index']
     ],
-//    [
-//        'id'          => 'menu-product-primary-business-types',
-//        'priority'    => 1,
-//        'parent_id'   => 'menu-product-business-types',
-//        'name'        => 'plugins-product::sidebar.primary-business-type',
-//        'icon'        => 'fas fa-users-cog',
-//        'url'         => 'admin.product.business-type.list',
-//        'permissions' => ['product.index']
-//    ],
-//    [
-//        'id'          => 'menu-product-sub-business-types',
-//        'priority'    => 2,
-//        'parent_id'   => 'menu-product-business-types',
-//        'name'        => 'plugins-product::sidebar.sub-business-type',
-//        'icon'        => 'fas fa-users-cog',
-//        'url'         => 'admin.product.business-type.sub-business-type.list',
-//        'permissions' => ['product.index']
-//    ],
     [
         'id'          => 'menu-product-collections',
         'priority'    => 6,
@@ -89,6 +71,15 @@ return [
         'name'        => 'plugins-product::sidebar.material',
         'icon'        => 'fas fa-users-cog',
         'url'         => 'admin.product.material.list',
+        'permissions' => ['product.index']
+    ],
+    [
+        'id'          => 'menu-look-books',
+        'priority'    => 8,
+        'parent_id'   => 'menu-product-administrator',
+        'name'        => 'plugins-product::sidebar.look_book',
+        'icon'        => 'fas fa-users-cog',
+        'url'         => 'admin.product.look_book.list',
         'permissions' => ['product.index']
     ],
 ];

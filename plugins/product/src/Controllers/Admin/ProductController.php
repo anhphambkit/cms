@@ -3,7 +3,9 @@
 namespace Plugins\Product\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use Plugins\Product\Repositories\Interfaces\BrandRepositories;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Plugins\Product\Repositories\Interfaces\ManufacturerRepositories;
 use Plugins\Product\Repositories\Interfaces\BusinessTypeRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCollectionRepositories;
@@ -29,9 +31,9 @@ class ProductController extends BaseAdminController
     protected $productCategoryRepositories;
 
     /**
-     * @var BrandRepositories
+     * @var ManufacturerRepositories
      */
-    protected $brandRepositories;
+    protected $manufacturerRepositories;
 
     /**
      * @var ProductColorRepositories
@@ -57,20 +59,20 @@ class ProductController extends BaseAdminController
      * ProductController constructor.
      * @param ProductRepositories $productRepository
      * @param ProductCategoryRepositories $productCategoryRepositories
-     * @param BrandRepositories $brandRepositories
+     * @param ManufacturerRepositories $manufacturerRepositories
      * @param ProductColorRepositories $productColorRepositories
      * @param BusinessTypeRepositories $businessTypeRepositories
      * @param ProductCollectionRepositories $productCollectionRepositories
      * @param ProductMaterialRepositories $productMaterialRepositories
      */
     public function __construct(ProductRepositories $productRepository, ProductCategoryRepositories $productCategoryRepositories,
-                                BrandRepositories $brandRepositories, ProductColorRepositories $productColorRepositories,
+                                ManufacturerRepositories $manufacturerRepositories, ProductColorRepositories $productColorRepositories,
                                 BusinessTypeRepositories $businessTypeRepositories, ProductCollectionRepositories $productCollectionRepositories,
                                 ProductMaterialRepositories $productMaterialRepositories)
     {
         $this->productRepository = $productRepository;
         $this->productCategoryRepositories = $productCategoryRepositories;
-        $this->brandRepositories = $brandRepositories;
+        $this->manufacturerRepositories = $manufacturerRepositories;
         $this->productColorRepositories = $productColorRepositories;
         $this->businessTypeRepositories = $businessTypeRepositories;
         $this->productCollectionRepositories = $productCollectionRepositories;
@@ -102,9 +104,9 @@ class ProductController extends BaseAdminController
 
 //        $categories = array_merge([ 0 => "Please select parent product category" ], $categories);
 
-        $brand = $this->brandRepositories->pluck('name', 'id');
+        $manufacturer = $this->manufacturerRepositories->pluck('name', 'id');
 
-//        $brand = array_merge([ 0 => "Please select a brand" ], $brand);
+//        $manufacturer = array_merge([ 0 => "Please select a manufacturer" ], $manufacturer);
 
         $colors = $this->productColorRepositories->pluck('name', 'id');
 
@@ -126,7 +128,7 @@ class ProductController extends BaseAdminController
 
         $this->addDetailAssets();
 
-        return view('plugins-product::product.create', compact('categories', 'brand', 'colors', 'businessTypes', 'collections', 'materials'));
+        return view('plugins-product::product.create', compact('categories', 'manufacturer', 'colors', 'businessTypes', 'collections', 'materials'));
     }
 
     /**
@@ -140,13 +142,36 @@ class ProductController extends BaseAdminController
     {
         $data = $request->input();
 
-//        dd($data);
-
         $data['slug'] = str_slug($data['name']);
+        $data['is_best_seller'] = $request->input('is_best_seller', false);
+        $data['available_3d'] = $request->input('available_3d', false);
+        $data['has_assembly'] = $request->input('has_assembly', false);
+        $data['is_outdoor'] = $request->input('is_outdoor', false);
+        $data['sku'] = "{$data['manufacturer_id']}{$data['sku']}";
+        $data['created_by'] = Auth::id();
 
-        $data['sku'] = "{$data['brand_id']}{$data['sku']}{$data['brand_id']}";
+        DB::transaction(function () use ($data, $request) {
+            $product = $this->productRepository->createOrUpdate($data);
 
-        $product = $this->productRepository->createOrUpdate($data);
+            $categoryIds = $request->input('category_id', []);
+            $product->productCategories()->attach($categoryIds);
+
+            $businessTypeIds = $request->input('business_type_id', []);
+            $product->productBusinessTypes()->attach($businessTypeIds);
+
+            $collectionIds = $request->input('collection_id', []);
+            $product->productCollections()->attach($collectionIds);
+
+            $colorIds = $request->input('color_id', []);
+            $product->productColors()->attach($colorIds);
+
+            $materialIds = $request->input('material_id', []);
+            $product->productMaterials()->attach($materialIds);
+
+            $product->sku .= $product->id;
+
+            $product->save();
+        }, 3);
 
         do_action(BASE_ACTION_AFTER_CREATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $product);
 
@@ -168,29 +193,43 @@ class ProductController extends BaseAdminController
     {
         $categories = $this->productCategoryRepositories->pluck('name', 'id');
 
-//        $categories = array_merge([ 0 => "Please select parent product category" ], $categories);
-
-        $brand = $this->brandRepositories->pluck('name', 'id');
-
-//        $brand = array_merge([ 0 => "Please select a brand" ], $brand);
+        $manufacturer = $this->manufacturerRepositories->pluck('name', 'id');
 
         $colors = $this->productColorRepositories->pluck('name', 'id');
 
-//        $colors = array_merge([ 0 => "Please select a color" ], $colors);
-
         $businessTypes = $this->businessTypeRepositories->pluck('name', 'id');
-
-//        $businessTypes = array_merge([ 0 => "Please select a business type" ], $businessTypes);
 
         $collections = $this->productCollectionRepositories->pluck('name', 'id');
 
-//        $collections = array_merge([ 0 => "Please select a collection" ], $collections);
-
         $materials = $this->productMaterialRepositories->pluck('name', 'id');
 
-//        $materials = array_merge([ 0 => "Please select a material" ], $materials);
-
         $product = $this->productRepository->findById($id);
+
+        $selectedProductCategories = [];
+        if ($product->productCategories != null) {
+            $selectedProductCategories = $product->productCategories->pluck('id')->all();
+        }
+
+        $selectedProductBusinessTypes = [];
+        if ($product->productBusinessTypes != null) {
+            $selectedProductBusinessTypes = $product->productBusinessTypes->pluck('id')->all();
+        }
+
+        $selectedProductCollections = [];
+        if ($product->productCollections != null) {
+            $selectedProductCollections = $product->productCollections->pluck('id')->all();
+        }
+
+        $selectedProductColors = [];
+        if ($product->productColors != null) {
+            $selectedProductColors = $product->productColors->pluck('id')->all();
+        }
+
+        $selectedProductMaterials = [];
+        if ($product->productMaterials != null) {
+            $selectedProductMaterials = $product->productMaterials->pluck('id')->all();
+        }
+
         if (empty($product)) {
             abort(404);
         }
@@ -199,7 +238,9 @@ class ProductController extends BaseAdminController
 
         $this->addDetailAssets();
 
-        return view('plugins-product::product.edit', compact('product', 'categories', 'brand', 'colors', 'businessTypes', 'collections', 'materials'));
+        return view('plugins-product::product.edit', compact('product', 'categories', 'manufacturer', 'colors',
+                    'businessTypes', 'collections', 'materials', 'selectedProductCategories', 'selectedProductBusinessTypes',
+                    'selectedProductCollections', 'selectedProductColors', 'selectedProductMaterials'));
     }
 
     /**
@@ -218,12 +259,39 @@ class ProductController extends BaseAdminController
         $data = $request->input();
 
         $data['slug'] = str_slug($data['name']);
+        $data['is_best_seller'] = $request->input('is_best_seller', false);
+        $data['available_3d'] = $request->input('available_3d', false);
+        $data['has_assembly'] = $request->input('has_assembly', false);
+        $data['is_outdoor'] = $request->input('is_outdoor', false);
+        $data['sku'] = "{$data['manufacturer_id']}{$data['sku']}{$id}";
+        $data['updated_by'] = Auth::id();
 
-        $data['sku'] = "{$data['brand_id']}{$data['sku']}{$product->id}";
+        DB::transaction(function () use ($data, $product) {
+            $product->fill($data);
 
-        $product->fill($data);
+            $this->productRepository->createOrUpdate($product);
 
-        $this->productRepository->createOrUpdate($product);
+            $categoryIds = $data['category_id'];
+            $product->productCategories()->detach();
+            $product->productCategories()->attach($categoryIds);
+
+            $businessTypeIds = $data['business_type_id'];
+            $product->productBusinessTypes()->detach();
+            $product->productBusinessTypes()->attach($businessTypeIds);
+
+            $collectionIds = $data['collection_id'];
+            $product->productCollections()->detach();
+            $product->productCollections()->attach($collectionIds);
+
+            $colorIds = $data['color_id'];
+            $product->productColors()->detach();
+            $product->productColors()->attach($colorIds);
+
+            $materialIds = $data['material_id'];
+            $product->productMaterials()->detach();
+            $product->productMaterials()->attach($materialIds);
+        }, 3);
+
 
         do_action(BASE_ACTION_AFTER_UPDATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $product);
 

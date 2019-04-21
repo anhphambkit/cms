@@ -23,4 +23,12 @@ class CacheProductRepositories extends CacheAbstractDecorator implements Product
         $this->repository = $repository;
         $this->entityName = "Cache-Product"; # Please setup reference name of cache.
     }
+
+    /**
+     * @param int|null $categoryId
+     * @return mixed
+     */
+    public function getAllProductsByCategory(int $categoryId = null) {
+        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
+    }
 }

@@ -29,6 +29,17 @@ class ProductCategory extends Model
         'parent_id',
         'order',
         'status',
+        'created_by',
+        'updated_by',
         'is_root',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @author TrinhLe
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_categories_relation');
+    }
 }

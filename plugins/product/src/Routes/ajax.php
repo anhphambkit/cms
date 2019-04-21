@@ -11,3 +11,12 @@
 |
 */
 use Illuminate\Routing\Router;
+
+$router->group(['prefix' => 'admin'], function (Router $router) {
+
+    $router->get('/get-products-by-category', [
+        'as' => 'ajax.admin.get_products_by_category',
+        'uses' => 'Admin\ProductController@getProductsByCategory',
+    ]);
+
+});

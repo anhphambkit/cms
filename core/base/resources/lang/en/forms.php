@@ -11,6 +11,7 @@ return [
     'edit'                    => 'Edit',
     'permalink'               => 'Permalink',
     'parent_category'         => 'Parent Category',
+    'category'                => 'Category',
     'ok'                      => 'OK',
     'cancel'                  => 'Cancel',
     'character_remain'        => 'character(s) remain',
