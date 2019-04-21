@@ -82,7 +82,7 @@ class Role extends Model
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function userCreated()
     {

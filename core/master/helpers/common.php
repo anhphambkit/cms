@@ -74,3 +74,24 @@
             return setting(get_setting_email_status_key($module_type, $module_name, $email_template_key), true);
         }
     }
+
+    if (!function_exists('get_array_parent_object')) {
+        /**
+         * @param $collection
+         * @param $parentId
+         * @param &$result
+         * @return array
+         */
+        function get_array_parent_object($collection, $parentId = 0, array &$result = [])
+        {
+            $item = $collection
+                    ->first(function ($item, $key) use ($parentId){
+                        return $item->id === (int)$parentId;
+                    });
+            if($item){
+                array_push($result, $item->id);
+                get_array_parent_object($collection, $item->parent_id, $result); 
+            }
+            return $result;
+        }
+    }

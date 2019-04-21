@@ -14,7 +14,7 @@ class AdminBreadcrumbFacade extends Facade
 
     /**
      * @return string
-     * @author Sang Nguyen
+     * @author Trinh Le
      * @since 2.1
      */
     protected static function getFacadeAccessor()

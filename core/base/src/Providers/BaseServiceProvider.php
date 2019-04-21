@@ -13,13 +13,12 @@ use Core\Theme\Providers\ThemeServiceProvider;
 use Core\User\Providers\UserServiceProvider;
 use Core\Media\Providers\MediaServiceProvider;
 use Core\Slug\Providers\SlugServiceProvider;
-use Event;
 use Illuminate\Routing\Events\RouteMatched;
-
-# Plugin 
 use Core\Base\Repositories\Interfaces\PluginRepositories;
 use Core\Base\Repositories\Eloquent\EloquentPluginRepositories;
 use Core\Base\Repositories\Cache\CachePluginRepositories;
+use Illuminate\Support\Facades\Validator;
+use Event;
 
 class BaseServiceProvider extends ServiceProvider
 {	
@@ -91,16 +90,46 @@ class BaseServiceProvider extends ServiceProvider
         Event::listen(RouteMatched::class, function () {
             dashboard_menu()->loadRegisterMenus();
         });
+
+        $this->registerValidation();
 	}
 
 	/**
      * @param $data
      * @param $screen
      * @return mixed
-     * @author Sang Nguyen
+     * @author TrinhLe
      */
     public function addLanguageColumn($data, $screen)
     {
         return $data;
+    }
+
+    /**
+     * Register list extend validation
+     * @author TrinhLe
+     */
+    protected function registerValidation()
+    {
+    	/**
+         * Create validation mutiple level
+         * @author TrinhLe
+         * @return boolean
+         */
+        Validator::extend('mutiple_level_parent', function ($attribute, $value, $parameters, $validator) {
+			$primaryKey = $parameters[0] ?? 0;
+			$collection = app($parameters[1])->all();
+			$parents    = get_array_parent_object($collection, $value);
+			return !in_array((int)$primaryKey, $parents);
+        });
+
+        /**
+         * Replace validation mutiple level
+         * @author TrinhLe
+         * @return String
+         */
+        Validator::replacer('mutiple_level_parent', function ($message, $attribute, $rule, $parameters) {
+        	return trans('core-base::validation.mutiple_level_parent');
+        });
     }
 }

@@ -174,7 +174,7 @@ class RoleController extends BaseAdminController
 
     /**
      * @return array
-     * @author Sang Nguyen
+     * @author Trinh Le
      */
     public function getJson()
     {

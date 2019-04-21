@@ -35,7 +35,7 @@
 
                 <input type="password" placeholder="Password" id="password" name="password" required/>
                 {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
-                <a href="#">Forgot your password?</a>
+                <a href="{{ URL::route('auth.reset') }}">Forgot your password?</a>
                 <button type="submit" id="login">Log in</button>
             {!! Form::close() !!}                
         </div>
@@ -54,18 +54,5 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        // const signUpButton = document.getElementById('signUp');
-        const signInButton = document.getElementById('signIn');
-        const container = document.getElementById('container');
-
-        // signUpButton.addEventListener('click', () => {
-        //     container.classList.add('right-panel-active');
-        // });
-
-        signInButton.addEventListener('click', () => {
-            container.classList.remove('right-panel-active');
-        });
-    </script>
 </body>
 </html>
