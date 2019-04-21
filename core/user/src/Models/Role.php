@@ -1,13 +1,11 @@
 <?php 
 namespace Core\User\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Core\User\Traits\PermissionTrait;
 class Role extends Model
 {
-    use SoftDeletes,
-        PermissionTrait;
+    use PermissionTrait;
 
     /**
      * The database table used by the model.
