@@ -46,36 +46,36 @@ $router->group(['prefix' => 'product'], function (Router $router) {
         'uses' => 'ProductController@getDelete',
     ]);
 
-    $router->group(['prefix' => 'brand'], function (Router $router) {
+    $router->group(['prefix' => 'manufacturer'], function (Router $router) {
 
         $router->get('/', [
-            'as' => 'admin.product.brand.list',
-            'uses' => 'BrandController@getList',
+            'as' => 'admin.product.manufacturer.list',
+            'uses' => 'ManufacturerController@getList',
         ]);
 
         $router->get('/create', [
-            'as' => 'admin.product.brand.create',
-            'uses' => 'BrandController@getCreate',
+            'as' => 'admin.product.manufacturer.create',
+            'uses' => 'ManufacturerController@getCreate',
         ]);
 
         $router->post('/create', [
-            'as' => 'admin.product.brand.create',
-            'uses' => 'BrandController@postCreate',
+            'as' => 'admin.product.manufacturer.create',
+            'uses' => 'ManufacturerController@postCreate',
         ]);
 
         $router->get('/edit/{id}', [
-            'as' => 'admin.product.brand.edit',
-            'uses' => 'BrandController@getEdit',
+            'as' => 'admin.product.manufacturer.edit',
+            'uses' => 'ManufacturerController@getEdit',
         ]);
 
         $router->post('/edit/{id}', [
-            'as' => 'admin.product.brand.edit',
-            'uses' => 'BrandController@postEdit',
+            'as' => 'admin.product.manufacturer.edit',
+            'uses' => 'ManufacturerController@postEdit',
         ]);
 
         $router->get('/delete/{id}', [
-            'as' => 'admin.product.brand.delete',
-            'uses' => 'BrandController@getDelete',
+            'as' => 'admin.product.manufacturer.delete',
+            'uses' => 'ManufacturerController@getDelete',
         ]);
 
     });
@@ -280,6 +280,74 @@ $router->group(['prefix' => 'product'], function (Router $router) {
         $router->get('/delete/{id}', [
             'as' => 'admin.product.category.delete',
             'uses' => 'ProductCategoryController@getDelete',
+        ]);
+
+//        $router->group(['prefix' => 'sub-category'], function (Router $router) {
+//
+////            $router->get('/', [
+////                'as' => 'admin.product.category.sub-category.list',
+////                'uses' => 'ProductCategoryController@getList',
+////            ]);
+//
+//            $router->get('/create', [
+//                'as' => 'admin.product.category.sub-category.create',
+//                'uses' => 'ProductCategoryController@getSubCreate',
+//            ]);
+//
+//            $router->post('/create', [
+//                'as' => 'admin.product.category.sub-category.create',
+//                'uses' => 'ProductCategoryController@postSubCreate',
+//            ]);
+//
+//            $router->get('/edit/{id}', [
+//                'as' => 'admin.product.category.sub-category.edit',
+//                'uses' => 'ProductCategoryController@getSubEdit',
+//            ]);
+//
+//            $router->post('/edit/{id}', [
+//                'as' => 'admin.product.category.sub-category.edit',
+//                'uses' => 'ProductCategoryController@postSubEdit',
+//            ]);
+//
+//            $router->get('/delete/{id}', [
+//                'as' => 'admin.product.category.sub-category.delete',
+//                'uses' => 'ProductCategoryController@getDelete',
+//            ]);
+//
+//        });
+
+    });
+
+    $router->group(['prefix' => 'look_book'], function (Router $router) {
+
+        $router->get('/', [
+            'as' => 'admin.product.look_book.list',
+            'uses' => 'LookBookController@getList',
+        ]);
+
+        $router->get('/create', [
+            'as' => 'admin.product.look_book.create',
+            'uses' => 'LookBookController@getCreate',
+        ]);
+
+        $router->post('/create', [
+            'as' => 'admin.product.look_book.create',
+            'uses' => 'LookBookController@postCreate',
+        ]);
+
+        $router->get('/edit/{id}', [
+            'as' => 'admin.product.look_book.edit',
+            'uses' => 'LookBookController@getEdit',
+        ]);
+
+        $router->post('/edit/{id}', [
+            'as' => 'admin.product.look_book.edit',
+            'uses' => 'LookBookController@postEdit',
+        ]);
+
+        $router->get('/delete/{id}', [
+            'as' => 'admin.product.look_book.delete',
+            'uses' => 'LookBookController@getDelete',
         ]);
 
 //        $router->group(['prefix' => 'sub-category'], function (Router $router) {

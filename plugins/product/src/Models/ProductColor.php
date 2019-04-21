@@ -27,5 +27,16 @@ class ProductColor extends Model
         'code',
         'description',
         'status',
+        'created_by',
+        'updated_by',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @author TrinhLe
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_colors_relation');
+    }
 }

@@ -1,12 +1,12 @@
 @extends('layouts.master')
 @section('content')
-    {!! Form::open(['route' => 'admin.product.brand.create']) !!}
+    {!! Form::open(['route' => 'admin.product.manufacturer.create']) !!}
         @php do_action(BASE_FILTER_BEFORE_RENDER_FORM, PRODUCT_MODULE_SCREEN_NAME, request(), null) @endphp
         <div class="row">
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-product::brand.create') }}</h4>
+                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-product::manufacturer.create') }}</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -27,16 +27,16 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('brand_image')) has-error @endif">
-                                        <label class="control-label required" for="role">{{ trans('plugins-product::brand.form.brand_image') }}</label>
-                                        {!! Form::mediaImage('brand_image', null, [ 'action' => 'select-image' ]) !!}
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('manufacturer_image')) has-error @endif">
+                                        <label class="control-label required" for="role">{{ trans('plugins-product::manufacturer.form.manufacturer_image') }}</label>
+                                        {!! Form::mediaImage('manufacturer_image', null, [ 'action' => 'select-image' ]) !!}
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('description')) has-error @endif">
-                                        <label for="name">{{ trans('core-base::forms.description') }}</label>
-                                        {!! render_editor('description', old('description'), true) !!}
-                                        {!! Form::error('description', $errors) !!}
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('policy')) has-error @endif">
+                                        <label for="name">{{ trans('core-base::forms.policy') }}</label>
+                                        {!! render_editor('policy', old('policy'), true) !!}
+                                        {!! Form::error('policy', $errors) !!}
                                     </div>
                                 </div>
                             </div>

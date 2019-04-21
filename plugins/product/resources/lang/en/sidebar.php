@@ -2,10 +2,11 @@
 return [
     'administrator' => 'Products',
     'product' => 'Manage Products',
-    'brand' => 'Brands',
+    'manufacturer' => 'Manufacturers',
     'color' => 'Color Attributes',
     'business-type' => 'Business Type',
-    'collection' => 'Collection Products',
-    'material' => 'Material Products',
+    'collection' => 'Collection',
+    'material' => 'Material',
     'category' => 'Product Categories',
+    'look_book' => 'Look Books',
 ];

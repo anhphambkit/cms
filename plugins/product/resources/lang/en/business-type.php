@@ -7,8 +7,8 @@
  */
 
 return [
-    'name' => 'Product Business Type',
-    'create' => 'New product business type',
-    'edit' => 'Edit product business type',
-    'list' => 'List product business type',
+    'name' => 'Business Type',
+    'create' => 'New business type',
+    'edit' => 'Edit business type',
+    'list' => 'List business type',
 ];

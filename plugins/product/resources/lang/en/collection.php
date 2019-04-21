@@ -7,8 +7,8 @@
  */
 
 return [
-    'name' => 'Product Collection',
-    'create' => 'New product collection',
-    'edit' => 'Edit product collection',
-    'list' => 'List product collection',
+    'name' => 'Collection',
+    'create' => 'New collection',
+    'edit' => 'Edit collection',
+    'list' => 'List collection',
 ];

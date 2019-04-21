@@ -1,12 +1,12 @@
 @extends('layouts.master')
 @section('content')
-    {!! Form::open(['route' => ['admin.product.brand.edit', $brand->id]]) !!}
-        @php do_action(BASE_FILTER_BEFORE_RENDER_FORM, PRODUCT_MODULE_SCREEN_NAME, request(), $brand) @endphp
+    {!! Form::open(['route' => ['admin.product.look_book.edit', $lookBook->id]]) !!}
+        @php do_action(BASE_FILTER_BEFORE_RENDER_FORM, PRODUCT_MODULE_SCREEN_NAME, request(), $lookBook) @endphp
         <div class="row">
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-product::brand.edit') }}</h4>
+                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-product::look-book.edit') }}</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -22,20 +22,20 @@
                                 <div class="row">
                                     <div class="form-group col-md-12 mb-2 @if ($errors->has('name')) has-error @endif">
                                         <label for="name">{{ trans('core-base::forms.name') }}</label>
-                                        {!! Form::text('name', $brand->name, ['class' => 'form-control', 'id' => 'name', 'placeholder' => trans('core-base::forms.name_placeholder'), 'data-counter' => 120]) !!}
+                                        {!! Form::text('name', $lookBook->name, ['class' => 'form-control', 'id' => 'name', 'placeholder' => trans('core-base::forms.name_placeholder'), 'data-counter' => 120]) !!}
                                         {!! Form::error('name', $errors) !!}
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('brand_image')) has-error @endif">
-                                        <label class="control-label required" for="role">{{ trans('plugins-product::brand.form.brand_image') }}</label>
-                                        {!! Form::mediaImage('brand_image', $brand->brand_image, [ 'action' => 'select-image' ]) !!}
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('look_book_image')) has-error @endif">
+                                        <label class="control-label required" for="role">{{ trans('plugins-product::look-book.form.look_book_image') }}</label>
+                                        {!! Form::mediaImage('look_book_image', $lookBook->look_book_image, [ 'action' => 'select-image' ]) !!}
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-12 mb-2 @if ($errors->has('description')) has-error @endif">
                                         <label for="name">{{ trans('core-base::forms.description') }}</label>
-                                        {!! render_editor('description', $brand->description, true) !!}
+                                        {!! render_editor('description', $lookBook->description, true) !!}
                                         {!! Form::error('description', $errors) !!}
                                     </div>
                                 </div>
@@ -47,9 +47,9 @@
             </div>
             <div class="col-md-3 right-sidebar">
                 @include('core-base::elements.form-actions')
-                @include('core-base::elements.forms.status', ['selected' => $brand->status])
-                @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'top', $brand) @endphp
-                @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'side', $brand) @endphp
+                @include('core-base::elements.forms.status', ['selected' => $lookBook->status])
+                @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'top', $lookBook) @endphp
+                @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'side', $lookBook) @endphp
             </div>
         </div>
     {!! Form::close() !!}

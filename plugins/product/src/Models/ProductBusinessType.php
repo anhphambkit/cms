@@ -30,5 +30,16 @@ class ProductBusinessType extends Model
         'order',
         'status',
         'is_root',
+        'created_by',
+        'updated_by',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @author TrinhLe
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_business_types_relation');
+    }
 }

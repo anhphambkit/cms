@@ -44,7 +44,9 @@
         </div>
     </div>
 
-    
+    @section('variable-scripts')
+    @show
+
     @foreach($jsFiles as $js)
         <script src="{{ URL::asset($js) }}" type="text/javascript"></script>
     @endforeach
