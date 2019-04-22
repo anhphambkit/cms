@@ -50,7 +50,8 @@
             "Plugins\\Faq\\": "plugins/faq/src",
             "Plugins\\Customer\\": "plugins/customer/src",
             "Plugins\\Product\\": "plugins/product/src",
-            "Plugins\\Blog\\": "plugins/blog/src"
+            "Plugins\\Blog\\": "plugins/blog/src",
+            "Plugins\\Payment\\": "plugins/payment/src"
         },
         "files": [
             "helpers.php"

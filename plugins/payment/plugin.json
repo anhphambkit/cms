@@ -1,0 +1,10 @@
+{
+    "name": "Payment",
+    "provider": "Plugins\\Payment\\Providers\\PaymentServiceProvider",
+    "plugin": "Plugins\\Payment\\Plugin",
+    "author": "Trinh Le",
+    "version": "1.0",
+    "description": "Payment",
+    "namespace": "Plugins\\Payment\\",
+    "src": "plugins/payment/src"
+}

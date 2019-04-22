@@ -177,7 +177,8 @@ return [
         
 
         /*=====================================*/
-        Core\Base\Providers\BaseServiceProvider::class
+        Core\Base\Providers\BaseServiceProvider::class,
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class
     ],
 
     /*
@@ -192,7 +193,6 @@ return [
     */
 
     'aliases' => [
-
         'App'          => Illuminate\Support\Facades\App::class,
         'Artisan'      => Illuminate\Support\Facades\Artisan::class,
         'Auth'         => Illuminate\Support\Facades\Auth::class,
@@ -227,6 +227,7 @@ return [
         'Validator'    => Illuminate\Support\Facades\Validator::class,
         'View'         => Illuminate\Support\Facades\View::class,
         'DataTables'   => Yajra\DataTables\Facades\DataTables::class,
+        'PayPal'       => Srmklive\PayPal\Facades\PayPal::class
     ],
 
 ];
