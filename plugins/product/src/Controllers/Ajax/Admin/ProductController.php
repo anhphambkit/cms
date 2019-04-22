@@ -25,7 +25,13 @@ class ProductController extends BaseAdminController
         $this->productServices = $productServices;
     }
 
-    public function getProductsByCategory(Request $request) {
+    /**
+     * Description
+     * @param Request $request 
+     * @return type
+     */
+    public function getProductsByCategory(Request $request)
+    {
         $categoryId = $request->get('category_id');
         $category = ProductCategory::find($categoryId);
         $products = $category->products()->get();

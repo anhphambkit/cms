@@ -49,6 +49,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
     // Format icon
     function iconFormat(icon) {
+        if (!icon.id) return icon.text;
         var $icon = `<img class="image-item-select" src="${icon.image_feature}" />${icon.text}`
         return $icon;
     }
