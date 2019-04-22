@@ -3,7 +3,6 @@
     {!! Form::open(['route' => 'admin.product.look_book.create']) !!}
         @php do_action(BASE_FILTER_BEFORE_RENDER_FORM, PRODUCT_MODULE_SCREEN_NAME, request(), null) @endphp
         <div class="row">
-            @include('plugins-product::look-book.partials.modal-look-book-tag')
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
@@ -28,9 +27,16 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('look_book_image')) has-error @endif">
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('image')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::look-book.form.look_book_image') }}</label>
-                                        {!! Form::lookBookImage('look_book_image', null) !!}
+                                        {!! Form::lookBookImage('image', old('image'), old('tag')) !!}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('short_description')) has-error @endif">
+                                        <label for="name">{{ trans('plugins-product::product.form.short_description') }}</label>
+                                        {!! render_editor('short_description', old('short_description'), true) !!}
+                                        {!! Form::error('short_description', $errors) !!}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -54,6 +60,7 @@
             </div>
         </div>
     {!! Form::close() !!}
+    @include('plugins-product::look-book.partials.modal-look-book-tag')
 @stop
 
 @section('variable-scripts')
@@ -61,5 +68,6 @@
         const API = {
             GET_PRODUCTS_BY_CATEGORY : "{{ route('ajax.admin.get_products_by_category') }}",
         };
+        const START_INDEX = 0;
     </script>
 @stop

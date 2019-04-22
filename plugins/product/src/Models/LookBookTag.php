@@ -25,9 +25,18 @@ class LookBookTag extends Model
     protected $fillable = [
         'look_book_id',
         'product_id',
+        'product_category_id',
         'left',
         'top',
         'created_by',
         'updated_by',
     ];
+
+    /**
+     * Get the look book that owns the look book tag.
+     */
+    public function lookBook()
+    {
+        return $this->belongsTo(LookBook::class);
+    }
 }

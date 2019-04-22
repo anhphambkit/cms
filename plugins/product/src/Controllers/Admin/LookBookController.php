@@ -10,11 +10,15 @@ namespace Plugins\Product\Controllers\Admin;
 
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Plugins\Product\DataTables\LookBookDataTable;
+use Plugins\Product\Models\LookBookTag;
 use Plugins\Product\Repositories\Interfaces\LookBookRepositories;
 use AssetManager;
 use AssetPipeline;
 use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
+use Plugins\Product\Requests\LookBookRequest;
 
 class LookBookController extends BaseAdminController
 {
@@ -49,9 +53,9 @@ class LookBookController extends BaseAdminController
     public function getList(LookBookDataTable $dataTable)
     {
 
-        page_title()->setTitle(trans('plugins-product::look_book.list'));
+        page_title()->setTitle(trans('plugins-product::look-book.list'));
 
-        return $dataTable->renderTable(['title' => trans('plugins-product::look_book.list')]);
+        return $dataTable->renderTable(['title' => trans('plugins-product::look-book.list')]);
     }
 
     /**
@@ -65,7 +69,7 @@ class LookBookController extends BaseAdminController
 
         $products = [];
 
-        page_title()->setTitle(trans('plugins-product::look_book.create'));
+        page_title()->setTitle(trans('plugins-product::look-book.create'));
 
         $this->addDetailAssets();
 
@@ -73,21 +77,31 @@ class LookBookController extends BaseAdminController
     }
 
     /**
-     * Insert new Product into database
-     *
+     * @param LookBookRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postCreate(Request $request)
+    public function postCreate(LookBookRequest $request)
     {
-        $look_book = $this->lookBookRepository->createOrUpdate($request->input());
+        $data = $request->input();
+        $data['created_by'] = Auth::id();
 
-        do_action(BASE_ACTION_AFTER_CREATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $look_book);
+        $lookBook = DB::transaction(function () use ($data, $request) {
+            $lookBook = $this->lookBookRepository->createOrUpdate($data);
+
+            $lookBookTags = $data['tag'];
+
+            $lookBook->lookBookTags()->createMany($lookBookTags);
+
+            return $lookBook->save();
+        }, 3);
+
+
+        do_action(BASE_ACTION_AFTER_CREATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $lookBook);
 
         if ($request->input('submit') === 'save') {
             return redirect()->route('admin.product.look_book.list')->with('success_msg', trans('core-base::notices.create_success_message'));
         } else {
-            return redirect()->route('admin.product.look_book.edit', $look_book->id)->with('success_msg', trans('core-base::notices.create_success_message'));
+            return redirect()->route('admin.product.look_book.edit', $lookBook->id)->with('success_msg', trans('core-base::notices.create_success_message'));
         }
     }
 
@@ -100,34 +114,60 @@ class LookBookController extends BaseAdminController
      */
     public function getEdit($id)
     {
-        $look_book = $this->lookBookRepository->findById($id);
-        if (empty($look_book)) {
+        $categories = $this->productCategoryRepositories->pluck('name', 'id');
+
+        $products = [];
+
+        $lookBook = $this->lookBookRepository->findById($id);
+
+        $lookBookTags = [];
+        $maxIndex = 0;
+        if ($lookBook->lookBookTags() != null) {
+            $lookBookTags = $lookBook->lookBookTags()->get();
+            $maxIndex = LookBookTag::max('id') + 1;
+        }
+
+        if (empty($lookBook)) {
             abort(404);
         }
 
-        page_title()->setTitle(trans('plugins-product::look_book.edit') . ' #' . $id);
+        page_title()->setTitle(trans('plugins-product::look-book.edit') . ' #' . $id);
 
         $this->addDetailAssets();
 
-        return view('plugins-product::look-book.edit', compact('look_book'));
+        return view('plugins-product::look-book.edit', compact('products', 'categories', 'lookBook', 'lookBookTags', 'maxIndex'));
     }
 
     /**
      * @param $id
+     * @param LookBookRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postEdit($id, Request $request)
+    public function postEdit($id, LookBookRequest $request)
     {
-        $look_book = $this->lookBookRepository->findById($id);
-        if (empty($look_book)) {
+        $lookBook = $this->lookBookRepository->findById($id);
+        if (empty($lookBook)) {
             abort(404);
         }
-        $look_book->fill($request->input());
 
-        $this->lookBookRepository->createOrUpdate($look_book);
+        $data = $request->input();
+        $data['updated_by'] = Auth::id();
 
-        do_action(BASE_ACTION_AFTER_UPDATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $look_book);
+        $lookBook = DB::transaction(function () use ($data, $lookBook) {
+            $lookBook->fill($data);
+
+            $this->lookBookRepository->createOrUpdate($lookBook);
+
+            LookBookTag::with('lookBook')->where('look_book_id', $lookBook->id)->delete();
+
+            $lookBookTags = $data['tag'];
+
+            $lookBook->lookBookTags()->createMany($lookBookTags);
+
+            return $lookBook->save();
+        }, 3);
+
+        do_action(BASE_ACTION_AFTER_UPDATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $lookBook);
 
         if ($request->input('submit') === 'save') {
             return redirect()->route('admin.product.look_book.list')->with('success_msg', trans('core-base::notices.update_success_message'));
@@ -145,13 +185,13 @@ class LookBookController extends BaseAdminController
     public function getDelete(Request $request, $id)
     {
         try {
-            $look_book = $this->lookBookRepository->findById($id);
-            if (empty($look_book)) {
+            $lookBook = $this->lookBookRepository->findById($id);
+            if (empty($lookBook)) {
                 abort(404);
             }
-            $this->lookBookRepository->delete($look_book);
+            $this->lookBookRepository->delete($lookBook);
 
-            do_action(BASE_ACTION_AFTER_DELETE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $look_book);
+            do_action(BASE_ACTION_AFTER_DELETE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $lookBook);
 
             return [
                 'error' => false,
@@ -173,6 +213,7 @@ class LookBookController extends BaseAdminController
     {
         AssetManager::addAsset('select2-css', 'libs/plugins/product/css/select2/select2.min.css');
         AssetManager::addAsset('look-book-component-css', 'backend/core/base/assets/css/look-book-component.css');
+        AssetManager::addAsset('look-book-css', 'backend/plugins/product/assets/css/look-book.css');
 
         AssetManager::addAsset('select2-js', 'libs/plugins/product/js/select2/select2.full.min.js');
         AssetManager::addAsset('cropper-js', '//cdnjs.cloudflare.com/ajax/libs/cropper/0.7.9/cropper.min.js');
@@ -180,6 +221,7 @@ class LookBookController extends BaseAdminController
 
         AssetPipeline::requireCss('select2-css');
         AssetPipeline::requireCss('look-book-component-css');
+        AssetPipeline::requireCss('look-book-css');
 
         AssetPipeline::requireJs('select2-js');
         AssetPipeline::requireJs('cropper-js');

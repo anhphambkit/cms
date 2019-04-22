@@ -60,6 +60,7 @@ class FormServiceProvider extends ServiceProvider
         Form::component('lookBookImage', 'core-base::elements.forms.image-look-book', [
             'name',
             'value' => null,
+            'tags' => [],
             'attributes' => [],
         ]);
 

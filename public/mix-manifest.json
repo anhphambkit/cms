@@ -1,6 +1,12 @@
 {
-    "/backend/core/base/assets/js/datatables.js": "/backend/core/base/assets/js/datatables.js",
-    "/backend/core/base/assets/css/look-book-component.css": "/backend/core/base/assets/css/look-book-component.css",
-    "/backend/core/base/assets/js/script.js": "/backend/core/base/assets/js/script.js",
-    "/backend/core/base/assets/js/editor.js": "/backend/core/base/assets/js/editor.js"
+    "/backend/plugins/product/assets/js/look-book.js": "/backend/plugins/product/assets/js/look-book.js",
+    "/backend/plugins/product/assets/css/look-book.css": "/backend/plugins/product/assets/css/look-book.css",
+    "/backend/plugins/product/assets/css/product-color.css": "/backend/plugins/product/assets/css/product-color.css",
+    "/backend/plugins/product/assets/css/product.css": "/backend/plugins/product/assets/css/product.css",
+    "/backend/plugins/product/assets/scripts/switch.min.js": "/backend/plugins/product/assets/scripts/switch.min.js",
+    "/backend/plugins/product/assets/scripts/switch.js": "/backend/plugins/product/assets/scripts/switch.js",
+    "/backend/plugins/product/assets/scripts/picker-color.min.js": "/backend/plugins/product/assets/scripts/picker-color.min.js",
+    "/backend/plugins/product/assets/scripts/picker-color.js": "/backend/plugins/product/assets/scripts/picker-color.js",
+    "/backend/plugins/product/assets/scripts/form-select2.min.js": "/backend/plugins/product/assets/scripts/form-select2.min.js",
+    "/backend/plugins/product/assets/scripts/form-select2.js": "/backend/plugins/product/assets/scripts/form-select2.js"
 }

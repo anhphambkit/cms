@@ -23,6 +23,8 @@ class LookBookRequest extends CoreRequest
     {
         return [
             'name' => 'required',
+            'image' => 'required',
+            'tag' => 'required',
         ];
     }
 }

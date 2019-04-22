@@ -192,7 +192,7 @@ class CreateProductTable extends Migration
             $table->text('description')->nullable();
             $table->text('short_description')->nullable();
             $table->text('image');
-            $table->string('permalink');
+            $table->string('permalink')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->softDeletes();
@@ -203,6 +203,7 @@ class CreateProductTable extends Migration
             $table->increments('id');
             $table->integer('look_book_id');
             $table->integer('product_id');
+            $table->integer('product_category_id');
             $table->float('left', 3, 2);
             $table->float('top', 3, 2);
             $table->integer('created_by')->nullable();

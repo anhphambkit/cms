@@ -41,7 +41,7 @@ class ProductCategory extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_categories_relation');
+        return $this->belongsToMany(Product::class, 'product_categories_relation')->select(['products.id', 'name as text', 'image_feature']);
     }
 
     /**

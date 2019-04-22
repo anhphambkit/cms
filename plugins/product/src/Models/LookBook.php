@@ -41,4 +41,12 @@ class LookBook extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    /**
+     * Get the look book tags for the look book.
+     */
+    public function lookBookTags()
+    {
+        return $this->hasMany(LookBookTag::class);
+    }
 }

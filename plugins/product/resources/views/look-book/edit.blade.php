@@ -27,9 +27,16 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('look_book_image')) has-error @endif">
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('image')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::look-book.form.look_book_image') }}</label>
-                                        {!! Form::mediaImage('look_book_image', $lookBook->look_book_image, [ 'action' => 'select-image' ]) !!}
+                                        {!! Form::lookBookImage('image', $lookBook->image, $lookBookTags) !!}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('short_description')) has-error @endif">
+                                        <label for="name">{{ trans('plugins-product::product.form.short_description') }}</label>
+                                        {!! render_editor('short_description', $lookBook->short_description, true) !!}
+                                        {!! Form::error('short_description', $errors) !!}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -53,4 +60,14 @@
             </div>
         </div>
     {!! Form::close() !!}
+    @include('plugins-product::look-book.partials.modal-look-book-tag')
+@stop
+
+@section('variable-scripts')
+    <script>
+        const API = {
+            GET_PRODUCTS_BY_CATEGORY : "{{ route('ajax.admin.get_products_by_category') }}",
+        };
+        const START_INDEX = {{ $maxIndex }};
+    </script>
 @stop

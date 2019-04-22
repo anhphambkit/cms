@@ -448,6 +448,8 @@ Lcms.initMediaIntegrate = function () {
                     case 'look-book-image':
                         var firstItem = _.first(files);
                         $el.closest('.image-look-book').find('.image-data').val(firstItem.url);
+                        $el.closest('.image-look-book').find('.look-book-box-preview').addClass('look-book-box-tag');
+                        $el.closest('.image-look-book').find('.preview_image').addClass('preview-look-book-image');
                         $el.closest('.image-look-book').find('.preview_image').attr('src', firstItem.url).show();
                         break;
                 }
@@ -464,6 +466,9 @@ Lcms.initMediaIntegrate = function () {
             event.preventDefault();
             $(this).closest('.image-look-book').find('img').hide();
             $(this).closest('.image-look-book').find('input').val('');
+            $(this).closest('.image-look-book').find('.preview_image').removeClass('preview-look-book-image');
+            $(this).closest('.image-look-book').find('.look-book-box-preview').removeClass('look-book-box-tag');
+            $(this).closest('.image-look-book').find('.tt-hotspot').remove();
         });
 
         // Gallery:
