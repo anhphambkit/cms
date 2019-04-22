@@ -36,16 +36,16 @@ task('deploy:start', function(){ //
 task('deploy:upload', function(){ // 
     writeln('Start upload');
     $folders = [
-        // 'app',
-        // 'config',
-        'core//user',
-        // 'plugins//blog',
-        // 'public//themes',
-        // 'public//backend',
-        // 'public//frontend',
-        // 'public//libs',
-        // 'public//vendor',
-        // 'Themes',
+        'app',
+        'config',
+        'core',
+        'plugins//blog',
+        'public//themes',
+        'public//backend',
+        'public//frontend',
+        'public//libs',
+        'public//vendor',
+        'Themes',
         // 'webpack'
     ];
     $path = get('deploy_path');

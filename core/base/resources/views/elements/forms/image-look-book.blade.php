@@ -12,8 +12,8 @@
                name="{{ $name }}"
                value="{{ $value }}"
                class="image-data">
-        <div class="look-book-box-preview {{ (sizeof($tags) > 0) ? "look-book-box-tag" : "" }}">
-            <img src="{{ $value }}" alt="preview image" class="preview_image {{ (sizeof($tags) > 0) ? "preview-look-book-image" : "" }}">
+        <div class="look-book-box-preview {{ (sizeof($tags) > 0) ? 'look-book-box-tag' : '' }}">
+            <img src="{{ get_object_image($value) }}" alt="preview image" class="preview_image {{ (sizeof($tags) > 0) ? 'preview-look-book-image' : '' }}">
             @foreach($tags as $tag)
                 <div class="tt-hotspot tt-tag-{{ $tag->id }}" style="left: {{ $tag->left }}%; top: {{ $tag->top }}%;" data-left="{{ $tag->left }}" data-top="{{ $tag->top }}" data-tag-id="{{ $tag->id }}">
                     <div class="tt-btn">
