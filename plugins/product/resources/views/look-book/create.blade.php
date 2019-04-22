@@ -29,7 +29,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-12 mb-2 @if ($errors->has('image')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::look-book.form.look_book_image') }}</label>
-                                        {!! Form::lookBookImage('image', old('image'), old('tag')) !!}
+                                        {!! Form::lookBookImage('image', old('image'), []) !!}
                                     </div>
                                 </div>
                                 <div class="row">

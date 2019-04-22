@@ -68,12 +68,13 @@ class LookBookController extends BaseAdminController
         $categories = $this->productCategoryRepositories->pluck('name', 'id');
 
         $products = [];
+        $tags = [];
 
         page_title()->setTitle(trans('plugins-product::look-book.create'));
 
         $this->addDetailAssets();
 
-        return view('plugins-product::look-book.create', compact('categories', 'products'));
+        return view('plugins-product::look-book.create', compact('categories', 'products','tags'));
     }
 
     /**
