@@ -9,6 +9,7 @@ return [
     'image_placeholder'       => 'Insert path of image or click upload button',
     'create'                  => 'Create',
     'edit'                    => 'Edit',
+    'delete'                  => 'Delete',
     'permalink'               => 'Permalink',
     'parent_category'         => 'Parent Category',
     'category'                => 'Category',

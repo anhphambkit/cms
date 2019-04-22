@@ -10,12 +10,14 @@ namespace Plugins\Product\Controllers\Admin;
 
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Plugins\Product\DataTables\ProductBusinessTypeDataTable;
 use Plugins\Product\Models\ProductBusinessType;
 use Plugins\Product\Repositories\Interfaces\BusinessTypeRepositories;
 use AssetManager;
 use AssetPipeline;
+use Plugins\Product\Requests\ProductBusinessTypeRequest;
 
 class ProductBusinessTypeController extends BaseAdminController
 {
@@ -66,16 +68,15 @@ class ProductBusinessTypeController extends BaseAdminController
     }
 
     /**
-     * Insert new Product into database
-     *
+     * @param ProductBusinessTypeRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postCreate(Request $request)
+    public function postCreate(ProductBusinessTypeRequest $request)
     {
         $data = $request->input();
 
         $data['slug'] = str_slug($data['name']);
+        $data['created_by'] = Auth::id();
 
         $business_type = $this->businessTypeRepository->createOrUpdate($data);
 
@@ -114,10 +115,10 @@ class ProductBusinessTypeController extends BaseAdminController
 
     /**
      * @param $id
+     * @param ProductBusinessTypeRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postEdit($id, Request $request)
+    public function postEdit($id, ProductBusinessTypeRequest $request)
     {
         $business_type = $this->businessTypeRepository->findById($id);
         if (empty($business_type)) {
@@ -127,6 +128,7 @@ class ProductBusinessTypeController extends BaseAdminController
         $data = $request->input();
 
         $data['slug'] = str_slug($data['name']);
+        $data['updated_by'] = Auth::id();
 
         $business_type->fill($data);
 

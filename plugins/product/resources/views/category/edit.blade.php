@@ -34,7 +34,7 @@
                                     </div>
                                     <div class="form-group col-md-6 mb-2 @if ($errors->has('order')) has-error @endif">
                                         <label for="name">{{ trans('core-base::forms.order') }}</label>
-                                        {!! Form::text('order', $infoCategory->order, ['class' => 'form-control', 'id' => 'order', 'type' => 'number', 'min' => 0, 'placeholder' => trans('core-base::forms.name_placeholder')]) !!}
+                                        {!! Form::number('order', $infoCategory->order, ['class' => 'form-control', 'id' => 'order', 'type' => 'number', 'min' => 0, 'placeholder' => trans('core-base::forms.name_placeholder')]) !!}
                                         {!! Form::error('order', $errors) !!}
                                     </div>
                                 </div>

@@ -13,5 +13,6 @@ return [
     'list' => 'List manufacturer',
     'form' => [
         'manufacturer_image' => 'Manufacturer Image',
+        'policy' => 'Return/Refund Policy',
     ]
 ];

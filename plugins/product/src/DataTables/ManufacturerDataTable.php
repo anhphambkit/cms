@@ -26,8 +26,8 @@ class ManufacturerDataTable extends DataTableAbstract
             ->editColumn('name', function ($item) {
                 return anchor_link(route('admin.product.manufacturer.edit', $item->id), $item->name);
             })
-            ->editColumn('checkbox', function ($item) {
-                return table_checkbox($item->id);
+            ->editColumn('created_by', function ($item) {
+                return $item->createdByUser ? $item->createdByUser->getFullName() : null;
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
@@ -56,9 +56,15 @@ class ManufacturerDataTable extends DataTableAbstract
         /**
          * @var \Eloquent $model
          */
-        $query = $model->select(['product_manufacturers.id',
-            'product_manufacturers.manufacturer_image',
-            'product_manufacturers.name', 'product_manufacturers.created_at', 'product_manufacturers.status']);
+        $query = $model->select(
+            [
+                'product_manufacturers.id',
+                'product_manufacturers.manufacturer_image',
+                'product_manufacturers.name',
+                'product_manufacturers.created_by',
+                'product_manufacturers.created_at',
+                'product_manufacturers.status'
+            ]);
         return $query;
     }
 
@@ -89,6 +95,12 @@ class ManufacturerDataTable extends DataTableAbstract
                 'name' => 'product_manufacturers.name',
                 'title' => trans('core-base::tables.name'),
                 'footer' => trans('core-base::tables.name'),
+                'class' => 'text-left searchable',
+            ],
+            'created_by' => [
+                'name' => 'products.created_by',
+                'title' => trans('core-base::tables.created_by'),
+                'footer' => trans('core-base::tables.created_by'),
                 'class' => 'text-left searchable',
             ],
             'created_at' => [

@@ -12,8 +12,10 @@ use Core\Base\Controllers\Admin\BaseAdminController;
 use AssetManager;
 use AssetPipeline;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Plugins\Product\DataTables\ProductColorDataTable;
 use Plugins\Product\Repositories\Interfaces\ProductColorRepositories;
+use Plugins\Product\Requests\ProductColorRequest;
 
 class ProductColorController extends BaseAdminController
 {
@@ -60,14 +62,14 @@ class ProductColorController extends BaseAdminController
     }
 
     /**
-     * Insert new Product into database
-     *
+     * @param ProductColorRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postCreate(Request $request)
+    public function postCreate(ProductColorRequest $request)
     {
         $data = $request->input();
+
+        $data['created_by'] = Auth::id();
 
         $color = $this->productColorRepository->createOrUpdate($data);
 
@@ -100,16 +102,16 @@ class ProductColorController extends BaseAdminController
 
     /**
      * @param $id
+     * @param ProductColorRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postEdit($id, Request $request)
+    public function postEdit($id, ProductColorRequest $request)
     {
         $color = $this->productColorRepository->findById($id);
         if (empty($color)) {
             abort(404);
         }
-        $color->fill($request->input());
+        $color->fill(array($request->input(), ['updated_by' => Auth::id()]));
 
         $this->productColorRepository->createOrUpdate($color);
 

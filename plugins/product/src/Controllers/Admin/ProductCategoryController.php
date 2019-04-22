@@ -12,9 +12,11 @@ use AssetManager;
 use AssetPipeline;
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
 use Plugins\Product\DataTables\ProductCategoryDataTable;
 use Illuminate\Support\Facades\DB;
+use Plugins\Product\Requests\ProductCategoryRequest;
 
 class ProductCategoryController extends BaseAdminController
 {
@@ -65,16 +67,15 @@ class ProductCategoryController extends BaseAdminController
     }
 
     /**
-     * Insert new Product into database
-     *
+     * @param ProductCategoryRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postCreate(Request $request)
+    public function postCreate(ProductCategoryRequest $request)
     {
         $data = $request->input();
 
         $data['slug'] = str_slug($data['name']);
+        $data['created_by'] = Auth::id();
 
         $category= $this->productCategoryRepository->createOrUpdate($data);
 
@@ -113,10 +114,10 @@ class ProductCategoryController extends BaseAdminController
 
     /**
      * @param $id
+     * @param ProductCategoryRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postEdit($id, Request $request)
+    public function postEdit($id, ProductCategoryRequest $request)
     {
         $category= $this->productCategoryRepository->findById($id);
         if (empty($category)) {
@@ -126,6 +127,7 @@ class ProductCategoryController extends BaseAdminController
         $data = $request->input();
 
         $data['slug'] = str_slug($data['name']);
+        $data['updated_by'] = Auth::id();
 
         $category->fill($data);
 

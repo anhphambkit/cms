@@ -1,12 +1,7 @@
 /*=========================================================================================
-    File Name: form-select2.js
-    Description: Select2 is a jQuery-based replacement for select boxes.
-    It supports searching, remote data sets, and pagination of results.
+    File Name: look-book.js
     ----------------------------------------------------------------------------------------
-    Item Name: Modern Admin - Clean Bootstrap 4 Dashboard HTML Template
-   Version: 3.0
-    Author: Pixinvent
-    Author URL: hhttp://www.themeforest.net/user/pixinvent
+    Author: AnhPham
 ==========================================================================================*/
 import axios from 'axios';
 axios.defaults.withCredentials = true;
@@ -14,8 +9,8 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 (function(window, document, $) {
     'use strict';
-
-
+    let index = START_INDEX;
+    let currentProductId = 0;
 
     // Single Select Placeholder
     $("#select-category-list").select2({
@@ -32,7 +27,17 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
         return request
             .then(function(data){
-                alert(data);
+                $('#select-product-list').empty();
+                $('#select-product-list').select2({
+                    placeholder: "Select a product",
+                    minimumResultsForSearch: Infinity,
+                    data: data.data,
+                    templateResult: iconFormat,
+                    templateSelection: iconFormat,
+                    escapeMarkup: function(es) { return es; }
+                });
+                if (currentProductId > 0)
+                    $("#select-product-list").val(currentProductId).trigger('change');
             })
             .catch(function(data){
                 console.log("error", data);
@@ -42,24 +47,84 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
             });
     });
 
+    // Format icon
+    function iconFormat(icon) {
+        var $icon = `<img class="image-item-select" src="${icon.image_feature}" />${icon.text}`
+        return $icon;
+    }
+
     $('#select-category-list').trigger('change');
 
-    let left = 0;
-    let top = 0;
-
-    $("img.preview-look-book-image").on("click", function(event) {
-        $('#look-book-tag-modal').modal('show')
-        // let leftOffset = event.offsetX - 19 - 4; // 19px is width of tag and 4px is padding in tag icon
-        // let topOffset = event.offsetY - 19 - 4;
-        // let width = $(this).width();
-        // let height = $(this).height();
-        // left = (leftOffset/width)*100;
-        // top = (topOffset/height)*100;
-        // $('.width').text('Width: ' + left);
-        // $('.height').text('Height: ' + top);
-        // $('#popup-lookbook').removeClass('d-none');
+    $(document).on("click", "img.preview-look-book-image", function(event) {
+        currentProductId = 0;
+        let leftOffset = event.offsetX - 19 - 4; // 19px is width of tag and 4px is padding in tag icon
+        let topOffset = event.offsetY - 19 - 4;
+        let width = $(this).width();
+        let height = $(this).height();
+        let left = (leftOffset/width)*100;
+        let top = (topOffset/height)*100;
+        $('.position-dataX').val(left);
+        $('.position-dataY').val(top);
+        $('#look-book-tag-modal').data('tag-index', index);
+        $('#look-book-tag-modal').modal('show');
     });
 
-    let index = 0;
+    $(document).on('click', '.look-book-tag-save', function () {
+        let productId = $('#select-product-list').val();
+        let productCategoryId = $('#select-category-list').val();
+        let left = $('.position-dataX').val();
+        let top = $('.position-dataY').val();
+        let tagId = $('#look-book-tag-modal').data('tag-index');
 
+        if (tagId === index) {
+            let newHotspot = `<div class="tt-hotspot tt-tag-${tagId}" style="left: ${left}%; top: ${top}%;" data-left="${left}" data-top="${top}" data-tag-id="${tagId}">
+                                <div class="tt-btn">
+                                    <i class="icon-tag fas fa-tag"></i>
+                                </div>
+                            <input type="number" hidden name="tag[${tagId}][left]" value="${left}">
+                            <input type="number" hidden name="tag[${tagId}][top]" value="${top}">
+                            <input type="number" hidden name="tag[${tagId}][product_id]" value="${productId}">
+                            <input type="number" hidden name="tag[${tagId}][product_category_id]" value="${productCategoryId}">
+                            </div>
+                          `;
+            $('.look-book-box-preview').append(newHotspot);
+            index++;
+        }
+        else {
+            $(`input[name="tag[${tagId}][left]"]`).val(left);
+            $(`input[name="tag[${tagId}][top]"]`).val(top);
+            $(`input[name="tag[${tagId}][product_category_id]"]`).val(productCategoryId);
+            $(`input[name="tag[${tagId}][product_id]"]`).val(productId);
+            $(`.tt-tag-${tagId}`).css('left', `${left}%`);
+            $(`.tt-tag-${tagId}`).css('top', `${top}%`);
+            $(`.tt-tag-${tagId}`).data('left', `${left}`);
+            $(`.tt-tag-${tagId}`).data('top', `${top}`);
+        }
+
+        $('#look-book-tag-modal').modal('hide');
+    });
+
+    /**
+     * Delete look book tag
+     */
+    $(document).on('click', '#delete-tag-item', function () {
+        let tagId = $('#look-book-tag-modal').data('tag-index');
+        $(`.tt-tag-${tagId}`).remove();
+        $('#look-book-tag-modal').modal('hide');
+    });
+
+    // Event click on tag:
+    $(document).on("click", '.tt-btn', function(event) {
+        let tagId = $(this).parent('.tt-hotspot').data('tag-id');
+        currentProductId = $(`input[name="tag[${tagId}][product_id]"]`).val();
+        let productCategoryId = $(`input[name="tag[${tagId}][product_category_id]"]`).val();
+        $("#select-category-list").val(productCategoryId).trigger('change');
+
+        let left = $(`input[name="tag[${tagId}][left]"]`).val();
+        let top = $(`input[name="tag[${tagId}][top]"]`).val();
+        $('.position-dataX').val(left);
+        $('.position-dataY').val(top);
+        $('#look-book-tag-modal').data('tag-index', tagId);
+        $('#look-book-tag-modal').modal('show');
+    });
 })(window, document, jQuery);

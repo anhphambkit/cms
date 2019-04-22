@@ -5,6 +5,7 @@ namespace Plugins\Product\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Plugins\Product\Models\ProductGallery;
 use Plugins\Product\Repositories\Interfaces\ManufacturerRepositories;
 use Plugins\Product\Repositories\Interfaces\BusinessTypeRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
@@ -150,8 +151,17 @@ class ProductController extends BaseAdminController
         $data['sku'] = "{$data['manufacturer_id']}{$data['sku']}";
         $data['created_by'] = Auth::id();
 
-        DB::transaction(function () use ($data, $request) {
+        $product = DB::transaction(function () use ($data, $request) {
             $product = $this->productRepository->createOrUpdate($data);
+
+            $galleries = json_decode($request->input('image_gallery', "[]"));
+
+            foreach ($galleries as $gallery) {
+                $product->galleries()->create([
+                    'media' => $gallery,
+//                    'description' => $gallery->description,
+                ]);
+            }
 
             $categoryIds = $request->input('category_id', []);
             $product->productCategories()->attach($categoryIds);
@@ -170,7 +180,7 @@ class ProductController extends BaseAdminController
 
             $product->sku .= $product->id;
 
-            $product->save();
+            return $product->save();
         }, 3);
 
         do_action(BASE_ACTION_AFTER_CREATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $product);
@@ -230,6 +240,11 @@ class ProductController extends BaseAdminController
             $selectedProductMaterials = $product->productMaterials->pluck('id')->all();
         }
 
+        $galleries = [];
+        if ($product->galleries != null) {
+            $galleries = $product->galleries->pluck('media')->all();
+        }
+
         if (empty($product)) {
             abort(404);
         }
@@ -240,7 +255,7 @@ class ProductController extends BaseAdminController
 
         return view('plugins-product::product.edit', compact('product', 'categories', 'manufacturer', 'colors',
                     'businessTypes', 'collections', 'materials', 'selectedProductCategories', 'selectedProductBusinessTypes',
-                    'selectedProductCollections', 'selectedProductColors', 'selectedProductMaterials'));
+                    'selectedProductCollections', 'selectedProductColors', 'selectedProductMaterials', 'galleries'));
     }
 
     /**
@@ -256,6 +271,7 @@ class ProductController extends BaseAdminController
             abort(404);
         }
 
+
         $data = $request->input();
 
         $data['slug'] = str_slug($data['name']);
@@ -266,30 +282,43 @@ class ProductController extends BaseAdminController
         $data['sku'] = "{$data['manufacturer_id']}{$data['sku']}{$id}";
         $data['updated_by'] = Auth::id();
 
-        DB::transaction(function () use ($data, $product) {
+        $product = DB::transaction(function () use ($data, $product, $request) {
             $product->fill($data);
 
             $this->productRepository->createOrUpdate($product);
 
-            $categoryIds = $data['category_id'];
+            $galleries = json_decode($request->input('image_gallery', "[]"));
+
+            ProductGallery::with('product')->where('product_id', $product->id)->delete();
+
+            foreach ($galleries as $gallery) {
+                $product->galleries()->create([
+                    'media' => $gallery,
+//                    'description' => $gallery->description,
+                ]);
+            }
+
+            $categoryIds = $request->input('category_id', []);
             $product->productCategories()->detach();
             $product->productCategories()->attach($categoryIds);
 
-            $businessTypeIds = $data['business_type_id'];
+            $businessTypeIds = $request->input('business_type_id', []);
             $product->productBusinessTypes()->detach();
             $product->productBusinessTypes()->attach($businessTypeIds);
 
-            $collectionIds = $data['collection_id'];
+            $collectionIds = $request->input('collection_id', []);
             $product->productCollections()->detach();
             $product->productCollections()->attach($collectionIds);
 
-            $colorIds = $data['color_id'];
+            $colorIds = $request->input('color_id', []);
             $product->productColors()->detach();
             $product->productColors()->attach($colorIds);
 
-            $materialIds = $data['material_id'];
+            $materialIds = $request->input('material_id', []);
             $product->productMaterials()->detach();
             $product->productMaterials()->attach($materialIds);
+
+            return $product;
         }, 3);
 
 
@@ -338,11 +367,14 @@ class ProductController extends BaseAdminController
     private function addDetailAssets()
     {
         AssetManager::addAsset('select2-css', 'libs/plugins/product/css/select2/select2.min.css');
-        AssetManager::addAsset('select2-js', 'libs/plugins/product/js/select2/select2.full.min.js');
         AssetManager::addAsset('bootstrap-switch-css', 'libs/plugins/product/css/toggle/bootstrap-switch.min.css');
+        AssetManager::addAsset('switchery-css', 'libs/plugins/product/css/toggle/switchery.min.css');
+        AssetManager::addAsset('admin-gallery-css', 'libs/core/base/css/gallery/admin-gallery.css');
+        AssetManager::addAsset('product-css', 'backend/plugins/product/assets/css/product.css');
+
+        AssetManager::addAsset('select2-js', 'libs/plugins/product/js/select2/select2.full.min.js');
         AssetManager::addAsset('bootstrap-switch-js', 'libs/plugins/product/js/toggle/bootstrap-switch.min.js');
         AssetManager::addAsset('bootstrap-checkbox-js', 'libs/plugins/product/js/toggle/bootstrap-checkbox.min.js');
-        AssetManager::addAsset('switchery-css', 'libs/plugins/product/css/toggle/switchery.min.css');
         AssetManager::addAsset('switchery-js', 'libs/plugins/product/js/toggle/switchery.min.js');
         AssetManager::addAsset('form-select2-js', 'backend/plugins/product/assets/scripts/form-select2.min.js');
         AssetManager::addAsset('switch-js', 'backend/plugins/product/assets/scripts/switch.min.js');
@@ -350,6 +382,9 @@ class ProductController extends BaseAdminController
         AssetPipeline::requireCss('select2-css');
         AssetPipeline::requireCss('bootstrap-switch-css');
         AssetPipeline::requireCss('switchery-css');
+        AssetPipeline::requireCss('admin-gallery-css');
+        AssetPipeline::requireCss('product-css');
+
         AssetPipeline::requireJs('select2-js');
         AssetPipeline::requireJs('bootstrap-switch-js');
         AssetPipeline::requireJs('bootstrap-checkbox-js');

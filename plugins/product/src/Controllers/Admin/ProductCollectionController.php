@@ -10,8 +10,10 @@ namespace Plugins\Product\Controllers\Admin;
 
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Plugins\Product\DataTables\ProductCollectionDataTable;
 use Plugins\Product\Repositories\Interfaces\ProductCollectionRepositories;
+use Plugins\Product\Requests\ProductCollectionRequest;
 
 class ProductCollectionController extends BaseAdminController
 {
@@ -57,16 +59,15 @@ class ProductCollectionController extends BaseAdminController
     }
 
     /**
-     * Insert new Product into database
-     *
+     * @param ProductCollectionRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postCreate(Request $request)
+    public function postCreate(ProductCollectionRequest $request)
     {
         $data = $request->input();
 
         $data['slug'] = str_slug($data['name']);
+        $data['created_by'] = Auth::id();
 
         $collection = $this->productCollectionRepository->createOrUpdate($data);
 
@@ -100,10 +101,10 @@ class ProductCollectionController extends BaseAdminController
 
     /**
      * @param $id
+     * @param ProductCollectionRequest $request
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postEdit($id, Request $request)
+    public function postEdit($id, ProductCollectionRequest $request)
     {
         $collection = $this->productCollectionRepository->findById($id);
         if (empty($collection)) {
@@ -113,6 +114,7 @@ class ProductCollectionController extends BaseAdminController
         $data = $request->input();
 
         $data['slug'] = str_slug($data['name']);
+        $data['updated_by'] = Auth::id();
 
         $collection->fill($data);
 

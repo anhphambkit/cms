@@ -16,6 +16,13 @@ class ProductRequest extends CoreRequest
     {
         return [
             'name' => 'required',
+            'upc' => 'required',
+            'sku' => 'required',
+            'category_id' => 'required',
+            'manufacturer_id' => 'required',
+            'image_gallery' => 'required',
+            'price' => 'required',
+            'inventory' => 'required',
         ];
     }
 }

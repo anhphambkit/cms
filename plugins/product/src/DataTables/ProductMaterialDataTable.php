@@ -26,8 +26,8 @@ class ProductMaterialDataTable extends DataTableAbstract
             ->editColumn('name', function ($item) {
                 return anchor_link(route('admin.product.material.edit', $item->id), $item->name);
             })
-            ->editColumn('checkbox', function ($item) {
-                return table_checkbox($item->id);
+            ->editColumn('created_by', function ($item) {
+                return $item->createdByUser ? $item->createdByUser->getFullName() : null;
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
@@ -56,8 +56,14 @@ class ProductMaterialDataTable extends DataTableAbstract
         /**
          * @var \Eloquent $model
          */
-        $query = $model->select(['product_materials.id',
-            'product_materials.name', 'product_materials.created_at', 'product_materials.status']);
+        $query = $model->select(
+            [
+                'product_materials.id',
+                'product_materials.name',
+                'product_materials.created_by',
+                'product_materials.created_at',
+                'product_materials.status'
+            ]);
         return $query;
     }
 
@@ -80,6 +86,12 @@ class ProductMaterialDataTable extends DataTableAbstract
                 'name' => 'product_materials.name',
                 'title' => trans('core-base::tables.name'),
                 'footer' => trans('core-base::tables.name'),
+                'class' => 'text-left searchable',
+            ],
+            'created_by' => [
+                'name' => 'products.created_by',
+                'title' => trans('core-base::tables.created_by'),
+                'footer' => trans('core-base::tables.created_by'),
                 'class' => 'text-left searchable',
             ],
             'created_at' => [

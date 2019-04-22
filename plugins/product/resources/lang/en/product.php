@@ -11,6 +11,7 @@ return [
         'sku' => 'SKU',
         'sku_placeholder' => 'SKU',
         'image_feature' => 'Image Feature',
+        'image_gallery' => 'Gallery',
         'price' => 'Price',
         'price_placeholder' => 'Price',
         'sale_price' => 'Sale Price',

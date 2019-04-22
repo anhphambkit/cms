@@ -136,9 +136,7 @@ class CreateProductTable extends Migration
         Schema::create('product_tags', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 120);
-            $table->integer('author_id');
-            $table->string('author_type', 255)->default(addslashes(User::class));
-            $table->string('description', 400)->nullable()->default('');
+            $table->string('description', 400)->nullable();
             $table->integer('parent_id')->unsigned()->default(0);
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
@@ -194,7 +192,7 @@ class CreateProductTable extends Migration
             $table->text('description')->nullable();
             $table->text('short_description')->nullable();
             $table->text('image');
-            $table->string('permalink');
+            $table->string('permalink')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->softDeletes();
@@ -205,6 +203,7 @@ class CreateProductTable extends Migration
             $table->increments('id');
             $table->integer('look_book_id');
             $table->integer('product_id');
+            $table->integer('product_category_id');
             $table->float('left', 3, 2);
             $table->float('top', 3, 2);
             $table->integer('created_by')->nullable();

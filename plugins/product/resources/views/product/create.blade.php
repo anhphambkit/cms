@@ -50,14 +50,22 @@
                                         {!! Form::error('manufacturer_id', $errors) !!}
                                     </div>
                                 </div>
-                                {{-- Image--}}
+
+                                {{-- Gallery--}}
                                 <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('image_feature')) has-error @endif">
-                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.form.image_feature') }}</label>
-                                        {!! Form::mediaImage('image_feature', null, [ 'action' => 'select-image' ]) !!}
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('image_gallery')) has-error @endif">
+                                        <div class="widget meta-boxes gallery-box">
+                                            <div class="widget-title">
+                                                <h4><span class="required">{{ trans('plugins-product::product.form.image_gallery') }}</span></h4>
+                                            </div>
+                                            <div class="widget-body">
+                                                {!! Form::mediaGallery('image_gallery', null) !!}
+                                                {!! Form::error('image_gallery', $errors) !!}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                {{--End Image--}}
+                                {{--End Gallery--}}
                                 <div class="row">
                                     <div class="form-group col-md-4 mb-2 @if ($errors->has('price')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.price') }}</label>
@@ -169,6 +177,21 @@
             <div class="col-md-3 right-sidebar">
                 @include('core-base::elements.form-actions')
                 @include('core-base::elements.forms.status')
+                {{-- Image--}}
+                <div class="widget meta-boxes">
+                    <div class="widget-title">
+                        <h4>
+                            <span class="required @if ($errors->has('image_feature')) has-error @endif">
+                                <label class="control-label required" for="role">{{ trans('plugins-product::product.form.image_feature') }}</label>
+                            </span>
+                        </h4>
+                    </div>
+                    <div class="widget-body">
+                        {!! Form::mediaImage('image_feature', old('image_feature')) !!}
+                        {!! Form::error('image_feature', $errors) !!}
+                    </div>
+                </div>
+                {{--End Image--}}
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'top') @endphp
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'side') @endphp
             </div>
