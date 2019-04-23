@@ -23,6 +23,7 @@ class ProductRequest extends CoreRequest
             'image_gallery' => 'required',
             'price' => 'required',
             'inventory' => 'required',
+            'image_feature' => 'required',
         ];
     }
 }
