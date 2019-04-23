@@ -8,7 +8,7 @@ return [
         'name'        => 'plugins-product::sidebar.administrator',
         'icon'        => 'fas fa-users-cog',
         'url'         => null,
-        'permissions' => ['product.index']
+        'permissions' => ['products.list']
     ],
     [
         'id'          => 'menu-product-product',
@@ -17,7 +17,7 @@ return [
         'name'        => 'plugins-product::sidebar.product',
         'icon'        => 'fas fa-users-cog',
         'url'         => 'admin.product.list',
-        'permissions' => ['product.list']
+        'permissions' => ['products.list']
     ],
     [
         'id'          => 'menu-product-categories',
@@ -26,7 +26,7 @@ return [
         'name'        => 'plugins-product::sidebar.category',
         'icon'        => 'fas fa-users-cog',
         'url'         => 'admin.product.category.list',
-        'permissions' => ['product.index']
+        'permissions' => ['product_categories.list']
     ],
     [
         'id'          => 'menu-product-manufacturers',
@@ -35,7 +35,7 @@ return [
         'name'        => 'plugins-product::sidebar.manufacturer',
         'icon'        => 'fas fa-users-cog',
         'url'         => 'admin.product.manufacturer.list',
-        'permissions' => ['product.index']
+        'permissions' => ['product_manufacturers.list']
     ],
     [
         'id'          => 'menu-product-colors',
@@ -44,7 +44,7 @@ return [
         'name'        => 'plugins-product::sidebar.color',
         'icon'        => 'fas fa-users-cog',
         'url'         => 'admin.product.color.list',
-        'permissions' => ['product.index']
+        'permissions' => ['product_colors.list']
     ],
     [
         'id'          => 'menu-product-business-types',
@@ -53,7 +53,7 @@ return [
         'name'        => 'plugins-product::sidebar.business-type',
         'icon'        => 'fas fa-users-cog',
         'url'         => 'admin.product.business-type.list',
-        'permissions' => ['product.index']
+        'permissions' => ['product_business_types.list']
     ],
     [
         'id'          => 'menu-product-collections',
@@ -62,7 +62,7 @@ return [
         'name'        => 'plugins-product::sidebar.collection',
         'icon'        => 'fas fa-users-cog',
         'url'         => 'admin.product.collection.list',
-        'permissions' => ['product.index']
+        'permissions' => ['product_collections.list']
     ],
     [
         'id'          => 'menu-product-materials',
@@ -71,7 +71,7 @@ return [
         'name'        => 'plugins-product::sidebar.material',
         'icon'        => 'fas fa-users-cog',
         'url'         => 'admin.product.material.list',
-        'permissions' => ['product.index']
+        'permissions' => ['product_materials.list']
     ],
     [
         'id'          => 'menu-look-books',
@@ -80,6 +80,6 @@ return [
         'name'        => 'plugins-product::sidebar.look_book',
         'icon'        => 'fas fa-users-cog',
         'url'         => 'admin.product.look_book.list',
-        'permissions' => ['product.index']
+        'permissions' => ['product_look_books.list']
     ],
 ];
