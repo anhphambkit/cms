@@ -1,12 +1,12 @@
 @extends('layouts.master')
 @section('content')
-    {!! Form::open(['route' => 'admin.product.look_book.create']) !!}
+    {!! Form::open(['route' => 'admin.product.space.create']) !!}
         @php do_action(BASE_FILTER_BEFORE_RENDER_FORM, PRODUCT_MODULE_SCREEN_NAME, request(), null) @endphp
         <div class="row">
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-product::look-book.create') }}</h4>
+                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-product::space.create') }}</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -27,16 +27,10 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('image')) has-error @endif">
-                                        <label class="control-label required" for="role">{{ trans('plugins-product::look-book.form.look_book_image') }}</label>
-                                        {!! Form::lookBookImage('image', old('image'), old('tag')) !!}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('short_description')) has-error @endif">
-                                        <label for="name">{{ trans('plugins-product::product.form.short_description') }}</label>
-                                        {!! render_editor('short_description', old('short_description'), true) !!}
-                                        {!! Form::error('short_description', $errors) !!}
+                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('business_type_id')) has-error @endif">
+                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.form.business_type') }}</label>
+                                        {!! Form::select('business_type_id[]', $businessTypes, old('business_type_id'), ['class' => 'select2-placeholder-multiple form-control business_type-list', "id" => "select-business_type-list", "multiple" => "multiple" ]) !!}
+                                        {!! Form::error('business_type_id', $errors) !!}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -55,19 +49,24 @@
             <div class="col-md-3 right-sidebar">
                 @include('core-base::elements.form-actions')
                 @include('core-base::elements.forms.status')
+                {{-- Image--}}
+                <div class="widget meta-boxes">
+                    <div class="widget-title">
+                        <h4>
+                            <span class="required @if ($errors->has('image_feature')) has-error @endif">
+                                <label class="control-label required" for="role">{{ trans('plugins-product::product.form.image_feature') }}</label>
+                            </span>
+                        </h4>
+                    </div>
+                    <div class="widget-body">
+                        {!! Form::mediaImage('image_feature', old('image_feature'), [ 'action' => 'select-image' ]) !!}
+                        {!! Form::error('image_feature', $errors) !!}
+                    </div>
+                </div>
+                {{--End Image--}}
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'top') @endphp
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'side') @endphp
             </div>
         </div>
     {!! Form::close() !!}
-    @include('plugins-product::look-book.partials.modal-look-book-tag')
-@stop
-
-@section('variable-scripts')
-    <script>
-        const API = {
-            GET_PRODUCTS_BY_CATEGORY : "{{ route('ajax.admin.get_products_by_category') }}",
-        };
-        const START_INDEX = 0;
-    </script>
 @stop

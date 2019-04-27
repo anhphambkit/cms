@@ -146,39 +146,39 @@ $router->group(['prefix' => 'product'], function (Router $router) {
             'uses' => 'ProductBusinessTypeController@getDelete',
         ]);
 
-//        $router->group(['prefix' => 'sub-business-type'], function (Router $router) {
-//
-//            $router->get('/', [
-//                'as' => 'admin.product.business-type.sub-business-type.list',
-//                'uses' => 'ProductBusinessTypeController@getList',
-//            ]);
-//
-//            $router->get('/create', [
-//                'as' => 'admin.product.business-type.sub-business-type.create',
-//                'uses' => 'ProductBusinessTypeController@getCreate',
-//            ]);
-//
-//            $router->post('/create', [
-//                'as' => 'admin.product.business-type.sub-business-type.create',
-//                'uses' => 'ProductBusinessTypeController@postCreate',
-//            ]);
-//
-//            $router->get('/edit/{id}', [
-//                'as' => 'admin.product.business-type.sub-business-type.edit',
-//                'uses' => 'ProductBusinessTypeController@getEdit',
-//            ]);
-//
-//            $router->post('/edit/{id}', [
-//                'as' => 'admin.product.business-type.sub-business-type.edit',
-//                'uses' => 'ProductBusinessTypeController@postEdit',
-//            ]);
-//
-//            $router->get('/delete/{id}', [
-//                'as' => 'admin.product.business-type.sub-business-type.delete',
-//                'uses' => 'ProductBusinessTypeController@getDelete',
-//            ]);
-//
-//        });
+        $router->group(['prefix' => 'space'], function (Router $router) {
+
+            $router->get('/', [
+                'as' => 'admin.product.space.list',
+                'uses' => 'ProductSpacesController@getList',
+            ]);
+
+            $router->get('/create', [
+                'as' => 'admin.product.space.create',
+                'uses' => 'ProductSpacesController@getCreate',
+            ]);
+
+            $router->post('/create', [
+                'as' => 'admin.product.space.create',
+                'uses' => 'ProductSpacesController@postCreate',
+            ]);
+
+            $router->get('/edit/{id}', [
+                'as' => 'admin.product.space.edit',
+                'uses' => 'ProductSpacesController@getEdit',
+            ]);
+
+            $router->post('/edit/{id}', [
+                'as' => 'admin.product.space.edit',
+                'uses' => 'ProductSpacesController@postEdit',
+            ]);
+
+            $router->get('/delete/{id}', [
+                'as' => 'admin.product.space.delete',
+                'uses' => 'ProductSpacesController@getDelete',
+            ]);
+
+        });
 
     });
 

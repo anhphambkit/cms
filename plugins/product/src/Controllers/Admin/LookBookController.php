@@ -124,7 +124,7 @@ class LookBookController extends BaseAdminController
         $lookBookTags = [];
         $maxIndex = 0;
         if ($lookBook->lookBookTags() != null) {
-            $lookBookTags = $lookBook->lookBookTags()->get();
+            $lookBookTags = $lookBook->lookBookTags()->select('*', 'id as index')->get()->toArray();
             $maxIndex = LookBookTag::max('id') + 1;
         }
 

@@ -87,12 +87,12 @@
                                 <div class="row">
                                     <div class="form-group col-md-6 mb-2 @if ($errors->has('business_type_id')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.business_type') }}</label>
-                                        {!! Form::select('business_type_id[]', $businessTypes, null, ['class' => 'select2-placeholder-multiple form-control business_type-list', "id" => "select-business_type-list", "multiple" => "multiple" ]) !!}
+                                        {!! Form::select('business_type_id[]', $businessTypes, old('business_type_id'), ['class' => 'select2-placeholder-multiple form-control business_type-list', "id" => "select-business_type-list", "multiple" => "multiple" ]) !!}
                                         {!! Form::error('business_type_id', $errors) !!}
                                     </div>
                                     <div class="form-group col-md-6 mb-2 @if ($errors->has('collection_id')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.collection') }}</label>
-                                        {!! Form::select('collection_id[]', $collections, null, ['class' => 'select2-placeholder-multiple form-control collection-list', "id" => "select-collection-list", "multiple" => "multiple" ]) !!}
+                                        {!! Form::select('collection_id[]', $collections, old('collection_id'), ['class' => 'select2-placeholder-multiple form-control collection-list', "id" => "select-collection-list", "multiple" => "multiple" ]) !!}
                                         {!! Form::error('collection_id', $errors) !!}
                                     </div>
                                 </div>
@@ -100,12 +100,12 @@
                                 <div class="row">
                                     <div class="form-group col-md-6 mb-2 @if ($errors->has('material_id')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.material') }}</label>
-                                        {!! Form::select('material_id[]', $materials, null, ['class' => 'select2-placeholder-multiple form-control material-list', "id" => "select-material-list", "multiple" => "multiple" ]) !!}
+                                        {!! Form::select('material_id[]', $materials, old('material_id'), ['class' => 'select2-placeholder-multiple form-control material-list', "id" => "select-material-list", "multiple" => "multiple" ]) !!}
                                         {!! Form::error('material_id', $errors) !!}
                                     </div>
                                     <div class="form-group col-md-6 mb-2 @if ($errors->has('color_id')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.color') }}</label>
-                                        {!! Form::select('color_id[]', $colors, null, ['class' => 'select2-placeholder-multiple form-control color-list', "id" => "select-color-list", "multiple" => "multiple" ]) !!}
+                                        {!! Form::select('color_id[]', $colors, old('color_id'), ['class' => 'select2-placeholder-multiple form-control color-list', "id" => "select-color-list", "multiple" => "multiple" ]) !!}
                                         {!! Form::error('color_id', $errors) !!}
                                     </div>
                                 </div>

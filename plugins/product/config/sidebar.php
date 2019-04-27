@@ -38,8 +38,17 @@ return [
         'permissions' => ['product_manufacturers.list']
     ],
     [
-        'id'          => 'menu-product-colors',
+        'id'          => 'menu-product-spaces',
         'priority'    => 4,
+        'parent_id'   => 'menu-product-administrator',
+        'name'        => 'plugins-product::sidebar.space',
+        'icon'        => 'fas fa-users-cog',
+        'url'         => 'admin.product.space.list',
+        'permissions' => ['product_spaces.list']
+    ],
+    [
+        'id'          => 'menu-product-colors',
+        'priority'    => 5,
         'parent_id'   => 'menu-product-administrator',
         'name'        => 'plugins-product::sidebar.color',
         'icon'        => 'fas fa-users-cog',
@@ -48,7 +57,7 @@ return [
     ],
     [
         'id'          => 'menu-product-business-types',
-        'priority'    => 5,
+        'priority'    => 6,
         'parent_id'   => 'menu-product-administrator',
         'name'        => 'plugins-product::sidebar.business-type',
         'icon'        => 'fas fa-users-cog',
@@ -57,7 +66,7 @@ return [
     ],
     [
         'id'          => 'menu-product-collections',
-        'priority'    => 6,
+        'priority'    => 7,
         'parent_id'   => 'menu-product-administrator',
         'name'        => 'plugins-product::sidebar.collection',
         'icon'        => 'fas fa-users-cog',
@@ -66,7 +75,7 @@ return [
     ],
     [
         'id'          => 'menu-product-materials',
-        'priority'    => 7,
+        'priority'    => 8,
         'parent_id'   => 'menu-product-administrator',
         'name'        => 'plugins-product::sidebar.material',
         'icon'        => 'fas fa-users-cog',
@@ -75,7 +84,7 @@ return [
     ],
     [
         'id'          => 'menu-look-books',
-        'priority'    => 8,
+        'priority'    => 9,
         'parent_id'   => 'menu-product-administrator',
         'name'        => 'plugins-product::sidebar.look_book',
         'icon'        => 'fas fa-users-cog',

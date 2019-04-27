@@ -5,6 +5,8 @@
  * Date: 2019-04-20
  * Time: 10:05
  */
+$tags = !empty($tags) ? $tags : [];
+//dd($tags);
 ?>
 <div class="look-book-area row">
     <div class="image-look-book form-group col-md-12 mb-2">
@@ -15,14 +17,14 @@
         <div class="look-book-box-preview {{ (sizeof($tags) > 0) ? 'look-book-box-tag' : '' }}">
             <img src="{{ get_object_image($value) }}" alt="preview image" class="preview_image {{ (sizeof($tags) > 0) ? 'preview-look-book-image' : '' }}">
             @foreach($tags as $tag)
-                <div class="tt-hotspot tt-tag-{{ $tag->id }}" style="left: {{ $tag->left }}%; top: {{ $tag->top }}%;" data-left="{{ $tag->left }}" data-top="{{ $tag->top }}" data-tag-id="{{ $tag->id }}">
+                <div class="tt-hotspot tt-tag-{{ $tag['index'] }}" style="left: {{ $tag['left'] }}%; top: {{ $tag['top'] }}%;" data-left="{{ $tag['left'] }}" data-top="{{ $tag['top'] }}" data-tag-id="{{ $tag['index'] }}">
                     <div class="tt-btn">
                         <i class="icon-tag fas fa-tag"></i>
                     </div>
-                    <input type="number" hidden name="tag[{{ $tag->id }}][left]" value="{{ $tag->left }}">
-                    <input type="number" hidden name="tag[{{ $tag->id }}][top]" value="{{ $tag->top }}">
-                    <input type="number" hidden name="tag[{{ $tag->id }}][product_id]" value="{{ $tag->product_id }}">
-                    <input type="number" hidden name="tag[{{ $tag->id }}][product_category_id]" value="{{ $tag->product_category_id }}">
+                    <input type="number" hidden name="tag[{{ $tag['index'] }}][left]" value="{{ $tag['left'] }}">
+                    <input type="number" hidden name="tag[{{ $tag['index'] }}][top]" value="{{ $tag['top'] }}">
+                    <input type="number" hidden name="tag[{{ $tag['index'] }}][product_id]" value="{{ $tag['product_id'] }}">
+                    <input type="number" hidden name="tag[{{ $tag['index'] }}][product_category_id]" value="{{ $tag['product_category_id'] }}">
                 </div>
             @endforeach
         </div>

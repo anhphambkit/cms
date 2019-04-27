@@ -60,8 +60,8 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         currentProductId = 0;
         let leftOffset = event.offsetX - 19 - 4; // 19px is width of tag and 4px is padding in tag icon
         let topOffset = event.offsetY - 19 - 4;
-        let width = $(this).width();
-        let height = $(this).height();
+        let width = $("img.preview-look-book-image").width();
+        let height = $("img.preview-look-book-image").height();
         let left = (leftOffset/width)*100;
         let top = (topOffset/height)*100;
         $('.position-dataX').val(left);
@@ -82,6 +82,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                                 <div class="tt-btn">
                                     <i class="icon-tag fas fa-tag"></i>
                                 </div>
+                            <input type="number" hidden name="tag[${tagId}][index]" value="${tagId}">
                             <input type="number" hidden name="tag[${tagId}][left]" value="${left}">
                             <input type="number" hidden name="tag[${tagId}][top]" value="${top}">
                             <input type="number" hidden name="tag[${tagId}][product_id]" value="${productId}">

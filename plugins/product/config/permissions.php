@@ -115,6 +115,28 @@ return [
         'parent_flag' => 'product_business_types.list',
     ],
 
+    // Space:
+    [
+        'name'        => 'Spaces',
+        'flag'        => 'product_spaces.list',
+        'parent_flag' => 'plugins.product',
+    ],
+    [
+        'name'        => 'Create',
+        'flag'        => 'product_spaces.create',
+        'parent_flag' => 'product_spaces.list',
+    ],
+    [
+        'name'        => 'Edit',
+        'flag'        => 'product_spaces.edit',
+        'parent_flag' => 'product_spaces.list',
+    ],
+    [
+        'name'        => 'Delete',
+        'flag'        => 'product_spaces.delete',
+        'parent_flag' => 'product_spaces.list',
+    ],
+
     // Collection:
     [
         'name'        => 'Collections',
