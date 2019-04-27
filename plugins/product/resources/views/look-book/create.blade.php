@@ -32,6 +32,7 @@
                                         {!! Form::lookBookImage('image', old('image'), old('tag')) !!}
                                     </div>
                                 </div>
+                                @include('plugins-product::look-book.partials.list-space-business-selected')
                                 <div class="row">
                                     <div class="form-group col-md-12 mb-2 @if ($errors->has('short_description')) has-error @endif">
                                         <label for="name">{{ trans('plugins-product::product.form.short_description') }}</label>
@@ -67,7 +68,10 @@
     <script>
         const API = {
             GET_PRODUCTS_BY_CATEGORY : "{{ route('ajax.admin.get_products_by_category') }}",
+            GET_SPACES_BY_BUSINESS_TYPE : "{{ route('ajax.admin.get_spaces_by_business_type') }}",
+            GET_DEFAULT_BUSINESS_TYPE : "{{ route('ajax.admin.get_default_business_type') }}",
         };
         const START_INDEX = 0;
+        const BUSINESS_SPACE_INDEX = 1;
     </script>
 @stop

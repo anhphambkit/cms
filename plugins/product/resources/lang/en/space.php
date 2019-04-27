@@ -11,4 +11,8 @@ return [
     'create' => 'New space',
     'edit' => 'Edit space',
     'list' => 'List space',
+    'form' => [
+        'add_space' => 'Add Space Business Type',
+        'action' => 'Actions',
+    ]
 ];

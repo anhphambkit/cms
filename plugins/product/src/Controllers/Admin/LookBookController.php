@@ -13,11 +13,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Plugins\Product\DataTables\LookBookDataTable;
+use Plugins\Product\Models\LookBookBusinessTypeSpaceRelation;
 use Plugins\Product\Models\LookBookTag;
+use Plugins\Product\Repositories\Interfaces\BusinessTypeRepositories;
 use Plugins\Product\Repositories\Interfaces\LookBookRepositories;
 use AssetManager;
 use AssetPipeline;
 use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
+use Plugins\Product\Repositories\Interfaces\ProductSpaceRepositories;
 use Plugins\Product\Requests\LookBookRequest;
 
 class LookBookController extends BaseAdminController
@@ -33,15 +36,30 @@ class LookBookController extends BaseAdminController
     protected $productCategoryRepositories;
 
     /**
-     * ProductController constructor.
+     * @var BusinessTypeRepositories
+     */
+    protected $businessTypeRepositories;
+
+    /**
+     * @var ProductSpaceRepositories
+     */
+    protected $productSpaceRepositories;
+
+    /**
+     * LookBookController constructor.
      * @param LookBookRepositories $lookBookRepository
      * @param ProductCategoryRepositories $productCategoryRepositories
-     * @author AnhPham
+     * @param BusinessTypeRepositories $businessTypeRepositories
+     * @param ProductSpaceRepositories $productSpaceRepositories
      */
-    public function __construct(LookBookRepositories $lookBookRepository, ProductCategoryRepositories $productCategoryRepositories)
+    public function __construct(LookBookRepositories $lookBookRepository, ProductCategoryRepositories $productCategoryRepositories,
+                                BusinessTypeRepositories $businessTypeRepositories, ProductSpaceRepositories $productSpaceRepositories
+                                )
     {
         $this->lookBookRepository = $lookBookRepository;
         $this->productCategoryRepositories = $productCategoryRepositories;
+        $this->businessTypeRepositories = $businessTypeRepositories;
+        $this->productSpaceRepositories = $productSpaceRepositories;
     }
 
     /**
@@ -66,7 +84,8 @@ class LookBookController extends BaseAdminController
     public function getCreate()
     {
         $categories = $this->productCategoryRepositories->pluck('name', 'id');
-
+        $businessTypes = $this->businessTypeRepositories->pluck('name', 'id');
+        $spaces = [];
         $products = [];
         $tags = [];
 
@@ -74,7 +93,7 @@ class LookBookController extends BaseAdminController
 
         $this->addDetailAssets();
 
-        return view('plugins-product::look-book.create', compact('categories', 'products','tags'));
+        return view('plugins-product::look-book.create', compact('categories', 'products','tags', 'businessTypes', 'spaces'));
     }
 
     /**
@@ -90,8 +109,10 @@ class LookBookController extends BaseAdminController
             $lookBook = $this->lookBookRepository->createOrUpdate($data);
 
             $lookBookTags = $data['tag'];
-
             $lookBook->lookBookTags()->createMany($lookBookTags);
+
+            $lookBookSpaces = $data['space_business'];
+            $lookBook->lookBookSpaces()->createMany($lookBookSpaces);
 
             return $lookBook->save();
         }, 3);
@@ -116,7 +137,8 @@ class LookBookController extends BaseAdminController
     public function getEdit($id)
     {
         $categories = $this->productCategoryRepositories->pluck('name', 'id');
-
+        $businessTypes = $this->businessTypeRepositories->pluck('name', 'id');
+        $spaces = [];
         $products = [];
 
         $lookBook = $this->lookBookRepository->findById($id);
@@ -128,6 +150,11 @@ class LookBookController extends BaseAdminController
             $maxIndex = LookBookTag::max('id') + 1;
         }
 
+        $businessSpaces = [];
+        if ($lookBook->lookBookSpaces() != null) {
+            $businessSpaces = $lookBook->lookBookSpaces()->select('*')->get()->toArray();
+        }
+
         if (empty($lookBook)) {
             abort(404);
         }
@@ -136,7 +163,7 @@ class LookBookController extends BaseAdminController
 
         $this->addDetailAssets();
 
-        return view('plugins-product::look-book.edit', compact('products', 'categories', 'lookBook', 'lookBookTags', 'maxIndex'));
+        return view('plugins-product::look-book.edit', compact('products', 'categories', 'lookBook', 'lookBookTags', 'maxIndex', 'businessTypes', 'spaces', 'businessSpaces'));
     }
 
     /**
@@ -160,10 +187,12 @@ class LookBookController extends BaseAdminController
             $this->lookBookRepository->createOrUpdate($lookBook);
 
             LookBookTag::with('lookBook')->where('look_book_id', $lookBook->id)->delete();
-
             $lookBookTags = $data['tag'];
-
             $lookBook->lookBookTags()->createMany($lookBookTags);
+
+            LookBookBusinessTypeSpaceRelation::with('lookBook')->where('look_book_id', $lookBook->id)->delete();
+            $lookBookSpaces = $data['space_business'];
+            $lookBook->lookBookSpaces()->createMany($lookBookSpaces);
 
             return $lookBook->save();
         }, 3);

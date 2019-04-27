@@ -49,4 +49,12 @@ class LookBook extends Model
     {
         return $this->hasMany(LookBookTag::class);
     }
+
+    /**
+     * Get the look book spaces for the look book.
+     */
+    public function lookBookSpaces()
+    {
+        return $this->hasMany(LookBookBusinessTypeSpaceRelation::class);
+    }
 }

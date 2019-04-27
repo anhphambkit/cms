@@ -12,6 +12,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     let index = START_INDEX;
     let businessSpaceIndex = BUSINESS_SPACE_INDEX;
     let currentProductId = 0;
+    let currentSpaceId = 0;
 
     // Single Select Placeholder
     $("#select-category-list").select2({
@@ -161,11 +162,8 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                     templateSelection: iconFormat,
                     escapeMarkup: function(es) { return es; }
                 });
-                let currentSpaceId = $(`.select-space-${businessTypeIndex}`).data('init-space-id');
-                if (currentSpaceId > 0) {
+                if (currentSpaceId > 0)
                     $(`.select-space-${businessTypeIndex}`).val(currentSpaceId).trigger('change');
-                    $(`.select-space-${businessTypeIndex}`).data('init-space-id', 0);
-                }
             })
             .catch(function(data){
                 console.log("error", data);
@@ -181,6 +179,8 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
     // Add space:
     $(document).on("click", ".btn.add-space-business", function(event) {
+        currentSpaceId = 0;
+
         let request = axios.get(API.GET_DEFAULT_BUSINESS_TYPE);
 
         return request
@@ -193,7 +193,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                                         </div>
                                         <div class="form-group col-md-5 mb-2">
                                             <label class="control-label required" for="select-space">Space</label>
-                                            <select class="select2-placeholder-multiple form-control select-space-${businessSpaceIndex} select-space-list" name="space_business[${businessSpaceIndex}][space_id]" data-space-index='${businessSpaceIndex}' data-init-space-id="0">
+                                            <select class="select2-placeholder-multiple form-control select-space-${businessSpaceIndex} select-space-list" name="space_business[${businessSpaceIndex}][space_id]" data-space-index='${businessSpaceIndex}'>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-2 mb-2">

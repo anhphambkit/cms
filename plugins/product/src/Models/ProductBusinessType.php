@@ -52,4 +52,13 @@ class ProductBusinessType extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @author TrinhLe
+     */
+    public function spaces()
+    {
+        return $this->belongsToMany(ProductSpace::class, 'business_type_space_relation', 'business_type_id', 'space_id')->select(['product_spaces.id', 'name as text', 'image_feature']);
+    }
 }
