@@ -1,13 +1,14 @@
 @extends("layouts.master")
 
 @section('content')
+
     <section class="banner-slider">
         <?php for ($i=0; $i < 3; $i++) { ?>
-            <div class="banner-slider--item">
+            <div class="item">
                 <img src="{{ URL::asset('themes/ifoss/assets/images/banner/banner1.jpg') }} "/>
-                <div class="banner-slider--item--content">
-                    <div class="banner-slider--item--content--title">Free Design</div>
-                    <div class="banner-slider--item--content--descriptions"> for qualifying orders over $3000</div>
+                <div class="content">
+                    <div class="title">Free Design</div>
+                    <div class="descriptions"> for qualifying orders over $3000</div>
                 </div>
             </div>
         <?php } ?>
@@ -16,12 +17,12 @@
     <section class="banner-advertisement">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-3 banner-advertisement--item vertical-layout">
+                <div class="col-lg-3 item vertical-layout">
                     <img src="{{ URL::asset('themes/ifoss/assets/images/banner/banner2.jpg') }} "/>
-                    <div class="banner-advertisement--item--content">
-                        <div class="banner-advertisement--item--tag">Decor</div>
-                        <div class="banner-advertisement--item--title">new arrivals off 20%</div>
-                        <a href="#" class="banner-advertisement--item--action">Shop now</a>
+                    <div class="content">
+                        <div class="tag">Decor</div>
+                        <div class="title">new arrivals off 20%</div>
+                        <a href="#" class="action">Shop now</a>
                     </div>
                 </div>
                 <div class="col-lg-9">
@@ -29,21 +30,21 @@
                         <div class="col-lg-4 px-0 small-thumbnail">
                             <img src="{{ URL::asset('themes/ifoss/assets/images/banner/banner3.jpg') }} "/>
                         </div>
-                        <div class="col-lg-8 banner-advertisement--item horizontal-layout">
+                        <div class="col-lg-8 item horizontal-layout">
                             <img src="{{ URL::asset('themes/ifoss/assets/images/banner/banner4.jpg') }} "/>
-                            <div class="banner-advertisement--item--content">
-                                <div class="banner-advertisement--item--tag">furniture</div>
-                                <div class="banner-advertisement--item--title" style="max-width: 190px;">the living room’s</div>
-                                <a href="#" class="banner-advertisement--item--action">Shop now</a>
+                            <div class="content">
+                                <div class="tag">furniture</div>
+                                <div class="title" style="max-width: 190px;">the living room’s</div>
+                                <a href="#" class="action">Shop now</a>
                             </div>
                         </div>
 
-                        <div class="col-lg-8 banner-advertisement--item horizontal-layout">
+                        <div class="col-lg-8 item horizontal-layout">
                             <img src="{{ URL::asset('themes/ifoss/assets/images/banner/banner5.jpg') }} "/>
-                            <div class="banner-advertisement--item--content">
-                                <div class="banner-advertisement--item--tag">Decor</div>
-                                <div class="banner-advertisement--item--title">new arrivals off 20%</div>
-                                <a href="#" class="banner-advertisement--item--action">Shop now</a>
+                            <div class="content">
+                                <div class="tag">Decor</div>
+                                <div class="title">new arrivals off 20%</div>
+                                <a href="#" class="action">Shop now</a>
                             </div>
                         </div>
                         <div class="col-lg-4 px-0 small-thumbnail">
@@ -55,7 +56,6 @@
         </div>
     </section>
 
-
     <section class="banner-feature">
         <div class="container">
             <div class="row">
@@ -63,15 +63,15 @@
                 $bannerFeatureThumbnailWidth= array('169px','144px','102px');
                 foreach ($bannerFeatureDescriptions as $key => $value) {
                     ?>
-                    <div class="col-md-4 banner-feature--item">
-                        <div class="banner-feature--item--thumbnail">
+                    <div class="col-md-4 item">
+                        <div class="thumbnail">
                             @php
                                 $index = $key + 1;
                                 $url = "themes/ifoss/assets/images/banner/banner-vector{$index}.png";
                             @endphp
                             <img src="{{ URL::asset($url) }}" style="max-width: <?php echo $bannerFeatureThumbnailWidth[$key];?>"/>
                         </div>
-                        <div class="banner-feature--item--descriptions"><?php echo $value; ?></div>
+                        <div class="descriptions"><?php echo $value; ?></div>
                     </div>
                 <?php } ?>
             </div>
@@ -80,9 +80,9 @@
 
     <section class="product-categories">
         <div class="text-center">
-            <div class="section--title">Trending Design</div>
+            <div class="section-title">Trending Design</div>
         </div>
-        <div class="product-categories--tabs">
+        <div class="tabs">
             <ul class="nav nav-outline">
                 <?php $productCategoriesTitle = array('Living room ','Dining room','Work room', 'Bedroom');
                 foreach ($productCategoriesTitle as $key => $value) {
@@ -92,30 +92,28 @@
                     </li>
                 <?php } ?>
             </ul>
-            <div class="tab-content product-categories--tab-content">
+            <div class="tab-content">
                 <?php for ($i=0; $i < 4; $i++) { ?>
                     <div class="tab-pane fade <?php if($i==2) echo 'show active'; ?>" id="category-<?php echo $i; ?>" role="tabpanel">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-lg-8 product-categories--tab-content--item">
+                                <div class="col-lg-8 item">
                                     <img src="{{ URL::asset('themes/ifoss/assets/images/categories/category1.jpg') }} ">
                                 </div>
-                                <div class="col-lg-4 product-categories--tab-content--item small-picture bg-white">
+                                <div class="col-lg-4 item small-picture bg-white">
                                     <img src="{{ URL::asset('themes/ifoss/assets/images/categories/category2.jpg') }}">
-                                    <div class="product-categories--tab-content--item--title">Chairs & Armchairs</div>
-                                    <div class="product-categories--tab-content--item--price">$1200</div>
+                                    <div class="item-title">Chairs & Armchairs</div>
+                                    <div class="item-price">$1200</div>
                                 </div>
                             </div>
                             <div class="row">
                                 <?php for ($j=4; $j < 9; $j++) { ?>
-                                    <div class="product-categories--tab-content--item-touch">
-
+                                    <div class="item-touch">
                                         @php
-                                            $index = $key + 1;
                                             $url = "themes/ifoss/assets/images/categories/category{$j}.jpg";
                                         @endphp
                                         <img src="{{ URL::asset($url) }}">
-                                        <a href="#" class="product-categories--tab-content--item-touch--mask">
+                                        <a href="#" class="item-touch-mask">
                                             <img src="{{ URL::asset('themes/ifoss/assets/images/icons/hand-click.png') }}">
                                         </a>
                                     </div>
@@ -133,29 +131,29 @@
 
     <section class="product-slider">
         <div class="text-center">
-            <div class="section--title">Best sellers</div>
+            <div class="section-title">Best sellers</div>
         </div>
         <div class="container">
             <div class="row product-slider--wrapper">
                 <?php for ($i=0; $i < 2; $i++) { ?>
                     <?php for ($j=0; $j < 4; $j++) { ?>
                         <div class="col-md-3">
-                            <div class="product-slider--wrapper--item">
-                                <div class="product-slider--wrapper--item--thumbnail" >
+                            <div class="item">
+                                <div class="thumbnail" >
                                     @php
                                         $index = $j + 1;
                                         $url = "themes/ifoss/assets/images/products/product{$index}.jpg";
                                     @endphp
                                     <img src="{{ URL::asset($url) }}">
-                                    <div class="product-slider--wrapper--item--mask">
+                                    <div class="mask">
                                         <button class="btn btn-white">quick view</button>
-                                        <a href="#" class="product-slider--wrapper--item--favourite"><i class="far fa-heart"></i></a>
+                                        <a href="#" class="favourite"><i class="far fa-heart"></i></a>
                                     </div>
                                 </div>
-                                <div class="product-slider--wrapper--item--title">Basics Metal Box Spring</div>
-                                <div class="product-slider--wrapper--item--cost">
-                                    <div class="product-slider--wrapper--item--cost--discount">$5560</div>
-                                    <div class="product-slider--wrapper--item--cost--original-cost">$4560</div>
+                                <div class="title">Basics Metal Box Spring</div>
+                                <div class="cost">
+                                    <div class="discount">$5560</div>
+                                    <div class="original-cost">$4560</div>
                                 </div>
                             </div>
                         </div>

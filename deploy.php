@@ -39,14 +39,14 @@ task('deploy:upload', function(){ //
         'app',
         'config',
         'core',
-        'plugins//blog',
+        'plugins',
         'public//themes',
         'public//backend',
         'public//frontend',
         'public//libs',
         'public//vendor',
         'Themes',
-        // 'webpack'
+        'webpack'
     ];
     $path = get('deploy_path');
     foreach ($folders as $key => $folder) {

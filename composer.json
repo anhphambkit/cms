@@ -46,6 +46,7 @@
             "Core\\Theme\\": "core/theme/src",
             "Core\\User\\": "core/user/src",
             "Core\\Dashboard\\": "core/dashboard/src",
+            "Core\\Page\\": "core/page/src",
             "Plugins\\Newsletter\\": "plugins/newsletter/src",
             "Plugins\\Faq\\": "plugins/faq/src",
             "Plugins\\Customer\\": "plugins/customer/src",
@@ -94,6 +95,7 @@
         "Core\\Theme\\": "core/theme/src",
         "Core\\User\\": "core/user/src",
         "Core\\Dashboard\\": "core/dashboard/src",
-        "Core\\Media\\": "core/media/src"
+        "Core\\Media\\": "core/media/src",
+        "Core\\Page\\": "core/page/src"
     }
 }
