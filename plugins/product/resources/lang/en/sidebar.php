@@ -9,4 +9,5 @@ return [
     'material' => 'Material',
     'category' => 'Product Categories',
     'look_book' => 'Look Books',
+    'space' => 'Spaces',
 ];

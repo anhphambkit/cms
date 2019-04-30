@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: AnhPham
- * Date: 2019-04-20
- * Time: 08:25
+ * Date: 2019-04-26
+ * Time: 23:39
  */
 
 namespace Plugins\Product\Models;
@@ -12,7 +12,7 @@ use Core\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class LookBook extends Model
+class ProductSpace extends Model
 {
     use SoftDeletes;
 
@@ -21,14 +21,13 @@ class LookBook extends Model
      *
      * @var string
      */
-    protected $table = 'look_books';
+    protected $table = 'product_spaces';
 
     protected $fillable = [
         'name',
+        'slug',
+        'image_feature',
         'description',
-        'short_description',
-        'image',
-        'permalink',
         'created_by',
         'updated_by',
     ];
@@ -43,18 +42,11 @@ class LookBook extends Model
     }
 
     /**
-     * Get the look book tags for the look book.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @author TrinhLe
      */
-    public function lookBookTags()
+    public function spaceBusinessTypes()
     {
-        return $this->hasMany(LookBookTag::class);
-    }
-
-    /**
-     * Get the look book spaces for the look book.
-     */
-    public function lookBookSpaces()
-    {
-        return $this->hasMany(LookBookBusinessTypeSpaceRelation::class);
+        return $this->belongsToMany(ProductBusinessType::class, 'business_type_space_relation', 'space_id', 'business_type_id');
     }
 }

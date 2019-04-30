@@ -4,10 +4,10 @@
 }
 
 .look-book-box-preview {
-  text-align: center;
   position: relative;
   &.look-book-box-tag {
     height: 500px;
+    float: left;
   }
 }
 
@@ -19,6 +19,7 @@
   cursor: pointer;
   width: 38px;
   height: 38px;
+  text-align: center;
 }
 .look-book-box-preview .tt-hotspot .tt-btn {
   width: 38px;
@@ -42,7 +43,6 @@ i.icon-tag {
 }
 
 img.preview-look-book-image {
-  width: 100%;
   height: 100%;
 }
 
@@ -50,4 +50,23 @@ img.preview-look-book-image {
   .preview-look-book-image {
     cursor: crosshair;
   }
+}
+
+.image-box-actions {
+  float: left;
+  width: 100%;
+}
+
+.action-space-area {
+  display: block;
+  padding: 10px 0;
+}
+
+.edit-business-space {
+  margin-right: 10px;
+}
+
+.delete-business-space {
+  color: #ac1313 !important;
+  font-weight: 600;
 }

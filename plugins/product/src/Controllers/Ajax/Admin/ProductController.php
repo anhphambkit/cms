@@ -10,6 +10,7 @@ namespace Plugins\Product\Controllers\Ajax\Admin;
 
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Http\Request;
+use Plugins\Product\Models\ProductBusinessType;
 use Plugins\Product\Models\ProductCategory;
 use Plugins\Product\Services\ProductServices;
 
@@ -36,5 +37,26 @@ class ProductController extends BaseAdminController
         $category = ProductCategory::find($categoryId);
         $products = $category->products()->get();
         return response()->json($products);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSpacesByBusinessType(Request $request)
+    {
+        $businessTypeId = $request->get('business_type_id');
+        $businessType = ProductBusinessType::find($businessTypeId);
+        $spaces = $businessType->spaces()->get();
+        return response()->json($spaces);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDefaultBusinessType()
+    {
+        $businessType = ProductBusinessType::select('id', 'name as text')->get();
+        return response()->json($businessType);
     }
 }

@@ -41,5 +41,6 @@ return [
         'product_weight_placeholder' => 'Product Weight',
         'package_weight' => 'Package Weight',
         'package_weight_placeholder' => 'Package Weight',
+        'space' => 'Space',
     ]
 ];

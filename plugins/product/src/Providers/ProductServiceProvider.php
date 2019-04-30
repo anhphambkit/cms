@@ -5,8 +5,10 @@ namespace Plugins\Product\Providers;
 use Illuminate\Support\ServiceProvider;
 use Plugins\Product\Repositories\Caches\CacheLookBookRepositories;
 use Plugins\Product\Repositories\Caches\CacheProductCategoryRepositories;
+use Plugins\Product\Repositories\Caches\CacheProductSpaceRepositories;
 use Plugins\Product\Repositories\Eloquent\EloquentLookBookRepositories;
 use Plugins\Product\Repositories\Eloquent\EloquentProductCategoryRepositories;
+use Plugins\Product\Repositories\Eloquent\EloquentProductSpaceRepositories;
 use Plugins\Product\Repositories\Interfaces\LookBookRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
 use Plugins\Product\Repositories\Caches\CacheManufacturerRepositories;
@@ -27,6 +29,7 @@ use Plugins\Product\Repositories\Interfaces\ProductCollectionRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductColorRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductMaterialRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductRepositories;
+use Plugins\Product\Repositories\Interfaces\ProductSpaceRepositories;
 use Plugins\Product\Services\Implement\ImplementProductCategoryServices;
 use Plugins\Product\Services\Implement\ImplementProductServices;
 use Plugins\Product\Services\ProductCategoryServices;
@@ -77,6 +80,10 @@ class ProductServiceProvider extends ServiceProvider
                 return new CacheLookBookRepositories(new EloquentLookBookRepositories(new \Plugins\Product\Models\LookBook()));
             });
 
+            $this->app->singleton(ProductSpaceRepositories::class, function () {
+                return new CacheProductSpaceRepositories(new EloquentProductSpaceRepositories(new \Plugins\Product\Models\ProductSpace()));
+            });
+
         } else {
             $this->app->singleton(ProductRepositories::class, function () {
                 return new EloquentProductRepositories(new \Plugins\Product\Models\Product());
@@ -108,6 +115,10 @@ class ProductServiceProvider extends ServiceProvider
 
             $this->app->singleton(LookBookRepositories::class, function () {
                 return new EloquentLookBookRepositories(new \Plugins\Product\Models\LookBook());
+            });
+
+            $this->app->singleton(ProductSpaceRepositories::class, function () {
+                return new EloquentProductSpaceRepositories(new \Plugins\Product\Models\ProductSpace());
             });
         }
 

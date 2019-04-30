@@ -52,7 +52,7 @@
                         </h4>
                     </div>
                     <div class="widget-body">
-                        {!! Form::mediaImage('manufacturer_image', null, [ 'action' => 'select-image' ]) !!}
+                        {!! Form::mediaImage('manufacturer_image', old('manufacturer_image'), [ 'action' => 'select-image' ]) !!}
                         {!! Form::error('manufacturer_image', $errors) !!}
                     </div>
                 </div>
