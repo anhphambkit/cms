@@ -4,6 +4,7 @@ use Core\Master\Facades\PageTitleFacade;
 use Core\Master\Facades\AdminBreadcrumbFacade;
 use Core\Master\Supports\Editor;
 use Illuminate\Support\Collection;
+use Illuminate\Contracts\Foundation\Application;
 
 if (!function_exists('sort_item_with_children')) {
     /**
@@ -181,5 +182,34 @@ if (!function_exists('render_editor')) {
         $editor = new Editor;
 
         return $editor->render($name, $value, $with_short_code, $attributes);
+    }
+}
+
+if (!function_exists('register_repositories')) {
+    /**
+     * helper register repositories of provider core/plugin
+     * @author TrinhLe
+     * @param  [type] $provider [description]
+     * @return [type]           [description]
+     */
+    function register_repositories($provider)
+    {
+        $repositories = call_user_func_array([$provider, 'getRespositories'],[]);
+        foreach ($repositories as $interface => $model) {
+            # code...
+            $detection      = explode('\\', $interface);
+            $detectionClass = $provider::PREFIX_REPOSITORY_ELOQUENT . end($detection);
+            $detectionCache = $provider::PREFIX_REPOSITORY_CACHE . end($detection);
+            array_pop($detection);
+            array_pop($detection);
+            app(Application::class)->singleton($interface, function () use ($detection, $detectionClass, $detectionCache, $model) {
+                $detectionClass = implode("\\", array_merge($detection, [$detectionClass]));
+                $detectionCache = implode("\\", array_merge($detection, [$detectionCache]));
+                $repository     = new $detectionClass(new $model());
+                if (setting('enable_cache', false))
+                    return new $detectionCache($repository);
+                return $repository;
+            });
+        }
     }
 }

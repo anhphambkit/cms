@@ -282,40 +282,6 @@ $router->group(['prefix' => 'product'], function (Router $router) {
             'uses' => 'ProductCategoryController@getDelete',
         ]);
 
-//        $router->group(['prefix' => 'sub-category'], function (Router $router) {
-//
-////            $router->get('/', [
-////                'as' => 'admin.product.category.sub-category.list',
-////                'uses' => 'ProductCategoryController@getList',
-////            ]);
-//
-//            $router->get('/create', [
-//                'as' => 'admin.product.category.sub-category.create',
-//                'uses' => 'ProductCategoryController@getSubCreate',
-//            ]);
-//
-//            $router->post('/create', [
-//                'as' => 'admin.product.category.sub-category.create',
-//                'uses' => 'ProductCategoryController@postSubCreate',
-//            ]);
-//
-//            $router->get('/edit/{id}', [
-//                'as' => 'admin.product.category.sub-category.edit',
-//                'uses' => 'ProductCategoryController@getSubEdit',
-//            ]);
-//
-//            $router->post('/edit/{id}', [
-//                'as' => 'admin.product.category.sub-category.edit',
-//                'uses' => 'ProductCategoryController@postSubEdit',
-//            ]);
-//
-//            $router->get('/delete/{id}', [
-//                'as' => 'admin.product.category.sub-category.delete',
-//                'uses' => 'ProductCategoryController@getDelete',
-//            ]);
-//
-//        });
-
     });
 
     $router->group(['prefix' => 'look_book'], function (Router $router) {
@@ -350,41 +316,41 @@ $router->group(['prefix' => 'product'], function (Router $router) {
             'uses' => 'LookBookController@getDelete',
         ]);
 
-//        $router->group(['prefix' => 'sub-category'], function (Router $router) {
-//
-////            $router->get('/', [
-////                'as' => 'admin.product.category.sub-category.list',
-////                'uses' => 'ProductCategoryController@getList',
-////            ]);
-//
-//            $router->get('/create', [
-//                'as' => 'admin.product.category.sub-category.create',
-//                'uses' => 'ProductCategoryController@getSubCreate',
-//            ]);
-//
-//            $router->post('/create', [
-//                'as' => 'admin.product.category.sub-category.create',
-//                'uses' => 'ProductCategoryController@postSubCreate',
-//            ]);
-//
-//            $router->get('/edit/{id}', [
-//                'as' => 'admin.product.category.sub-category.edit',
-//                'uses' => 'ProductCategoryController@getSubEdit',
-//            ]);
-//
-//            $router->post('/edit/{id}', [
-//                'as' => 'admin.product.category.sub-category.edit',
-//                'uses' => 'ProductCategoryController@postSubEdit',
-//            ]);
-//
-//            $router->get('/delete/{id}', [
-//                'as' => 'admin.product.category.sub-category.delete',
-//                'uses' => 'ProductCategoryController@getDelete',
-//            ]);
-//
-//        });
-
     });
+
+    $router->group(['prefix' => 'coupon'], function (Router $router) {
+
+        $router->get('/', [
+            'as' => 'admin.product.coupon.list',
+            'uses' => 'ProductCouponController@getList',
+        ]);
+
+        $router->get('/create', [
+            'as' => 'admin.product.coupon.create',
+            'uses' => 'ProductCouponController@getCreate',
+        ]);
+
+        $router->post('/create', [
+            'as' => 'admin.product.coupon.create',
+            'uses' => 'ProductCouponController@postCreate',
+        ]);
+
+        $router->get('/edit/{id}', [
+            'as' => 'admin.product.coupon.edit',
+            'uses' => 'ProductCouponController@getEdit',
+        ]);
+
+        $router->post('/edit/{id}', [
+            'as' => 'admin.product.coupon.edit',
+            'uses' => 'ProductCouponController@postEdit',
+        ]);
+
+        $router->get('/delete/{id}', [
+            'as' => 'admin.product.coupon.delete',
+            'uses' => 'ProductCouponController@getDelete',
+        ]);
+    });
+
 });
 
 	

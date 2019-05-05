@@ -202,4 +202,25 @@ return [
         'flag'        => 'product_look_books.delete',
         'parent_flag' => 'product_look_books.list',
     ],
+    //Coupon
+    [
+        'name'        => 'Coupon',
+        'flag'        => 'product_coupon.list',
+        'parent_flag' => 'plugins.product',
+    ],
+    [
+        'name'        => 'Create',
+        'flag'        => 'product_coupon.create',
+        'parent_flag' => 'product_coupon.list',
+    ],
+    [
+        'name'        => 'Edit',
+        'flag'        => 'product_coupon.edit',
+        'parent_flag' => 'product_coupon.list',
+    ],
+    [
+        'name'        => 'Delete',
+        'flag'        => 'product_coupon.delete',
+        'parent_flag' => 'product_coupon.list',
+    ],
 ];

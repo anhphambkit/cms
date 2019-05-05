@@ -34,6 +34,10 @@ use Plugins\Product\Services\Implement\ImplementProductCategoryServices;
 use Plugins\Product\Services\Implement\ImplementProductServices;
 use Plugins\Product\Services\ProductCategoryServices;
 use Plugins\Product\Services\ProductServices;
+use Plugins\Product\Repositories\Interfaces\ProductCouponRepositories;
+use Plugins\Product\Repositories\Eloquent\EloquentProductCouponRepositories;
+use Plugins\Product\Repositories\Caches\CacheProductCouponRepositories;
+
 
 class ProductServiceProvider extends ServiceProvider
 {
@@ -43,94 +47,50 @@ class ProductServiceProvider extends ServiceProvider
     protected $app;
 
     /**
+     * Prefix support binding eloquent
+     * @author TrinhLe
+     */
+    const PREFIX_REPOSITORY_ELOQUENT = 'Eloquent\\Eloquent';
+
+    /**
+     * Prefix support binding cache
+     * @author TrinhLe
+     */
+    const PREFIX_REPOSITORY_CACHE = 'Caches\\Cache';
+
+    /**
      * @author AnhPham
      */
     public function register()
     {
-        if (setting('enable_cache', false)) {
-            $this->app->singleton(ProductRepositories::class, function () {
-                return new CacheProductRepositories(new EloquentProductRepositories(new \Plugins\Product\Models\Product()));
-            });
-
-            $this->app->singleton(manufacturerRepositories::class, function () {
-                return new CacheManufacturerRepositories(new EloquentManufacturerRepositories(new \Plugins\Product\Models\ProductManufacturer()));
-            });
-
-            $this->app->singleton(ProductColorRepositories::class, function () {
-                return new CacheProductColorRepositories(new EloquentProductColorRepositories(new \Plugins\Product\Models\ProductColor()));
-            });
-
-            $this->app->singleton(ProductCollectionRepositories::class, function () {
-                return new CacheProductCollectionRepositories(new EloquentProductCollectionRepositories(new \Plugins\Product\Models\ProductCollection()));
-            });
-
-            $this->app->singleton(ProductMaterialRepositories::class, function () {
-                return new CacheProductMaterialRepositories(new EloquentProductMaterialRepositories(new \Plugins\Product\Models\ProductMaterial()));
-            });
-
-            $this->app->singleton(BusinessTypeRepositories::class, function () {
-                return new CacheBusinessTypeRepositories(new EloquentBusinessTypeRepositories(new \Plugins\Product\Models\ProductBusinessType()));
-            });
-
-            $this->app->singleton(ProductCategoryRepositories::class, function () {
-                return new CacheProductCategoryRepositories(new EloquentProductCategoryRepositories(new \Plugins\Product\Models\ProductCategory()));
-            });
-
-            $this->app->singleton(LookBookRepositories::class, function () {
-                return new CacheLookBookRepositories(new EloquentLookBookRepositories(new \Plugins\Product\Models\LookBook()));
-            });
-
-            $this->app->singleton(ProductSpaceRepositories::class, function () {
-                return new CacheProductSpaceRepositories(new EloquentProductSpaceRepositories(new \Plugins\Product\Models\ProductSpace()));
-            });
-
-        } else {
-            $this->app->singleton(ProductRepositories::class, function () {
-                return new EloquentProductRepositories(new \Plugins\Product\Models\Product());
-            });
-
-            $this->app->singleton(manufacturerRepositories::class, function () {
-                return new EloquentManufacturerRepositories(new \Plugins\Product\Models\ProductManufacturer());
-            });
-
-            $this->app->singleton(ProductColorRepositories::class, function () {
-                return new EloquentProductColorRepositories(new \Plugins\Product\Models\ProductColor());
-            });
-
-            $this->app->singleton(ProductCollectionRepositories::class, function () {
-                return new EloquentProductCollectionRepositories(new \Plugins\Product\Models\ProductCollection());
-            });
-
-            $this->app->singleton(ProductMaterialRepositories::class, function () {
-                return new EloquentProductMaterialRepositories(new \Plugins\Product\Models\ProductMaterial());
-            });
-
-            $this->app->singleton(BusinessTypeRepositories::class, function () {
-                return new EloquentBusinessTypeRepositories(new \Plugins\Product\Models\ProductBusinessType());
-            });
-
-            $this->app->singleton(ProductCategoryRepositories::class, function () {
-                return new EloquentProductCategoryRepositories(new \Plugins\Product\Models\ProductCategory());
-            });
-
-            $this->app->singleton(LookBookRepositories::class, function () {
-                return new EloquentLookBookRepositories(new \Plugins\Product\Models\LookBook());
-            });
-
-            $this->app->singleton(ProductSpaceRepositories::class, function () {
-                return new EloquentProductSpaceRepositories(new \Plugins\Product\Models\ProductSpace());
-            });
-        }
-
+        register_repositories($this);
         $this->app->singleton(ProductServices::class, ImplementProductServices::class);
         $this->app->singleton(ProductCategoryServices::class, ImplementProductCategoryServices::class);
     }
 
     /**
+     * Get config repositories
+     * @author TrinhLe
+     * @return [array] [description]
+     */
+    public function getRespositories():array
+    {
+        return [
+            ProductRepositories::class           => \Plugins\Product\Models\Product::class,
+            ManufacturerRepositories::class      => \Plugins\Product\Models\ProductManufacturer::class,
+            ProductColorRepositories::class      => \Plugins\Product\Models\ProductColor::class,
+            ProductCollectionRepositories::class => \Plugins\Product\Models\ProductCollection::class,
+            ProductMaterialRepositories::class   => \Plugins\Product\Models\ProductMaterial::class,
+            BusinessTypeRepositories::class      => \Plugins\Product\Models\ProductBusinessType::class,
+            ProductCategoryRepositories::class   => \Plugins\Product\Models\ProductCategory::class,
+            LookBookRepositories::class          => \Plugins\Product\Models\LookBook::class,
+            ProductSpaceRepositories::class      => \Plugins\Product\Models\ProductSpace::class,
+            ProductCouponRepositories::class     => \Plugins\Product\Models\ProductCoupon::class,
+        ];
+    }
+
+    /**
      * @author AnhPham
      */
-    public function boot()
-    {
-        
-    }
+    public function boot(){}
 }

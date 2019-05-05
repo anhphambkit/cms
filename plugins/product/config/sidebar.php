@@ -91,4 +91,13 @@ return [
         'url'         => 'admin.product.look_book.list',
         'permissions' => ['product_look_books.list']
     ],
+    [
+        'id'          => 'menu-product-coupon',
+        'priority'    => 10,
+        'parent_id'   => 'menu-product-administrator',
+        'name'        => 'plugins-product::sidebar.coupon',
+        'icon'        => 'fas fa-users-cog',
+        'url'         => 'admin.product.coupon.list',
+        'permissions' => ['product_coupon.list']
+    ],
 ];
