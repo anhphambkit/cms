@@ -3,6 +3,7 @@ namespace Plugins\Product\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Core\User\Models\User;
 
 class ProductCoupon extends Model
 {
@@ -65,5 +66,14 @@ class ProductCoupon extends Model
      */
     public function setIsAllProductAttribute($value){
         return $this->attributes['is_all_product'] = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @author AnhPham
+     */
+    public function createdByUser()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

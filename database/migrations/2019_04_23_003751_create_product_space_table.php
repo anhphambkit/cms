@@ -52,7 +52,7 @@ class CreateProductSpaceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_space');
+        Schema::dropIfExists('product_spaces');
         Schema::dropIfExists('business_type_space_relation');
         Schema::dropIfExists('look_book_business_type_space_relation');
     }

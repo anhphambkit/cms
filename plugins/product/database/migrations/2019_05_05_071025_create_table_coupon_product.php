@@ -18,7 +18,7 @@ class CreateTableCouponProduct extends Migration
             $table->integer('number')->default(0);
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('code');
+            $table->string('code')->unique();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('product_category')->nullable();

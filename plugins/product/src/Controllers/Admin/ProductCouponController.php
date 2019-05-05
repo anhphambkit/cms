@@ -34,7 +34,6 @@ class ProductCouponController extends BaseAdminController
      */
     public function getList(ProductCouponDataTable $dataTable)
     {
-
         page_title()->setTitle(trans('plugins-product::coupon.list'));
 
         return $dataTable->renderTable(['title' => trans('plugins-product::coupon.list')]);
@@ -64,8 +63,6 @@ class ProductCouponController extends BaseAdminController
         $data['created_by'] = Auth::id();
 
         $material = $this->productCouponRepository->createOrUpdate($data);
-
-        do_action(BASE_ACTION_AFTER_CREATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $material);
 
         if ($request->input('submit') === 'save') {
             return redirect()->route('admin.product.material.list')->with('success_msg', trans('core-base::notices.create_success_message'));
@@ -114,8 +111,6 @@ class ProductCouponController extends BaseAdminController
 
         $this->productCouponRepository->createOrUpdate($material);
 
-        do_action(BASE_ACTION_AFTER_UPDATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $material);
-
         if ($request->input('submit') === 'save') {
             return redirect()->route('admin.product.material.list')->with('success_msg', trans('core-base::notices.update_success_message'));
         } else {
@@ -137,8 +132,6 @@ class ProductCouponController extends BaseAdminController
                 abort(404);
             }
             $this->productCouponRepository->delete($material);
-
-            do_action(BASE_ACTION_AFTER_DELETE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $material);
 
             return [
                 'error' => false,
