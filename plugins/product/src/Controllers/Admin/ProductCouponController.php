@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Plugins\Product\DataTables\ProductCouponDataTable;
 use Plugins\Product\Repositories\Interfaces\ProductCouponRepositories;
 use Plugins\Product\Requests\ProductCouponRequest;
+use Core\Base\Responses\BaseHttpResponse;
+use AssetManager;
+use AssetPipeline;
 
 class ProductCouponController extends BaseAdminController
 {
@@ -27,6 +30,14 @@ class ProductCouponController extends BaseAdminController
     }
 
     /**
+     * [addAssets description]
+     */
+    protected function addAssets(){
+        AssetManager::addAsset('pretty-checkbox', 'https://cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/3.0.0/pretty-checkbox.min.css');
+        AssetPipeline::requireCss('pretty-checkbox');
+    }
+
+    /**
      * Display all material
      * @param ProductCouponDataTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -34,6 +45,7 @@ class ProductCouponController extends BaseAdminController
      */
     public function getList(ProductCouponDataTable $dataTable)
     {
+        
         page_title()->setTitle(trans('plugins-product::coupon.list'));
 
         return $dataTable->renderTable(['title' => trans('plugins-product::coupon.list')]);
@@ -46,16 +58,19 @@ class ProductCouponController extends BaseAdminController
      */
     public function getCreate()
     {
+        $this->addAssets();
         page_title()->setTitle(trans('plugins-product::coupon.create'));
 
-        return view('plugins-product::coupon.create');
+        $categories = [0 => trans('plugins-blog::categories.none')];
+
+        return view('plugins-product::coupon.create', compact('categories'));
     }
 
     /**
      * @param ProductCouponRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postCreate(ProductCouponRequest $request)
+    public function postCreate(ProductCouponRequest $request, BaseHttpResponse $response)
     {
         $data = $request->input();
 
@@ -95,7 +110,7 @@ class ProductCouponController extends BaseAdminController
      * @param ProductCouponRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postEdit($id, ProductCouponRequest $request)
+    public function postEdit($id, ProductCouponRequest $request, BaseHttpResponse $response)
     {
         $material = $this->productCouponRepository->findById($id);
         if (empty($material)) {
@@ -124,7 +139,7 @@ class ProductCouponController extends BaseAdminController
      * @return array
      * @author TrinhLe
      */
-    public function getDelete(Request $request, $id)
+    public function getDelete(Request $request, $id, BaseHttpResponse $response)
     {
         try {
             $material = $this->productCouponRepository->findById($id);

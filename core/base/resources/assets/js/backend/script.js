@@ -379,6 +379,7 @@ Lcms.handleWaypoint = function () {
 
 Lcms.handlerMaskInput = function () {
     $('.us-phone-mask-input').mask('(000) 000-0000');
+    $('.mask-number-mask-input-discount').mask('00 000');
 }
 
 // Handles counterup plugin wrapper

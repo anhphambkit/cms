@@ -41,6 +41,14 @@ class FormServiceProvider extends ServiceProvider
             'attributes' => [],
         ]);
 
+        Form::component('onOffPretty', 'core-base::elements.forms.on-off-pretty', [
+            'name',
+            'value' => false,
+            'attributes' => [],
+        ]);
+
+
+
         /**
          * Custom checkbox
          * Every checkbox will not have the same name
