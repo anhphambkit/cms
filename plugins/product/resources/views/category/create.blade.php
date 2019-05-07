@@ -54,6 +54,21 @@
             <div class="col-md-3 right-sidebar">
                 @include('core-base::elements.form-actions')
                 @include('core-base::elements.forms.status')
+                {{-- Image--}}
+                <div class="widget meta-boxes">
+                    <div class="widget-title">
+                        <h4>
+                            <span class="required @if ($errors->has('image_feature')) has-error @endif">
+                                <label class="control-label required" for="role">{{ trans('plugins-product::product.form.image_feature') }}</label>
+                            </span>
+                        </h4>
+                    </div>
+                    <div class="widget-body">
+                        {!! Form::mediaImage('image_feature', old('image_feature')) !!}
+                        {!! Form::error('image_feature', $errors) !!}
+                    </div>
+                </div>
+                {{--End Image--}}
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'top') @endphp
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'side') @endphp
             </div>
