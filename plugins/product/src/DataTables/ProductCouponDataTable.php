@@ -56,7 +56,8 @@ class ProductCouponDataTable extends DataTableAbstract
             [
                 "{$table}.id",
                 "{$table}.code",
-                // "{$table}.number",
+                "{$table}.name",
+                "{$table}.number",
                 // "{$table}.start_date",
                 // "{$table}.end_date",
                 "{$table}.created_by",
@@ -88,6 +89,12 @@ class ProductCouponDataTable extends DataTableAbstract
                 'title'  => trans('core-base::tables.name'),
                 'footer' => trans('core-base::tables.name'),
                 'class'  => 'text-left searchable',
+            ],
+            'number' => [
+                'name'   => "{$table}.number",
+                'title'  => trans('Numbers'),
+                'footer' => trans('Numbers'),
+                'class'  => 'text-left',
             ],
             'code' => [
                 'name' => "{$table}.code",
