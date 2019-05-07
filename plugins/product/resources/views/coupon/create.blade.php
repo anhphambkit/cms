@@ -20,8 +20,39 @@
                         <div class="card-body">
                             <div class="form-body">
                                 <div class="row">
+                                    <div class="form-group col-md-4 mb-2 @if ($errors->has('start_date')) has-error @endif">
+                                        <label for="start_date">{{ trans('Start Date') }}</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <span class="far fa-calendar-alt"></span>
+                                                </span>
+                                            </div>
+                                            {!! Form::text('start_date', old('start_date'), ['class' => 'form-control pickadate', 'id' => 'start_date', 'placeholder' => '1993-03-23']) !!}
+                                        </div>
+                                        {!! Form::error('start_date', $errors) !!}
+                                    </div>
+                                    <div class="form-group col-md-4 mb-2 @if ($errors->has('end_date')) has-error @endif">
+                                        <label for="end_date">{{ trans('End Date') }}</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <span class="far fa-calendar-alt"></span>
+                                                </span>
+                                            </div>
+                                            {!! Form::text('end_date', old('end_date'), ['class' => 'form-control pickadate', 'id' => 'end_date', 'placeholder' => '1993-03-23']) !!}
+                                        </div>
+                                        {!! Form::error('end_date', $errors) !!}
+                                    </div>
+                                    <div class="form-group col-md-4 mb-2 @if ($errors->has('number')) has-error @endif">
+                                        <label for="number">{{ trans('Numbers use') }}</label>
+                                        {!! Form::text('number', old('number',1), ['class' => 'form-control mask-number-mask-input-discount', 'id' => 'number', 'placeholder' => trans('Numbers'), 'data-counter' => 120]) !!}
+                                        {!! Form::error('number', $errors) !!}
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="form-group col-md-6 mb-2 @if ($errors->has('number_coupon')) has-error @endif">
-                                        <label for="number_coupon">{{ trans('Coupon Numbers') }}</label>
+                                        <label for="number_coupon">{{ trans('Numbers Coupon') }}</label>
                                         {!! Form::text('number_coupon', old('number',1), ['class' => 'form-control mask-number-mask-input-discount', 'id' => 'number_coupon', 'placeholder' => trans('Numbers'), 'data-counter' => 120]) !!}
                                         {!! Form::error('number_coupon', $errors) !!}
                                     </div>
@@ -40,28 +71,22 @@
                                 <div class="row">
                                     <div class="form-group col-md-6 mb-6">
                                         <label class="control-label required" for="role">Apply All Categories</label>
-                                        {!! Form::onOffPretty('is_all_product', old('is_all_product',1), ['id' => 'is_all_product']) !!}
+                                        {!! Form::onOffPretty('is_all_product', old('is_all_product'), ['id' => 'is_all_product']) !!}
+                                    </div>
+                                    <div class="form-group col-md-4 mb-2">
+                                        <label for="number">{{ trans('Coupon Type') }}</label>
+                                        <div class="clearfix"></div>
+                                        {!! Form::radioPretty('coupon_type', old('coupon_type'), 'Money', ['icon' => 'fas fa-dollar-sign']) !!}
+                                        {!! Form::radioPretty('coupon_type', old('coupon_type'), 'Percent',['icon' => 'fas fa-percent'], 1) !!}
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-4 mb-2 @if ($errors->has('start_date')) has-error @endif">
-                                        <label for="start_date">{{ trans('Start Date') }}</label>
-                                        {!! Form::text('start_date', old('start_date'), ['class' => 'form-control datepicker', 'id' => 'start_date', 'placeholder' => '1993-03-23', 'data-counter' => 30]) !!}
-                                        {!! Form::error('start_date', $errors) !!}
-                                    </div>
-                                    <div class="form-group col-md-4 mb-2 @if ($errors->has('end_date')) has-error @endif">
-                                        <label for="end_date">{{ trans('End Date') }}</label>
-                                        {!! Form::text('end_date', old('end_date'), ['class' => 'form-control datepicker', 'id' => 'end_date', 'placeholder' => '1993-03-23', 'data-counter' => 30]) !!}
-                                        {!! Form::error('end_date', $errors) !!}
-                                    </div>
-
-                                    <div class="form-group col-md-4 mb-2 @if ($errors->has('number')) has-error @endif">
-                                        <label for="number">{{ trans('Numbers use') }}</label>
-                                        {!! Form::text('number', old('number',1), ['class' => 'form-control mask-number-mask-input-discount', 'id' => 'number', 'placeholder' => trans('Numbers'), 'data-counter' => 120]) !!}
-                                        {!! Form::error('number', $errors) !!}
+                                    <div class="form-group col-md-12 mb-4 @if ($errors->has('coupon_value')) has-error @endif">
+                                        <label for="coupon_value">{{ trans('Coupon Value') }}</label>
+                                        {!! Form::text('coupon_value', old('coupon_value'), ['class' => 'form-control', 'id' => 'coupon_value', 'placeholder' => trans('Numbers'), 'data-counter' => 120]) !!}
+                                        {!! Form::error('coupon_value', $errors) !!}
                                     </div>
                                 </div>
-                                <!--  -->
                             </div>
                         </div>
                     </div>
@@ -90,12 +115,36 @@
                 $('#product_category').closest('.form-group').css("display","block");
             }
         }
+
+        var changeCouponValue = function(type){
+            var regex = '00';
+            if(!type) regex = '000 000';
+            $('#coupon_value').mask(`${regex}A`,{
+                translation: {
+                    'A': {
+                        pattern: /%/,
+                        optional: true
+                    }
+                },      
+            });
+        }
+
         $(document).ready(function(){
+
             const is_all_product = document.getElementById('is_all_product')
             is_all_product.addEventListener('change', (event) => {
                 changeUI(event.target.checked)
             })
             changeUI(is_all_product.checked);
+
+            var couponType = $('input[name="coupon_type"]:checked').val();
+            changeCouponValue(parseInt(couponType));
+
+            $(document).on('click', '[name="coupon_type"]', function () {
+                $('#coupon_value').val('');
+                lastSelected = $(this).val();
+                changeCouponValue(parseInt(lastSelected));
+            });
         })
     </script>
 @endpush

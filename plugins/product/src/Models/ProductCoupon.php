@@ -20,6 +20,7 @@ class ProductCoupon extends Model
      * @var array
      */
     protected $fillable = [
+        'name',
         'number',
         'start_date',
         'end_date',
@@ -28,7 +29,9 @@ class ProductCoupon extends Model
         'updated_by',
         'product_category',
         'is_all_product',
-        'status'
+        'status',
+        'coupon_value',
+        'coupon_type'
     ];
 
     /**

@@ -11,6 +11,7 @@ use Plugins\Product\Requests\ProductCouponRequest;
 use Core\Base\Responses\BaseHttpResponse;
 use AssetManager;
 use AssetPipeline;
+use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
 
 class ProductCouponController extends BaseAdminController
 {
@@ -20,13 +21,19 @@ class ProductCouponController extends BaseAdminController
     protected $productCouponRepository;
 
     /**
+     * @var ProductCategoryRepositories
+     */
+    protected $productCategoryRepository;
+
+    /**
      * ProductController constructor.
      * @param ProductCouponRepositories $productCouponRepository
      * @author TrinhLe
      */
-    public function __construct(ProductCouponRepositories $productCouponRepository)
+    public function __construct(ProductCouponRepositories $coupon, ProductCategoryRepositories $category)
     {
-        $this->productCouponRepository = $productCouponRepository;
+        $this->productCouponRepository   = $coupon;
+        $this->productCategoryRepository = $category;
     }
 
     /**
@@ -35,6 +42,15 @@ class ProductCouponController extends BaseAdminController
     protected function addAssets(){
         AssetManager::addAsset('pretty-checkbox', 'https://cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/3.0.0/pretty-checkbox.min.css');
         AssetPipeline::requireCss('pretty-checkbox');
+
+        AssetPipeline::requireCss('daterangepicker-css');
+        AssetPipeline::requireCss('pickadate-css');
+        AssetPipeline::requireCss('cnddaterange-css');
+
+        AssetPipeline::requireJs('pickadate-picker-js');
+        AssetPipeline::requireJs('pickadate-picker-date-js');
+        AssetPipeline::requireJs('daterangepicker-js');
+        AssetPipeline::requireJs('datetime-js');
     }
 
     /**
@@ -45,7 +61,6 @@ class ProductCouponController extends BaseAdminController
      */
     public function getList(ProductCouponDataTable $dataTable)
     {
-        
         page_title()->setTitle(trans('plugins-product::coupon.list'));
 
         return $dataTable->renderTable(['title' => trans('plugins-product::coupon.list')]);
@@ -61,7 +76,12 @@ class ProductCouponController extends BaseAdminController
         $this->addAssets();
         page_title()->setTitle(trans('plugins-product::coupon.create'));
 
-        $categories = [0 => trans('plugins-blog::categories.none')];
+        $list = $this->productCategoryRepository->all();
+
+        foreach ($list as $row) {
+            $categories[$row->id] = $row->name;
+        }
+        $categories = [0 => trans('plugins-blog::categories.none')] + $categories;
 
         return view('plugins-product::coupon.create', compact('categories'));
     }
@@ -72,18 +92,24 @@ class ProductCouponController extends BaseAdminController
      */
     public function postCreate(ProductCouponRequest $request, BaseHttpResponse $response)
     {
-        $data = $request->input();
+        $numberCoupons = $request->get('number_coupon', 0);
+        $coupons = array();
+        while ( $numberCoupons > 0) {
+            # code...
+            $this->productCouponRepository->createOrUpdate(array_merge($request->input(), [
+                'created_by'   => Auth::user()->getKey(),
+                'updated_by'   => Auth::user()->getKey(),
+                'coupon_value' => (float)preg_replace('/\s+/', '', $request->coupon_value),
+                'code'         => substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 10)
+            ]));
 
-        $data['slug'] = str_slug($data['name']);
-        $data['created_by'] = Auth::id();
-
-        $material = $this->productCouponRepository->createOrUpdate($data);
-
-        if ($request->input('submit') === 'save') {
-            return redirect()->route('admin.product.material.list')->with('success_msg', trans('core-base::notices.create_success_message'));
-        } else {
-            return redirect()->route('admin.product.material.edit', $material->id)->with('success_msg', trans('core-base::notices.create_success_message'));
+            $numberCoupons--;
         }
+
+        return $response
+            ->setPreviousUrl(route('admin.product.coupon.list'))
+            ->setNextUrl(route('admin.product.coupon.list'))
+            ->setMessage(trans('core-base::notices.create_success_message'));
     }
 
     /**
@@ -134,29 +160,21 @@ class ProductCouponController extends BaseAdminController
     }
 
     /**
+     * @param int $id
      * @param Request $request
-     * @param $id
-     * @return array
+     * @return BaseHttpResponse
      * @author TrinhLe
      */
     public function getDelete(Request $request, $id, BaseHttpResponse $response)
     {
         try {
-            $material = $this->productCouponRepository->findById($id);
-            if (empty($material)) {
-                abort(404);
-            }
-            $this->productCouponRepository->delete($material);
-
-            return [
-                'error' => false,
-                'message' => trans('core-base::notices.deleted'),
-            ];
-        } catch (\Exception $e) {
-            return [
-                'error' => true,
-                'message' => trans('core-base::notices.cannot_delete'),
-            ];
+            $coupon = $this->productCouponRepository->findOrFail($id);
+            $this->productCouponRepository->delete($coupon);
+            return $response->setMessage(trans('core-base::notices.delete_success_message'));
+        } catch (Exception $ex) {
+            return $response
+                ->setError()
+                ->setMessage(trans('core-base::notices.cannot_delete'));
         }
     }
 }
