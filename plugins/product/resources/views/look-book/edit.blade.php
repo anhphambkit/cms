@@ -69,9 +69,12 @@
         const API = {
             GET_PRODUCTS_BY_CATEGORY : "{{ route('ajax.admin.get_products_by_category') }}",
             GET_SPACES_BY_BUSINESS_TYPE : "{{ route('ajax.admin.get_spaces_by_business_type') }}",
+            GET_ALL_SPACES : "{{ route('ajax.admin.get_all_spaces') }}",
             GET_DEFAULT_BUSINESS_TYPE : "{{ route('ajax.admin.get_default_business_type') }}",
         };
         const START_INDEX = {{ $maxIndex }};
         const BUSINESS_SPACE_INDEX = {{ sizeof($businessSpaces) }};
+        const ALL_SPACE_INDEX = {{ sizeof($allSpaces) }};
+        const ALL_SPACES = {!! json_encode($spaces) !!};
     </script>
 @stop

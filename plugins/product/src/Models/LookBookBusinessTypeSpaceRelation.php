@@ -23,6 +23,7 @@ class LookBookBusinessTypeSpaceRelation extends Model
         'business_type_id',
         'space_id',
         'look_book_id',
+        'apply_all',
         'created_by',
         'updated_by',
     ];

@@ -24,6 +24,11 @@ $router->group(['prefix' => 'admin'], function (Router $router) {
         'uses' => 'Admin\ProductController@getSpacesByBusinessType',
     ]);
 
+    $router->get('/get-all-spaces', [
+        'as' => 'ajax.admin.get_all_spaces',
+        'uses' => 'Admin\ProductController@getAllSpaces',
+    ]);
+
     $router->get('/get-default-business-type', [
         'as' => 'ajax.admin.get_default_business_type',
         'uses' => 'Admin\ProductController@getDefaultBusinessType',
