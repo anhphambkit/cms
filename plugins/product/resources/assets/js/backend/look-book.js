@@ -11,6 +11,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     'use strict';
     let index = START_INDEX;
     let businessSpaceIndex = BUSINESS_SPACE_INDEX;
+    let applyAllSpaceIndex = ALL_SPACE_INDEX;
     let currentProductId = 0;
 
     // Single Select Placeholder
@@ -59,7 +60,10 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     // Format icon
     function iconFormat(icon) {
         if (!icon.id) return icon.text;
-        var $icon = `<img class="image-item-select" src="${icon.image_feature}" />${icon.text}`
+        let imageFeature = '/vendor/core/images/default-avatar.jpg';
+        if (icon.image_feature !== undefined && icon.image_feature !== null && icon.image_feature !== '')
+            imageFeature = icon.image_feature;
+        let $icon = `<img class="image-item-select" src="${imageFeature}" />${icon.text}`
         return $icon;
     }
 
@@ -179,13 +183,35 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         $(this).trigger('change');
     });
 
-    // Add space:
-    $(document).on("click", ".btn.add-space-business", function(event) {
+    // Spaces select
+    let listSpaces = $.map(ALL_SPACES, function(item) {
+        return {
+            id : item.id,
+            text: item.text,
+            image_feature: item.image_feature,
+        };
+    });
+    $(`.select-all-space-list`).empty();
+    $(`.select-all-space-list`).select2({
+        placeholder: "Select a space",
+        minimumResultsForSearch: Infinity,
+        data: listSpaces,
+        templateResult: iconFormat,
+        templateSelection: iconFormat,
+        escapeMarkup: function(es) { return es; }
+    });
+    $('.select-all-space-list').each(function(i, obj) {
+        let allSpaceId = $(this).data('init-all-space-id');
+        $(this).val(allSpaceId).trigger('change');
+    });
+
+    // Add specific space:
+    $(document).on("click", ".add-specific-space", function(event) {
         let request = axios.get(API.GET_DEFAULT_BUSINESS_TYPE);
 
         return request
             .then(function(data){
-                let newSelectBusinessSpace = `<div class="row business-space-row-${businessSpaceIndex}">
+                let newSelectBusinessSpace = `<div class="row business-space-row business-space-row-${businessSpaceIndex}">
                                         <div class="form-group col-md-5 mb-2">
                                             <label class="control-label required" for="select-business-type">Business Type</label>
                                             <select class="select2-placeholder-multiple form-control select-business-type-${businessSpaceIndex} select-business-type-list" name="space_business[${businessSpaceIndex}][business_type_id]" data-business-type-index='${businessSpaceIndex}'>
@@ -199,14 +225,16 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                                         <div class="form-group col-md-2 mb-2">
                                             <label class="control-label" for="action-space">Actions</label>
                                             <div class="action-space-area">
-                                                <a class="action-space delete-business-space delete-business-space-${businessSpaceIndex}" data-business-space-index="${businessSpaceIndex}">
+                                                <a class="action-space delete-space-action delete-business-space delete-business-space-${businessSpaceIndex}" data-business-space-index="${businessSpaceIndex}">
                                                     <i class="far fa-trash-alt icon-business-space-delete"></i>
                                                     Delete
                                                 </a>
                                             </div>
                                         </div>
-                                    </div>`
-                $('.render-space-business-select').append(newSelectBusinessSpace);
+                                    </div>`;
+
+                $('.render-space-business-specific-selected').show();
+                $('.render-space-business-specific-selected').append(newSelectBusinessSpace);
 
                 // let defaultBusinessTypes = $.map(data.data, function(el) { return el; });
 
@@ -231,9 +259,66 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
             });
     });
 
-    // Delete Space:
+    // Add apply all space:
+    $(document).on("click", ".add-space-apply-all", function(event) {
+        let request = axios.get(API.GET_ALL_SPACES);
+
+        return request
+            .then(function(data){
+                let newApplyAllSpaceSelect = `<div class="row all-space-row all-space-row-${applyAllSpaceIndex}">
+                                        <div class="form-group col-md-5 mb-2">
+                                            <label class="control-label required" for="select-space">Space</label>
+                                            <select class="select2-placeholder-multiple form-control select-space-${applyAllSpaceIndex} select-all-space-list" name="all_space[${applyAllSpaceIndex}][space_id]" data-all-space-index='${applyAllSpaceIndex}' data-init-all-space-id="0">
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-2 mb-2">
+                                            <label class="control-label" for="action-space">Actions</label>
+                                            <div class="action-space-area">
+                                                <a class="action-space delete-space-action delete-all-space delete-all-space-${applyAllSpaceIndex}" data-all-space-index="${applyAllSpaceIndex}">
+                                                    <i class="far fa-trash-alt icon-business-space-delete"></i>
+                                                    Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>`;
+
+                $('.render-space-apply-all-selected').show();
+                $('.render-space-apply-all-selected').append(newApplyAllSpaceSelect);
+
+                $(`.select-all-space-list.select-space-${applyAllSpaceIndex}`).select2({
+                    placeholder: "Select a space",
+                    minimumResultsForSearch: Infinity,
+                    data: data.data,
+                    templateResult: iconFormat,
+                    templateSelection: iconFormat,
+                    escapeMarkup: function(es) { return es; }
+                });
+
+                applyAllSpaceIndex++;
+            })
+            .catch(function(data){
+                console.log("error", data);
+            })
+            .then(function(data){
+
+            });
+    });
+
+    // Delete All Space:
+    $(document).on('click', '.delete-all-space', function () {
+        let allSpaceIndex = $(this).data('all-space-index');
+        $(`.all-space-row-${allSpaceIndex}`).remove();
+        if ($('.render-space-apply-all-selected .all-space-row').length <= 0) {
+            $('.render-space-apply-all-selected').hide();
+        }
+    });
+
+    // Delete Specific Space:
     $(document).on('click', '.delete-business-space', function () {
         let businessSpaceIndex = $(this).data('business-space-index');
         $(`.business-space-row-${businessSpaceIndex}`).remove();
+        if ($('.render-space-business-specific-selected .business-space-row').length <= 0) {
+            $('.render-space-business-specific-selected').hide();
+        }
     });
 })(window, document, jQuery);

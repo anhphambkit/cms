@@ -19,6 +19,20 @@ if (!function_exists('format_time')) {
     }
 }
 
+if (!function_exists('format_date_time')) {
+    /**
+     * @param DateTime $datetime
+     * @param string $timezone
+     * @param string $format
+     * @return Carbon
+     */
+    function format_date_time(DateTime $datetime, string $timezone = 'America/Eirunepe', string $format = 'Y-m-d H:i:s')
+    {
+        $serverTimezone = \Config::get('app.timezone');
+        return Carbon::createFromFormat($format, $datetime, $timezone)->setTimezone($serverTimezone);
+    }
+}
+
 if (!function_exists('date_from_database')) {
     /**
      * @param $time

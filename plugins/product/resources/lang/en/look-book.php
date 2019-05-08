@@ -16,4 +16,6 @@ return [
     ],
     'modal_select_product_look_book' => 'Create Look Book Tag',
     'modal_select_business_space' => 'Add Space Business To Look Book',
+    'space_for_apply_all' => 'Apply all with current space',
+    'specific_space' => 'Apply with specific space',
 ];

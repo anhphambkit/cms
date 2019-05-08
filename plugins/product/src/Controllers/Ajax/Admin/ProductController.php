@@ -12,6 +12,7 @@ use Core\Base\Controllers\Admin\BaseAdminController;
 use Illuminate\Http\Request;
 use Plugins\Product\Models\ProductBusinessType;
 use Plugins\Product\Models\ProductCategory;
+use Plugins\Product\Models\ProductSpace;
 use Plugins\Product\Services\ProductServices;
 
 class ProductController extends BaseAdminController
@@ -58,5 +59,14 @@ class ProductController extends BaseAdminController
     {
         $businessType = ProductBusinessType::select('id', 'name as text')->get();
         return response()->json($businessType);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAllSpaces()
+    {
+        $spaces = ProductSpace::select('id', 'name as text', 'image_feature')->get();
+        return response()->json($spaces);
     }
 }

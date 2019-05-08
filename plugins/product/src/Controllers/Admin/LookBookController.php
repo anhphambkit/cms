@@ -114,6 +114,15 @@ class LookBookController extends BaseAdminController
             $lookBookSpaces = $data['space_business'];
             $lookBook->lookBookSpaces()->createMany($lookBookSpaces);
 
+            $lookBookAllSpaces = $data['all_space'];
+            foreach ($lookBookAllSpaces as $lookBookAllSpace) {
+                $lookBook->lookBookSpaces()->create([
+                    'business_type_id' => 0,
+                    'space_id' => $lookBookAllSpace['space_id'],
+                    'apply_all' => true
+                ]);
+            }
+
             return $lookBook->save();
         }, 3);
 
@@ -138,7 +147,7 @@ class LookBookController extends BaseAdminController
     {
         $categories = $this->productCategoryRepositories->pluck('name', 'id');
         $businessTypes = $this->businessTypeRepositories->pluck('name', 'id');
-        $spaces = [];
+        $spaces = $this->productSpaceRepositories->select(['id', 'name as text', 'image_feature'])->get();
         $products = [];
 
         $lookBook = $this->lookBookRepository->findById($id);
@@ -151,8 +160,10 @@ class LookBookController extends BaseAdminController
         }
 
         $businessSpaces = [];
+        $allSpaces = [];
         if ($lookBook->lookBookSpaces() != null) {
-            $businessSpaces = $lookBook->lookBookSpaces()->select('*')->get()->toArray();
+            $businessSpaces = $lookBook->lookBookSpaces()->where('look_book_business_type_space_relation.apply_all', false)->select('*')->get()->toArray();
+            $allSpaces = $lookBook->lookBookSpaces()->where('look_book_business_type_space_relation.apply_all', true)->select('*')->get()->toArray();
         }
 
         if (empty($lookBook)) {
@@ -163,7 +174,7 @@ class LookBookController extends BaseAdminController
 
         $this->addDetailAssets();
 
-        return view('plugins-product::look-book.edit', compact('products', 'categories', 'lookBook', 'lookBookTags', 'maxIndex', 'businessTypes', 'spaces', 'businessSpaces'));
+        return view('plugins-product::look-book.edit', compact('products', 'categories', 'lookBook', 'lookBookTags', 'maxIndex', 'businessTypes', 'spaces', 'businessSpaces', 'allSpaces'));
     }
 
     /**
@@ -193,6 +204,14 @@ class LookBookController extends BaseAdminController
             LookBookBusinessTypeSpaceRelation::with('lookBook')->where('look_book_id', $lookBook->id)->delete();
             $lookBookSpaces = $data['space_business'];
             $lookBook->lookBookSpaces()->createMany($lookBookSpaces);
+            $lookBookAllSpaces = $data['all_space'];
+            foreach ($lookBookAllSpaces as $lookBookAllSpace) {
+                $lookBook->lookBookSpaces()->create([
+                    'business_type_id' => 0,
+                    'space_id' => $lookBookAllSpace['space_id'],
+                    'apply_all' => true
+                ]);
+            }
 
             return $lookBook->save();
         }, 3);
