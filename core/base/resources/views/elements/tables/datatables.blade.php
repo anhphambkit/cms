@@ -1,6 +1,3 @@
-<?php
-//dd($dataTable);
-?>
 <div class="card">
     <div class="card-header">
         <h4 class="card-title">{{ $title }}</h4>

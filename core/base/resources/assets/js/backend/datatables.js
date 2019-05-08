@@ -132,7 +132,6 @@
                 event.preventDefault();
                 let action_item = $(this);
                 let span = $(this).find('span');
-                console.log(span);
                 if (span.length > 1) {
                     span = span.find('span');
                 }

@@ -30,27 +30,36 @@ abstract class DataTableAbstract extends YajraTable
     {
         return $this->builder()
             ->columns($this->getColumns())
-            ->parameters([
-                'dom' => "Brt<'datatables__info_wrap'pli<'clearfix'>>",
-                'buttons' => $this->getBuilderParameters(),
-                'initComplete' => $this->htmlInitComplete(),
-                'drawCallback' => $this->htmlDrawCallback(),
-                'paging' => true,
-                'searching' => true,
-                'info' => true,
-                'searchDelay' => 350,
-                'bStateSave' => true,
-                'lengthMenu' => [
-                    [10, 30, 50, -1],
-                    [10, 30, 50, __('All')]
-                ],
-                'pageLength' => 10,
-                'processing' => true,
-                'serverSide' => true,
-                'bServerSide' => true,
-                'bDeferRender' => true,
-                'bProcessing' => true,
-            ]);
+            ->parameters($this->getParameters());
+    }
+
+    /**
+     * [getParameters description]
+     * @return [type] [description]
+     */
+    public function getParameters():array
+    {
+        return [
+            'dom' => "Brt<'datatables__info_wrap'pli<'clearfix'>>",
+            'buttons' => $this->getBuilderParameters(),
+            'initComplete' => $this->htmlInitComplete(),
+            'drawCallback' => $this->htmlDrawCallback(),
+            'paging' => true,
+            'searching' => true,
+            'info' => true,
+            'searchDelay' => 350,
+            'bStateSave' => true,
+            'lengthMenu' => [
+            [10, 30, 50, -1],
+            [10, 30, 50, __('All')]
+            ],
+            'pageLength' => 10,
+            'processing' => true,
+            'serverSide' => true,
+            'bServerSide' => true,
+            'bDeferRender' => true,
+            'bProcessing' => true,
+        ];
     }
 
     /**

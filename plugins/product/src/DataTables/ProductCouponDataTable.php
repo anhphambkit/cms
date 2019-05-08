@@ -28,6 +28,9 @@ class ProductCouponDataTable extends DataTableAbstract
             })
             ->editColumn('status', function ($item) {
                 return table_status($item->status);
+            })
+            ->editColumn('qr_code', function ($item) {
+                return \QrCode::size(70)->generate($item->code);
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, CUSTOMER_MODULE_SCREEN_NAME)
@@ -58,10 +61,9 @@ class ProductCouponDataTable extends DataTableAbstract
                 "{$table}.code",
                 "{$table}.name",
                 "{$table}.number",
-                // "{$table}.start_date",
-                // "{$table}.end_date",
                 "{$table}.created_by",
                 "{$table}.created_at",
+                "{$table}.updated_at",
                 "{$table}.status"
             ]);
         return $query;
@@ -77,18 +79,15 @@ class ProductCouponDataTable extends DataTableAbstract
         $table = $model->getTable();
 
         return [
-            'id' => [
-                'name'   => "{$table}.id",
-                'title'  => trans('core-base::tables.id'),
-                'footer' => trans('core-base::tables.id'),
-                'width'  => '20px',
-                'class'  => 'searchable searchable_id',
-            ],
-            'name' => [
-                'name'   => "{$table}.name",
-                'title'  => trans('core-base::tables.name'),
-                'footer' => trans('core-base::tables.name'),
-                'class'  => 'text-left searchable',
+            'qr_code' => [
+                'title'      => __('QR code'),
+                'width'      => '134px',
+                'class'      => 'text-center',
+                'orderable'  => false,
+                'searchable' => false,
+                'exportable' => false,
+                'printable'  => false,
+                'footer'     => __('QR code')
             ],
             'number' => [
                 'name'   => "{$table}.number",
@@ -146,6 +145,17 @@ class ProductCouponDataTable extends DataTableAbstract
     public function actions()
     {
         return [];
+    }
+
+    /**
+     * Custom parameters
+     * @return [type] [description]
+     */
+    public function getParameters():array
+    {
+        return array_merge(parent::getParameters(),[
+            'autoWidth' => false
+        ]);
     }
 
     /**
