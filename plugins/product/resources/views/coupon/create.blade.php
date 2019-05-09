@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-    {!! Form::open(['route' => 'admin.product.coupon.create']) !!}
+    {!! Form::open(['route' => 'admin.product.coupon.create', 'id' => 'coupon-form']) !!}
         @php do_action(BASE_FILTER_BEFORE_RENDER_FORM, PRODUCT_MODULE_COUPON_SCREEN_NAME, request(), null) @endphp
         <div class="row">
             <div class="col-md-9">
@@ -116,16 +116,16 @@
             }
         }
 
+        $("#coupon-form").submit(function() {
+            $('#coupon_value').unmask();
+        });
+
         var changeCouponValue = function(type){
-            var regex = '00';
-            if(!type) regex = '000 000';
-            $('#coupon_value').mask(`${regex}A`,{
-                translation: {
-                    'A': {
-                        pattern: /%/,
-                        optional: true
-                    }
-                },      
+            $('#coupon_value').unmask();
+            var regex = '00 %';
+            if(!type) regex = '#,##0 $';
+            $('#coupon_value').mask(regex,{
+                reverse: true    
             });
         }
 

@@ -23,6 +23,9 @@ class ProductCouponDataTable extends DataTableAbstract
             ->editColumn('created_by', function ($item) {
                 return $item->createdByUser ? $item->createdByUser->getFullName() : '-';
             })
+            ->editColumn('coupon_value', function ($item) {
+                return number_format($item->coupon_value) . ($item->coupon_type ? ' %' : ' $');
+            })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
             })
@@ -30,7 +33,7 @@ class ProductCouponDataTable extends DataTableAbstract
                 return table_status($item->status);
             })
             ->editColumn('qr_code', function ($item) {
-                return \QrCode::size(70)->generate($item->code);
+                return \QrCode::generate($item->code);
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, CUSTOMER_MODULE_SCREEN_NAME)
@@ -63,8 +66,9 @@ class ProductCouponDataTable extends DataTableAbstract
                 "{$table}.number",
                 "{$table}.created_by",
                 "{$table}.created_at",
-                "{$table}.updated_at",
-                "{$table}.status"
+                "{$table}.status",
+                "{$table}.coupon_type",
+                "{$table}.coupon_value",
             ]);
         return $query;
     }
@@ -89,17 +93,11 @@ class ProductCouponDataTable extends DataTableAbstract
                 'printable'  => false,
                 'footer'     => __('QR code')
             ],
-            'number' => [
-                'name'   => "{$table}.number",
-                'title'  => trans('Numbers'),
-                'footer' => trans('Numbers'),
+            'coupon_value' => [
+                'name'   => "{$table}.coupon_value",
+                'title'  => trans('Value'),
+                'footer' => trans('Value'),
                 'class'  => 'text-left',
-            ],
-            'code' => [
-                'name' => "{$table}.code",
-                'title' => trans('core-base::tables.code'),
-                'footer' => trans('core-base::tables.code'),
-                'class' => 'text-left searchable',
             ],
             'created_by' => [
                 'name' => "{$table}.created_by",

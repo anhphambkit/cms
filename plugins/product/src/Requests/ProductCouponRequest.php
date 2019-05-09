@@ -2,6 +2,7 @@
 namespace Plugins\Product\Requests;
 
 use Core\Master\Requests\CoreRequest;
+use Carbon\Carbon;
 
 class ProductCouponRequest extends CoreRequest
 {
@@ -17,10 +18,10 @@ class ProductCouponRequest extends CoreRequest
             'name'             => 'required',
             'product_category' => 'required_if:is_all_product,0|min:1',
             'coupon_type'      => 'required|in:0,1',
-            'coupon_value'     => 'required|min:0',
+            'coupon_value'     => 'required|numeric|min:0',
             'start_date'       => 'required|date',
-            'end_date'         => 'required|date',
-            'number_coupon'    => 'required|numeric|min:1',
+            'end_date'         => 'required|date|after:start_date',
+            'number_coupon'    => 'nullable|numeric|min:1',
         ];
     }
 }

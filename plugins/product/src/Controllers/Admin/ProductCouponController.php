@@ -99,7 +99,7 @@ class ProductCouponController extends BaseAdminController
             $this->productCouponRepository->createOrUpdate(array_merge($request->input(), [
                 'created_by'   => Auth::user()->getKey(),
                 'updated_by'   => Auth::user()->getKey(),
-                'coupon_value' => (float)preg_replace('/\s+/', '', $request->coupon_value),
+                'coupon_value' => (float)preg_replace("/[^0-9.]/", "", $request->coupon_value),
                 'code'         => substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 10)
             ]));
 
@@ -121,14 +121,18 @@ class ProductCouponController extends BaseAdminController
      */
     public function getEdit($id)
     {
-        $material = $this->productCouponRepository->findById($id);
-        if (empty($material)) {
-            abort(404);
+        $this->addAssets();
+        $coupon = $this->productCouponRepository->findOrFail($id);
+        $list   = $this->productCategoryRepository->all();
+
+        foreach ($list as $row) {
+            $categories[$row->id] = $row->name;
         }
+        $categories = [0 => trans('plugins-blog::categories.none')] + $categories;
 
         page_title()->setTitle(trans('plugins-product::coupon.edit') . ' #' . $id);
 
-        return view('plugins-product::coupon.edit', compact('material'));
+        return view('plugins-product::coupon.edit', compact('coupon', 'categories'));
     }
 
     /**
@@ -138,25 +142,17 @@ class ProductCouponController extends BaseAdminController
      */
     public function postEdit($id, ProductCouponRequest $request, BaseHttpResponse $response)
     {
-        $material = $this->productCouponRepository->findById($id);
-        if (empty($material)) {
-            abort(404);
-        }
+        $coupon = $this->productCouponRepository->findOrFail($id);
 
-        $data = $request->input();
+        $coupon->fill($request->input());
+        $coupon->updated_by = Auth::id();
+        $coupon->coupon_value = (float)preg_replace("/[^0-9.]/", "", $request->coupon_value);
 
-        $data['slug'] = str_slug($data['name']);
-        $data['updated_by'] = Auth::id();
+        $this->productCouponRepository->createOrUpdate($coupon);
 
-        $material->fill($data);
-
-        $this->productCouponRepository->createOrUpdate($material);
-
-        if ($request->input('submit') === 'save') {
-            return redirect()->route('admin.product.material.list')->with('success_msg', trans('core-base::notices.update_success_message'));
-        } else {
-            return redirect()->route('admin.product.material.edit', $id)->with('success_msg', trans('core-base::notices.update_success_message'));
-        }
+        return $response
+            ->setPreviousUrl(route('admin.product.coupon.list'))
+            ->setMessage(trans('core-base::notices.update_success_message'));
     }
 
     /**
