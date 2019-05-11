@@ -13,4 +13,16 @@ interface BusinessTypeServices {
      * @return mixed
      */
     public function getAllBusinessTypeGroupByParent();
+
+    /**
+     * @param string $slug
+     * @return mixed
+     */
+    public function getBusinessTypeBySlug(string $slug);
+
+    /**
+     * @param string $slug
+     * @return mixed
+     */
+    public function getAllSpacesByBusinessTypeBySlug(string $slug);
 }

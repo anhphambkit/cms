@@ -30,4 +30,30 @@ class ImplementBusinessTypeServices implements BusinessTypeServices {
     public function getAllBusinessTypeGroupByParent() {
         return $this->repository->getAllBusinessTypeGroupByParent();
     }
+
+    /**
+     * @param string $slug
+     * @return mixed
+     */
+    public function getBusinessTypeBySlug(string $slug) {
+        return $this->repository->bySlug($slug);
+    }
+
+    /**
+     * @param string $slug
+     * @return array|mixed
+     */
+    public function getAllSpacesByBusinessTypeBySlug(string $slug) {
+        $businessType = $this->repository->bySlug($slug);
+        if ($businessType->spaces) {
+            $allRoom = new \stdClass();
+            $allRoom->id = 0;
+            $allRoom->text = 'All Room';
+            $allRoom->slug = 'all_room';
+
+            $businessType->spaces->prepend($allRoom);
+            return $businessType->spaces;
+        }
+        return [];
+    }
 }

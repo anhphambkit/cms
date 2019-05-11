@@ -25,9 +25,12 @@ class CacheLookBookRepositories extends CacheAbstractDecorator implements LookBo
     /**
      * @param string $type
      * @param bool $isMain
+     * @param int $take
+     * @param int $businessTypeId
+     * @param int $spaceId
      * @return mixed
      */
-    public function getAllLookBookByTypeLayout(string $type, bool $isMain = false) {
+    public function getAllLookBookByTypeLayout(string $type, bool $isMain = false, int $take = 0, int $businessTypeId = 0, int $spaceId = 0) {
         return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
     }
 }

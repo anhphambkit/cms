@@ -11,6 +11,6 @@ class EloquentBusinessTypeRepositories extends RepositoriesAbstract implements B
      * @return mixed
      */
     public function getAllBusinessTypeGroupByParent() {
-        return $this->model->select('id', 'name', 'order')->where('parent_id', 0)->with('children')->orderBy('order', 'asc')->get();
+        return $this->model->select('id', 'name', 'slug', 'order')->where('parent_id', 0)->with('children')->orderBy('order', 'asc')->get();
     }
 }

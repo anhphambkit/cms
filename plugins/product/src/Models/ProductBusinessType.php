@@ -59,7 +59,7 @@ class ProductBusinessType extends Model
      */
     public function spaces()
     {
-        return $this->belongsToMany(ProductSpace::class, 'business_type_space_relation', 'business_type_id', 'space_id')->select(['product_spaces.id', 'name as text', 'image_feature']);
+        return $this->belongsToMany(ProductSpace::class, 'business_type_space_relation', 'business_type_id', 'space_id')->select(['product_spaces.id', 'name as text', 'slug', 'image_feature']);
     }
 
     /**

@@ -22,7 +22,7 @@ class ProductBusinessTypeRequest extends CoreRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|unique:product_business_types',
         ];
     }
 }

@@ -35,12 +35,14 @@ use Plugins\Product\Services\Implement\ImplementBusinessTypeServices;
 use Plugins\Product\Services\Implement\ImplementLookBookServices;
 use Plugins\Product\Services\Implement\ImplementProductCategoryServices;
 use Plugins\Product\Services\Implement\ImplementProductServices;
+use Plugins\Product\Services\Implement\ImplementProductSpaceServices;
 use Plugins\Product\Services\LookBookServices;
 use Plugins\Product\Services\ProductCategoryServices;
 use Plugins\Product\Services\ProductServices;
 use Plugins\Product\Repositories\Interfaces\ProductCouponRepositories;
 use Plugins\Product\Repositories\Eloquent\EloquentProductCouponRepositories;
 use Plugins\Product\Repositories\Caches\CacheProductCouponRepositories;
+use Plugins\Product\Services\ProductSpaceServices;
 
 
 class ProductServiceProvider extends ServiceProvider
@@ -72,6 +74,7 @@ class ProductServiceProvider extends ServiceProvider
         $this->app->singleton(BusinessTypeServices::class, ImplementBusinessTypeServices::class);
         $this->app->singleton(ProductCategoryServices::class, ImplementProductCategoryServices::class);
         $this->app->singleton(LookBookServices::class, ImplementLookBookServices::class);
+        $this->app->singleton(ProductSpaceServices::class, ImplementProductSpaceServices::class);
     }
 
     /**
