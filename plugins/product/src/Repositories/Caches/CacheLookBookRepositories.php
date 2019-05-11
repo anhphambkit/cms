@@ -19,6 +19,15 @@ class CacheLookBookRepositories extends CacheAbstractDecorator implements LookBo
     {
         parent::__construct();
         $this->repository = $repository;
-        $this->entityName = 'default'; # Please setup reference name of cache.
+        $this->entityName = 'look-book-repo'; # Please setup reference name of cache.
+    }
+
+    /**
+     * @param string $type
+     * @param bool $isMain
+     * @return mixed
+     */
+    public function getAllLookBookByTypeLayout(string $type, bool $isMain = false) {
+        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
     }
 }

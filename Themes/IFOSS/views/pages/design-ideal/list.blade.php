@@ -25,59 +25,81 @@
                 </ul>
             </div>
             <div class="tab-content product-categories--tab-content">
-                <?php for ($i=0; $i < 4; $i++) { ?>
-                    <div class="tab-pane fade <?php if($i==2) echo 'show active'; ?>" id="category-<?php echo $i; ?>" role="tabpanel">
+                <div class="tab-pane fade show active" id="category-2" role="tabpanel">
                         <div class="design-ideas">
                             <div class="container-fluid">
                                 <div class="row design-ideas-row">
-                                    <div class="col-md-8">
-                                        <div class="item">
-                                            <img src="{{ URL::asset('themes/ifoss/assets/images/ideas/design-ideas-5.jpg') }}"/>
-                                            <div class="design-ideas-overlay-content">
-                                                <div class="title">Modern & Contemporary Foyer Design</div>
-                                                <ul class="tag">
-                                                    <li>Business <a href="#">Nail Salon</a></li>
-                                                    <li>Space <a href="#">Lounge</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="item sub-item">
-                                            <div class="item">
-                                                <img src="{{ URL::asset('themes/ifoss/assets/images/ideas/design-ideas-6.jpg') }}"/>
-                                                <div class="design-ideas-overlay-content">
-                                                    <div class="title">Modern & Contemporary Foyer Design</div>
-                                                    <ul class="tag">
-                                                        <li>Business <a href="#">Nail Salon</a></li>
-                                                        <li>Space <a href="#">Lounge</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <img src="{{ URL::asset('themes/ifoss/assets/images/ideas/design-ideas-7.jpg') }}"/>
-                                                <div class="design-ideas-overlay-content">
-                                                    <div class="title">Modern & Contemporary Foyer Design</div>
-                                                    <ul class="tag">
-                                                        <li>Business <a href="#">Nail Salon</a></li>
-                                                        <li>Space <a href="#">Lounge</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="item sub-item">
-                                            <div class="row">
-                                                <?php for ($j=6; $j < 10; $j++) { ?>
-                                                    @php
-                                                        $url = "themes/ifoss/assets/images/ideas/design-ideas-{$j}.jpg";
-                                                    @endphp
-                                                <div class="col-md-6">
-                                                    <div class="item">
-                                                        <img src="{{ URL::asset($url) }}"/>
+                                    @foreach($listRender as $list)
+                                        @php
+                                            $i = 0;
+                                        @endphp
+                                        @while($i < sizeof($list))
+                                            @if($list[$i]['type_layout'] === 'Normal')
+                                                    @if($list[$i]['is_main'])
+                                                        <div class="col-md-8">
+                                                            <div class="item main-look-book item-look-book">
+                                                                <img src="{{ URL::asset($list[$i]['image']) }}"/>
+                                                                <div class="design-ideas-overlay-content">
+                                                                    <div class="title">{{ $list[$i]['name'] }}</div>
+                                                                    <ul class="tag">
+                                                                        <li>Business <a href="#">Nail Salon</a></li>
+                                                                        <li>Space <a href="#">Lounge</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @php
+                                                            $i++;
+                                                        @endphp
+                                                    @else
+                                                        @php
+                                                            $normalLayoutTmp = array();
+                                                        @endphp
+                                                        @while($i < sizeof($list) && $list[$i]['type_layout'] === 'Normal')
+                                                            @php
+                                                                array_push($normalLayoutTmp, $list[$i]);
+                                                                $i++;
+                                                            @endphp
+                                                        @endwhile
+                                                        @php
+                                                            $normalLayoutChunks = array_chunk($normalLayoutTmp, 6);
+                                                        @endphp
+                                                        @foreach($normalLayoutChunks as $normalLayoutChunk)
+                                                            @php
+                                                                $colRender = round(sizeof($normalLayoutChunk)/2)*4;
+                                                                $j = 0;
+                                                            @endphp
+                                                            <div class="col-md-{{$colRender}}">
+                                                                <div class="item sub-item">
+                                                                    <div class="row">
+                                                                        @while($j < sizeof($normalLayoutChunk))
+                                                                            <div class="col-md-{{ ($colRender == 12) ? 4 : ($colRender == 8) ? 6 : 12 }}">
+                                                                                <div class="item normal-look-book item-look-book">
+                                                                                    <img src="{{ URL::asset($normalLayoutChunk[$j]['image']) }}"/>
+                                                                                    <div class="design-ideas-overlay-content">
+                                                                                        <div class="title">{{ $normalLayoutChunk[$j]['name'] }}</div>
+                                                                                        <ul class="tag">
+                                                                                            <li>Business <a href="#">Nail Salon</a></li>
+                                                                                            <li>Space <a href="#">Lounge</a></li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            @php
+                                                                                $j++;
+                                                                            @endphp
+                                                                        @endwhile
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                            @elseif($list[$i]['type_layout'] === 'Vertical')
+                                                <div class="col-md-4">
+                                                    <div class="item vertical-look-book item-look-book">
+                                                        <img src="{{ URL::asset($list[$i]['image']) }}"/>
                                                         <div class="design-ideas-overlay-content">
-                                                            <div class="title">Modern & Contemporary Foyer Design</div>
+                                                            <div class="title">{{ $list[$i]['name'] }}</div>
                                                             <ul class="tag">
                                                                 <li>Business <a href="#">Nail Salon</a></li>
                                                                 <li>Space <a href="#">Lounge</a></li>
@@ -85,57 +107,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <?php } ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="item">
-                                            <img src="{{ URL::asset('themes/ifoss/assets/images/ideas/design-ideas-10.jpg') }}"/>
-                                            <div class="design-ideas-overlay-content">
-                                                <div class="title">Modern & Contemporary Foyer Design</div>
-                                                <ul class="tag">
-                                                    <li>Business <a href="#">Nail Salon</a></li>
-                                                    <li>Space <a href="#">Lounge</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="item">
-                                            <img src="{{ URL::asset('themes/ifoss/assets/images/ideas/design-ideas-10.jpg') }}"/>
-                                            <div class="design-ideas-overlay-content">
-                                                <div class="title">Modern & Contemporary Foyer Design</div>
-                                                <ul class="tag">
-                                                    <li>Business <a href="#">Nail Salon</a></li>
-                                                    <li>Space <a href="#">Lounge</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="item sub-item">
-                                            <div class="row">
-                                                <?php for ($j=6; $j < 10; $j++) { ?>
-                                                    @php
-                                                        $url = "themes/ifoss/assets/images/ideas/design-ideas-{$j}.jpg";
-                                                    @endphp
-                                                <div class="col-md-6">
-                                                    <div class="item">
-                                                        <img src="{{ URL::asset($url) }}"/>
-                                                        <div class="design-ideas-overlay-content">
-                                                            <div class="title">Modern & Contemporary Foyer Design</div>
-                                                            <ul class="tag">
-                                                                <li>Business <a href="#">Nail Salon</a></li>
-                                                                <li>Space <a href="#">Lounge</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <?php } ?>
-                                            </div>
-                                        </div>
-                                    </div>
+                                                @php
+                                                    $i++;
+                                                @endphp
+                                            @endif
+                                        @endwhile
+                                    @endforeach
                                 </div>
                                 <div class="text-center py-4">
                                     <a href="javascript:void(0);" class="btn-view-icon"><i class="fas fa-plus"></i> <span>Load more</span></a>
@@ -143,7 +120,6 @@
                             </div>
                         </div>
                     </div>
-                <?php } ?>
             </div>
         </div>
     </section>

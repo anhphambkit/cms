@@ -57,7 +57,7 @@ class ProductCategoryController extends BaseAdminController
     {
         $categories = $this->productCategoryRepository->pluck('name', 'id');
 
-        $categories = array_merge([ 0 => "Please select parent product category" ], $categories);
+        $categories = [ 0 => "Please select parent product category" ] + $categories;
 
         page_title()->setTitle(trans('plugins-product::category.create'));
 

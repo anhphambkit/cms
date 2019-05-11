@@ -9,9 +9,11 @@
 namespace Plugins\Product\Controllers\Admin;
 
 use Core\Base\Controllers\Admin\BaseAdminController;
+use Core\Setting\Services\ReferenceServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Plugins\Product\Contracts\ProductReferenceConfig;
 use Plugins\Product\DataTables\LookBookDataTable;
 use Plugins\Product\Models\LookBookBusinessTypeSpaceRelation;
 use Plugins\Product\Models\LookBookTag;
@@ -46,20 +48,28 @@ class LookBookController extends BaseAdminController
     protected $productSpaceRepositories;
 
     /**
+     * @var ReferenceServices
+     */
+    protected $referenceServices;
+
+    /**
      * LookBookController constructor.
      * @param LookBookRepositories $lookBookRepository
      * @param ProductCategoryRepositories $productCategoryRepositories
      * @param BusinessTypeRepositories $businessTypeRepositories
      * @param ProductSpaceRepositories $productSpaceRepositories
+     * @param ReferenceServices $referenceServices
      */
     public function __construct(LookBookRepositories $lookBookRepository, ProductCategoryRepositories $productCategoryRepositories,
-                                BusinessTypeRepositories $businessTypeRepositories, ProductSpaceRepositories $productSpaceRepositories
+                                BusinessTypeRepositories $businessTypeRepositories, ProductSpaceRepositories $productSpaceRepositories,
+                                ReferenceServices $referenceServices
                                 )
     {
         $this->lookBookRepository = $lookBookRepository;
         $this->productCategoryRepositories = $productCategoryRepositories;
         $this->businessTypeRepositories = $businessTypeRepositories;
         $this->productSpaceRepositories = $productSpaceRepositories;
+        $this->referenceServices = $referenceServices;
     }
 
     /**
@@ -85,15 +95,18 @@ class LookBookController extends BaseAdminController
     {
         $categories = $this->productCategoryRepositories->pluck('name', 'id');
         $businessTypes = $this->businessTypeRepositories->pluck('name', 'id');
-        $spaces = [];
+        $spaces = $this->productSpaceRepositories->select(['id', 'name as text', 'image_feature'])->get();
         $products = [];
         $tags = [];
+        $typeLayouts = $this->referenceServices->getReferenceFromAttributeType(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT)
+            ->pluck('value', 'value')
+            ->toArray();
 
         page_title()->setTitle(trans('plugins-product::look-book.create'));
 
         $this->addDetailAssets();
 
-        return view('plugins-product::look-book.create', compact('categories', 'products','tags', 'businessTypes', 'spaces'));
+        return view('plugins-product::look-book.create', compact('categories', 'products','tags', 'businessTypes', 'spaces', 'typeLayouts'));
     }
 
     /**
@@ -103,6 +116,7 @@ class LookBookController extends BaseAdminController
     public function postCreate(LookBookRequest $request)
     {
         $data = $request->input();
+
         $data['created_by'] = Auth::id();
 
         $lookBook = DB::transaction(function () use ($data, $request) {
@@ -111,10 +125,10 @@ class LookBookController extends BaseAdminController
             $lookBookTags = $data['tag'];
             $lookBook->lookBookTags()->createMany($lookBookTags);
 
-            $lookBookSpaces = $data['space_business'];
+            $lookBookSpaces = (isset($data['space_business']) ? $data['space_business'] : []);
             $lookBook->lookBookSpaces()->createMany($lookBookSpaces);
 
-            $lookBookAllSpaces = $data['all_space'];
+            $lookBookAllSpaces = (isset($data['all_space']) ? $data['all_space'] : []);
             foreach ($lookBookAllSpaces as $lookBookAllSpace) {
                 $lookBook->lookBookSpaces()->create([
                     'business_type_id' => 0,
@@ -148,6 +162,9 @@ class LookBookController extends BaseAdminController
         $categories = $this->productCategoryRepositories->pluck('name', 'id');
         $businessTypes = $this->businessTypeRepositories->pluck('name', 'id');
         $spaces = $this->productSpaceRepositories->select(['id', 'name as text', 'image_feature'])->get();
+        $typeLayouts = $this->referenceServices->getReferenceFromAttributeType(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT)
+            ->pluck('value', 'value')
+            ->toArray();
         $products = [];
 
         $lookBook = $this->lookBookRepository->findById($id);
@@ -174,7 +191,9 @@ class LookBookController extends BaseAdminController
 
         $this->addDetailAssets();
 
-        return view('plugins-product::look-book.edit', compact('products', 'categories', 'lookBook', 'lookBookTags', 'maxIndex', 'businessTypes', 'spaces', 'businessSpaces', 'allSpaces'));
+        return view('plugins-product::look-book.edit',
+            compact('products', 'categories', 'lookBook', 'lookBookTags',
+                'maxIndex', 'businessTypes', 'spaces', 'businessSpaces', 'allSpaces', 'typeLayouts'));
     }
 
     /**
@@ -202,9 +221,9 @@ class LookBookController extends BaseAdminController
             $lookBook->lookBookTags()->createMany($lookBookTags);
 
             LookBookBusinessTypeSpaceRelation::with('lookBook')->where('look_book_id', $lookBook->id)->delete();
-            $lookBookSpaces = $data['space_business'];
+            $lookBookSpaces = (isset($data['space_business']) ? $data['space_business'] : []);
             $lookBook->lookBookSpaces()->createMany($lookBookSpaces);
-            $lookBookAllSpaces = $data['all_space'];
+            $lookBookAllSpaces = (isset($data['all_space']) ? $data['all_space'] : []);
             foreach ($lookBookAllSpaces as $lookBookAllSpace) {
                 $lookBook->lookBookSpaces()->create([
                     'business_type_id' => 0,
@@ -275,5 +294,8 @@ class LookBookController extends BaseAdminController
         AssetPipeline::requireJs('select2-js');
         AssetPipeline::requireJs('cropper-js');
         AssetPipeline::requireJs('look-book-js');
+
+        AssetManager::addAsset('pretty-checkbox', 'https://cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/3.0.0/pretty-checkbox.min.css');
+        AssetPipeline::requireCss('pretty-checkbox');
     }
 }

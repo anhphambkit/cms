@@ -58,7 +58,7 @@ class ProductBusinessTypeController extends BaseAdminController
     {
         $businessTypes = $this->businessTypeRepository->pluck('name', 'id');
 
-        $businessTypes = array_merge([ 0 => "Please select parent business type" ], $businessTypes);
+        $businessTypes = [ 0 => "Please select parent business type" ] +  $businessTypes;
 
         page_title()->setTitle(trans('plugins-product::business-type.create'));
 

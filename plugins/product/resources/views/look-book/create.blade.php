@@ -27,9 +27,20 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('image')) has-error @endif">
+                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('type_layout')) has-error @endif">
+                                        <label class="control-label required" for="role">{{ trans('plugins-product::look-book.form.type_layout') }}</label>
+                                        {!! Form::select('type_layout', $typeLayouts, old('type_layout'), ['class' => 'select2-placeholder-multiple form-control type-layout-list', "id" => "select-type-layout-list" ]) !!}
+                                        {!! Form::error('type_layout', $errors) !!}
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2 is-main-form">
+                                        <label class="control-label required" for="role">{{ trans('plugins-product::look-book.form.is_main') }}</label>
+                                        {!! Form::onOffPretty('is_main', old('is_main'), ['id' => 'is_main' ], 'is-main-switch checkbox-large') !!}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-7 mb-2 @if ($errors->has('image')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::look-book.form.look_book_image') }}</label>
-                                        {!! Form::lookBookImage('image', old('image'), old('tag')) !!}
+                                        {!! Form::lookBookImage('image', old('image'), old('tag'), old('type_layout')) !!}
                                     </div>
                                 </div>
                                 @include('plugins-product::look-book.partials.list-space-business-selected')
@@ -75,5 +86,6 @@
         const START_INDEX = 0;
         const BUSINESS_SPACE_INDEX = 1;
         const ALL_SPACE_INDEX = 1;
+        const ALL_SPACES = {!! json_encode($spaces) !!};
     </script>
 @stop

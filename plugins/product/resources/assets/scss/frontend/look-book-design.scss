@@ -1,0 +1,13 @@
+.item-look-book {
+  width: 100%;
+  &.main-look-book, &.vertical-look-book  {
+    height: 845px;
+  }
+  &.normal-look-book {
+    height: 415px;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}

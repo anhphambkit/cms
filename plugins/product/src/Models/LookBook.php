@@ -29,6 +29,8 @@ class LookBook extends Model
         'short_description',
         'image',
         'permalink',
+        'type_layout',
+        'is_main',
         'created_by',
         'updated_by',
     ];
@@ -56,5 +58,21 @@ class LookBook extends Model
     public function lookBookSpaces()
     {
         return $this->hasMany(LookBookBusinessTypeSpaceRelation::class);
+    }
+
+    /**
+     * Get the look book spaces for the look book.
+     */
+    public function lookBookBusiness()
+    {
+        return $this->belongsToMany(ProductBusinessType::class, 'look_book_business_type_space_relation', 'look_book_id', 'business_type_id');
+    }
+
+    /**
+     * Get the look book spaces for the look book.
+     */
+    public function lookBookSpacesBelong()
+    {
+        return $this->belongsToMany(ProductSpace::class, 'look_book_business_type_space_relation', 'look_book_id', 'space_id');
     }
 }

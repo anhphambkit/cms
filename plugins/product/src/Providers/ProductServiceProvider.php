@@ -30,8 +30,12 @@ use Plugins\Product\Repositories\Interfaces\ProductColorRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductMaterialRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductSpaceRepositories;
+use Plugins\Product\Services\BusinessTypeServices;
+use Plugins\Product\Services\Implement\ImplementBusinessTypeServices;
+use Plugins\Product\Services\Implement\ImplementLookBookServices;
 use Plugins\Product\Services\Implement\ImplementProductCategoryServices;
 use Plugins\Product\Services\Implement\ImplementProductServices;
+use Plugins\Product\Services\LookBookServices;
 use Plugins\Product\Services\ProductCategoryServices;
 use Plugins\Product\Services\ProductServices;
 use Plugins\Product\Repositories\Interfaces\ProductCouponRepositories;
@@ -65,7 +69,9 @@ class ProductServiceProvider extends ServiceProvider
     {
         register_repositories($this);
         $this->app->singleton(ProductServices::class, ImplementProductServices::class);
+        $this->app->singleton(BusinessTypeServices::class, ImplementBusinessTypeServices::class);
         $this->app->singleton(ProductCategoryServices::class, ImplementProductCategoryServices::class);
+        $this->app->singleton(LookBookServices::class, ImplementLookBookServices::class);
     }
 
     /**

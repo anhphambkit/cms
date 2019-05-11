@@ -45,6 +45,7 @@ class FormServiceProvider extends ServiceProvider
             'name',
             'value' => false,
             'attributes' => [],
+            'classSwitch' => '',
         ]);
         
         Form::component('radioPretty', 'core-base::elements.forms.radio-pretty', [
@@ -75,6 +76,7 @@ class FormServiceProvider extends ServiceProvider
             'name',
             'value' => null,
             'tags' => [],
+            'typeLayout' => 'normal',
             'attributes' => [],
         ]);
 

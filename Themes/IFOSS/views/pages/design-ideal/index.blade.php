@@ -11,25 +11,33 @@
             <div class="filter-categories-title">Select your business type</div>
             <div class="content">
                 <div class="row">
-                    <?php 
-                    $filterCategoriesTitle = array('Beauty', 'FOOD & BEVERAGE', 'RETAIL TRADE', 'PROFESSIONAL TRADE');
-                    $filterCategoriesItem = array(
-                        0 => array('Nail Salon','Hair Salon','Spas','Eyebrow / eyelash studio','Cosmetic surgery office'),
-                        1 => array('Restaurant','Coffee & Tea','Hotels','Motels'),
-                        2 => array('Cosmetic, beauty supply, perfume store', 'Clothing boutiques'),
-                        3 => array('Dental Office','Doctor Office','Real estate / Finance office','Law Office')
-                    );
-                    foreach ($filterCategoriesTitle as $key => $value) {
-                    ?>
+                    @foreach ($businessTypes as $key => $businessType)
                     <div class="col-lg-3 col-md-6">
-                        <div class="content-title"><?php echo $value; ?></div>
+                        <div class="content-title">{{ $businessType->name }}</div>
                         <ul class="content-item">
-                            <?php foreach ($filterCategoriesItem[$key] as $key => $value) { ?>
-                            <li><a href="#"><?php echo $value; ?></a></li>
-                            <?php } ?>
+                            @foreach ($businessType->children as $keyChildren => $businessTypeChildren)
+                            <li><a href="#">{{ $businessTypeChildren->name }}</a></li>
+                            @endforeach
                         </ul>
                     </div>
-                    <?php } ?>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <div class="filter-space">
+            <div class="filter-space-title">SELECT YOUR DESIRED <SPACE></SPACE></div>
+            <div class="content">
+                <div class="row">
+                    @foreach ($businessTypes as $key => $businessType)
+                        <div class="col-lg-3 col-md-6">
+                            <div class="content-title">{{ $businessType->name }}</div>
+                            <ul class="content-item">
+                                @foreach ($businessType->children as $keyChildren => $businessTypeChildren)
+                                    <li><a href="#">{{ $businessTypeChildren->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

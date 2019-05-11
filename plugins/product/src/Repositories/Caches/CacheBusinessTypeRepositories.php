@@ -6,19 +6,25 @@ use Plugins\Product\Repositories\Interfaces\BusinessTypeRepositories;
 class CacheBusinessTypeRepositories extends CacheAbstractDecorator implements BusinessTypeRepositories
 {
     /**
-     * @var ApplicationInterface
+     * @var BusinessTypeRepositories
      */
     protected $repository;
 
     /**
-     * ApplicationCacheDecorator constructor.
-     * @param ApplicationInterface $repository
-     * @author TrinhLe
+     * CacheBusinessTypeRepositories constructor.
+     * @param BusinessTypeRepositories $repository
      */
     public function __construct(BusinessTypeRepositories $repository)
     {
         parent::__construct();
         $this->repository = $repository;
-        $this->entityName = 'default'; # Please setup reference name of cache.
+        $this->entityName = 'business-repos'; # Please setup reference name of cache.
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAllBusinessTypeGroupByParent() {
+        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
     }
 }

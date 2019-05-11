@@ -103,27 +103,15 @@ class ProductController extends BaseAdminController
     {
         $categories = $this->productCategoryRepositories->pluck('name', 'id');
 
-//        $categories = array_merge([ 0 => "Please select parent product category" ], $categories);
-
         $manufacturer = $this->manufacturerRepositories->pluck('name', 'id');
-
-//        $manufacturer = array_merge([ 0 => "Please select a manufacturer" ], $manufacturer);
 
         $colors = $this->productColorRepositories->pluck('name', 'id');
 
-//        $colors = array_merge([ 0 => "Please select a color" ], $colors);
-
         $businessTypes = $this->businessTypeRepositories->pluck('name', 'id');
-
-//        $businessTypes = array_merge([ 0 => "Please select a business type" ], $businessTypes);
 
         $collections = $this->productCollectionRepositories->pluck('name', 'id');
 
-//        $collections = array_merge([ 0 => "Please select a collection" ], $collections);
-
         $materials = $this->productMaterialRepositories->pluck('name', 'id');
-
-//        $materials = array_merge([ 0 => "Please select a material" ], $materials);
 
         page_title()->setTitle(trans('plugins-product::product.create'));
 
