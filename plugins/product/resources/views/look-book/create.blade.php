@@ -40,7 +40,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-7 mb-2 @if ($errors->has('image')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::look-book.form.look_book_image') }}</label>
-                                        {!! Form::lookBookImage('image', old('image'), old('tag'), old('type_layout')) !!}
+                                        {!! Form::lookBookImage('image', old('image'), (!empty(old('tag')) ? old('tag') : []), old('type_layout')) !!}
                                     </div>
                                 </div>
                                 @include('plugins-product::look-book.partials.list-space-business-selected')

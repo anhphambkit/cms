@@ -118,6 +118,7 @@ class LookBookController extends BaseAdminController
         $data = $request->input();
 
         $data['created_by'] = Auth::id();
+        $data['is_main'] = (isset($data['is_main']) ? $data['is_main'] : false);
 
         $lookBook = DB::transaction(function () use ($data, $request) {
             $lookBook = $this->lookBookRepository->createOrUpdate($data);
@@ -208,8 +209,10 @@ class LookBookController extends BaseAdminController
             abort(404);
         }
 
-        $data = $request->input();
+        $data = $request->all();
+
         $data['updated_by'] = Auth::id();
+        $data['is_main'] = (isset($data['is_main']) ? $data['is_main'] : false);
 
         $lookBook = DB::transaction(function () use ($data, $lookBook) {
             $lookBook->fill($data);
