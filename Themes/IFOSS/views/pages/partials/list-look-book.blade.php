@@ -24,6 +24,7 @@ $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
                             @slot('currentBusinessName', (!empty($currentBusinessName) ? $currentBusinessName : get_attribute_from_random_array($list[$i]['look_book_business'], 'text')))
                             @slot('currentBusinessSlug', (!empty($currentBusinessSlug) ? $currentBusinessSlug : get_attribute_from_random_array($list[$i]['look_book_business'], 'slug')))
                             @slot('spaces', $list[$i]['look_book_spaces_belong'])
+                            @slot('tags', $list[$i]['look_book_tags'])
                         @endcomponent
                     </div>
                     @php
@@ -59,6 +60,7 @@ $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
                                                 @slot('currentBusinessName', (!empty($currentBusinessName) ? $currentBusinessName : get_attribute_from_random_array($normalLayoutChunk[$j]['look_book_business'], 'text')))
                                                 @slot('currentBusinessSlug', (!empty($currentBusinessSlug) ? $currentBusinessSlug : get_attribute_from_random_array($normalLayoutChunk[$j]['look_book_business'], 'slug')))
                                                 @slot('spaces', $normalLayoutChunk[$j]['look_book_spaces_belong'])
+                                                @slot('tags', $normalLayoutChunk[$j]['look_book_tags'])
                                             @endcomponent
                                         </div>
                                         @php
@@ -79,6 +81,7 @@ $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
                         @slot('currentBusinessName', (!empty($currentBusinessName) ? $currentBusinessName : get_attribute_from_random_array($list[$i]['look_book_business'], 'text')))
                         @slot('currentBusinessSlug', (!empty($currentBusinessSlug) ? $currentBusinessSlug : get_attribute_from_random_array($list[$i]['look_book_business'], 'slug')))
                         @slot('spaces', $list[$i]['look_book_spaces_belong'])
+                        @slot('tags', $list[$i]['look_book_tags'])
                     @endcomponent
                 </div>
                 @php
