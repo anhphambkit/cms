@@ -36,6 +36,6 @@ class EloquentLookBookRepositories extends RepositoriesAbstract implements LookB
 
         if ($take)
             $query = $query->take($take);
-        return $query->get();
+        return $query->distinct()->get();
     }
 }

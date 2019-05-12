@@ -15,7 +15,7 @@ class ModifyLookBookTable extends Migration
     {
         if (!Schema::hasColumn('look_books', 'type_layout')) {
             Schema::table('look_books', function (Blueprint $table) {
-                $table->string('type_layout')->default('square')->comment('square|rectangle');
+                $table->string('type_layout')->default('normal')->comment('normal|vertical');
             });
         }
 

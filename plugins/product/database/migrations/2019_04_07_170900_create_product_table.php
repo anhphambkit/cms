@@ -204,8 +204,8 @@ class CreateProductTable extends Migration
             $table->integer('look_book_id');
             $table->integer('product_id');
             $table->integer('product_category_id');
-            $table->float('left', 3, 2);
-            $table->float('top', 3, 2);
+            $table->string('left');
+            $table->string('top');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->softDeletes();
