@@ -28,8 +28,8 @@ interface LookBookServices {
     public function getBlockRenderLookBook(int $numberBlock = 0, array $businessTypes = [], array $spaces = [], array $exceptBusinessType = [], bool $hasFirstMainBlock = true);
 
     /**
-     * @param int $numberBlock
+     * @param int $lookBookId
      * @return mixed
      */
-    public function getNewestBlockRenderLookBook(int $numberBlock = 1);
+    public function getDetailLookBook(int $lookBookId);
 }

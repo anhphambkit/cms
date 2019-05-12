@@ -159,13 +159,16 @@ class PublicController extends BasePublicController{
 		return view('pages.design-ideal.list', compact('listRender'));
 	}
 
-	/**
-	 * [pageDesignIdeal show]
-	 * @param  Request $request [description]
-	 * @return Illuminate\View\View
-	 */
-	public function pageDesignIdealDetail(Request $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+	public function pageDetailDesignIdea($url, Request $request)
 	{
-		return view('pages.design-ideal.detail');
+	    $lookBookId = get_id_from_url($url);
+	    $lookBook = $this->lookBookServices->getDetailLookBook($lookBookId);
+        AssetManager::addAsset('look-book-design-css', 'frontend/plugins/product/assets/css/look-book-design.css');
+        AssetPipeline::requireCss('look-book-design-css');
+		return view('pages.design-ideal.detail', compact('lookBook'));
 	}
 }

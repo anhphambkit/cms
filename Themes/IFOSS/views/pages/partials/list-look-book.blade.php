@@ -25,6 +25,7 @@ $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
                             @slot('currentBusinessSlug', (!empty($currentBusinessSlug) ? $currentBusinessSlug : get_attribute_from_random_array($list[$i]['look_book_business'], 'slug')))
                             @slot('spaces', $list[$i]['look_book_spaces_belong'])
                             @slot('tags', $list[$i]['look_book_tags'])
+                            @slot('urlLookBook', $list[$i]['slug_link'])
                         @endcomponent
                     </div>
                     @php
@@ -61,6 +62,7 @@ $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
                                                 @slot('currentBusinessSlug', (!empty($currentBusinessSlug) ? $currentBusinessSlug : get_attribute_from_random_array($normalLayoutChunk[$j]['look_book_business'], 'slug')))
                                                 @slot('spaces', $normalLayoutChunk[$j]['look_book_spaces_belong'])
                                                 @slot('tags', $normalLayoutChunk[$j]['look_book_tags'])
+                                                @slot('urlLookBook', $normalLayoutChunk[$j]['slug_link'])
                                             @endcomponent
                                         </div>
                                         @php
@@ -82,6 +84,7 @@ $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
                         @slot('currentBusinessSlug', (!empty($currentBusinessSlug) ? $currentBusinessSlug : get_attribute_from_random_array($list[$i]['look_book_business'], 'slug')))
                         @slot('spaces', $list[$i]['look_book_spaces_belong'])
                         @slot('tags', $list[$i]['look_book_tags'])
+                        @slot('urlLookBook', $list[$i]['slug_link'])
                     @endcomponent
                 </div>
                 @php

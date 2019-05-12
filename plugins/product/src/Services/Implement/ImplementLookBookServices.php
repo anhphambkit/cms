@@ -367,14 +367,12 @@ class ImplementLookBookServices implements LookBookServices {
                 break;
         }
     }
+
     /**
-     * @param int $numberBlock
+     * @param int $lookBookId
      * @return mixed
      */
-    public function getNewestBlockRenderLookBook(int $numberBlock = 1) {
-        $takeNormalLookBook = $numberBlock*6;
-        $takeVerticalLookBook = $numberBlock*3;
-        $normalLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL, false, $takeNormalLookBook)->toArray();
-        $verticalLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_VERTICAL, false, $takeVerticalLookBook)->toArray();
+    public function getDetailLookBook(int $lookBookId) {
+        return $this->repository->findById($lookBookId, ['lookBookTags', 'lookBookSpacesBelong', 'lookBookBusiness'])->toArray();
     }
 }

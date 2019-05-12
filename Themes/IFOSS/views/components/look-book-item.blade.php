@@ -26,7 +26,9 @@ $tags = !empty($tags) ? $tags : [];
         </div>
     @endforeach
     <div class="design-ideas-overlay-content">
-        <div class="title">{{ $nameLookBook }}</div>
+        <div class="title">
+            <a class="link-look-book btn-link-custom" href="{{ route('public.design-ideal.detail_look_book', [ 'url' => $urlLookBook ]) }}">{{ $nameLookBook }}</a>
+        </div>
         <ul class="tag">
             @if(!empty($currentBusinessName) && !empty($currentBusinessSlug))
                 <li>

@@ -43,6 +43,7 @@ class LookBook extends Model
     protected $appends = [
         'look_book_all_spaces',
         'look_book_all_business',
+        'slug_link'
     ];
 
     /**
@@ -114,5 +115,14 @@ class LookBook extends Model
                 $result .= ", ";
         }
         return trim($result);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlugLinkAttribute()
+    {
+        $slug = str_slug($this->name);
+        return "{$slug}.{$this->id}";
     }
 }

@@ -49,4 +49,9 @@ $router->group(['prefix' => 'design-ideal'], function (Router $router) {
 		'as'         => 'public.design-ideal.list', 
 		'uses'       => 'PublicController@pageDesignIdealList',
     ]);
+
+    $router->get('/detail/{url}', [
+        'as'         => 'public.design-ideal.detail_look_book',
+        'uses'       => 'PublicController@pageDetailDesignIdea',
+    ]);
 });
