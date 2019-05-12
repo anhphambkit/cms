@@ -36,6 +36,16 @@ class LookBook extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'look_book_all_spaces',
+        'look_book_all_business',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      * @author AnhPham
      */
@@ -65,7 +75,8 @@ class LookBook extends Model
      */
     public function lookBookBusiness()
     {
-        return $this->belongsToMany(ProductBusinessType::class, 'look_book_business_type_space_relation', 'look_book_id', 'business_type_id');
+        return $this->belongsToMany(ProductBusinessType::class, 'look_book_business_type_space_relation', 'look_book_id', 'business_type_id')
+            ->select(['product_business_types.id', 'product_business_types.name as text', 'product_business_types.slug'])->distinct();
     }
 
     /**
@@ -73,6 +84,35 @@ class LookBook extends Model
      */
     public function lookBookSpacesBelong()
     {
-        return $this->belongsToMany(ProductSpace::class, 'look_book_business_type_space_relation', 'look_book_id', 'space_id');
+        return $this->belongsToMany(ProductSpace::class, 'look_book_business_type_space_relation', 'look_book_id', 'space_id')
+            ->select(['product_spaces.id', 'product_spaces.name as text', 'product_spaces.slug'])->distinct();
+    }
+
+    /**
+     * @return string
+     */
+    public function getLookBookAllSpacesAttribute()
+    {
+        $result = "";
+        foreach ($this->lookBookSpacesBelong as $index => $space) {
+            $result .= "{$space->text}";
+            if ($index < ($this->lookBookSpacesBelong->count() - 1))
+                $result .= ", ";
+        }
+        return trim($result);
+    }
+
+    /**
+     * @return string
+     */
+    public function getLookBookAllBusinessAttribute()
+    {
+        $result = "";
+        foreach ($this->lookBookBusiness as $index => $businessType) {
+            $result .= "{$businessType->text}";
+            if ($index < ($this->lookBookBusiness->count() - 1))
+                $result .= ", ";
+        }
+        return trim($result);
     }
 }

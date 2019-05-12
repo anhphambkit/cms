@@ -7,9 +7,10 @@ interface LookBookRepositories extends RepositoryInterface{
      * @param string $type
      * @param bool $isMain
      * @param int $take
-     * @param int $businessTypeId
-     * @param int $spaceId
+     * @param array $businessTypes
+     * @param array $spaces
+     * @param array $exceptBusinessType
      * @return mixed
      */
-    public function getAllLookBookByTypeLayout(string $type, bool $isMain = false, int $take = 0, int $businessTypeId = 0, int $spaceId = 0);
+    public function getAllLookBookByTypeLayout(string $type, bool $isMain = false, int $take = 0, array $businessTypes = [], array $spaces = [], array $exceptBusinessType = []);
 }

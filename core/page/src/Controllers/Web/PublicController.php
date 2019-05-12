@@ -61,9 +61,10 @@ class PublicController extends BasePublicController{
 	public function pageDesignIdeal(Request $request)
 	{
 	    $businessTypes = $this->businessTypeServices->getAllBusinessTypeGroupByParent();
-        $listRender = $this->lookBookServices->getBlockRenderLookBook(1);
+        $listRender = $this->lookBookServices->getBlockRenderLookBook(1, [], [], [0], false);
         AssetManager::addAsset('look-book-design-css', 'frontend/plugins/product/assets/css/look-book-design.css');
         AssetPipeline::requireCss('look-book-design-css');
+//        dd($listRender);
 		return view('pages.design-ideal.index', compact('businessTypes', 'listRender'));
 	}
 
@@ -113,16 +114,17 @@ class PublicController extends BasePublicController{
 
 	    $spaces = $this->businessTypeServices->getAllSpacesByBusinessTypeBySlug($businessType);
 
-        $listRender = $this->lookBookServices->getBlockRenderLookBook(0, $businessTypeModel->id, $spaceModel->id);
+	    $spaceName = $spaceModel->name;
 
-//        dd($listRender);
+        $listRender = $this->lookBookServices->getBlockRenderLookBook(0, [0, $businessTypeModel->id], [$spaceModel->id]);
 
-        return view('pages.design-ideal.list', compact('listRender'));
+        return view('pages.design-ideal.list', compact('listRender', 'businessType', 'businessTypeName', 'spaceName', 'spaces'));
 	}
 
     /**
      * @param $businessType
      * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
 	public function pageAllRoomsDesignIdealOfBusinessType($businessType, Request $request) {
         $businessTypeModel = $this->businessTypeServices->getBusinessTypeBySlug($businessType);
@@ -130,7 +132,16 @@ class PublicController extends BasePublicController{
         if (!$businessTypeModel)
             abort(404);
 
-//        dd($businessTypeModel);
+        $businessTypeName = $businessTypeModel->name;
+        $spaces = $this->businessTypeServices->getAllSpacesByBusinessTypeBySlug($businessType);
+        $spaceName = 'All Rooms';
+
+        AssetManager::addAsset('look-book-design-css', 'frontend/plugins/product/assets/css/look-book-design.css');
+        AssetPipeline::requireCss('look-book-design-css');
+
+        $listRender = $this->lookBookServices->getBlockRenderLookBook(0, [0, $businessTypeModel->id]);
+
+        return view('pages.design-ideal.list', compact('listRender', 'businessType', 'businessTypeName', 'spaceName', 'spaces'));
     }
 
 	/**

@@ -48,8 +48,8 @@ class ImplementBusinessTypeServices implements BusinessTypeServices {
         if ($businessType->spaces) {
             $allRoom = new \stdClass();
             $allRoom->id = 0;
-            $allRoom->text = 'All Room';
-            $allRoom->slug = 'all_room';
+            $allRoom->text = 'All Rooms';
+            $allRoom->slug = 'all_rooms';
 
             $businessType->spaces->prepend($allRoom);
             return $businessType->spaces;

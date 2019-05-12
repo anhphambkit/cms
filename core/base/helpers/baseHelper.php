@@ -140,3 +140,21 @@ if (!function_exists('table_status')) {
         return view('core-base::elements.tables.status', compact('selected', 'statuses'))->render();
     }
 }
+
+if (function_exists('get_attribute_from_random_array') === false) {
+    /**
+     * @param array $array
+     * @param string $attr
+     * @param string $defaultNull
+     * @return string
+     */
+    function get_attribute_from_random_array(array $array, string $attr, $defaultNull = "")
+    {
+        $result = $defaultNull;
+        if(!empty($array)) {
+            $randomKey = array_rand($array);
+            $result = isset($array[$randomKey][$attr]) ? $array[$randomKey][$attr] : (isset($array[$randomKey]->{$attr}) ? isset($array[$randomKey]->{$attr}) : $defaultNull);
+        }
+        return $result;
+    }
+}

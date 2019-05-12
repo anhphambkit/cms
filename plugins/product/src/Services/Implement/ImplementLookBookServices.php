@@ -37,22 +37,28 @@ class ImplementLookBookServices implements LookBookServices {
 
     /**
      * @param int $numberBlock
-     * @param int $businessTypeId
-     * @param int $spaceId
+     * @param array $businessTypes
+     * @param array $spaces
+     * @param array $exceptBusinessType
+     * @param bool $hasFirstMainBlock
      * @return array|mixed
      */
-    public function getBlockRenderLookBook(int $numberBlock = 0, int $businessTypeId = 0, int $spaceId = 0) {
+    public function getBlockRenderLookBook(int $numberBlock = 0, array $businessTypes = [], array $spaces = [], array $exceptBusinessType = [], bool $hasFirstMainBlock = true) {
         $takeNormalLookBook = $numberBlock*6;
         $takeVerticalLookBook = $numberBlock*3;
         $takeMainLookBook = $numberBlock*1;
-        $mainLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL, true, $takeMainLookBook, $businessTypeId, $spaceId)->toArray();
-        $normalLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL, false, $takeNormalLookBook, $businessTypeId, $spaceId)->toArray();
-        $verticalLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_VERTICAL, false, $takeVerticalLookBook, $businessTypeId, $spaceId)->toArray();
+        $mainLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL, true, $takeMainLookBook, $businessTypes, $spaces, $exceptBusinessType)->toArray();
+        $normalLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL, false, $takeNormalLookBook, $businessTypes, $spaces, $exceptBusinessType)->toArray();
+        $verticalLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_VERTICAL, false, $takeVerticalLookBook, $businessTypes, $spaces, $exceptBusinessType)->toArray();
         $listFullPercents = config('plugins-product.product.percent_layout_look_book.full');
         $listWeights = config('plugins-product.product.weight_layout_look_book');
         $blocks = array();
-        $firstBlock = $this->renderFirstBlock($listWeights, $normalLookBooks, $verticalLookBooks, $mainLookBooks, 6);
-        if ($firstBlock)
+        $firstBlock = array();
+
+        if ($hasFirstMainBlock)
+            $firstBlock = $this->renderFirstBlock($listWeights, $normalLookBooks, $verticalLookBooks, $mainLookBooks, 6);
+
+        if (!empty($firstBlock))
             array_push($blocks, $firstBlock);
 
         while (sizeof($normalLookBooks) >= 2 || sizeof($verticalLookBooks) >= 1 || sizeof($mainLookBooks) >= 1) {
@@ -125,9 +131,10 @@ class ImplementLookBookServices implements LookBookServices {
 
         $blocks = array_merge($blocks, $lastNormalSingleBlocks, $lastVerticalSingleBlocks, $lastMainSingleBlocks);
 
-        if ($numberBlock) {
-            array_shift($blocks);
-            array_pop($blocks);
+        if ($numberBlock && !empty($blocks)) {
+            if (sizeof($blocks) >= 2) {
+                array_pop($blocks);
+            }
             $result = array();
             if ($numberBlock > 1) {
                 $randomBlockKeys = array_rand($blocks, $numberBlock);

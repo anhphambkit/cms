@@ -4,7 +4,9 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('homepage') }}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Library</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Design Ideas
+                </li>
             </ol>
         </nav>
         <div class="filter-categories">
@@ -31,9 +33,9 @@
                 <div class="section-title-s2">New design ideas</div>
             </div>
             @include("pages.partials.list-look-book")
-            <div class="text-center py-4">
-                <a href="javascript:void(0);" class="btn-view-icon"><i class="fas fa-plus"></i> <span>Load more</span></a>
-            </div>
+            {{--<div class="text-center py-4">--}}
+                {{--<a href="javascript:void(0);" class="btn-view-icon"><i class="fas fa-plus"></i> <span>Load more</span></a>--}}
+            {{--</div>--}}
         </div>
     </section>
 @stop

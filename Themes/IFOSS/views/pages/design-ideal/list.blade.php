@@ -3,11 +3,14 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <?php $breadcrumbItem = array('Design ideas', 'Beauty', 'Nail salon'); 
-                foreach ($breadcrumbItem as $key => $value) { ?>
-                <li class="breadcrumb-item"><a href="#"><?php echo $value; ?></a></li>
-                <?php } ?>
-                <li class="breadcrumb-item active" aria-current="page">All room</li>
+                <li class="breadcrumb-item"><a href="{{ route('homepage') }}">Home</a></li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('public.design-ideal') }}">Design Ideas</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('public.design-ideal.business-type', [ 'businessType' => $businessType ]) }}">{{ $businessTypeName }}</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $spaceName }}</li>
             </ol>
         </nav>
     </div>
@@ -15,26 +18,26 @@
         <div class="product-categories--tabs">
             <div class="container">
                 <ul class="nav nav-outline mb-4">
-                    <?php $productCategoriesTitle = array('all room','reception room','dining rooms','foyers','toilet','living rooms','office');
-                    foreach ($productCategoriesTitle as $key => $value) {
-                        ?>
+                    @foreach ($spaces as $space)
                         <li class="nav-item">
-                            <a class="nav-link <?php if($key==0) echo 'active'; ?>" href="#category-<?php echo $key; ?>" data-toggle="pill" role="tab"><?php echo $value; ?></a>
+                            <a class="nav-link {{ (strtolower($space->text) == strtolower($spaceName)) ? 'active' : '' }}"
+                               href="{{ ($space->id > 0) ? route('public.design-ideal.business-type.space', [ 'businessType' => $businessType, 'space' => $space->slug ]) : route('public.design-ideal.business-type.space.all-rooms', [ 'businessType' => $businessType ]) }}">
+                                {{ $space->text }}
+                            </a>
                         </li>
-                    <?php } ?>
+                    @endforeach
                 </ul>
             </div>
-            <div class="tab-content product-categories--tab-content">
-                <div class="tab-pane fade show active" id="category-2" role="tabpanel">
-                        <div class="design-ideas">
-                            <div class="container-fluid">
-                                @include("pages.partials.list-look-book")
-                                <div class="text-center py-4">
-                                    <a href="javascript:void(0);" class="btn-view-icon"><i class="fas fa-plus"></i> <span>Load more</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="design-ideas">
+                <div class="container-fluid">
+                    @include("pages.partials.list-look-book", [
+                        'currentBusinessSlug' => $businessType,
+                        'currentBusinessName' => $businessTypeName
+                    ])
+                    {{--<div class="text-center py-4">--}}
+                    {{--<a href="javascript:void(0);" class="btn-view-icon"><i class="fas fa-plus"></i> <span>Load more</span></a>--}}
+                    {{--</div>--}}
+                </div>
             </div>
         </div>
     </section>

@@ -5,6 +5,8 @@
  * Date: 2019-05-11
  * Time: 17:07
  */
+$currentBusinessSlug = !empty($currentBusinessSlug) ? $currentBusinessSlug : '';
+$currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
 ?>
 <div class="row design-ideas-row">
     @foreach($listRender as $list)
@@ -15,16 +17,14 @@
             @if($list[$i]['type_layout'] === 'Normal')
                 @if($list[$i]['is_main'])
                     <div class="col-md-8">
-                        <div class="item main-look-book item-look-book">
-                            <img src="{{ URL::asset($list[$i]['image']) }}"/>
-                            <div class="design-ideas-overlay-content">
-                                <div class="title">{{ $list[$i]['name'] }}</div>
-                                <ul class="tag">
-                                    <li>Business <a href="#">Nail Salon</a></li>
-                                    <li>Space <a href="#">Lounge</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                        @component("components.look-book-item")
+                            @slot('typeLookBook', 'main')
+                            @slot('urlImage', $list[$i]['image'])
+                            @slot('nameLookBook', $list[$i]['name'])
+                            @slot('currentBusinessName', (!empty($currentBusinessName) ? $currentBusinessName : get_attribute_from_random_array($list[$i]['look_book_business'], 'text')))
+                            @slot('currentBusinessSlug', (!empty($currentBusinessSlug) ? $currentBusinessSlug : get_attribute_from_random_array($list[$i]['look_book_business'], 'slug')))
+                            @slot('spaces', $list[$i]['look_book_spaces_belong'])
+                        @endcomponent
                     </div>
                     @php
                         $i++;
@@ -52,16 +52,14 @@
                                 <div class="row">
                                     @while($j < sizeof($normalLayoutChunk))
                                         <div class="col-md-{{ ($colRender == 12) ? 4 : ($colRender == 8) ? 6 : 12 }}">
-                                            <div class="item normal-look-book item-look-book">
-                                                <img src="{{ URL::asset($normalLayoutChunk[$j]['image']) }}"/>
-                                                <div class="design-ideas-overlay-content">
-                                                    <div class="title">{{ $normalLayoutChunk[$j]['name'] }}</div>
-                                                    <ul class="tag">
-                                                        <li>Business <a href="#">Nail Salon</a></li>
-                                                        <li>Space <a href="#">Lounge</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                            @component("components.look-book-item")
+                                                @slot('typeLookBook', 'normal')
+                                                @slot('urlImage', $normalLayoutChunk[$j]['image'])
+                                                @slot('nameLookBook', $normalLayoutChunk[$j]['name'])
+                                                @slot('currentBusinessName', (!empty($currentBusinessName) ? $currentBusinessName : get_attribute_from_random_array($normalLayoutChunk[$j]['look_book_business'], 'text')))
+                                                @slot('currentBusinessSlug', (!empty($currentBusinessSlug) ? $currentBusinessSlug : get_attribute_from_random_array($normalLayoutChunk[$j]['look_book_business'], 'slug')))
+                                                @slot('spaces', $normalLayoutChunk[$j]['look_book_spaces_belong'])
+                                            @endcomponent
                                         </div>
                                         @php
                                             $j++;
@@ -74,16 +72,14 @@
                 @endif
             @elseif($list[$i]['type_layout'] === 'Vertical')
                 <div class="col-md-4">
-                    <div class="item vertical-look-book item-look-book">
-                        <img src="{{ URL::asset($list[$i]['image']) }}"/>
-                        <div class="design-ideas-overlay-content">
-                            <div class="title">{{ $list[$i]['name'] }}</div>
-                            <ul class="tag">
-                                <li>Business <a href="#">Nail Salon</a></li>
-                                <li>Space <a href="#">Lounge</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                    @component("components.look-book-item")
+                        @slot('typeLookBook', 'vertical')
+                        @slot('urlImage', $list[$i]['image'])
+                        @slot('nameLookBook', $list[$i]['name'])
+                        @slot('currentBusinessName', (!empty($currentBusinessName) ? $currentBusinessName : get_attribute_from_random_array($list[$i]['look_book_business'], 'text')))
+                        @slot('currentBusinessSlug', (!empty($currentBusinessSlug) ? $currentBusinessSlug : get_attribute_from_random_array($list[$i]['look_book_business'], 'slug')))
+                        @slot('spaces', $list[$i]['look_book_spaces_belong'])
+                    @endcomponent
                 </div>
                 @php
                     $i++;
