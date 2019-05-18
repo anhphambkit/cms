@@ -62,7 +62,7 @@ class LoginController extends BasePublicController
      */
     public function showLoginForm()
     {
-        // SeoHelper::setTitle(trans('plugins/member::member.login'));
+        page_title()->setTitle('Login');
         return view('plugins-customer::auth.login');
     }
 

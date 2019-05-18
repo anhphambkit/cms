@@ -23,6 +23,7 @@ class RegisterController extends BasePublicController
 	 */
 	public function showRegisterForm(Request $request)
 	{
+		page_title()->setTitle('Register');
 		return view('plugins-customer::auth.register');
 	}
 
