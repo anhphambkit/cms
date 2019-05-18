@@ -30,6 +30,16 @@ $router->group(['prefix' => 'customer', 'middleware' => ['customer.guest']], fun
         'as'         => 'public.customer.resend_confirmation', 
         'uses'       => 'LoginController@logout',
     ]);
+
+    $router->get('create-account', [
+        'as'         => 'public.customer.create-account', 
+        'uses'       => 'RegisterController@showRegisterForm',
+    ]);
+
+    $router->post('create-account', [
+        'as'         => 'public.customer.create-account', 
+        'uses'       => 'RegisterController@register',
+    ]);
 });
 
 $router->group(['prefix' => 'account', 'middleware' => ['customer']], function (Router $router) {

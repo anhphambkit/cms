@@ -1,3 +1,6 @@
+@php
+     use Illuminate\Support\Facades\Auth;
+@endphp
     <div class="top-navigation">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -5,8 +8,12 @@
                 <div class="col-lg-6 top-navigation-right text-lg-right">
                     <ul>
                         <li><a href="javascript:void(0);" class="call">call now {{ theme_option('phone') }}</a></li>
-                        <li><a href="javascript:void(0);"><i class="fas fa-user-circle"></i> <span>My Account</span></a></li>
-                        <li><a href="javascript:void(0);"><i class="fas fa-shopping-cart"></i> (1)</a></li>
+                        @if(Auth::guard('customer')->check())
+                            <li><a href="javascript:void(0);"><i class="fas fa-user-circle"></i> <span>My Account</span></a></li>
+                            <li><a href="javascript:void(0);"><i class="fas fa-shopping-cart"></i> (1)</a></li>
+                        @else
+                            <li><a href="{{ route('public.customer.create-account') }}"><i class="fas fa-user-circle"></i> <span>Sign In</span></a></li>
+                        @endif    
                     </ul>
                 </div>
             </div>
