@@ -19,6 +19,14 @@ class CacheProductSpaceRepositories extends CacheAbstractDecorator implements Pr
     {
         parent::__construct();
         $this->repository = $repository;
-        $this->entityName = 'default'; # Please setup reference name of cache.
+        $this->entityName = 'space-repo'; # Please setup reference name of cache.
+    }
+
+    /**
+     * @param int $businessTypeId
+     * @return mixed
+     */
+    public function getAllSpacesByBusinessTypeId(int $businessTypeId) {
+        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
     }
 }

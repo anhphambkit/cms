@@ -59,6 +59,24 @@ class ProductBusinessType extends Model
      */
     public function spaces()
     {
-        return $this->belongsToMany(ProductSpace::class, 'business_type_space_relation', 'business_type_id', 'space_id')->select(['product_spaces.id', 'name as text', 'image_feature']);
+        return $this->belongsToMany(ProductSpace::class, 'business_type_space_relation', 'business_type_id', 'space_id')->select(['product_spaces.id', 'name as text', 'slug', 'image_feature']);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @author TrinhLe
+     */
+    public function parent()
+    {
+        return $this->belongsTo(ProductBusinessType::class, 'parent_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @author TrinhLe
+     */
+    public function children()
+    {
+        return $this->hasMany(ProductBusinessType::class, 'parent_id');
     }
 }

@@ -1,21 +1,15 @@
 @extends("layouts.master")
 @section('content')
     <section class="product-detail">
-        <img src="{{ URL::asset('themes/ifoss/assets/images/ideas/design-ideas-detail.jpg') }}" class="w-100">
-        <div class="design-ideas-overlay-content is-static">
-            <div class="container">
-                <div class="row mx-0 justify-content-between align-items-center">
-                    <div>
-                        <div class="title">Modern & Contemporary Foyer Design</div>
-                        <ul class="tag">
-                            <li>Business <a href="#">Nail Salon</a></li>
-                            <li>Space <a href="#">Lounge</a></li>
-                        </ul>
-                    </div>
-                    <button class="btn btn-outline-custom"><i class="fas fa-heart text-save mr-1"></i> Save</button>
-                </div>
-            </div>
-        </div>
+        @component("components.look-book-detail")
+            @slot('urlImage', $lookBook['image'])
+            @slot('nameLookBook', $lookBook['name'])
+            @slot('currentBusinessName', (!empty($currentBusinessName) ? $currentBusinessName : get_attribute_from_random_array($lookBook['look_book_business'], 'text')))
+            @slot('currentBusinessSlug', (!empty($currentBusinessSlug) ? $currentBusinessSlug : get_attribute_from_random_array($lookBook['look_book_business'], 'slug')))
+            @slot('spaces', $lookBook['look_book_spaces_belong'])
+            @slot('tags', $lookBook['look_book_tags'])
+            @slot('urlLookBook', $lookBook['slug_link'])
+        @endcomponent
     </section>
     <section class="product-wrapper">
         <div class="container">
@@ -27,7 +21,8 @@
                             <div class="item">
                                 <div class="thumbnail" >
                                     @php
-                                        $url = "themes/ifoss/assets/images/products/product{$j+1}.jpg";
+                                        $indexUrl = $j+1;
+                                        $url = "themes/ifoss/assets/images/products/product{$indexUrl}.jpg";
                                     @endphp
                                     <img src="{{ URL::asset($url) }}">
                                     <div class="mask">
@@ -53,7 +48,8 @@
                         <div class="item">
                             <div class="thumbnail" >
                                 @php
-                                    $url = "themes/ifoss/assets/images/products/product{$j+1}.jpg";
+                                    $indexUrl = $j+1;
+                                    $url = "themes/ifoss/assets/images/products/product{$indexUrl}.jpg";
                                 @endphp
                                 <img src="{{ URL::asset($url) }}">
                                 <div class="mask">
@@ -80,7 +76,8 @@
                                 <div class="item">
                                     <div class="thumbnail mb-0">
                                         @php
-                                            $url = "themes/ifoss/assets/images/products/product{$j+1}.jpg";
+                                            $indexUrl = $j+1;
+                                            $url = "themes/ifoss/assets/images/products/product{$indexUrl}.jpg";
                                         @endphp
                                         <img src="{{ URL::asset('$url') }}">
                                         <div class="mask">

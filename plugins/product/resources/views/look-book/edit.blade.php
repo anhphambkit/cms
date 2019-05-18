@@ -27,9 +27,20 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('image')) has-error @endif">
+                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('type_layout')) has-error @endif">
+                                        <label class="control-label required" for="role">{{ trans('plugins-product::look-book.form.type_layout') }}</label>
+                                        {!! Form::select('type_layout', $typeLayouts, $lookBook->type_layout, ['class' => 'select2-placeholder-multiple form-control type-layout-list', "id" => "select-type-layout-list" ]) !!}
+                                        {!! Form::error('type_layout', $errors) !!}
+                                    </div>
+                                    <div class="form-group col-md-6 mb-2 is-main-form">
+                                        <label class="control-label required" for="role">{{ trans('plugins-product::look-book.form.is_main') }}</label>
+                                        {!! Form::onOffPretty('is_main', $lookBook->is_main, ['id' => 'is_main' ], 'is-main-switch checkbox-large') !!}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-7 mb-2 @if ($errors->has('image')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::look-book.form.look_book_image') }}</label>
-                                        {!! Form::lookBookImage('image', $lookBook->image, $lookBookTags) !!}
+                                        {!! Form::lookBookImage('image', $lookBook->image, $lookBookTags, $lookBook->type_layout) !!}
                                     </div>
                                 </div>
                                 @include('plugins-product::look-book.partials.list-space-business-selected')

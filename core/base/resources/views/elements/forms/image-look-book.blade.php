@@ -5,8 +5,7 @@
  * Date: 2019-04-20
  * Time: 10:05
  */
-$tags = !empty($tags) ? $tags : [];
-//dd($tags);
+$typeLayout = strtolower($typeLayout);
 ?>
 <div class="look-book-area row">
     <div class="image-look-book form-group col-md-12 mb-2">
@@ -14,7 +13,7 @@ $tags = !empty($tags) ? $tags : [];
                name="{{ $name }}"
                value="{{ $value }}"
                class="image-data">
-        <div class="look-book-box-preview {{ (sizeof($tags) > 0) ? 'look-book-box-tag' : '' }}">
+        <div class="look-book-box-preview {{ "{$typeLayout}-layout" }} {{ (sizeof($tags) > 0) ? 'look-book-box-tag' : '' }}">
             <img src="{{ get_object_image($value) }}" alt="preview image" class="preview_image {{ (sizeof($tags) > 0) ? 'preview-look-book-image' : '' }}">
             @foreach($tags as $tag)
                 <div class="tt-hotspot tt-tag-{{ $tag['index'] }}" style="left: {{ $tag['left'] }}%; top: {{ $tag['top'] }}%;" data-left="{{ $tag['left'] }}" data-top="{{ $tag['top'] }}" data-tag-id="{{ $tag['index'] }}">

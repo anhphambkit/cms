@@ -6,6 +6,7 @@
 .look-book-box-preview {
   position: relative;
   &.look-book-box-tag {
+    width: 650px;
     height: 500px;
     float: left;
   }
@@ -42,8 +43,17 @@ i.icon-tag {
   font-size: 17px;
 }
 
+.normal-layout {
+  height: 440px !important;
+}
+
+.vertical-layout {
+  height: 890px !important;
+}
+
 img.preview-look-book-image {
   height: 100%;
+  width: 100%;
 }
 
 .image-look-book {
@@ -73,4 +83,10 @@ img.preview-look-book-image {
 
 .render-space-selected {
   padding: 20px;
+}
+
+.checkbox-large {
+  .state {
+    font-size: 30px;
+  }
 }

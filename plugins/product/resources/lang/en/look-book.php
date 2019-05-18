@@ -13,6 +13,8 @@ return [
     'list' => 'List look book',
     'form' => [
         'look_book_image' => 'Look Book Image',
+        'type_layout' => 'Type Layout',
+        'is_main' => 'Main Look Book',
     ],
     'modal_select_product_look_book' => 'Create Look Book Tag',
     'modal_select_business_space' => 'Add Space Business To Look Book',

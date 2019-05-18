@@ -321,4 +321,60 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
             $('.render-space-business-specific-selected').hide();
         }
     });
+
+    // Type layout change:
+    $(document).on("change", '#select-type-layout-list', function(e) {
+        // Do something
+        e.preventDefault();
+        let typeLayout = $(this).val();
+        let imageValue = $('.image-look-book input.image-data').val();
+        if (typeLayout === 'Normal') {
+            $('.is-main-form').show();
+            setNormalLayoutLookBookImage();
+        }
+        else {
+            $('.is-main-form').hide();
+            setVerticalLayoutLookBookImage();
+        }
+
+        if (imageValue === '' || imageValue === null) {
+            $('.look-book-box-preview').removeClass('normal-layout');
+            $('.look-book-box-preview').removeClass('vertical-layout');
+        }
+        $('#is_main').prop('checked', false);
+    });
+
+    $(document).on("change", '.image-look-book input.image-data', function(e) {
+        // Do something
+        e.preventDefault();
+        let imageValue = $(this).val();
+
+        if (imageValue !== '' && imageValue !== null) {
+            let typeLayout = $('#select-type-layout-list').val();
+            if (typeLayout === 'Normal') {
+                setNormalLayoutLookBookImage();
+            }
+            else {
+                setVerticalLayoutLookBookImage();
+            }
+        }
+        else {
+            $('.look-book-box-preview').removeClass('normal-layout');
+            $('.look-book-box-preview').removeClass('vertical-layout');
+        }
+    });
+
+    function setNormalLayoutLookBookImage() {
+        $('.look-book-box-preview').addClass('normal-layout');
+        $('.look-book-box-preview').removeClass('vertical-layout');
+    }
+
+    function setVerticalLayoutLookBookImage() {
+        $('.look-book-box-preview').addClass('vertical-layout');
+        $('.look-book-box-preview').removeClass('normal-layout');
+    }
+
+    let loadedTypeLayout = $('#select-type-layout-list').val();
+    if (loadedTypeLayout !== 'Normal')
+        $('#select-type-layout-list').val(loadedTypeLayout).trigger('change');
 })(window, document, jQuery);

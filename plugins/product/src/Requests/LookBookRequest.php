@@ -25,6 +25,8 @@ class LookBookRequest extends CoreRequest
             'name' => 'required',
             'image' => 'required',
             'tag' => 'required',
+            'all_space' => 'required_without:space_business',
+            'space_business' => 'required_without:all_space',
         ];
     }
 }
