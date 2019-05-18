@@ -48,26 +48,6 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
-            Lcms.showNotice = function (messageType, message, messageHeader) {
-                toastr.clear();
-
-                toastr.options = {
-                    closeButton: true,
-                    positionClass: 'toast-bottom-right',
-                    onclick: null,
-                    showDuration: 1000,
-                    hideDuration: 1000,
-                    timeOut: 10000,
-                    extendedTimeOut: 1000,
-                    showEasing: 'swing',
-                    hideEasing: 'linear',
-                    showMethod: 'fadeIn',
-                    hideMethod: 'fadeOut'
-
-                };
-                toastr[messageType](message, messageHeader);
-            };
         </script>
         @section('script-table')
         @show

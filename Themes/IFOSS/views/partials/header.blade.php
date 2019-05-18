@@ -12,7 +12,7 @@
                             <li><a href="javascript:void(0);"><i class="fas fa-user-circle"></i> <span>My Account</span></a></li>
                             <li><a href="javascript:void(0);"><i class="fas fa-shopping-cart"></i> (1)</a></li>
                         @else
-                            <li><a href="{{ route('public.customer.create-account') }}"><i class="fas fa-user-circle"></i> <span>Sign In</span></a></li>
+                            <li><a href="{{ route('public.customer.login') }}"><i class="fas fa-user-circle"></i> <span>Sign In</span></a></li>
                         @endif    
                     </ul>
                 </div>

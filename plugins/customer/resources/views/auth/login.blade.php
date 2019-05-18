@@ -1,78 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends("layouts.master")
 
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link media="all" type="text/css" rel="stylesheet" href="{{ URL::asset('frontend/core/user/assets/css/login.css') }}">
-</head>
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    <style type="text/css">
+        body{ background-color: #f5f5f5;}
+    </style>
+@endsection
 
-<body>
-    <div class="container login-page fade-in-left animated-fade-in" id="container">
-        <div class="form-container sign-up-container">
-            <form action="#">
-                <h1>Create Account</h1>
-                <div class="social-container">
-                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your email for registration</span>
-                <input type="text" placeholder="Name" />
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
-                <button>Sign Up</button>
-            </form>
-        </div>
-        <div class="form-container sign-in-container">
-            {!! Form::open(['route' => 'public.customer.login', 'method' => 'post']) !!}
-                @csrf
-                <h1>Sign in</h1>
-                <div class="social-container">
-                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your account</span>
-                <input type="email" placeholder="Email" name="email" maxlength="256" required/>
-                {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
+@section('master-footer')
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+@endsection
 
-                <input type="password" placeholder="Password" id="password" name="password" required/>
-                {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
-
-                <a href="#">Forgot your password?</a>
-                <button type="submit" id="login">Log in</button>
-            {!! Form::close() !!}                
-        </div>
-        <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-left">
-                    <h1>Welcome Back!</h1>
-                    <p>To keep connected with us please login with your personal info</p>
-                    <button class="ghost" id="signIn">Sign In</button>
-                </div>
-                <div class="overlay-panel overlay-right">
-                    <h1>Hello, Friend!</h1>
-                    <p>Enter your personal details and start journey with us</p>
-                    <button class="ghost" id="signUp">Sign Up</button>
+@section('content')
+{!! Form::open(['route' => 'public.customer.login', 'method' => 'post', 'autocomplete' => 'off']) !!}
+    <div class="container">
+        <div class="row justify-content-center my-5">
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="form-group-fl">
+                        <input readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" type="email" class="form-control-fl" placeholder="Email address*" name="email" maxlength="100" required/>
+                        {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
+                    </div>
+                    <div class="form-group-fl">
+                        <input readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" type="password" class="form-control-fl" placeholder="Password*" id="password" name="password" required/>
+                        {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox checkbox-custom checkbox-circle">
+                            <input id="checkbox-circle-circle" type="checkbox" checked="" name="remember"/>
+                            <label for="checkbox-circle-circle">Remember Me</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-custom btn-s1 btn-block justify-content-center mb-3">
+                        Sign in
+                    </button>
+                    <div class="gray-color">or <a href="{{ route('public.customer.create-account') }}">Create a New Account</a>  |  <a href="#">Forgot Password?</a></div>
                 </div>
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        const signUpButton = document.getElementById('signUp');
-        const signInButton = document.getElementById('signIn');
-        const container = document.getElementById('container');
-
-        signUpButton.addEventListener('click', () => {
-            container.classList.add('right-panel-active');
-        });
-
-        signInButton.addEventListener('click', () => {
-            container.classList.remove('right-panel-active');
-        });
-    </script>
-</body>
-</html>
+{!! Form::close() !!}
+@endsection

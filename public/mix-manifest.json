@@ -1,6 +1,8 @@
 {
-    "/backend/core/base/assets/js/datatables.js": "/backend/core/base/assets/js/datatables.js",
+    "/frontend/core/base/assets/js/script.js": "/frontend/core/base/assets/js/script.js",
     "/backend/core/base/assets/css/look-book-component.css": "/backend/core/base/assets/css/look-book-component.css",
     "/backend/core/base/assets/js/script.js": "/backend/core/base/assets/js/script.js",
-    "/backend/core/base/assets/js/editor.js": "/backend/core/base/assets/js/editor.js"
+    "/backend/core/base/assets/js/editor.js": "/backend/core/base/assets/js/editor.js",
+    "/backend/core/base/assets/js/datatables.js": "/backend/core/base/assets/js/datatables.js",
+    "/backend/core/base/assets/js/card-action.js": "/backend/core/base/assets/js/card-action.js"
 }

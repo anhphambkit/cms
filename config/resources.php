@@ -47,7 +47,8 @@ return [
 
 	'frontend-assets' => [
 		/* js */
-		'vendor-js'         => ['theme' => "assets/js/style.min.js"],
+		'vendor-js'      => ['theme' => "assets/js/style.min.js"],
+		'base-script-js' => ['cdn' => 'frontend/core/base/assets/js/script.js'],
 
 		/* css */
 		'vendor-css'      => ['theme' => 'assets/css/style.min.css'],
@@ -58,7 +59,8 @@ return [
 			'vendor-css',
 		],
 		'js' => [
-			'vendor-js'        ,
+			'vendor-js',
+			'base-script-js'
 		]
 	],
 
