@@ -12,15 +12,18 @@
 		<div class="row justify-content-center my-5">
 			<div class="col-md-6">
 				<div class="panel">
-					<div class="form-group-fl">
-						<input readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" type="email" name="email" class="form-control-fl" placeholder="Email address" required />
+					<div class="form-group-fl @if ($errors->has('email')) has-error @endif">
+						<input value="{{ old('email') }}" readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" type="email" name="email" class="form-control-fl @if ($errors->has('email')) is-invalid @endif" placeholder="Email address" required />
+						{!! $errors->first('email', '<span class="invalid-feedback">:message</span>') !!}
 					</div>
-					<div class="form-group-fl">
-						<input readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" type="text" name="username" class="form-control-fl" placeholder="Username" required />
+					<div class="form-group-fl @if ($errors->has('username')) has-error @endif">
+						<input value="{{ old('username') }}" readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" type="text" name="username" class="form-control-fl @if ($errors->has('username')) is-invalid @endif" placeholder="Username" required />
+						{!! $errors->first('username', '<span class="invalid-feedback">:message</span>') !!}
 					</div>
 
-					<div class="form-group-fl">
-						<input readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" type="password" name="password" class="form-control-fl" placeholder="Create Password*" required/>
+					<div class="form-group-fl @if ($errors->has('password')) has-error @endif">
+						<input readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" type="password" name="password" class="form-control-fl @if ($errors->has('password')) is-invalid @endif" placeholder="Create Password*" required/>
+						{!! $errors->first('password', '<span class="invalid-feedback">:message</span>') !!}
 					</div>
 					<div class="form-group-fl">
 						<input readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" type="password" name="password_confirmation" class="form-control-fl" placeholder="Password Confirmation" required/>

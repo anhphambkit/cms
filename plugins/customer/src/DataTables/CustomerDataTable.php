@@ -26,6 +26,9 @@ class CustomerDataTable extends DataTableAbstract
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
             })
+            ->editColumn('confirmed_at', function ($item) {
+                return date_from_database($item->confirmed_at, config('core-base.cms.date_format.date'));
+            })
             ->editColumn('status', function ($item) {
                 return table_status($item->status);
             });
@@ -50,7 +53,7 @@ class CustomerDataTable extends DataTableAbstract
        /**
         * @var \Eloquent $model
         */
-       $query = $model->select(['customers.id', 'customers.username', 'customers.created_at', 'customers.status']);
+       $query = $model->select(['customers.id', 'customers.confirmed_at' ,'customers.username', 'customers.created_at', 'customers.status']);
        return $query;
     }
 
@@ -74,6 +77,12 @@ class CustomerDataTable extends DataTableAbstract
                 'title' => trans('core-base::tables.name'),
                 'footer' => trans('core-base::tables.name'),
                 'class' => 'text-left searchable',
+            ],
+            'confirmed_at' => [
+                'name' => 'customers.confirmed_at',
+                'title' => trans('core-base::tables.confirmed_at'),
+                'footer' => trans('core-base::tables.confirmed_at'),
+                'width' => '100px',
             ],
             'created_at' => [
                 'name' => 'customers.created_at',
