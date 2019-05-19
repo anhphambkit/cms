@@ -14752,9 +14752,11 @@ fieldset[disabled] .form-group.is-focused .toggle-btn label {
 .form-group-fl {
   position: relative;
   margin-bottom: 1rem; }
-  .form-group-fl.has-success label, .form-group-fl.has-success label.active {
+  .form-group-fl.has-success label,
+  .form-group-fl.has-success label.active {
     color: #6eaf0f; }
-  .form-group-fl.has-error label, .form-group-fl.has-error label.active {
+  .form-group-fl.has-error label,
+  .form-group-fl.has-error label.active {
     color: #dc3545; }
   .form-group-fl label {
     color: #9e9e9e;
@@ -14835,15 +14837,20 @@ fieldset[disabled] .form-group.is-focused .toggle-btn label {
             flex: 1 1 auto;
     width: 1%;
     margin-bottom: 0; }
-  .form-group-fl .input-group.custom .input-group-append, .form-group-fl .input-group.custom .input-group-prepend {
+  .form-group-fl .input-group.custom .input-group-append,
+  .form-group-fl .input-group.custom .input-group-prepend {
     position: relative;
     width: auto;
     margin: 0; }
-    .form-group-fl .input-group.custom .input-group-append > button, .form-group-fl .input-group.custom .input-group-append > i, .form-group-fl .input-group.custom .input-group-prepend > button, .form-group-fl .input-group.custom .input-group-prepend > i {
+    .form-group-fl .input-group.custom .input-group-append > button,
+    .form-group-fl .input-group.custom .input-group-append > i,
+    .form-group-fl .input-group.custom .input-group-prepend > button,
+    .form-group-fl .input-group.custom .input-group-prepend > i {
       background: 0;
       -webkit-box-shadow: none;
               box-shadow: none; }
-    .form-group-fl .input-group.custom .input-group-append > i, .form-group-fl .input-group.custom .input-group-prepend > i {
+    .form-group-fl .input-group.custom .input-group-append > i,
+    .form-group-fl .input-group.custom .input-group-prepend > i {
       font-size: 20px;
       padding: 11px;
       display: -webkit-box;
@@ -14864,6 +14871,26 @@ fieldset[disabled] .form-group.is-focused .toggle-btn label {
   .form-group-fl .input-group.custom .input-group-prepend + input + label {
     left: 50px; }
 
+.custom-select.is-invalid ~ .invalid-feedback,
+.custom-select.is-invalid ~ .invalid-tooltip,
+.form-control-fl.is-invalid ~ .invalid-feedback,
+.form-control-fl.is-invalid ~ .invalid-tooltip,
+.was-validated .custom-select:invalid ~ .invalid-feedback,
+.was-validated .custom-select:invalid ~ .invalid-tooltip,
+.was-validated .form-control-fl:invalid ~ .invalid-feedback,
+.was-validated .form-control-fl:invalid ~ .invalid-tooltip {
+  display: block; }
+
+.custom-select.is-valid ~ .valid-feedback,
+.custom-select.is-valid ~ .valid-tooltip,
+.form-control-fl.is-valid ~ .valid-feedback,
+.form-control-fl.is-valid ~ .valid-tooltip,
+.was-validated .custom-select:valid ~ .valid-feedback,
+.was-validated .custom-select:valid ~ .valid-tooltip,
+.was-validated .form-control-fl:valid ~ .valid-feedback,
+.was-validated .form-control-fl:valid ~ .valid-tooltip {
+  display: block; }
+
 .form-group-s1 > label {
   color: #96c4bd;
   font-weight: 500;
@@ -14879,6 +14906,14 @@ select.form-control, select.form-control-fl {
   background-size: 15px;
   background-image: url(../images/icons/caret-light.png);
   padding-right: 2.5em; }
+
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
+  background-image: none; }
+
+.form-control.is-valid,
+.was-validated .form-control:valid {
+  background-image: none; }
 
 @media (min-width: 767px) {
   .modal-body.px-s1 {
@@ -15370,7 +15405,7 @@ a {
   background-color: #fff;
   -webkit-box-shadow: 0 7px 22px -5px rgba(60, 60, 60, 0.2);
           box-shadow: 0 7px 22px -5px rgba(60, 60, 60, 0.2);
-  z-index: 1;
+  z-index: 9;
   -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;

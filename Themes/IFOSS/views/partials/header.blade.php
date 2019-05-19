@@ -1,6 +1,7 @@
 @php
      use Illuminate\Support\Facades\Auth;
 @endphp
+<header id="header">
     <div class="top-navigation">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -9,7 +10,17 @@
                     <ul>
                         <li><a href="javascript:void(0);" class="call">call now {{ theme_option('phone') }}</a></li>
                         @if(Auth::guard('customer')->check())
-                            <li><a href="javascript:void(0);"><i class="fas fa-user-circle"></i> <span>My Account</span></a></li>
+                            <li class="dropdown dropdown-s1">
+                                <a href="javascript:void(0);" role="button" id="account-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user-circle"></i> <span>My Account</span>
+                                </a>
+                                <div class="dropdown-menu text-right text-uppercase" aria-labelledby="account-dropdown">
+                                    <a class="dropdown-item" href="#">My profile</a>
+                                    <a class="dropdown-item" href="#">My orders</a>
+                                    <a class="dropdown-item" href="#">Wishlist</a>
+                                    <a class="dropdown-item" href="{{ route('public.customer.logout') }}">Logout</a>
+                                </div>
+                            </li>
                             <li><a href="javascript:void(0);"><i class="fas fa-shopping-cart"></i> (1)</a></li>
                         @else
                             <li><a href="{{ route('public.customer.login') }}"><i class="fas fa-user-circle"></i> <span>Sign In</span></a></li>
@@ -80,3 +91,5 @@
             </ul>
         </div>
     </div>
+</header>
+    

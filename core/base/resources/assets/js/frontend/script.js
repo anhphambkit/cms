@@ -550,7 +550,6 @@ Lcms.initMediaIntegrate = function () {
 $(document).ready(function () {
     Lcms.countCharacter();
     Lcms.handleCounterup();
-    Lcms.handlerMaskInput();
 });
 
 window.Lcms = Lcms;

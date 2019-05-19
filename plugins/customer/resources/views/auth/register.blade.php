@@ -1,14 +1,9 @@
 @extends("layouts.master")
 
 @section('styles')
-	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
 	<style type="text/css">
 		body{ background-color: #f5f5f5;}
 	</style>
-@endsection
-
-@section('master-footer')
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 @endsection
 
 @section('content')

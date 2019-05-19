@@ -1,14 +1,9 @@
 @extends("layouts.master")
 
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
     <style type="text/css">
         body{ background-color: #f5f5f5;}
     </style>
-@endsection
-
-@section('master-footer')
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 @endsection
 
 @section('content')
@@ -17,13 +12,14 @@
         <div class="row justify-content-center my-5">
             <div class="col-md-6">
                 <div class="panel">
-                    <div class="form-group-fl">
-                        <input readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" type="email" class="form-control-fl" placeholder="Email address*" name="email" maxlength="100" required/>
-                        {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
+                    
+                    <div class="form-group-fl @if ($errors->has('email')) has-error @endif">
+                        <input readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" type="email" class="form-control-fl @if ($errors->has('email')) is-invalid @endif" placeholder="Email address*" name="email" maxlength="100" required/>
+                        {!! $errors->first('email', '<span class="invalid-feedback">:message</span>') !!}
                     </div>
-                    <div class="form-group-fl">
-                        <input readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" type="password" class="form-control-fl" placeholder="Password*" id="password" name="password" required/>
-                        {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
+                    <div class="form-group-fl @if ($errors->has('password')) has-error @endif">
+                        <input readonly onfocus="this.removeAttribute('readonly');" autocomplete="false" type="password" class="form-control-fl @if ($errors->has('password')) is-invalid @endif" placeholder="Password*" id="password" name="password" required/>
+                        {!! $errors->first('password', '<span class="invalid-feedback">:message</span>') !!}
                     </div>
                     <div class="form-group">
                         <div class="checkbox checkbox-custom checkbox-circle">

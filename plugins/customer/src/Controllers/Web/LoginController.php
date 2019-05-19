@@ -47,7 +47,7 @@ class LoginController extends BasePublicController
     {
         session(['url.intended' => URL::previous()]);
         if (session()->get('url.intended') === route('public.customer.login')) {
-            $this->redirectTo = route('public.customer.dashboard');
+            $this->redirectTo = route('homepage');
         } else {
             $this->redirectTo = session()->get('url.intended');
         }
