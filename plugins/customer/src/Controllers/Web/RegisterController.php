@@ -87,6 +87,11 @@ class RegisterController extends BasePublicController
             abort(404);
         }
 
+        if($member->confirmed_at) 
+            return $response
+                ->setError()
+                ->setMessage(__('Verified your email'));
+
         $member->confirmed_at = Carbon::now();
         $this->customerRepository->createOrUpdate($member);
 
@@ -94,7 +99,7 @@ class RegisterController extends BasePublicController
 
         return $response
             ->setNextUrl(route('homepage'))
-            ->setMessage(trans('plugins-customer::member.confirmation_successful'));
+            ->setMessage(trans('plugins-customer::customer.confirmation_successful'));
     }
 
     /**
@@ -117,9 +122,9 @@ class RegisterController extends BasePublicController
      * @return BaseHttpResponse
      * @author Trinh Le
      */
-    public function resendConfirmation(Request $request, CustomerRepositories $customerRepository, BaseHttpResponse $response)
+    public function resendConfirmation($email, CustomerRepositories $customerRepository, BaseHttpResponse $response)
     {
-        $member = $customerRepository->getFirstBy(['email' => $request->input('email')]);
+        $member = $customerRepository->getFirstBy(['email' => $email]);
         if (!$member) {
             return $response
                 ->setError()

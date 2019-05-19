@@ -12,7 +12,7 @@
                         @if(Auth::guard('customer')->check())
                             <li class="dropdown dropdown-s1">
                                 <a href="javascript:void(0);" role="button" id="account-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-user-circle"></i> <span>My Account</span>
+                                    <i class="fas fa-user-circle"></i> <span>Hello, <strong>{{ $currentAccount->username }}</strong></span>
                                 </a>
                                 <div class="dropdown-menu text-right text-uppercase" aria-labelledby="account-dropdown">
                                     <a class="dropdown-item" href="#">My profile</a>

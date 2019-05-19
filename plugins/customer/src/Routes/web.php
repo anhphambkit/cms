@@ -26,9 +26,9 @@ $router->group(['prefix' => 'customer', 'middleware' => ['customer.guest']], fun
 		'uses'       => 'LoginController@login',
     ]);
    
-    $router->get('resend-confirmation/{id}', [
+    $router->get('resend-confirmation/{email}', [
         'as'         => 'public.customer.resend_confirmation', 
-        'uses'       => 'LoginController@logout',
+        'uses'       => 'RegisterController@logout',
     ]);
 
     $router->get('create-account', [

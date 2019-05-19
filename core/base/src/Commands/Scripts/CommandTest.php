@@ -55,7 +55,7 @@ class CommandTest extends Command
      */
     public function handle()
     {
-        $customer = Customer::find(1);
+        $customer = Customer::find(5);
         $customer->notify(new ConfirmEmail());
     }
 }
