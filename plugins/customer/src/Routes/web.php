@@ -54,9 +54,14 @@ $router->group(['prefix' => 'account', 'middleware' => ['customer']], function (
         'uses'       => 'LoginController@logout',
     ]);
 
-    $router->get('/', [
+    $router->get('/profile', [
         'as' => 'public.customer.dashboard',
-        'uses' => 'CustomerController@myAccount',
+        'uses' => 'CustomerController@getMyAccount',
+    ]);
+
+    $router->post('/profile', [
+        'as' => 'public.customer.dashboard',
+        'uses' => 'CustomerController@postMyAccount',
     ]);
 
 });

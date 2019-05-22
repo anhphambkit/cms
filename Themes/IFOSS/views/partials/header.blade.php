@@ -15,7 +15,7 @@
                                     <i class="fas fa-user-circle"></i> <span>Hello, <strong>{{ $currentAccount->username }}</strong></span>
                                 </a>
                                 <div class="dropdown-menu text-right text-uppercase" aria-labelledby="account-dropdown">
-                                    <a class="dropdown-item" href="#">My profile</a>
+                                    <a class="dropdown-item" href="{{ route('public.customer.dashboard') }}">My profile</a>
                                     <a class="dropdown-item" href="#">My orders</a>
                                     <a class="dropdown-item" href="#">Wishlist</a>
                                     <a class="dropdown-item" href="{{ route('public.customer.logout') }}">Logout</a>
