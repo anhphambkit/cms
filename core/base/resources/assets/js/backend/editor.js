@@ -91,6 +91,8 @@ class EditorManagement {
     }
 }
 
+window.editorManagement = new EditorManagement();
+
 $(document).ready(() => {
-    new EditorManagement().init();
+    editorManagement.init();
 });

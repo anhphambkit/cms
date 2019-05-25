@@ -3,26 +3,9 @@
 namespace Plugins\Product\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Plugins\Product\Repositories\Caches\CacheLookBookRepositories;
-use Plugins\Product\Repositories\Caches\CacheProductCategoryRepositories;
-use Plugins\Product\Repositories\Caches\CacheProductSpaceRepositories;
-use Plugins\Product\Repositories\Eloquent\EloquentLookBookRepositories;
-use Plugins\Product\Repositories\Eloquent\EloquentProductCategoryRepositories;
-use Plugins\Product\Repositories\Eloquent\EloquentProductSpaceRepositories;
+
 use Plugins\Product\Repositories\Interfaces\LookBookRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
-use Plugins\Product\Repositories\Caches\CacheManufacturerRepositories;
-use Plugins\Product\Repositories\Caches\CacheBusinessTypeRepositories;
-use Plugins\Product\Repositories\Caches\CacheProductCollectionRepositories;
-use Plugins\Product\Repositories\Caches\CacheProductColorRepositories;
-use Plugins\Product\Repositories\Caches\CacheProductMaterialRepositories;
-use Plugins\Product\Repositories\Caches\CacheProductRepositories;
-use Plugins\Product\Repositories\Eloquent\EloquentManufacturerRepositories;
-use Plugins\Product\Repositories\Eloquent\EloquentBusinessTypeRepositories;
-use Plugins\Product\Repositories\Eloquent\EloquentProductCollectionRepositories;
-use Plugins\Product\Repositories\Eloquent\EloquentProductColorRepositories;
-use Plugins\Product\Repositories\Eloquent\EloquentProductMaterialRepositories;
-use Plugins\Product\Repositories\Eloquent\EloquentProductRepositories;
 use Plugins\Product\Repositories\Interfaces\ManufacturerRepositories;
 use Plugins\Product\Repositories\Interfaces\BusinessTypeRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCollectionRepositories;
@@ -40,8 +23,6 @@ use Plugins\Product\Services\LookBookServices;
 use Plugins\Product\Services\ProductCategoryServices;
 use Plugins\Product\Services\ProductServices;
 use Plugins\Product\Repositories\Interfaces\ProductCouponRepositories;
-use Plugins\Product\Repositories\Eloquent\EloquentProductCouponRepositories;
-use Plugins\Product\Repositories\Caches\CacheProductCouponRepositories;
 use Plugins\Product\Services\ProductSpaceServices;
 
 

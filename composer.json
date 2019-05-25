@@ -54,7 +54,9 @@
             "Plugins\\Customer\\": "plugins/customer/src",
             "Plugins\\Product\\": "plugins/product/src",
             "Plugins\\Blog\\": "plugins/blog/src",
-            "Plugins\\Payment\\": "plugins/payment/src"
+            "Plugins\\Payment\\": "plugins/payment/src",
+            "Plugins\\Customattributes\\": "plugins/customattributes/src",
+            "Plugins\\CustomAttributes\\": "plugins/custom-attributes/src"
         },
         "files": [
             "helpers.php"

@@ -284,19 +284,25 @@ class LookBookController extends BaseAdminController
     {
         AssetManager::addAsset('select2-css', 'libs/plugins/product/css/select2/select2.min.css');
         AssetManager::addAsset('look-book-component-css', 'backend/core/base/assets/css/look-book-component.css');
+        AssetManager::addAsset('custom-partials-css', 'backend/plugins/product/assets/css/custom-partials.css');
         AssetManager::addAsset('look-book-css', 'backend/plugins/product/assets/css/look-book.css');
 
         AssetManager::addAsset('select2-js', 'libs/plugins/product/js/select2/select2.full.min.js');
         AssetManager::addAsset('cropper-js', '//cdnjs.cloudflare.com/ajax/libs/cropper/0.7.9/cropper.min.js');
+        AssetManager::addAsset('select2-helper-js', 'backend/plugins/product/assets/js/select2-helper.js');
         AssetManager::addAsset('look-book-js', 'backend/plugins/product/assets/js/look-book.js');
+        AssetManager::addAsset('business-spaces-js', 'backend/plugins/product/assets/js/business-spaces.js');
 
         AssetPipeline::requireCss('select2-css');
         AssetPipeline::requireCss('look-book-component-css');
+        AssetPipeline::requireCss('custom-partials-css');
         AssetPipeline::requireCss('look-book-css');
 
         AssetPipeline::requireJs('select2-js');
         AssetPipeline::requireJs('cropper-js');
+        AssetPipeline::requireJs('select2-helper-js');
         AssetPipeline::requireJs('look-book-js');
+        AssetPipeline::requireJs('business-spaces-js');
 
         AssetManager::addAsset('pretty-checkbox', 'https://cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/3.0.0/pretty-checkbox.min.css');
         AssetPipeline::requireCss('pretty-checkbox');

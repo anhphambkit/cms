@@ -27,6 +27,8 @@ return [
  
 		/* css */
 		'vendors-css'              => ['theme' => 'app-assets/css/vendors.css'],
+		'bootstrap-css'              => ['theme' => 'app-assets/css/bootstrap.css'],
+		'bootstrap-extended-css'              => ['theme' => 'app-assets/css/bootstrap-extended.css'],
 		'vertical-menu-modern-css' => ['theme' => 'app-assets/css/core/menu/menu-types/vertical-menu-modern.css'],
 		'palette-gradient-css'     => ['theme' => 'app-assets/css/core/colors/palette-gradient.css'],
 		'app-css'                  => ['theme' => 'app-assets/css/app.css'],
@@ -65,7 +67,9 @@ return [
 	'admin-required-assets' => [
 		'css' => [
 			'vendors-css'  ,    
-			'datatable-css',        
+//			'bootstrap-css',
+//			'bootstrap-extended-css',
+			'datatable-css',
 			'vertical-menu-modern-css' ,
 			'palette-gradient-css' ,    
 			'app-css'    ,              

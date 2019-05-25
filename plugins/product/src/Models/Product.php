@@ -5,6 +5,8 @@ namespace Plugins\Product\Models;
 use Core\User\Models\User;
 use Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Plugins\CustomAttributes\Models\AttributeValueString;
+use Plugins\CustomAttributes\Models\CustomAttributes;
 
 /**
  * Plugins\Product\Models\Product
@@ -46,6 +48,7 @@ class Product extends Eloquent
         'inventory',
         'rating',
         'keywords',
+        'parent_product_id',
         'created_by',
         'updated_by',
         'status',
@@ -94,6 +97,58 @@ class Product extends Eloquent
     public function productMaterials()
     {
         return $this->belongsToMany(ProductMaterial::class, 'product_materials_relation');
+    }
+
+    /**
+     * Get the product spaces for the product.
+     */
+    public function productBusinessSpaces()
+    {
+        return $this->hasMany(ProductBusinessTypeSpaceRelation::class);
+    }
+
+    /**
+     * Get the product spaces for the product.
+     */
+    public function productBusiness()
+    {
+        return $this->belongsToMany(ProductBusinessType::class, 'product_business_type_space_relation', 'product_id', 'business_type_id')
+            ->select(['product_business_types.id', 'product_business_types.name as text', 'product_business_types.slug'])->distinct();
+    }
+
+    /**
+     * Get the product spaces for the product.
+     */
+    public function productSpaces()
+    {
+        return $this->belongsToMany(ProductSpace::class, 'product_business_type_space_relation', 'product_id', 'space_id')
+            ->select(['product_spaces.id', 'product_spaces.name as text', 'product_spaces.slug'])->distinct();
+    }
+
+    /**
+     * Get the product custom attributes value relation for the product.
+     */
+    public function productAttributeValues()
+    {
+        return $this->hasMany(ProductAttributeValueRelation::class);
+    }
+
+    /**
+     * Get the product custom attribute for the product.
+     */
+    public function productCustomAttributes()
+    {
+        return $this->belongsToMany(CustomAttributes::class, 'product_attribute_value_relations', 'product_id', 'attribute_id')
+            ->select(['custom_attributes.*'])->distinct();
+    }
+
+    /**
+     * Get the product string value attribute for the product.
+     */
+    public function productStringValueAttribute()
+    {
+        return $this->belongsToMany(AttributeValueString::class, 'product_attribute_value_relations', 'product_id', 'attribute_value_id')
+            ->select(['attribute_value_string.*'])->distinct();
     }
 
     /**

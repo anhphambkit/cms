@@ -159,14 +159,14 @@ class ProductColorController extends BaseAdminController
      */
     private function addDetailAssets()
     {
-        AssetManager::addAsset('product-color-css', 'backend/plugins/product/assets/css/product-color.css');
+        AssetManager::addAsset('custom-partials-css', 'backend/plugins/product/assets/css/product-color.css');
         AssetManager::addAsset('mini-colors-css', 'libs/plugins/product/css/miniColors/jquery.minicolors.css');
         AssetManager::addAsset('mini-colors-js', 'libs/plugins/product/js/miniColors/jquery.minicolors.min.js');
         AssetManager::addAsset('spectrum-js', 'libs/plugins/product/js/spectrum/spectrum.js');
         AssetManager::addAsset('picker-color-js', 'backend/plugins/product/assets/scripts/picker-color.min.js');
 
         AssetPipeline::requireCss('mini-colors-css');
-        AssetPipeline::requireCss('product-color-css');
+        AssetPipeline::requireCss('custom-partials-css');
         AssetPipeline::requireJs('mini-colors-js');
         AssetPipeline::requireJs('spectrum-js');
         AssetPipeline::requireJs('picker-color-js');
@@ -178,8 +178,8 @@ class ProductColorController extends BaseAdminController
      */
     private function addManageAssets()
     {
-        AssetManager::addAsset('product-color-css', 'backend/plugins/product/assets/css/product-color.css');
+        AssetManager::addAsset('custom-partials-css', 'backend/plugins/product/assets/css/product-color.css');
 
-        AssetPipeline::requireCss('product-color-css');
+        AssetPipeline::requireCss('custom-partials-css');
     }
 }

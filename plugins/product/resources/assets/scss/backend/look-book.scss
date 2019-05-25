@@ -1,8 +1,3 @@
-.image-item-select {
-  height: 30px;
-  margin-right: 5px;
-}
-
 .look-book-box-preview {
   position: relative;
   &.look-book-box-tag {
@@ -65,28 +60,4 @@ img.preview-look-book-image {
 .image-box-actions {
   float: left;
   width: 100%;
-}
-
-.action-space-area {
-  display: block;
-  padding: 10px 0;
-}
-
-.edit-business-space {
-  margin-right: 10px;
-}
-
-.delete-space-action {
-  color: #ac1313 !important;
-  font-weight: 600;
-}
-
-.render-space-selected {
-  padding: 20px;
-}
-
-.checkbox-large {
-  .state {
-    font-size: 30px;
-  }
 }

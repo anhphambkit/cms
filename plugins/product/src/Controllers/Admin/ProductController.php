@@ -5,13 +5,16 @@ namespace Plugins\Product\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Plugins\CustomAttributes\Contracts\CustomAttributeConfig;
 use Plugins\Product\Models\ProductGallery;
+use Plugins\CustomAttributes\Repositories\Interfaces\CustomAttributesRepositories;
 use Plugins\Product\Repositories\Interfaces\ManufacturerRepositories;
 use Plugins\Product\Repositories\Interfaces\BusinessTypeRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCollectionRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductColorRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductMaterialRepositories;
+use Plugins\Product\Repositories\Interfaces\ProductSpaceRepositories;
 use Plugins\Product\Requests\ProductRequest;
 use Plugins\Product\Repositories\Interfaces\ProductRepositories;
 use Plugins\Product\DataTables\ProductDataTable;
@@ -57,6 +60,16 @@ class ProductController extends BaseAdminController
     protected $productMaterialRepositories;
 
     /**
+     * @var ProductSpaceRepositories
+     */
+    protected $productSpaceRepositories;
+
+    /**
+     * @var CustomAttributesRepositories
+     */
+    protected $customAttributesRepositories;
+
+    /**
      * ProductController constructor.
      * @param ProductRepositories $productRepository
      * @param ProductCategoryRepositories $productCategoryRepositories
@@ -65,11 +78,14 @@ class ProductController extends BaseAdminController
      * @param BusinessTypeRepositories $businessTypeRepositories
      * @param ProductCollectionRepositories $productCollectionRepositories
      * @param ProductMaterialRepositories $productMaterialRepositories
+     * @param ProductSpaceRepositories $productSpaceRepositories
+     * @param CustomAttributesRepositories $customAttributesRepositories
      */
     public function __construct(ProductRepositories $productRepository, ProductCategoryRepositories $productCategoryRepositories,
                                 ManufacturerRepositories $manufacturerRepositories, ProductColorRepositories $productColorRepositories,
                                 BusinessTypeRepositories $businessTypeRepositories, ProductCollectionRepositories $productCollectionRepositories,
-                                ProductMaterialRepositories $productMaterialRepositories)
+                                ProductMaterialRepositories $productMaterialRepositories, ProductSpaceRepositories $productSpaceRepositories,
+                                CustomAttributesRepositories $customAttributesRepositories)
     {
         $this->productRepository = $productRepository;
         $this->productCategoryRepositories = $productCategoryRepositories;
@@ -78,6 +94,8 @@ class ProductController extends BaseAdminController
         $this->businessTypeRepositories = $businessTypeRepositories;
         $this->productCollectionRepositories = $productCollectionRepositories;
         $this->productMaterialRepositories = $productMaterialRepositories;
+        $this->productSpaceRepositories = $productSpaceRepositories;
+        $this->customAttributesRepositories = $customAttributesRepositories;
     }
 
     /**
@@ -113,11 +131,17 @@ class ProductController extends BaseAdminController
 
         $materials = $this->productMaterialRepositories->pluck('name', 'id');
 
+        $spaces = $this->productSpaceRepositories->select(['id', 'name as text', 'image_feature'])->get();
+
+        $productAttributes = $this->customAttributesRepositories->allBy([
+           [ 'type_entity', '=', strtolower(CustomAttributeConfig::REFERENCE_CUSTOM_ATTRIBUTE_TYPE_ENTITY_PRODUCT) ]
+        ], [], [ 'id', 'name as text', 'slug' ]);
+
         page_title()->setTitle(trans('plugins-product::product.create'));
 
         $this->addDetailAssets();
 
-        return view('plugins-product::product.create', compact('categories', 'manufacturer', 'colors', 'businessTypes', 'collections', 'materials'));
+        return view('plugins-product::product.create', compact('categories', 'manufacturer', 'colors', 'businessTypes', 'collections', 'materials', 'spaces', 'productAttributes'));
     }
 
     /**
@@ -137,47 +161,129 @@ class ProductController extends BaseAdminController
         $data['has_assembly'] = $request->input('has_assembly', false);
         $data['is_outdoor'] = $request->input('is_outdoor', false);
         $data['sku'] = "{$data['manufacturer_id']}{$data['sku']}";
+        $data['image_gallery'] = $request->input('image_gallery', "[]");
+        $data['category_id'] = $request->input('category_id', []);
+        $data['business_type_id'] = $request->input('business_type_id', []);
+        $data['collection_id'] = $request->input('collection_id', []);
+        $data['color_id'] = $request->input('color_id', []);
+        $data['material_id'] = $request->input('material_id', []);
         $data['created_by'] = Auth::id();
 
-        $product = DB::transaction(function () use ($data, $request) {
-            $product = $this->productRepository->createOrUpdate($data);
+        dd($data);
+        $productMaster = DB::transaction(function () use ($data) {
+            $productMaster = $this->createSingleProduct($data);
 
-            $galleries = json_decode($request->input('image_gallery', "[]"));
+            // Variant Products:
+            $variantProducts = (!empty($data['variant_products']) ? $data['variant_products'] : []);
+            foreach ($variantProducts as $variantProduct) {
+                // Prepare data variant:
+                $variantProduct['parent_product_id'] = $productMaster->id;
+                $variantProduct['slug'] = $variantProduct['name'];
+                $variantProduct['sku'] = "{$data['manufacturer_id']}{$variantProduct['sku']}";
+                $variantProduct['status'] = $data['status'];
+                $variantProduct['category_id'] = $data['category_id'];
+                $variantProduct['manufacturer_id'] = $data['manufacturer_id'];
+                $variantProduct['is_best_seller'] = $data['is_best_seller'];
+                $variantProduct['available_3d'] = $data['available_3d'];
+                $variantProduct['has_assembly'] = $data['has_assembly'];
+                $variantProduct['is_outdoor'] = $data['is_outdoor'];
+                $variantProduct['image_gallery'] = !empty($variantProduct['image_gallery']) ? $variantProduct['image_gallery'] : [];
+                $variantProduct['category_id'] = !empty($variantProduct['category_id']) ? $variantProduct['category_id'] : [];
+                $variantProduct['business_type_id'] = !empty($variantProduct['business_type_id']) ? $variantProduct['business_type_id'] : [];
+                $variantProduct['collection_id'] = !empty($variantProduct['collection_id']) ? $variantProduct['collection_id'] : [];
+                $variantProduct['color_id'] = !empty($variantProduct['color_id']) ? $variantProduct['color_id'] : [];
+                $variantProduct['material_id'] = !empty($variantProduct['material_id']) ? $variantProduct['material_id'] : [];
+                $variantProduct['created_by'] = Auth::id();
 
+                foreach ($data as $key => $dataAttribute) {
+                    $variantProduct[$key] = !empty($variantProduct["is_same_{$key}"]) ? $dataAttribute : (!empty($variantProduct[$key]) ? $variantProduct[$key] : null);
+                }
+
+                $this->createSingleProduct($variantProduct);
+            }
+            return $productMaster->save();
+        }, 3);
+
+        do_action(BASE_ACTION_AFTER_CREATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $productMaster);
+
+        if ($request->input('submit') === 'save') {
+            return redirect()->route('admin.product.list')->with('success_msg', trans('core-base::notices.create_success_message'));
+        } else {
+            return redirect()->route('admin.product.edit', $productMaster->id)->with('success_msg', trans('core-base::notices.create_success_message'));
+        }
+    }
+
+    /**
+     * @param $data
+     * @return bool
+     */
+    public function createSingleProduct($data) {
+        $product = $this->productRepository->createOrUpdate($data);
+
+        $galleries = json_decode($data['image_gallery']);
+
+        if (!empty($galleries)) {
             foreach ($galleries as $gallery) {
                 $product->galleries()->create([
                     'media' => $gallery,
 //                    'description' => $gallery->description,
                 ]);
             }
-
-            $categoryIds = $request->input('category_id', []);
-            $product->productCategories()->attach($categoryIds);
-
-            $businessTypeIds = $request->input('business_type_id', []);
-            $product->productBusinessTypes()->attach($businessTypeIds);
-
-            $collectionIds = $request->input('collection_id', []);
-            $product->productCollections()->attach($collectionIds);
-
-            $colorIds = $request->input('color_id', []);
-            $product->productColors()->attach($colorIds);
-
-            $materialIds = $request->input('material_id', []);
-            $product->productMaterials()->attach($materialIds);
-
-            $product->sku .= $product->id;
-
-            return $product->save();
-        }, 3);
-
-        do_action(BASE_ACTION_AFTER_CREATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $product);
-
-        if ($request->input('submit') === 'save') {
-            return redirect()->route('admin.product.list')->with('success_msg', trans('core-base::notices.create_success_message'));
-        } else {
-            return redirect()->route('admin.product.edit', $product->id)->with('success_msg', trans('core-base::notices.create_success_message'));
         }
+
+        if (!empty($data['category_id']))
+            $product->productCategories()->attach($data['category_id']);
+
+        if (!empty($data['business_type_id']))
+            $product->productBusinessTypes()->attach($data['business_type_id']);
+
+        if (!empty($data['collection_id']))
+            $product->productCollections()->attach($data['collection_id']);
+
+        if (!empty($data['color_id']))
+            $product->productColors()->attach($data['color_id']);
+
+        if (!empty($data['material_id']))
+            $product->productMaterials()->attach($data['material_id']);
+
+        // Business space product
+        $productSpaces = (!empty($data['space_business']) ? $data['space_business'] : []);
+        $product->productBusinessSpaces()->createMany($productSpaces);
+
+        $productAllSpaces = (!empty($data['all_space']) ? $data['all_space'] : []);
+        foreach ($productAllSpaces as $productAllSpace) {
+            $product->productBusinessSpaces()->create([
+                'business_type_id' => 0,
+                'space_id' => $productAllSpace['space_id'],
+                'apply_all' => true
+            ]);
+        }
+
+        // Attribute value product
+        $productCustomAttributes = (!empty($data['product_attribute']) ? $data['product_attribute'] : []);
+        foreach ($productCustomAttributes as $productCustomAttribute) {
+            $valueAttributes = (!empty($productCustomAttribute['value_attributes']) ? $productCustomAttribute['value_attributes'] : []);
+            foreach ($valueAttributes as $valueAttribute) {
+                $product->productAttributeValues()->create([
+                    'attribute_id' => $productCustomAttribute['attribute_id'],
+                    'attribute_value_id' => $valueAttribute,
+                ]);
+            }
+        }
+
+        $productCustomAttributes = (!empty($data['combination']) ? $data['combination'] : []);
+        foreach ($productCustomAttributes as $productCustomAttribute) {
+            $product->productAttributeValues()->create([
+                'attribute_id' => $productCustomAttribute['attribute_id'],
+                'attribute_value_id' => $productCustomAttribute['value_id'],
+            ]);
+        }
+
+        $product->sku .= $product->id;
+
+        $product->save();
+
+        return $product;
     }
 
     /**
@@ -200,6 +306,12 @@ class ProductController extends BaseAdminController
         $collections = $this->productCollectionRepositories->pluck('name', 'id');
 
         $materials = $this->productMaterialRepositories->pluck('name', 'id');
+
+        $spaces = $this->productSpaceRepositories->select(['id', 'name as text', 'image_feature'])->get();
+
+        $productAttributes = $this->customAttributesRepositories->allBy([
+            [ 'type_entity', '=', strtolower(CustomAttributeConfig::REFERENCE_CUSTOM_ATTRIBUTE_TYPE_ENTITY_PRODUCT) ]
+        ], [], [ 'id', 'name as text', 'slug' ]);
 
         $product = $this->productRepository->findById($id);
 
@@ -233,6 +345,13 @@ class ProductController extends BaseAdminController
             $galleries = $product->galleries->pluck('media')->all();
         }
 
+        $businessSpaces = [];
+        $allSpaces = [];
+        if ($product->productBusinessSpaces() != null) {
+            $businessSpaces = $product->productBusinessSpaces()->where('product_business_type_space_relation.apply_all', false)->select('*')->get()->toArray();
+            $allSpaces = $product->productBusinessSpaces()->where('product_business_type_space_relation.apply_all', true)->select('*')->get()->toArray();
+        }
+
         if (empty($product)) {
             abort(404);
         }
@@ -242,7 +361,8 @@ class ProductController extends BaseAdminController
         $this->addDetailAssets();
 
         return view('plugins-product::product.edit', compact('product', 'categories', 'manufacturer', 'colors',
-                    'businessTypes', 'collections', 'materials', 'selectedProductCategories', 'selectedProductBusinessTypes',
+                    'businessTypes', 'collections', 'materials', 'spaces', 'productAttributes',
+                    'selectedProductCategories', 'selectedProductBusinessTypes', 'businessSpaces', 'allSpaces',
                     'selectedProductCollections', 'selectedProductColors', 'selectedProductMaterials', 'galleries'));
     }
 
@@ -357,7 +477,9 @@ class ProductController extends BaseAdminController
         AssetManager::addAsset('select2-css', 'libs/plugins/product/css/select2/select2.min.css');
         AssetManager::addAsset('bootstrap-switch-css', 'libs/plugins/product/css/toggle/bootstrap-switch.min.css');
         AssetManager::addAsset('switchery-css', 'libs/plugins/product/css/toggle/switchery.min.css');
+        AssetManager::addAsset('pretty-checkbox', 'https://cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/3.0.0/pretty-checkbox.min.css');
         AssetManager::addAsset('admin-gallery-css', 'libs/core/base/css/gallery/admin-gallery.css');
+        AssetManager::addAsset('custom-partials-css', 'backend/plugins/product/assets/css/custom-partials.css');
         AssetManager::addAsset('product-css', 'backend/plugins/product/assets/css/product.css');
 
         AssetManager::addAsset('select2-js', 'libs/plugins/product/js/select2/select2.full.min.js');
@@ -366,11 +488,18 @@ class ProductController extends BaseAdminController
         AssetManager::addAsset('switchery-js', 'libs/plugins/product/js/toggle/switchery.min.js');
         AssetManager::addAsset('form-select2-js', 'backend/plugins/product/assets/scripts/form-select2.min.js');
         AssetManager::addAsset('switch-js', 'backend/plugins/product/assets/scripts/switch.min.js');
+        AssetManager::addAsset('core-helper-js', 'backend/core/base/assets/js/helper.js');
+        AssetManager::addAsset('select2-helper-js', 'backend/plugins/product/assets/js/select2-helper.js');
+        AssetManager::addAsset('variants-js', 'backend/plugins/product/assets/js/variants.js');
+        AssetManager::addAsset('business-spaces-js', 'backend/plugins/product/assets/js/business-spaces.js');
+        AssetManager::addAsset('product-js', 'backend/plugins/product/assets/js/product.js');
 
         AssetPipeline::requireCss('select2-css');
         AssetPipeline::requireCss('bootstrap-switch-css');
         AssetPipeline::requireCss('switchery-css');
+        AssetPipeline::requireCss('pretty-checkbox');
         AssetPipeline::requireCss('admin-gallery-css');
+        AssetPipeline::requireCss('custom-partials-css');
         AssetPipeline::requireCss('product-css');
 
         AssetPipeline::requireJs('select2-js');
@@ -379,5 +508,10 @@ class ProductController extends BaseAdminController
         AssetPipeline::requireJs('switchery-js');
         AssetPipeline::requireJs('form-select2-js');
         AssetPipeline::requireJs('switch-js');
+        AssetPipeline::requireJs('core-helper-js');
+        AssetPipeline::requireJs('select2-helper-js');
+        AssetPipeline::requireJs('variants-js');
+        AssetPipeline::requireJs('business-spaces-js');
+        AssetPipeline::requireJs('product-js');
     }
 }

@@ -58,6 +58,10 @@ class ProductDataTable extends DataTableAbstract
            'products.created_by',
            'products.created_at',
            'products.status'
+       ])->where([
+           [
+               'products.parent_product_id', '=', null
+           ]
        ]);
        return $query;
     }
