@@ -50,6 +50,7 @@ class PublicController extends BasePublicController{
 	 */
 	public function homepage(Request $request)
 	{
+        page_title()->setTitle('Ifoss');
 		return view('homepage');
 	}
 

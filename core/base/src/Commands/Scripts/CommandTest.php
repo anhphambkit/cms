@@ -10,6 +10,9 @@ use Illuminate\Contracts\Filesystem\Factory;
 use Core\User\Models\User;
 use Illuminate\Support\Facades\Hash;
 
+use Plugins\Customer\Notifications\ConfirmEmail;
+use Plugins\Customer\Models\Customer;
+
 class CommandTest extends Command
 {
     /**
@@ -52,8 +55,7 @@ class CommandTest extends Command
      */
     public function handle()
     {
-        $content = view('core-user::emails.reminder', ['link' => route('auth.reset.complete', ['token' => 123])])->render();
-        print_r($content);
-        print_r("\n");
+        $customer = Customer::find(5);
+        $customer->notify(new ConfirmEmail());
     }
 }

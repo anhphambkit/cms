@@ -9,6 +9,7 @@ use Plugins\Customer\Repositories\Interfaces\CustomerRepositories;
 use Plugins\Customer\Middlewares\RedirectIfNotCustomer;
 use Plugins\Customer\Middlewares\RedirectIfCustomer;
 use Plugins\Customer\Models\Customer;
+use Illuminate\View\View;
 
 class CustomerServiceProvider extends ServiceProvider
 {
@@ -67,6 +68,6 @@ class CustomerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+        view()->composer('*', \Plugins\Customer\Composers\CurrentCustomerComposer::class);
     }
 }

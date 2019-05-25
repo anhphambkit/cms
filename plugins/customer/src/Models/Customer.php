@@ -41,6 +41,7 @@ class Customer extends Authenticatable
         'description',
         'gender',
         'status',
+        'address',
         'secondary_address',
         'job_position',
         'secondary_phone',

@@ -64,4 +64,5 @@ return [
 	'shortcode'          => 'Shortcode',
 	'image'              => 'Image',
 	'code'              => 'Code',
+	'confirmed_at' => 'Confirmed At'
 ];

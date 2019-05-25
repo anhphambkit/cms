@@ -33,7 +33,7 @@ class ProductCouponDataTable extends DataTableAbstract
                 return table_status($item->status);
             })
             ->editColumn('qr_code', function ($item) {
-                return \QrCode::generate($item->code);
+                return $item->code; //\QrCode::generate($item->code);
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, CUSTOMER_MODULE_SCREEN_NAME)

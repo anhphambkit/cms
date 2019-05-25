@@ -10,6 +10,7 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <title>{{ page_title()->getTitle() }}</title>
         <!-- Fonts-->
         <link href="https://fonts.googleapis.com/css?family={{ theme_option('primary_font', 'Roboto') }}" rel="stylesheet" type="text/css">
         <!-- CSS Library-->

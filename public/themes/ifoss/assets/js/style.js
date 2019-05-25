@@ -22,7 +22,7 @@ $(document).ready(function() {
 		dots: true
 	});
 
-	$('.product-slider--wrapper').slick({
+	$('.product-slider-wrapper').slick({
 		speed: 300,
 		slidesToShow: 4,
 		slidesToScroll: 4,
@@ -51,5 +51,12 @@ $(document).ready(function() {
 			}
 		}
 		]
+	});
+	$('.close-subscribe-news').on('click', function(event) {
+		event.preventDefault();
+		console.log($(this).closest('section'));
+		$(this).closest('section').fadeOut('400', function() {
+			$(this).closest('section').remove();
+		});
 	});
 });

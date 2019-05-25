@@ -49,18 +49,24 @@ return [
 
 	'frontend-assets' => [
 		/* js */
-		'vendor-js'         => ['theme' => "assets/js/style.min.js"],
+		'vendor-js'      => ['theme' => "assets/js/style.min.js"],
+		'base-script-js' => ['cdn' => 'frontend/core/base/assets/js/script.js'],
+		'toastr-js'      => ['cdn' => '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js'],
 
 		/* css */
-		'vendor-css'      => ['theme' => 'assets/css/style.min.css'],
+		'vendor-css' => ['theme' => 'assets/css/style.min.css'],
+		'toastr-css' => ['cdn' => '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css'],
 	],
 
 	'frontend-required-assets' => [
 		'css' => [
 			'vendor-css',
+			'toastr-css',
 		],
 		'js' => [
-			'vendor-js'        ,
+			'vendor-js',
+			'toastr-js',
+			'base-script-js'
 		]
 	],
 
