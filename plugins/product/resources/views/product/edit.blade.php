@@ -248,8 +248,7 @@
                     </div>
                 </div>
                 {{--End Weight/dimensions and specifications--}}
-                    @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'advanced') @endphp
-                </div>
+                @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'advanced') @endphp
             </div>
             <div class="col-md-3 right-sidebar">
                 @include('core-base::elements.form-actions')
@@ -332,11 +331,6 @@
                     </div>
                 </div>
                 {{--End Gallery--}}
-
-                {{-- Image--}}
-
-                {{--End Image--}}
-                {{-- Image--}}
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'top') @endphp
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'side') @endphp
             </div>
