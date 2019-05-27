@@ -1,0 +1,55 @@
+.image-item-select {
+  height: 30px;
+  margin-right: 5px;
+}
+
+.action-space-area {
+  display: block;
+  padding: 10px 0;
+}
+
+.edit-business-space {
+  margin-right: 10px;
+}
+
+.delete-space-action {
+  color: #ac1313 !important;
+  font-weight: 600;
+}
+
+.render-space-selected {
+  padding: 20px;
+}
+
+.checkbox-large {
+  .state {
+    font-size: 30px;
+  }
+}
+
+.minicolors-theme-bootstrap .minicolors-swatch {
+  top: 6px !important;
+  left: 6px !important;
+}
+
+.minicolor-preview .minicolor-square-box {
+  z-index: 2;
+  width: 28px;
+  height: 28px;
+  border-radius: 3px;
+  position: absolute;
+}
+
+.product-color-attr {
+  padding-left: 44px;
+}
+
+a.delete-attribute {
+  float: right;
+  color: #ac1313 !important;
+}
+
+.attribute-item-area {
+  margin-bottom: 20px;
+  border: 1px dashed;
+}

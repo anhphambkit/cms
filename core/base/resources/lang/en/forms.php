@@ -26,6 +26,7 @@ return [
     'title'                   => 'Title',
     'value'                   => 'Value',
     'name_placeholder'        => 'Name',
+    'image_feature'           => 'Image Feature',
     'alias_placeholder'       => 'Alias',
     'description_placeholder' => 'Short description',
     'parent'                  => 'Parent',

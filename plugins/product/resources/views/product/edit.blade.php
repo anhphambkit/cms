@@ -4,15 +4,14 @@
         @php do_action(BASE_FILTER_BEFORE_RENDER_FORM, PRODUCT_MODULE_SCREEN_NAME, request(), $product) @endphp
         <div class="row">
             <div class="col-md-9">
+                {{--General--}}
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-product::product.edit') }}</h4>
+                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-product::product.general') }}</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
                                 <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -39,32 +38,42 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('category_id')) has-error @endif">
+                                    <div class="form-group col-md-4 mb-2 @if ($errors->has('category_id')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('core-base::forms.parent_category') }}</label>
                                         {!! Form::select('category_id[]', $categories, $selectedProductCategories, ['class' => 'select2-placeholder-multiple form-control category-list', "id" => "select-category-list", "multiple" => "multiple" ]) !!}
                                         {!! Form::error('category_id', $errors) !!}
                                     </div>
-                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('manufacturer_id')) has-error @endif">
+                                    <div class="form-group col-md-4 mb-2 @if ($errors->has('manufacturer_id')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.manufacturer') }}</label>
                                         {!! Form::select('manufacturer_id', $manufacturer, $product->manufacturer_id, ['class' => 'select2-placeholder-multiple form-control manufacturer-list', "id" => "select-manufacturer-list" ]) !!}
                                         {!! Form::error('manufacturer_id', $errors) !!}
                                     </div>
-                                </div>
-                                {{-- Gallery--}}
-                                <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('image_gallery')) has-error @endif">
-                                        <div class="widget meta-boxes gallery-box">
-                                            <div class="widget-title">
-                                                <h4><span class="required">{{ trans('plugins-product::product.form.image_gallery') }}</span></h4>
-                                            </div>
-                                            <div class="widget-body">
-                                                {!! Form::mediaGallery('image_gallery', $galleries) !!}
-                                                {!! Form::error('image_gallery', $errors) !!}
-                                            </div>
-                                        </div>
+                                    <div class="form-group col-md-4 mb-2 @if ($errors->has('collection_id')) has-error @endif">
+                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.form.collection') }}</label>
+                                        {!! Form::select('collection_id[]', $collections, $selectedProductCollections, ['class' => 'select2-placeholder-multiple form-control collection-list', "id" => "select-collection-list", "multiple" => "multiple" ]) !!}
+                                        {!! Form::error('collection_id', $errors) !!}
                                     </div>
                                 </div>
-                                {{--End Gallery--}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{--End General--}}
+
+                {{--Price Info--}}
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-product::product.price_info') }}</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collpase show">
+                        <div class="card-body">
+                            <div class="form-body">
                                 <div class="row">
                                     <div class="form-group col-md-4 mb-2 @if ($errors->has('price')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.price') }}</label>
@@ -82,40 +91,85 @@
                                         {!! Form::error('inventory', $errors) !!}
                                     </div>
                                 </div>
-                                {{--category--}}
-                                <div class="row">
-                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('business_type_id')) has-error @endif">
-                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.form.business_type') }}</label>
-                                        {!! Form::select('business_type_id[]', $businessTypes, $selectedProductBusinessTypes, ['class' => 'select2-placeholder-multiple form-control business_type-list', "id" => "select-business_type-list", "multiple" => "multiple" ]) !!}
-                                        {!! Form::error('business_type_id', $errors) !!}
-                                    </div>
-                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('collection_id')) has-error @endif">
-                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.form.collection') }}</label>
-                                        {!! Form::select('collection_id[]', $collections, $selectedProductCollections, ['class' => 'select2-placeholder-multiple form-control collection-list', "id" => "select-collection-list", "multiple" => "multiple" ]) !!}
-                                        {!! Form::error('collection_id', $errors) !!}
-                                    </div>
-                                </div>
+                                @include('plugins-product::look-book.partials.list-space-business-selected')
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{--End Price Info--}}
 
-                                <div class="row">
-                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('material_id')) has-error @endif">
-                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.form.material') }}</label>
-                                        {!! Form::select('material_id[]', $materials, $selectedProductMaterials, ['class' => 'select2-placeholder-multiple form-control material-list', "id" => "select-material-list", "multiple" => "multiple" ]) !!}
-                                        {!! Form::error('material_id', $errors) !!}
-                                    </div>
-                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('color_id')) has-error @endif">
-                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.form.color') }}</label>
-                                        {!! Form::select('color_id[]', $colors, $selectedProductColors, ['class' => 'select2-placeholder-multiple form-control color-list', "id" => "select-color-list", "multiple" => "multiple" ]) !!}
-                                        {!! Form::error('color_id', $errors) !!}
+                {{--Start Card Attributes/Variants--}}
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-product::product.variant_attribute') }}</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collpase show">
+                        <div class="card-body">
+                            <div class="form-body">
+                                <div class="nav-vertical nav-variant">
+                                    <ul class="nav nav-tabs nav-left nav-border-left">
+                                        <li class="nav-item">
+                                            <a class="nav-link active nav-tab-vertical-custom" id="attribute-variants-tab-panel-tab1" data-toggle="tab" aria-controls="tab-attribute-product" href="#tab-attribute-product" aria-expanded="true"><i class="fas fa-grip-horizontal"></i> {{ trans('plugins-product::product.attributes') }}</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link nav-tab-vertical-custom" id="attribute-variants-tab-panel-tab2" data-toggle="tab" aria-controls="tab-variant-product" href="#tab-variant-product" aria-expanded="false"><i class="fas fa-outdent"></i> {{ trans('plugins-product::product.variants') }}</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content px-1">
+                                        <div role="tabpanel" class="tab-pane active" id="tab-attribute-product" aria-expanded="true" aria-labelledby="attribute-variants-tab-panel-tab1">
+                                            <div class="container form-body">
+                                                <div class="row product-attribute-add-area">
+                                                    <div class="form-group col-md-4 mb-2">
+                                                        <label class="control-label" for="select-product-attributes-list">{{ trans('plugins-product::product.attributes') }}</label>
+                                                        {!! Form::select('', $productAttributes, '', ['class' => 'form-control product-attributes-list', "id" => "select-product-attributes-list" ]) !!}
+                                                    </div>
+                                                    <div class="form-group col-md-4 mb-2 add-attribute-btn">
+                                                        <label class="control-label" for="btn-add-attribute">{{ trans('plugins-product::product.action') }}</label>
+                                                        <div class="btn-middle-line">
+                                                            <button type="button" class="btn btn-info btn-add-attribute">
+                                                                <i class="far fa-plus-square"></i> {{ trans('core-base::forms.add') }}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="attribute-render-area">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab-variant-product" aria-labelledby="attribute-variants-tab-panel-tab2">
+                                            <div class="container form-body">
+                                                <div class="variant-products-area">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                {{--category--}}
-                                <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('short_description')) has-error @endif">
-                                        <label for="name">{{ trans('plugins-product::product.form.short_description') }}</label>
-                                        {!! render_editor('short_description', $product->short_description, true) !!}
-                                        {!! Form::error('short_description', $errors) !!}
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- End Card Attributes/Variants--}}
+
+                {{--Start Description--}}
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-product::product.description_info') }}</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collpase show">
+                        <div class="card-body">
+                            <div class="form-body">
                                 <div class="row">
                                     <div class="form-group col-md-12 mb-2 @if ($errors->has('long_desc')) has-error @endif">
                                         <label for="name">{{ trans('plugins-product::product.form.long_desc') }}</label>
@@ -123,6 +177,34 @@
                                         {!! Form::error('long_desc', $errors) !!}
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('short_description')) has-error @endif">
+                                        <label for="name">{{ trans('plugins-product::product.form.short_description') }}</label>
+                                        {!! render_editor('short_description', $product->short_description, true) !!}
+                                        {!! Form::error('short_description', $errors) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{--End Description--}}
+
+                {{--Start Weight/dimensions and specifications--}}
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-product::product.ship_specification_info') }}</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collpase show">
+                        <div class="card-body">
+                            <div class="form-body">
                                 <div class="row">
                                     <div class="form-group col-md-3 mb-2 @if ($errors->has('product_dimension')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.product_dimension') }}</label>
@@ -145,23 +227,63 @@
                                         {!! Form::error('package_weight', $errors) !!}
                                     </div>
                                 </div>
+
                                 <div class="row">
-                                    <div class="form-group col-md-3 mb-2 @if ($errors->has('is_best_seller')) has-error @endif">
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('weight_dimension_description')) has-error @endif">
+                                        <label for="name">{{ trans('plugins-product::product.form.weight_dimension_description') }}</label>
+                                        {!! render_editor('weight_dimension_description', $product->weight_dimension_description, true) !!}
+                                        {!! Form::error('weight_dimension_description', $errors) !!}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('specification')) has-error @endif">
+                                        <label for="name">{{ trans('plugins-product::product.form.specification') }}</label>
+                                        {!! render_editor('specification', $product->specification, true) !!}
+                                        {!! Form::error('specification', $errors) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{--End Weight/dimensions and specifications--}}
+                @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'advanced') @endphp
+            </div>
+            <div class="col-md-3 right-sidebar">
+                @include('core-base::elements.form-actions')
+                @include('core-base::elements.forms.status')
+                {{--Option render--}}
+                <div class="row">
+                    <div class="form-group col-md-12 mb-2">
+                        <div class="widget meta-boxes meta-box-custom">
+                            <div class="widget-title">
+                                <h4>
+                                    <span class="required">
+                                        <label class="control-label required" for="role">{{ trans('plugins-product::product.other_information') }}</label>
+                                    </span>
+                                </h4>
+                            </div>
+                            <div class="widget-body">
+                                <div class="row">
+                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('is_best_seller')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.is_best_seller') }}</label>
                                         {!! Form::checkbox('is_best_seller', true, $product->is_best_seller, ['class' => 'form-control switchery', 'id' => 'is_best_seller', 'placeholder' => trans('plugins-product::product.form.is_best_seller_placeholder')]) !!}
                                         {!! Form::error('is_best_seller', $errors) !!}
                                     </div>
-                                    <div class="form-group col-md-3 mb-2 @if ($errors->has('available_3d')) has-error @endif">
+                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('available_3d')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.available_3d') }}</label>
                                         {!! Form::checkbox('available_3d', true, $product->available_3d, ['class' => 'form-control switchery', 'id' => 'available_3d', 'placeholder' => trans('plugins-product::product.form.available_3d_placeholder')]) !!}
                                         {!! Form::error('available_3d', $errors) !!}
                                     </div>
-                                    <div class="form-group col-md-3 mb-2 @if ($errors->has('has_assembly')) has-error @endif">
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('has_assembly')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.has_assembly') }}</label>
                                         {!! Form::checkbox('has_assembly', true, $product->has_assembly, ['class' => 'form-control switchery', 'id' => 'has_assembly', 'placeholder' => trans('plugins-product::product.form.has_assembly_placeholder')]) !!}
                                         {!! Form::error('has_assembly', $errors) !!}
                                     </div>
-                                    <div class="form-group col-md-3 mb-2 @if ($errors->has('is_outdoor')) has-error @endif">
+                                    <div class="form-group col-md-6 mb-2 @if ($errors->has('is_outdoor')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.is_outdoor') }}</label>
                                         {!! Form::checkbox('is_outdoor', true, $product->is_outdoor, ['class' => 'form-control switchery', 'id' => 'is_outdoor', 'placeholder' => trans('plugins-product::product.form.is_outdoor_placeholder')]) !!}
                                         {!! Form::error('is_outdoor', $errors) !!}
@@ -170,31 +292,64 @@
                             </div>
                         </div>
                     </div>
-                    @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'advanced') @endphp
+
                 </div>
-            </div>
-            <div class="col-md-3 right-sidebar">
-                @include('core-base::elements.form-actions')
-                @include('core-base::elements.forms.status')
+                {{--Option render--}}
+
                 {{-- Image--}}
-                <div class="widget meta-boxes">
-                    <div class="widget-title">
-                        <h4>
+                <div class="row">
+                    <div class="form-group col-md-12 mb-2">
+                        <div class="widget meta-boxes meta-box-custom">
+                            <div class="widget-title">
+                                <h4>
                             <span class="required @if ($errors->has('image_feature')) has-error @endif">
                                 <label class="control-label required" for="role">{{ trans('plugins-product::product.form.image_feature') }}</label>
                             </span>
-                        </h4>
-                    </div>
-                    <div class="widget-body">
-                        {!! Form::mediaImage('image_feature', $product->image_feature, [ 'action' => 'select-image' ]) !!}
-                        {!! Form::error('image_feature', $errors) !!}
+                                </h4>
+                            </div>
+                            <div class="widget-body">
+                                {!! Form::mediaImage('image_feature', $product->image_feature, [ 'action' => 'select-image' ]) !!}
+                                {!! Form::error('image_feature', $errors) !!}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {{--End Image--}}
-                {{-- Image--}}
+
+                {{-- Gallery--}}
+                <div class="row">
+                    <div class="form-group col-md-12 mb-2 @if ($errors->has('image_gallery')) has-error @endif">
+                        <div class="widget meta-boxes gallery-box meta-box-custom">
+                            <div class="widget-title">
+                                <h4><span class="required">{{ trans('plugins-product::product.form.image_gallery') }}</span></h4>
+                            </div>
+                            <div class="widget-body">
+                                {!! Form::mediaGallery('image_gallery', $galleries) !!}
+                                {!! Form::error('image_gallery', $errors) !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{--End Gallery--}}
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'top') @endphp
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'side') @endphp
             </div>
         </div>
     {!! Form::close() !!}
+@stop
+
+@section('variable-scripts')
+    <script>
+        const API = {
+            GET_SPACES_BY_BUSINESS_TYPE : "{{ route('ajax.admin.get_spaces_by_business_type') }}",
+            GET_ALL_SPACES : "{{ route('ajax.admin.get_all_spaces') }}",
+            GET_DEFAULT_BUSINESS_TYPE : "{{ route('ajax.admin.get_default_business_type') }}",
+            GET_LIST_VALUE_OF_ATTRIBUTE : "{{ route('ajax.admin.get_list_value_custom_attributes') }}",
+            GET_CUSTOM_ATTRIBUTES : "{{ route('ajax.admin.get_custom_attributes') }}",
+        };
+        const BUSINESS_SPACE_INDEX = 1;
+        const ALL_SPACE_INDEX = 1;
+        const ALL_SPACES = {!! json_encode($spaces) !!};
+        const PRODUCT_ATTRIBUTES = {!! json_encode($productAttributes) !!};
+    </script>
 @stop

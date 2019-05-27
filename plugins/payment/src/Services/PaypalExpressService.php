@@ -140,6 +140,7 @@ class PaypalExpressService implements IPaypalExpressService
         // Transaction
         $transaction = new Transaction();
         $transaction->setAmount($amount)
+            ->setInvoiceNumber($invoiceId)
             ->setDescription($transactionDescription);
 
         $redirectUrls = new RedirectUrls();

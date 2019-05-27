@@ -8,7 +8,6 @@
 
 namespace Plugins\Product\Requests;
 
-
 use Core\Master\Requests\CoreRequest;
 
 class ProductColorRequest extends CoreRequest

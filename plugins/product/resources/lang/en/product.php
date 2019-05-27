@@ -3,8 +3,19 @@
 return [
     'name' => 'Product',
     'create' => 'New product',
+    'general' => 'General',
     'edit' => 'Edit product',
     'list' => 'List product',
+    'variant_attribute' => 'Attributes/Variants Product',
+    'attributes' => 'Attributes Product',
+    'variants' => 'Variants Product',
+    'action' => 'Action',
+    'price_info' => 'Price Information',
+    'image_feature_info' => 'Image Feature Information',
+    'gallery_info' => 'Gallery Information',
+    'description_info' => 'Description Information',
+    'other_information' => 'Other Information',
+    'ship_specification_info' => 'Weight/Dimension And Specifications Information',
     'form' => [
         'upc' => 'UPC',
         'upc_placeholder' => 'UPC',
@@ -42,5 +53,9 @@ return [
         'package_weight' => 'Package Weight',
         'package_weight_placeholder' => 'Package Weight',
         'space' => 'Space',
+        'specification' => 'Specifications',
+        'weight_dimension_description' => 'Weights & Dimensions',
+        'use_for_variants' => 'Use for variants',
+        'show_in_product_page' => 'Show in product page',
     ]
 ];

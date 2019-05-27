@@ -1,6 +1,24 @@
-.gallery-box {
+.meta-box-custom {
   border: 1px solid #aa970c;
   .widget-body {
     min-height: 100px;
   }
+}
+
+.nav-tab-vertical-custom {
+  min-width: 161px !important;
+}
+
+.card-variant {
+  border: 1px solid #aa970c;
+  margin: 10px 0;
+}
+
+.nav-variant {
+  border: 1px solid;
+  padding: 20px;
+}
+
+.variant-product-item {
+  margin: 10px 0;
 }
