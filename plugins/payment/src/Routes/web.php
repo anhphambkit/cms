@@ -39,3 +39,12 @@ $router->group(['prefix' => 'payment', 'middleware' => ['customer']], function (
 		'uses'       => 'PaypalExpressController@testExpressCheckoutCallback',
     ]);
 });
+
+$router->group(['prefix' => 'payment/webhook'], function (Router $router) {
+    
+    $router->get('sale', [
+		'as'         => 'payment.webhook.sale', 
+		'uses'       => 'PaymentController@webhookSale',
+    ]);
+    
+});

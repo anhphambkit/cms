@@ -79,4 +79,14 @@ class PaymentController extends BasePublicController
 		// echo "</pre>"; die;
 
 	}
+
+	/**
+	 * [webhookSale description]
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function webhookSale(Request $request)
+	{
+		\Log::info('success');
+	}
 }

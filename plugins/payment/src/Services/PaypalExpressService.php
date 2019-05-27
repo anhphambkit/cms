@@ -181,6 +181,10 @@ class PaypalExpressService implements IPaypalExpressService
 		$paymentExecution = new PaymentExecution();
 		$paymentExecution->setPayerId($request->PayerID);
 		$paymentStatus    = $payment->execute($paymentExecution, $this->apiContext);
+
+        echo "<pre>"; 
+            print_r($paymentStatus); 
+        echo "</pre>"; die;
         return $paymentStatus;
     }
 }
