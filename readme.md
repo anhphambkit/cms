@@ -65,3 +65,14 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 -npm run build-package -- --env.pkg=consumer
+* * * * * www-data php /home/ifossinc/public_html/demo/artisan schedule:run >> /dev/null 2>&1
+
+[program:email-queue]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/ifossinc/public_html/demo/artisan queue:work --queue=emails
+autostart=true
+autorestart=true
+user=www-data
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/home/ifossinc/public_html/demo/storage/logs/queue.log

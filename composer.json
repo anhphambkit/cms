@@ -19,6 +19,7 @@
         "laravel/tinker": "^1.0",
         "league/flysystem-aws-s3-v3": "^1.0",
         "nette/utils": "^3.0",
+        "paypal/rest-api-sdk-php": "*",
         "predis/predis": "^1.1",
         "ramsey/uuid": "^3.8",
         "simplesoftwareio/simple-qrcode": "^2.0",

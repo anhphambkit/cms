@@ -81,11 +81,11 @@ class BlogServiceProvider extends ServiceProvider
 
         $this->app->booted(function () use ($screens, $prefixes){
             config([
-                'core-slug.general.supported' => array_merge(config('core-slug.general.supported'), $screens),
+                'core-slug.general.supported' => array_merge(config('core-slug.general.supported') ?? [], $screens),
             ]);
 
             config([
-                'core-slug.general.prefixes' => array_merge(config('core-slug.general.prefixes'), $prefixes),
+                'core-slug.general.prefixes' => array_merge(config('core-slug.general.prefixes') ?? [], $prefixes),
             ]);
         });
     }
