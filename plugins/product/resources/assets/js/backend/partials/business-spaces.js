@@ -29,8 +29,8 @@ $(document).on("change", '.select-business-type-list', function(e) {
 
     return request
         .then(function(data){
-            $(`.select-space-${businessTypeIndex}`).empty();
-            $(`.select-space-${businessTypeIndex}`).select2({
+            $(`.select-space-list.select-space-${businessTypeIndex}`).empty();
+            $(`.select-space-list.select-space-${businessTypeIndex}`).select2({
                 placeholder: "Select a space",
                 minimumResultsForSearch: Infinity,
                 data: data.data,
@@ -38,10 +38,10 @@ $(document).on("change", '.select-business-type-list', function(e) {
                 templateSelection: iconFormat,
                 escapeMarkup: function(es) { return es; }
             });
-            let currentSpaceId = $(`.select-space-${businessTypeIndex}`).data('init-space-id');
+            let currentSpaceId = $(`.select-space-list.select-space-${businessTypeIndex}`).data('init-space-id');
             if (currentSpaceId > 0) {
-                $(`.select-space-${businessTypeIndex}`).val(currentSpaceId).trigger('change');
-                $(`.select-space-${businessTypeIndex}`).data('init-space-id', 0);
+                $(`.select-space-list.select-space-${businessTypeIndex}`).val(currentSpaceId).trigger('change');
+                $(`.select-space-list.select-space-${businessTypeIndex}`).data('init-space-id', 0);
             }
         })
         .catch(function(data){

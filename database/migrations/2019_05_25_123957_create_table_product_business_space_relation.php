@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyTableProduct extends Migration
+class CreateTableProductBusinessSpaceRelation extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,6 @@ class ModifyTableProduct extends Migration
      */
     public function up()
     {
-        if (!Schema::hasColumn('products', 'parent_product_id')) {
-            Schema::table('products', function (Blueprint $table) {
-                $table->integer('parent_product_id')->nullable();
-            });
-        }
-
         Schema::create('product_business_type_space_relation', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('business_type_id');
@@ -38,12 +32,6 @@ class ModifyTableProduct extends Migration
      */
     public function down()
     {
-        if (Schema::hasColumn('products', 'parent_product_id')) {
-            Schema::table('products', function (Blueprint $table) {
-                $table->dropColumn('parent_product_id');
-            });
-        }
-
         Schema::dropIfExists('product_business_type_space_relation');
     }
 }

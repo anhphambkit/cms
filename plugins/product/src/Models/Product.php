@@ -48,6 +48,8 @@ class Product extends Eloquent
         'inventory',
         'rating',
         'keywords',
+        'weight_dimension_description',
+        'specification',
         'parent_product_id',
         'created_by',
         'updated_by',

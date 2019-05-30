@@ -27,9 +27,9 @@ class CreateTableAttribute extends Migration
             });
         }
 
-        if (!Schema::hasColumn('products', 'parent_linked_product')) {
+        if (!Schema::hasColumn('products', 'parent_product_id')) {
             Schema::table('products', function (Blueprint $table) {
-                $table->integer('parent_linked_product')->nullable();
+                $table->integer('parent_product_id')->nullable();
             });
         }
     }
@@ -49,9 +49,9 @@ class CreateTableAttribute extends Migration
             });
         }
 
-        if (Schema::hasColumn('products', 'parent_linked_product')) {
+        if (Schema::hasColumn('products', 'parent_product_id')) {
             Schema::table('products', function (Blueprint $table) {
-                $table->dropColumn('parent_linked_product');
+                $table->dropColumn('parent_product_id');
             });
         }
     }

@@ -169,7 +169,6 @@ class ProductController extends BaseAdminController
         $data['material_id'] = $request->input('material_id', []);
         $data['created_by'] = Auth::id();
 
-        dd($data);
         $productMaster = DB::transaction(function () use ($data) {
             $productMaster = $this->createSingleProduct($data);
 
@@ -201,7 +200,8 @@ class ProductController extends BaseAdminController
 
                 $this->createSingleProduct($variantProduct);
             }
-            return $productMaster->save();
+            $productMaster->save();
+            return $productMaster;
         }, 3);
 
         do_action(BASE_ACTION_AFTER_CREATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $productMaster);
@@ -251,6 +251,7 @@ class ProductController extends BaseAdminController
         $product->productBusinessSpaces()->createMany($productSpaces);
 
         $productAllSpaces = (!empty($data['all_space']) ? $data['all_space'] : []);
+        
         foreach ($productAllSpaces as $productAllSpace) {
             $product->productBusinessSpaces()->create([
                 'business_type_id' => 0,
