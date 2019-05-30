@@ -5,6 +5,8 @@ use Core\Master\Facades\AdminBreadcrumbFacade;
 use Core\Master\Supports\Editor;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 if (!function_exists('sort_item_with_children')) {
     /**
@@ -211,5 +213,20 @@ if (!function_exists('register_repositories')) {
                 return $repository;
             });
         }
+    }
+}
+
+if (!function_exists('get_states')) {
+    /**
+     * helper register repositories of provider core/plugin
+     * @author TrinhLe
+     * @param  [type] $provider [description]
+     * @return [type]           [description]
+     */
+    function get_states()
+    {
+        return Cache::rememberForever('get_states', function () {
+            return DB::table('states')->select('id', 'name', 'code')->orderBy('name', 'ASC')->get();
+        });
     }
 }

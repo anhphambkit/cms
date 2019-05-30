@@ -3,7 +3,6 @@
 namespace Plugins\Product\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
 use Plugins\Product\Repositories\Interfaces\LookBookRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
 use Plugins\Product\Repositories\Interfaces\ManufacturerRepositories;
@@ -13,6 +12,7 @@ use Plugins\Product\Repositories\Interfaces\ProductColorRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductMaterialRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductSpaceRepositories;
+use Plugins\Product\Repositories\Interfaces\ProductCouponRepositories;
 use Plugins\Product\Services\BusinessTypeServices;
 use Plugins\Product\Services\Implement\ImplementBusinessTypeServices;
 use Plugins\Product\Services\Implement\ImplementLookBookServices;
@@ -22,7 +22,6 @@ use Plugins\Product\Services\Implement\ImplementProductSpaceServices;
 use Plugins\Product\Services\LookBookServices;
 use Plugins\Product\Services\ProductCategoryServices;
 use Plugins\Product\Services\ProductServices;
-use Plugins\Product\Repositories\Interfaces\ProductCouponRepositories;
 use Plugins\Product\Services\ProductSpaceServices;
 
 

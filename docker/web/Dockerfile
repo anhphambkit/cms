@@ -4,7 +4,7 @@ RUN apt-get update && apt-get -y install language-pack-en-base software-properti
 RUN export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8 && \
     add-apt-repository ppa:ondrej/php && \
     add-apt-repository -y ppa:nginx/stable && \
-    apt-get update && apt-get -y install nginx php7.1 php7.1-cli php7.1-common php7.1-json php7.1-opcache php7.1-pgsql php7.1-mbstring php7.1-mcrypt php7.1-zip php7.1-fpm \
+    apt-get update && apt-get -y install nginx php7.1 php7.1-cli php7.1-common php7.1-json php7.1-opcache php7.1-pgsql php7.1-mbstring php7.1-mcrypt php7.1-zip php7.1-fpm php7.1-curl \
     php7.1-xml php7.2-gd curl \
     git unzip vim && \
     curl -sS https://getcomposer.org/installer -o composer-setup.php && \

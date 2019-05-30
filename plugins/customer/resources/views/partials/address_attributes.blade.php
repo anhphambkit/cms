@@ -12,10 +12,9 @@
         <div class="form-group form-group-s1">
             <select class="form-control form-control-lg squared" name="address[{{ $key }}][state]">
                 <option value="">State</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
+                @foreach(get_states() as $state)
+                    <option value="{{ $state->id }}" @if($address->state == $state->id) selected @endif>{{ $state->name }}</option>
+                @endforeach
             </select>
         </div>
     </div>
@@ -27,7 +26,7 @@
     <div class="col-md-6">
         <div class="form-group">
             <div class="checkbox checkbox-custom checkbox-circle pl-2">
-                <input class="address-type" id="checkbox-circle-circle-residential-{{ $key }}" type="checkbox" name="address[{{ $key }}][is_residential_address]"/>
+                <input class="address-type" id="checkbox-circle-circle-residential-{{ $key }}" type="checkbox" name="address[{{ $key }}][is_residential_address]" @if($address->is_residential_address ?? false) checked @endif/>
                 <label for="checkbox-circle-circle-residential-{{ $key }}">Residential Address</label>
             </div>
         </div>
@@ -35,7 +34,7 @@
     <div class="col-md-6">
         <div class="form-group">
             <div class="checkbox checkbox-custom checkbox-circle pl-2">
-                <input class="address-type" id="checkbox-circle-circle-business-{{ $key }}" type="checkbox" name="address[{{ $key }}][is_residential_address]"/>
+                <input class="address-type" id="checkbox-circle-circle-business-{{ $key }}" type="checkbox" name="address[{{ $key }}][is_business_address]"  @if($address->is_business_address ?? false) checked @endif />
                 <label for="checkbox-circle-circle-business-{{ $key }}">Business/Commercial Address</label>
             </div>
         </div>
@@ -51,7 +50,7 @@
     <div class="col-md-6">
         <div class="form-group">
             <div class="checkbox checkbox-custom checkbox-circle pl-2">
-                <input class="is_default_shipping" id="checkbox-circle-circle-shipping-{{ $key }}" type="checkbox" name="address[{{ $key }}][is_default_shipping]"/>
+                <input class="is_default_shipping" id="checkbox-circle-circle-shipping-{{ $key }}" type="checkbox" name="address[{{ $key }}][is_default_shipping]" @if($address->is_default_shipping ?? false) checked @endif/>
                 <label for="checkbox-circle-circle-shipping-{{ $key }}">Make this my default shipping address</label>
             </div>
         </div>
@@ -59,7 +58,7 @@
     <div class="col-md-6">
         <div class="form-group">
             <div class="checkbox checkbox-custom checkbox-circle pl-2">
-                <input class="is_default_billing" id="checkbox-circle-circle-billing-{{ $key }}" type="checkbox" name="address[{{ $key }}][is_default_billing]"/>
+                <input class="is_default_billing" id="checkbox-circle-circle-billing-{{ $key }}" type="checkbox" name="address[{{ $key }}][is_default_billing]" @if($address->is_default_billing ?? false) checked @endif/>
                 <label for="checkbox-circle-circle-billing-{{ $key }}">Make this my default billing address</label>
             </div>
         </div>

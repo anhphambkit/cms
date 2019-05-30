@@ -64,4 +64,8 @@ $router->group(['prefix' => 'account', 'middleware' => ['customer']], function (
         'uses' => 'CustomerController@postMyAccount',
     ]);
 
+    $router->get('/my-orders', [
+        'as' => 'public.customer.my-orders',
+        'uses' => 'OrderController@getMyOrders',
+    ]);
 });

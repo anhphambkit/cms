@@ -16,7 +16,7 @@
                                 </a>
                                 <div class="dropdown-menu text-right text-uppercase" aria-labelledby="account-dropdown">
                                     <a class="dropdown-item" href="{{ route('public.customer.dashboard') }}">My profile</a>
-                                    <a class="dropdown-item" href="#">My orders</a>
+                                    <a class="dropdown-item" href="{{ route('public.customer.my-orders') }}">My orders</a>
                                     <a class="dropdown-item" href="#">Wishlist</a>
                                     <a class="dropdown-item" href="{{ route('public.customer.logout') }}">Logout</a>
                                 </div>

@@ -3,13 +3,14 @@
 namespace Plugins\Customer\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Plugins\Customer\Repositories\Caches\CacheCustomerRepositories;
-use Plugins\Customer\Repositories\Eloquent\EloquentCustomerRepositories;
 use Plugins\Customer\Repositories\Interfaces\CustomerRepositories;
+use Plugins\Customer\Repositories\Interfaces\OrderRepositories;
 use Plugins\Customer\Middlewares\RedirectIfNotCustomer;
 use Plugins\Customer\Middlewares\RedirectIfCustomer;
 use Plugins\Customer\Models\Customer;
 use Illuminate\View\View;
+use Plugins\Customer\Services\IOrderService;
+use Plugins\Customer\Services\Excute\OrderService;
 
 class CustomerServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,18 @@ class CustomerServiceProvider extends ServiceProvider
      * @var \Illuminate\Foundation\Application
      */
     protected $app;
+
+    /**
+     * Prefix support binding eloquent
+     * @author TrinhLe
+     */
+    const PREFIX_REPOSITORY_ELOQUENT = 'Eloquent\\Eloquent';
+
+    /**
+     * Prefix support binding cache
+     * @author TrinhLe
+     */
+    const PREFIX_REPOSITORY_CACHE = 'Caches\\Cache';
 
     /**
      * @author TrinhLe
@@ -51,16 +64,21 @@ class CustomerServiceProvider extends ServiceProvider
         $router->aliasMiddleware('customer', RedirectIfNotCustomer::class);
         $router->aliasMiddleware('customer.guest', RedirectIfCustomer::class);
 
+        register_repositories($this);
+        $this->app->singleton(IOrderService::class, OrderService::class);
+    }
 
-        if (setting('enable_cache', false)) {
-            $this->app->singleton(CustomerRepositories::class, function () {
-                return new CacheCustomerRepositories(new EloquentCustomerRepositories(new \Plugins\Customer\Models\Customer()));
-            });
-        } else {
-            $this->app->singleton(CustomerRepositories::class, function () {
-                return new EloquentCustomerRepositories(new \Plugins\Customer\Models\Customer());
-            });
-        }
+    /**
+     * Get config repositories
+     * @author TrinhLe
+     * @return [array] [description]
+     */
+    public function getRespositories():array
+    {
+        return [
+            CustomerRepositories::class => \Plugins\Customer\Models\Customer::class,
+            OrderRepositories::class    => \Plugins\Customer\Models\Order::class,
+        ];
     }
 
     /**
