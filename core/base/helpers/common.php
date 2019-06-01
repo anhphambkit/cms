@@ -225,8 +225,10 @@ if (!function_exists('get_states')) {
      */
     function get_states()
     {
-        return Cache::rememberForever('get_states', function () {
+        $states =  Cache::rememberForever('get_states', function () {
             return DB::table('states')->select('id', 'name', 'code')->orderBy('name', 'ASC')->get();
         });
+
+        return $states ?: [];
     }
 }

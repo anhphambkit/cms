@@ -56,11 +56,6 @@
                                             </div>
 
                                             <div class="row">
-                                                <div class="form-group col-md-6 mb-2 @if ($errors->has('address')) has-error @endif">
-                                                    <label for="userinput1">Address</label>
-                                                    {!! Form::text('address', $customer->address, ['class' => 'form-control', 'id' => 'address', 'placeholder' => 'Address', 'data-counter' => 255]) !!}
-                                                    {!! Form::error('address', $errors) !!}
-                                                </div>
                                                 <div class="form-group col-md-6 mb-2 @if ($errors->has('secondary_address')) has-error @endif">
                                                     <label for="userinput2">Secondary Address</label>
                                                     {!! Form::text('secondary_address', $customer->secondary_address, ['class' => 'form-control', 'id' => 'secondary_address', 'placeholder' => 'Address', 'data-counter' => 255]) !!}

@@ -36,19 +36,19 @@ task('deploy:start', function(){ //
 task('deploy:upload', function(){ // 
     writeln('Start upload');
     $folders = [
-//        'app',
-//        'config',
-//        'core',
-//        'Themes',
-//        'database//seeds',
-        'plugins//product//src//Repositories//Eloquent',
-//        'public//themes',
-//        'public//backend',
-//        'public//frontend',
-//        'public//libs',
-//        'public//vendor',
-//        'Themes',
-//        'webpack'
+       'app',
+       'config',
+       'core',
+       'Themes',
+       'database//seeds',
+        'plugins',
+       'public//themes',
+       'public//backend',
+       'public//frontend',
+       'public//libs',
+       'public//vendor',
+       'Themes',
+       'webpack'
     ];
     $path = get('deploy_path');
     foreach ($folders as $key => $folder) {

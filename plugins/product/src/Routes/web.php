@@ -57,3 +57,21 @@ $router->group(['prefix' => 'product'], function (Router $router) {
         'uses'       => 'ProductController@getProductDetail',
     ]);
 });
+
+$router->group(['prefix' => 'product/checkout', 'middleware' => ['customer']], function (Router $router) {
+    
+    $router->get('/', [
+        'as'         => 'public.product.checkout', 
+        'uses'       => 'CheckoutController@getCheckout',
+    ]);
+
+    $router->post('/', [
+        'as'         => 'public.product.checkout', 
+        'uses'       => 'CheckoutController@postCheckout',
+    ]);
+
+    $router->get('/paypal/callback', [
+		'as'         => 'public.product.checkout.paypal.callback', 
+		'uses'       => 'CheckoutController@callbackPaypalForm',
+    ]);
+});
