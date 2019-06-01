@@ -62,51 +62,55 @@
         }
       }
     }
-  }
-  .tag-product-popup {
-    min-width: 225px;
-    position: relative;
-    z-index: 3;
-    opacity: 0;
-    visibility: hidden;
-    -moz-transition: padding 0.2s linear;
-    -o-transition: padding 0.2s linear;
-    -webkit-transition: padding 0.2s linear;
-    transition: padding 0.2s linear;
-    &.left-bottom-product-popup {
-      right: 250px;
+    a.link-product-detail {
+      color: inherit;
     }
-    &.left-top-product-popup {
-      right: 250px;
-      bottom: 250px;
-    }
-    &.right-bottom-product-popup {
-      left: 250px;
-    }
-    &.right-top-product-popup {
-      left: 250px;
-      bottom: 250px;
-    }
-    &.bottom-product-popup {
-      top: 50px;
-      right: 80px;
-    }
-    &.top-product-popup {
-      bottom: 300px;
-      right: 80px;
-    }
+    .tag-product-popup {
+      min-width: 225px;
+      position: relative;
+      z-index: 3;
+      opacity: 0;
+      visibility: hidden;
+      -moz-transition: padding 0.2s linear;
+      -o-transition: padding 0.2s linear;
+      -webkit-transition: padding 0.2s linear;
+      transition: padding 0.2s linear;
+      &.left-bottom-product-popup {
+        right: 250px;
+      }
+      &.left-top-product-popup {
+        right: 250px;
+        bottom: 250px;
+      }
+      &.right-bottom-product-popup {
+        left: 250px;
+      }
+      &.right-top-product-popup {
+        left: 250px;
+        bottom: 250px;
+      }
+      &.bottom-product-popup {
+        top: 50px;
+        right: 80px;
+      }
+      &.top-product-popup {
+        bottom: 300px;
+        right: 80px;
+      }
 
-    .thumbnail-product-popup {
-      img.img-product-popup {
-        max-width: 300px;
-        max-height: 300px;
+      .thumbnail-product-popup {
+        img.img-product-popup {
+          max-width: 300px;
+          max-height: 300px;
+        }
+      }
+      .product-specs {
+        color: black;
+        padding-top: 10px;
       }
     }
-    .product-specs {
-      color: black;
-      padding-top: 10px;
-    }
   }
+
   &:hover .tt-hotspot .tt-btn, &:hover .tag-product-popup {
     opacity: 1;
     visibility: visible;
