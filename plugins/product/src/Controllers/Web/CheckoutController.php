@@ -71,10 +71,6 @@ class CheckoutController extends BasePublicController
 	{
 		//TODO CREATE INVOICE ORDER HERE TO GET ORDER_ID WITH PAYMENT TYPE "PAYPAL"
 
-		// Invoice amount belong to discount code if exist. please countdown if used.
-
-		// 3D free design for this invoice here
-
 		$paymentType   = PaymentReferenceConfig::REFERENCE_PAYMENT_TYPE_PAYPAL;
 		list($invoiceId, $invoiceAmount) = $this->createOrderInvoice($request, $paymentType);
 
@@ -165,6 +161,10 @@ class CheckoutController extends BasePublicController
 		$invoiceStatus = find_reference_element(OrderReferenceConfig::REFERENCE_ORDER_STATUS_NEW, OrderReferenceConfig::REFERENCE_ORDER_STATUS);
 		$invoiceId     = uniqid();
 		$invoiceAmount = 1000;
+
+		// Invoice amount belong to discount code if exist. please countdown if used.
+
+		// 3D free design for this invoice here
 
 		//TODO CODE HERE FOR CREATE INVOICE
 
