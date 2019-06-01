@@ -88,7 +88,7 @@ class PaypalCreditService implements IPaypalCreditService
     {
         $this->paymentCredit = new PaymentCard();
         $this->paymentCredit
-            ->setType($data['cardType'] ?? 'visa')
+            ->setType($data['cardType'])
             ->setNumber($data['cardNumber'])
             ->setExpireMonth($data['cardExpireMonth'])
             ->setExpireYear($data['cardExpireYear'])

@@ -72,7 +72,7 @@
 				$('#checkout-form').submit();
 			});
 
-			$('#submit-with-creditcard1').on('click', function(event) {
+			$('#submit-with-creditcard').on('click', function(event) {
 				event.preventDefault();
 				/* replace url post checkout*/
 				$('#checkout-form').attr('action', CHECKOUT_CREDIT_URL);

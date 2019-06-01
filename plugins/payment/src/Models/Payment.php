@@ -19,7 +19,18 @@ class Payment extends Eloquent
      *
      * @var string
      */
-    protected $table = 'payment';
+    protected $table = 'payment_transactions';
 
-    protected $fillable = ['name'];
+    protected $fillable = [
+    	'customer_id',
+		'description',
+		'transaction_id',
+		'amount',
+		'status',
+		'payment_type',
+		'last_4',
+		'payment_method',
+		'currency',
+		'paypal_id'
+    ];
 }
