@@ -16,14 +16,21 @@ class EloquentProductRepositories extends RepositoriesAbstract implements Produc
     {
         try {
             $query = $this->model->products();
-
-//            if ($categoryId)
-//                $query = $query->where('relation.cate_id', '=', $categoryId);
-//            ->orderBy('category.order', 'asc')->orderBy('products.order', 'asc')
             return $query->get();
         }
         catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+    }
+
+    /**
+     * @param int $productId
+     * @return mixed
+     */
+    public function getOverviewInfoProductPopup(int $productId) {
+        return $this->model
+                        ->select('id', 'name', 'slug', 'price', 'sale_price', 'image_feature')
+                        ->where('id', $productId)
+                        ->first();
     }
 }

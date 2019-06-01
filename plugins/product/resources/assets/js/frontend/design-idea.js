@@ -1,0 +1,87 @@
+/*=========================================================================================
+    File Name: design-idea.js
+    ----------------------------------------------------------------------------------------
+    Author: Anh Pham
+==========================================================================================*/
+
+import axios from 'axios';
+axios.defaults.withCredentials = true;
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+$(document).on('click', '.look-book-tag-product.show-popup', function (e) {
+    e.preventDefault();
+    let productId = $(this).data('product-id');
+    let data = {
+        "product_id" : productId
+    };
+    let request = axios.get(PRODUCT.GET_OVERVIEW_INFO_POPUP, { params: data});
+    let _this = this;
+
+    return request
+        .then(function(data){
+            closeAllOpenedPopup();
+            $(_this).addClass('close-popup');
+            $(_this).removeClass('show-popup');
+            let leftPosition = $(_this).data('left');
+            let topPosition = $(_this).data('top');
+            let classProductPopupPosition = generateClassProductPopupPosition(parseFloat(leftPosition), parseFloat(topPosition));
+            let htmlPopup = `<div class="tag-popup-info tag-product-popup ${classProductPopupPosition}">
+                        <div class="thumbnail thumbnail-product-popup">
+                            <img class="img-product-popup" src="${data.data.image_feature}">
+                        </div>
+                        <div class="product-specs mb-0">
+                            <div class="title">
+                                <a href="${PRODUCT.DETAIL_PRODUCT}${data.data.slug}.${data.data.id}" class="link-product-detail">${data.data.name}</a>
+                            </div>
+                            <div class="price">
+                                <div class="main">$${(data.data.is_expired_sale) ? data.data.price : data.data.sale_price}</div>
+                                <div class="discount ${(data.data.is_expired_sale) ? 'd-none' : ''}">$${(data.data.is_expired_sale) ? data.data.price : data.data.sale_price}</div>
+                                <div class="sale ${(data.data.is_expired_sale) ? 'd-none' : ''}">${(data.data.is_expired_sale) ? data.data.percent_sale : 0}% off</div>
+                            </div>
+                        </div>
+                    </div>`;
+            $(_this).find('.tt-btn .icon-show-popup').hide();
+            $(_this).find('.tt-btn .icon-close-popup').show();
+            $(_this).append(htmlPopup);
+        })
+        .catch(function(data){
+            console.log("error", data);
+        })
+        .then(function(data){
+
+        });
+})
+
+$(document).on('click', '.look-book-tag-product.close-popup', function (e) {
+    e.preventDefault();
+    $(this).addClass('show-popup');
+    $(this).removeClass('close-popup');
+    $(this).find('.tag-product-popup').remove();
+    $(this).find('.tt-btn .icon-show-popup').show();
+    $(this).find('.tt-btn .icon-close-popup').hide();
+})
+
+function generateClassProductPopupPosition(left, top) {
+    let classPosition = '';
+    if (left <= 40)
+        classPosition += ' right-';
+    else if (left >= 60)
+        classPosition += ' left-';
+
+    if (top <= 60)
+        classPosition += 'bottom-product-popup';
+    else
+        classPosition += 'top-product-popup';
+
+    return classPosition;
+}
+
+function closeAllOpenedPopup() {
+    $('.look-book-tag-product.close-popup').each(function (el) {
+        $(this).addClass('show-popup');
+        $(this).removeClass('close-popup');
+        $(this).find('.tag-product-popup').remove();
+        $(this).find('.tt-btn .icon-show-popup').show();
+        $(this).find('.tt-btn .icon-close-popup').hide();
+    })
+}

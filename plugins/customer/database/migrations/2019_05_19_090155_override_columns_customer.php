@@ -13,9 +13,11 @@ class OverrideColumnsCustomer extends Migration
      */
     public function up()
     {
-        Schema::table('customers', function (Blueprint $table) {
-            $table->string('first_name')->nullable()->change();
-        });
+        if (Schema::hasColumn('customers', 'first_name')) {
+            Schema::table('customers', function (Blueprint $table) {
+                $table->string('first_name')->nullable()->change();
+            });
+        }
     }
 
     /**
@@ -25,6 +27,10 @@ class OverrideColumnsCustomer extends Migration
      */
     public function down()
     {
-       
+        if (Schema::hasColumn('customers', 'first_name')) {
+            Schema::table('customers', function (Blueprint $table) {
+                $table->string('first_name')->nullable(false)->change();
+            });
+        }
     }
 }

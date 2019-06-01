@@ -2,6 +2,7 @@
 
 namespace Plugins\Product\Models;
 
+use Carbon\Carbon;
 use Core\User\Models\User;
 use Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -51,9 +52,21 @@ class Product extends Eloquent
         'weight_dimension_description',
         'specification',
         'parent_product_id',
+        'sale_start_date',
+        'sale_end_date',
         'created_by',
         'updated_by',
         'status',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'is_expired_sale',
+        'percent_sale',
     ];
 
     /**
@@ -168,5 +181,16 @@ class Product extends Eloquent
     public function createdByUser()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function getIsExpiredSaleAttribute() {
+        $now = Carbon::now();
+        return ($now->lessThan($this->sale_start_date) || $now->greaterThan($this->sale_end_date));
+    }
+
+    public function getPercentSaleAttribute() {
+        if ($this->sale_price)
+            return round((1 - ($this->sale_price/$this->price)) * 100);
+        return 0;
     }
 }

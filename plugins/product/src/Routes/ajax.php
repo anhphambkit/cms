@@ -35,3 +35,12 @@ $router->group(['prefix' => 'admin'], function (Router $router) {
     ]);
 
 });
+
+$router->group(['prefix' => 'product'], function (Router $router) {
+
+    $router->get('/get-overview-info-product-popup', [
+        'as' => 'ajax.product.get_overview_info_product_popup',
+        'uses' => 'ProductController@getOverviewInfoProductPopup',
+    ]);
+
+});

@@ -39,4 +39,12 @@ class ImplementProductServices implements ProductServices {
             throw new \Exception($e->getMessage());
         }
     }
+
+    /**
+     * @param int $productId
+     * @return mixed
+     */
+    public function getOverviewInfoProductPopup(int $productId) {
+        return $this->repository->getOverviewInfoProductPopup($productId);
+    }
 }

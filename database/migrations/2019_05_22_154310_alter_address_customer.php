@@ -13,9 +13,17 @@ class AlterAddressCustomer extends Migration
      */
     public function up()
     {
-        Schema::table('customers', function (Blueprint $table) {
-            $table->text('address')->nullable()->change();
-        });
+        if (Schema::hasColumn('customers', 'address')) {
+            Schema::table('customers', function (Blueprint $table) {
+                $table->text('address')->nullable()->change();
+            });
+        }
+
+        else {
+            Schema::table('customers', function (Blueprint $table) {
+                $table->text('address')->nullable();
+            });
+        }
     }
 
     /**

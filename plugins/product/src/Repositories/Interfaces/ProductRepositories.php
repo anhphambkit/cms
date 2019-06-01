@@ -11,4 +11,10 @@ interface ProductRepositories extends RepositoryInterface
      * @return mixed
      */
     public function getAllProductsByCategory(int $categoryId = null);
+
+    /**
+     * @param int $productId
+     * @return mixed
+     */
+    public function getOverviewInfoProductPopup(int $productId);
 }

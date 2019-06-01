@@ -34,11 +34,17 @@
                         'currentBusinessSlug' => $businessType,
                         'currentBusinessName' => $businessTypeName
                     ])
-                    {{--<div class="text-center py-4">--}}
-                    {{--<a href="javascript:void(0);" class="btn-view-icon"><i class="fas fa-plus"></i> <span>Load more</span></a>--}}
-                    {{--</div>--}}
                 </div>
             </div>
         </div>
     </section>
+@stop
+
+@section('variable-scripts')
+    <script>
+        const PRODUCT = {
+            GET_OVERVIEW_INFO_POPUP : "{{ route('ajax.product.get_overview_info_product_popup') }}",
+            DETAIL_PRODUCT : "{{ route('public.product.detail', [ 'url' => '' ]) }}",
+        };
+    </script>
 @stop

@@ -54,11 +54,72 @@
         top: 7px;
         left: 1px;
         font-size: 18px;
+        &.icon-close-popup {
+          display: none;
+          top: 5px;
+          left: 0px;
+          font-size: 22px;
+        }
       }
     }
   }
-  &:hover .tt-hotspot .tt-btn {
+  .tag-product-popup {
+    min-width: 225px;
+    position: relative;
+    z-index: 3;
+    opacity: 0;
+    visibility: hidden;
+    -moz-transition: padding 0.2s linear;
+    -o-transition: padding 0.2s linear;
+    -webkit-transition: padding 0.2s linear;
+    transition: padding 0.2s linear;
+    &.left-bottom-product-popup {
+      right: 250px;
+    }
+    &.left-top-product-popup {
+      right: 250px;
+      bottom: 250px;
+    }
+    &.right-bottom-product-popup {
+      left: 250px;
+    }
+    &.right-top-product-popup {
+      left: 250px;
+      bottom: 250px;
+    }
+    &.bottom-product-popup {
+      top: 50px;
+      right: 80px;
+    }
+    &.top-product-popup {
+      bottom: 300px;
+      right: 80px;
+    }
+
+    .thumbnail-product-popup {
+      img.img-product-popup {
+        max-width: 300px;
+        max-height: 300px;
+      }
+    }
+    .product-specs {
+      color: black;
+      padding-top: 10px;
+    }
+  }
+  &:hover .tt-hotspot .tt-btn, &:hover .tag-product-popup {
     opacity: 1;
     visibility: visible;
   }
+}
+
+.visible-product-tag {
+  .tt-btn {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
+
+.design-ideas-row .item.item-look-book {
+  overflow: unset;
 }

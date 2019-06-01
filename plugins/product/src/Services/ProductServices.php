@@ -14,4 +14,10 @@ interface ProductServices {
      * @return mixed
      */
     public function getAllProductsOfCategoryById(int $categoryId);
+
+    /**
+     * @param int $productId
+     * @return mixed
+     */
+    public function getOverviewInfoProductPopup(int $productId);
 }

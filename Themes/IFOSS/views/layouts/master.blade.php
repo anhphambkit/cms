@@ -52,7 +52,8 @@
         </script>
         @section('script-table')
         @show
-        
+        @section('variable-scripts')
+        @show
         @section('script-media')
             @include('core-media::partials.media')
         @show
