@@ -8,9 +8,9 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-$(document).on('click', '.look-book-tag-product.show-popup', function (e) {
+$(document).on('click', '.look-book-tag-product .icon-show-popup', function (e) {
     e.preventDefault();
-    let productId = $(this).data('product-id');
+    let productId = $(this).parents('.look-book-tag-product').data('product-id');
     let data = {
         "product_id" : productId
     };
@@ -20,10 +20,10 @@ $(document).on('click', '.look-book-tag-product.show-popup', function (e) {
     return request
         .then(function(data){
             closeAllOpenedPopup();
-            $(_this).addClass('close-popup');
-            $(_this).removeClass('show-popup');
-            let leftPosition = $(_this).data('left');
-            let topPosition = $(_this).data('top');
+            $(_this).parents('.look-book-tag-product').addClass('close-popup');
+            $(_this).parents('.look-book-tag-product').removeClass('show-popup');
+            let leftPosition = $(_this).parents('.look-book-tag-product').data('left');
+            let topPosition = $(_this).parents('.look-book-tag-product').data('top');
             let classProductPopupPosition = generateClassProductPopupPosition(parseFloat(leftPosition), parseFloat(topPosition));
             let htmlPopup = `<div class="tag-popup-info tag-product-popup ${classProductPopupPosition}">
                         <div class="thumbnail thumbnail-product-popup">
@@ -31,7 +31,7 @@ $(document).on('click', '.look-book-tag-product.show-popup', function (e) {
                         </div>
                         <div class="product-specs mb-0">
                             <div class="title">
-                                <a href="${PRODUCT.DETAIL_PRODUCT}${data.data.slug}.${data.data.id}" class="link-product-detail">${data.data.name}</a>
+                                <a href="${PRODUCT.DETAIL_PRODUCT}/${data.data.slug}.${data.data.id}" class="link-product-detail">${data.data.name}</a>
                             </div>
                             <div class="price">
                                 <div class="main">$${(data.data.is_expired_sale) ? data.data.price : data.data.sale_price}</div>
@@ -40,9 +40,9 @@ $(document).on('click', '.look-book-tag-product.show-popup', function (e) {
                             </div>
                         </div>
                     </div>`;
-            $(_this).find('.tt-btn .icon-show-popup').hide();
-            $(_this).find('.tt-btn .icon-close-popup').show();
-            $(_this).append(htmlPopup);
+            $(_this).parents('.look-book-tag-product').find('.tt-btn .icon-show-popup').hide();
+            $(_this).parents('.look-book-tag-product').find('.tt-btn .icon-close-popup').show();
+            $(_this).parents('.look-book-tag-product').append(htmlPopup);
         })
         .catch(function(data){
             console.log("error", data);
@@ -52,13 +52,13 @@ $(document).on('click', '.look-book-tag-product.show-popup', function (e) {
         });
 })
 
-$(document).on('click', '.look-book-tag-product.close-popup', function (e) {
+$(document).on('click', '.look-book-tag-product .icon-close-popup', function (e) {
     e.preventDefault();
-    $(this).addClass('show-popup');
-    $(this).removeClass('close-popup');
-    $(this).find('.tag-product-popup').remove();
-    $(this).find('.tt-btn .icon-show-popup').show();
-    $(this).find('.tt-btn .icon-close-popup').hide();
+    $(this).parents('.look-book-tag-product').addClass('show-popup');
+    $(this).parents('.look-book-tag-product').removeClass('close-popup');
+    $(this).parents('.look-book-tag-product').find('.tag-product-popup').remove();
+    $(this).parents('.look-book-tag-product').find('.tt-btn .icon-show-popup').show();
+    $(this).parents('.look-book-tag-product').find('.tt-btn .icon-close-popup').hide();
 })
 
 function generateClassProductPopupPosition(left, top) {
