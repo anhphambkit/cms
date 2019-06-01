@@ -190,14 +190,14 @@ class CheckoutController extends BasePublicController
 		];
 
 		$card = [
-			'cardType'           => $creditRequest->card_name;
-			'cardNumber'         => $creditRequest->card_name;
-			'cardExpireMonth'    => $creditRequest->expiration_month;
-			'cardExpireYear'     => $creditRequest->expiration_year;
-			'cardCvv'            => $creditRequest->card_cvv;
-			'cardFirstName'      => $creditRequest->first_name;
-			'cardLastName'       => $creditRequest->last_name;
-			'cardBillingCountry' => 'US';
+			'cardType'           => $creditRequest->card_name,
+			'cardNumber'         => $creditRequest->card_name,
+			'cardExpireMonth'    => $creditRequest->expiration_month,
+			'cardExpireYear'     => $creditRequest->expiration_year,
+			'cardCvv'            => $creditRequest->card_cvv,
+			'cardFirstName'      => $creditRequest->first_name,
+			'cardLastName'       => $creditRequest->last_name,
+			'cardBillingCountry' => 'US'
 		];
 		return [$address, $card];
 	}
