@@ -60,6 +60,8 @@ class PaymentController extends BaseAdminController
      */
     public function postCreate(PaymentRequest $request)
     {
+        return redirect()->route('admin.payment.list')->with('success_msg', trans('core-base::notices.create_success_message'));
+        
         $payment = $this->paymentRepository->createOrUpdate($request->input());
 
         do_action(BASE_ACTION_AFTER_CREATE_CONTENT, PAYMENT_MODULE_SCREEN_NAME, $request, $payment);
@@ -98,6 +100,8 @@ class PaymentController extends BaseAdminController
      */
     public function postEdit($id, PaymentRequest $request)
     {
+        return redirect()->route('admin.payment.list')->with('success_msg', trans('core-base::notices.update_success_message'));
+
         $payment = $this->paymentRepository->findById($id);
         if (empty($payment)) {
             abort(404);
