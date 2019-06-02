@@ -20,14 +20,20 @@ class OrderDataTable extends DataTableAbstract
             ->editColumn('name', function ($item) {
                 return anchor_link(route('admin.order.edit', $item->id), $item->name);
             })
-            ->editColumn('checkbox', function ($item) {
-                return table_checkbox($item->id);
-            })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
             })
             ->editColumn('status', function ($item) {
-                return table_status($item->status);
+                return ucfirst($item->status);
+            })
+            ->editColumn('amount', function ($item) {
+                return  $item->amount;
+            })
+            ->editColumn('amount_refund', function ($item) {
+                return  $item->amount_refund;
+            })
+            ->editColumn('payment_method', function ($item) {
+                return ucfirst($item->payment_method);
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, ORDER_MODULE_SCREEN_NAME)
@@ -50,7 +56,17 @@ class OrderDataTable extends DataTableAbstract
        /**
         * @var \Eloquent $model
         */
-       $query = $model->select(['order.id', 'order.name', 'order.created_at', 'order.status']);
+       $query = $model->select([
+            'customer_orders.id',
+            'customer_orders.paypal_id',
+            'customer_orders.amount',
+            'customer_orders.payment_method',
+            'customer_orders.created_at',
+            'customer_orders.status',
+            'customer_orders.amount',
+            'customer_orders.amount_refund',
+            'customer_orders.address_billing'
+        ]);
        return $query;
     }
 
@@ -63,27 +79,38 @@ class OrderDataTable extends DataTableAbstract
     {
         return [
             'id' => [
-                'name' => 'order.id',
+                'name' => 'customer_orders.id',
                 'title' => trans('core-base::tables.id'),
                 'footer' => trans('core-base::tables.id'),
                 'width' => '20px',
                 'class' => 'searchable searchable_id',
             ],
-            'name' => [
-                'name' => 'order.name',
-                'title' => trans('core-base::tables.name'),
-                'footer' => trans('core-base::tables.name'),
-                'class' => 'text-left searchable',
+            'paypal_id' => [
+                'name'   => 'customer_orders.paypal_id',
+                'title'  => __('Paypal ID'),
+                'footer' => __('Paypal ID'),
+                'class'  => 'text-left searchable',
             ],
-            'created_at' => [
-                'name' => 'order.created_at',
-                'title' => trans('core-base::tables.created_at'),
-                'footer' => trans('core-base::tables.created_at'),
-                'width' => '100px',
-                'class' => 'searchable',
+            'payment_method' => [
+                'name'   => 'customer_orders.payment_method',
+                'title'  => __('Payment method'),
+                'footer' => __('Payment method'),
+                'class'  => 'text-left',
+            ],
+            'amount' => [
+                'name'   => 'customer_orders.amount',
+                'title'  => __('Amount'),
+                'footer' => __('Amount'),
+                'class'  => 'text-left',
+            ],
+            'amount_refund' => [
+                'name'   => 'customer_orders.amount_refund',
+                'title'  => __('Amount refund'),
+                'footer' => __('Amount refund'),
+                'class'  => 'text-left',
             ],
             'status' => [
-                'name' => 'order.status',
+                'name' => 'customer_orders.status',
                 'title' => trans('core-base::tables.status'),
                 'footer' => trans('core-base::tables.status'),
                 'width' => '100px',
@@ -97,13 +124,7 @@ class OrderDataTable extends DataTableAbstract
      */
     public function buttons()
     {
-        $buttons = [
-            'create' => [
-                'link' => route('admin.order.create'),
-                'text' => view('core-base::elements.tables.actions.create')->render(),
-            ],
-        ];
-        return $buttons;
+        return [];
     }
 
     /**
