@@ -104,7 +104,7 @@
                         <div class="coupon-calc">
                             <div class="font-weight-500 mb-2">We offer free design for qualifying order over ${{ config('plugins-product.product.price_get_free_design_idea') }}</div>
                             <div class="input-group mb-3" style="box-shadow: 0 4px 12px #d6e9e7;">
-                                <input type="text" class="form-control rounded-0 px-2 special-price" value="+  {{ $cart['free_design']['wanting_price'] }}">
+                                <input type="text" class="form-control rounded-0 px-2 special-price" value="+  ${{ $cart['free_design']['wanting_price'] }}">
                                 <div class="input-group-append">
                                     <span class="input-group-text font-size-12 rounded-0" style="background-color: rgba(150,196,189,.2); color: #2a7469;">to qualify for {{ $cart['free_design']['total_free_design'] + 1 }} FREE DESIGN</span>
                                 </div>
@@ -113,7 +113,9 @@
                                 <a href="#" class="text-blue text-uppercase text-underline">Learn more</a>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-outline-custom btn-s1 btn-block justify-content-center mb-3">Checkout</button>
+                        <button type="button" class="btn btn-outline-custom btn-s1 btn-block justify-content-center mb-3">
+                            <a href="{{ route('public.product.checkout') }}">Checkout</a>
+                        </button>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,9 @@
 
 namespace Plugins\Product\Controllers\Web;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Plugins\Cart\Services\CartServices;
 use Plugins\Payment\Requests\CheckoutPaymentRequest;
 use Core\Base\Controllers\Web\BasePublicController;
 use Core\Base\Responses\BaseHttpResponse;
@@ -48,18 +50,25 @@ class CheckoutController extends BasePublicController
 	 */
 	private $orderService;
 
+    /**
+     * @var CartServices
+     */
+	private $cartServices;
+
 	public function __construct(
 		IOrderService $orderService, 
 		IPaypalCreditService $paypalCreditService,
 		PaymentRepositories $paymentRepositories,
-		IPaypalExpressService $paypalPaymentService)
+		IPaypalExpressService $paypalPaymentService,
+        CartServices $cartServices)
 	{
 		parent::__construct();
 		$this->orderService         = $orderService;
 		$this->paypalCreditService  = $paypalCreditService;
 		$this->paypalPaymentService = $paypalPaymentService;
 		$this->paymentRepositories  = $paymentRepositories;
-	}	
+		$this->cartServices  = $cartServices;
+	}
 
 	/**
 	 * Get checkout order product of customer
@@ -68,7 +77,8 @@ class CheckoutController extends BasePublicController
 	 */
 	public function getCheckout(Request $request)
 	{
-		return view('pages.checkout.index');
+        $cart = $this->cartServices->getBasicInfoCartOfCustomer(Auth::guard('customer')->id());
+		return view('pages.checkout.index', compact('cart'));
 	}
 
 	/**
