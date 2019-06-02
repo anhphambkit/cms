@@ -192,12 +192,6 @@
 @stop
 @section('variable-scripts')
     <script>
-        const PRODUCT = {
-            GET_DETAIL_PRODUCT : "{{ route('ajax.product.get_detail_info_product') }}",
-            DETAIL_PRODUCT_PAGE : "{{ route('public.product.detail', [ 'url' => '' ]) }}",
-        };
-
-
         const PRODUCT_ID = {{ $productInfo['product']->id }};
     </script>
 @stop

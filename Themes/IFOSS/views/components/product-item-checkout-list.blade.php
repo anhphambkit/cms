@@ -12,7 +12,7 @@ $attributeValues = $productItem->productStringValueAttribute()->get();
 ?>
 <div class="list-item">
     <div class="thumbnail">
-        <img src="{{ URL::asset('themes/ifoss/assets/images/products/product-cart-1.jpg') }}" alt=""/>
+        <img src="{{ asset($productItem->image_feature) }}" alt=""/>
     </div>
     <div>
         <div class="mb-1"><a href="{{ route('public.product.detail', [ 'url' => $productItem->url_product ]) }}">{{ $productItem->name }}</a></div>

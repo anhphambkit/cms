@@ -53,7 +53,12 @@ $isVariantAttribute = ($typeProduct === \Plugins\Product\Contracts\ProductRefere
                                 @endif
                             @endforeach
                         </div>
-                        <a href="javascript:void(0);" class="action-icon"><i class="fas fa-chevron-right"></i></a>
+                        <a href="javascript:void(0);" class="action-icon" data-toggle="dropdown"><i class="fas fa-chevron-right"></i></a>
+                        <div class="dropdown-menu align-left" aria-labelledby="account-dropdown">
+                            @foreach($productAttributeValues[$productAttribute->id] as $productAttributeValue)
+                                <a class="dropdown-item" href="#">{{ $productAttributeValue->name }}</a>
+                            @endforeach
+                        </div>
                     </div>
                 @break;
             @endswitch

@@ -15,30 +15,13 @@
         <div class="container">
             <div class="h6 text-uppercase text-center mb-3">Items in This Room</div>
             <div class="row">
-                <?php for ($i=0; $i < 2; $i++) { ?>
-                    <?php for ($j=0; $j < 4; $j++) { ?>
-                        <div class="col-md-3">
-                            <div class="item">
-                                <div class="thumbnail" >
-                                    @php
-                                        $indexUrl = $j+1;
-                                        $url = "themes/ifoss/assets/images/products/product{$indexUrl}.jpg";
-                                    @endphp
-                                    <img src="{{ URL::asset($url) }}">
-                                    <div class="mask">
-                                        <button class="btn btn-white">quick view</button>
-                                        <a href="#" class="favourite"><i class="far fa-heart"></i></a>
-                                    </div>
-                                </div>
-                                <div class="title">Basics Metal Box Spring</div>
-                                <div class="cost">
-                                    <div class="discount">$5560</div>
-                                    <div class="original-cost">$4560</div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php } ?>
-                <?php } ?>
+                @foreach($lookBook['look_book_products'] as $lookBookProduct)
+                    <div class="col-md-3">
+                        @component("components.product-item")
+                            @slot("productItem", json_decode (json_encode ($lookBookProduct), FALSE))
+                        @endcomponent
+                    </div>
+                @endforeach
             </div>
             <hr class="bg-custom mb-4">
             <div class="h6 text-uppercase text-center mb-3">Try something similar</div>
@@ -65,31 +48,6 @@
                         </div>
                     </div>
                 <?php } ?>
-            </div>
-            <hr class="bg-custom mb-4">
-            <div class="h6 text-uppercase text-center mb-3">Try something similar</div>
-            <div class="product-slider">
-                <div class="row product-slider--wrapper">
-                    <?php for ($i=0; $i < 2; $i++) { ?>
-                        <?php for ($j=0; $j < 4; $j++) { ?>
-                            <div class="col-md-3">
-                                <div class="item">
-                                    <div class="thumbnail mb-0">
-                                        @php
-                                            $indexUrl = $j+1;
-                                            $url = "themes/ifoss/assets/images/products/product{$indexUrl}.jpg";
-                                        @endphp
-                                        <img src="{{ URL::asset('$url') }}">
-                                        <div class="mask">
-                                            <button class="btn btn-white">quick view</button>
-                                            <a href="#" class="favourite"><i class="far fa-heart"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php } ?>
-                    <?php } ?>
-                </div>
             </div>
         </div>
     </section>
@@ -120,4 +78,8 @@
             </div>
         </div>
     </section>
+@stop
+
+@section('variable-scripts')
+
 @stop

@@ -64,6 +64,14 @@ class LookBook extends Model
     }
 
     /**
+     * Get the look book product for the look book.
+     */
+    public function lookBookProducts()
+    {
+        return $this->belongsToMany(Product::class, 'look_book_tags')->whereNull('look_book_tags.deleted_at');
+    }
+
+    /**
      * Get the look book spaces for the look book.
      */
     public function lookBookSpaces()
