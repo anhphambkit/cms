@@ -19,6 +19,6 @@ class CacheOrderRepositories extends CacheAbstractDecorator implements OrderRepo
     {
         parent::__construct();
         $this->repository = $repository;
-        $this->entityName = 'default'; # Please setup reference name of cache.
+        $this->entityName = 'Cache-Order'; # Please setup reference name of cache.
     }
 }

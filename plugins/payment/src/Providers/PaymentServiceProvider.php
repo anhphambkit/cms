@@ -10,6 +10,8 @@ use Plugins\Payment\Services\PaypalCreditService;
 use Plugins\Payment\Services\IPaypalCreditService;
 use Plugins\Payment\Services\PaypalExpressService;
 use Plugins\Payment\Services\IPaypalExpressService;
+use Plugins\Payment\Services\IPaypalRefundService;
+use Plugins\Payment\Services\PaypalRefundService;
 class PaymentServiceProvider extends ServiceProvider
 {
     /**
@@ -34,6 +36,7 @@ class PaymentServiceProvider extends ServiceProvider
 
         $this->app->singleton(IPaypalCreditService::class, PaypalCreditService::class);
         $this->app->singleton(IPaypalExpressService::class, PaypalExpressService::class);
+        $this->app->singleton(IPaypalRefundService::class, PaypalRefundService::class);
     }
 
     /**

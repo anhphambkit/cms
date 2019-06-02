@@ -10,6 +10,7 @@ use Core\Base\Controllers\Web\BasePublicController;
 use Core\Base\Responses\BaseHttpResponse;
 use Plugins\Customer\Services\IOrderService;
 use Plugins\Payment\Services\IPaypalCreditService;
+use Plugins\Payment\Services\IPaypalRefundService;
 use PayPal\Exception\PayPalConnectionException;
 use Plugins\Payment\Services\IPaypalExpressService;
 use Plugins\Product\Requests\CheckoutFormRequest;
@@ -55,11 +56,18 @@ class CheckoutController extends BasePublicController
      */
 	private $cartServices;
 
+	/**
+	 * [$paypalRefundService description]
+	 * @var IPaypalRefundService
+	 */
+	private $paypalRefundService;
+
 	public function __construct(
 		IOrderService $orderService, 
 		IPaypalCreditService $paypalCreditService,
 		PaymentRepositories $paymentRepositories,
 		IPaypalExpressService $paypalPaymentService,
+		IPaypalRefundService $paypalRefundService,
         CartServices $cartServices)
 	{
 		parent::__construct();
@@ -67,7 +75,8 @@ class CheckoutController extends BasePublicController
 		$this->paypalCreditService  = $paypalCreditService;
 		$this->paypalPaymentService = $paypalPaymentService;
 		$this->paymentRepositories  = $paymentRepositories;
-		$this->cartServices  = $cartServices;
+		$this->cartServices         = $cartServices;
+		$this->paypalRefundService  = $paypalRefundService;
 	}
 
 	/**
@@ -210,6 +219,35 @@ class CheckoutController extends BasePublicController
 
 		return $this->responseAfterChargeOrder($paymentInfo, $response);
 	}
+	/**
+     * @param int $id
+     * @param Request $request
+     * @return BaseHttpResponse
+     * @author TrinhLe
+     */
+    public function refundOrder(Request $request, $id, BaseHttpResponse $response)
+    {
+        try {
+            //TODO REFUND
+
+            $saleId = $id;
+            $paymentInfo = $this->paypalRefundService
+            	->setAmountAttribute(10000)
+            	->createRefundPayment($saleId);
+            // TODO UPDATE ORDER here	
+            return $response->setMessage(trans('Refund success your order'));
+        } catch (PayPalConnectionException $ex) {
+        
+            return $response
+                ->setError()
+                ->setMessage(trans('Cannot refund order!!!'));
+        }
+        catch (\Exception $ex) {
+            return $response
+                ->setError()
+                ->setMessage(trans('Cannot refund order!!!'));
+        }
+    }
 
 	/**
 	 * Create invoice

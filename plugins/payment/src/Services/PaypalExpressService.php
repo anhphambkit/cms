@@ -15,25 +15,10 @@ use PayPal\Api\Payer;
 use PayPal\Api\PaymentExecution;
 use Request;
 
-class PaypalExpressService implements IPaypalExpressService
+class PaypalExpressService extends BasePaymentService implements IPaypalExpressService
 {
-	private $apiContext;
-    private $paymentCurrency;
-    private $totalAmount;
-    private $returnUrl;
-    private $cancelUrl;
-
-    public function __construct()
-    {
-        $paypalConfigs = config('paypal');
-        $this->apiContext = new ApiContext(
-            new OAuthTokenCredential(
-                $paypalConfigs['client_id'],
-                $paypalConfigs['secret']
-            )
-        );
-        $this->paymentCurrency = $paypalConfigs['currency'];
-        $this->totalAmount = 0;
+	public function __construct(){
+        parent::__construct();
     }
 
     /**

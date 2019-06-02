@@ -19,4 +19,13 @@ return [
 		'url'         => 'admin.customer.list',
 		'permissions' => ['customer.list']
     ],
+    [
+		'id'          => 'menu-order-administrator',
+		'priority'    => 1,
+		'parent_id'   => null,
+		'name'        => 'plugins-customer::sidebar.order',
+		'icon'        => 'fas fa-users-cog',
+		'url'         => 'admin.order.list',
+		'permissions' => ['order.list']
+    ],
 ];

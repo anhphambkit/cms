@@ -16,50 +16,11 @@ use PayPal\Api\PaymentExecution;
 use PayPal\Api\FundingInstrument;
 use PayPal\Api\Address;
 use PayPal\Api\PaymentCard;
-class PaypalCreditService implements IPaypalCreditService
+
+class PaypalCreditService extends BasePaymentService implements IPaypalCreditService
 {
-    /**
-     * [$apiContext description]
-     * @var [type]
-     */
-    private $apiContext;
-
-    /**
-     * [$paymentCurrency description]
-     * @var [type]
-     */
-    private $paymentCurrency;
-
-    /**
-     * [$totalAmount description]
-     * @var [type]
-     */
-    private $totalAmount;
-
-    /**
-     * @var [type]
-     * [$returnUrl description]
-     */
-    private $returnUrl;
-
-    /**
-     * [$cancelUrl description]
-     * @var [type]
-     */
-    private $cancelUrl;
-
-    public function __construct()
-    {
-        $paypalConfigs = config('paypal');
-
-        $this->apiContext = new ApiContext(
-            new OAuthTokenCredential(
-                $paypalConfigs['client_id'],
-                $paypalConfigs['secret']
-            )
-        );
-        $this->paymentCurrency = $paypalConfigs['currency'];
-        $this->totalAmount = 0;
+    public function __construct(){
+        parent::__construct();
     }
 
     /**

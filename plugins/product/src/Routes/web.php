@@ -69,7 +69,7 @@ $router->group(['prefix' => 'product/checkout', 'middleware' => ['customer']], f
         'as'         => 'public.product.checkout', 
         'uses'       => 'CheckoutController@postCheckout',
     ]);
-
+    
     $router->post('credit-card', [
         'as'         => 'public.product.checkout.credit', 
         'uses'       => 'CheckoutController@postCheckoutCredit',
@@ -78,5 +78,13 @@ $router->group(['prefix' => 'product/checkout', 'middleware' => ['customer']], f
     $router->get('/paypal/callback', [
 		'as'         => 'public.product.checkout.paypal.callback', 
 		'uses'       => 'CheckoutController@callbackPaypalForm',
+    ]);
+});
+
+$router->group(['prefix' => 'product/order', 'middleware' => ['customer']], function (Router $router) {
+    
+    $router->get('/refund/{id}', [
+        'as'         => 'public.product.order.refund', 
+        'uses'       => 'CheckoutController@refundOrder',
     ]);
 });
