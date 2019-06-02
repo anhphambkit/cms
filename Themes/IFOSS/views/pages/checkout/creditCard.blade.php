@@ -1,40 +1,61 @@
+@php
+	use Plugins\Payment\Contracts\PaymentReferenceConfig;
+	$cardType = [
+		'visa'       => PaymentReferenceConfig::REFERENCE_PAYMENT_PAYPAL_CARD_NAME_VISA,
+		'mastercard' => PaymentReferenceConfig::REFERENCE_PAYMENT_PAYPAL_CARD_NAME_MASTER,
+		'discover'   => PaymentReferenceConfig::REFERENCE_PAYMENT_PAYPAL_CARD_NAME_DISCOVER,
+		'amex'       => PaymentReferenceConfig::REFERENCE_PAYMENT_PAYPAL_CARD_NAME_AMEX,
+	];
+@endphp
+
 <div class="text-uppercase text-center mb-3 font-size-12 font-weight-500" style="color: #51887f;">Add Credit or Debit Card</div>
 <div class="p-4 bg-white mb-3" style="border: 1px solid #96c4bd;">
-	<div class="d-flex mb-2">
-		<a href="#" class="btn-tab w-100 p-0 mr-2"><img src="{{ URL::asset('themes/ifoss/assets/images/icons/visa-logo.png') }}" class="w-100"></a>
-		<a href="#" class="btn-tab w-100 p-0 mr-2"><img src="{{ URL::asset('themes/ifoss/assets/images/icons/mastercard-logo.png') }}" class="w-100"></a>
-		<a href="#" class="btn-tab w-100 p-0 mr-2"><img src="{{ URL::asset('themes/ifoss/assets/images/icons/amex-logo.png') }}" class="w-100"></a>
-		<a href="#" class="btn-tab w-100 p-0"><img src="{{ URL::asset('themes/ifoss/assets/images/icons/discover-logo.png') }}" class="w-100"></a>
+	<div class="d-flex mb-2" id="tab-card-type">
+		<a href="#" class="btn-tab w-100 p-0 mr-2" attr-name="{{ $cardType['visa'] }}"><img src="{{ URL::asset('themes/ifoss/assets/images/icons/visa-logo.png') }}" class="w-100"></a>
+		<a href="#" class="btn-tab w-100 p-0 mr-2" attr-name="{{ $cardType['mastercard'] }}"><img src="{{ URL::asset('themes/ifoss/assets/images/icons/mastercard-logo.png') }}" class="w-100"></a>
+		<a href="#" class="btn-tab w-100 p-0 mr-2" attr-name="{{ $cardType['discover'] }}"><img src="{{ URL::asset('themes/ifoss/assets/images/icons/amex-logo.png') }}" class="w-100"></a>
+		<a href="#" class="btn-tab w-100 p-0" attr-name="{{ $cardType['amex'] }}"><img src="{{ URL::asset('themes/ifoss/assets/images/icons/discover-logo.png') }}" class="w-100"></a>
 	</div>
-	<div class="form-group-fl">
-		<input type="text" class="form-control-fl" placeholder="Name on card *">
+	<div class="form-group-fl @if ($errors->has('creditcard.card_name')) has-error @endif">
+		<input type="text" class="form-control-fl @if ($errors->has('creditcard.card_name')) is-invalid @endif" placeholder="Name on card *" name="creditcard[card_name]" value="{{ old('creditcard.card_name') }}">
+		{!! $errors->first('creditcard.card_name', '<span class="invalid-feedback">:message</span>') !!}
 	</div>
-	<div class="form-group-fl">
-		<input type="text" class="form-control-fl" placeholder="Card number *">
+	<div class="form-group-fl @if ($errors->has('creditcard.first_name')) has-error @endif">
+		<input type="text" class="form-control-fl @if ($errors->has('creditcard.first_name')) is-invalid @endif" placeholder="First Name *" name="creditcard[first_name]" value="{{ old('creditcard.first_name') }}">
+		{!! $errors->first('creditcard.first_name', '<span class="invalid-feedback">:message</span>') !!}
+	</div>
+	<div class="form-group-fl @if ($errors->has('creditcard.last_name')) has-error @endif">
+		<input type="text" class="form-control-fl @if ($errors->has('creditcard.last_name')) is-invalid @endif" placeholder="Last Name *" name="creditcard[last_name]" value="{{ old('creditcard.last_name') }}">
+		{!! $errors->first('creditcard.last_name', '<span class="invalid-feedback">:message</span>') !!}
+	</div>
+	<div class="form-group-fl @if ($errors->has('creditcard.card_number')) has-error @endif">
+		<input type="text" class="form-control-fl @if ($errors->has('creditcard.card_number')) is-invalid @endif" placeholder="Card number *" name="creditcard[card_number]" value="{{ old('creditcard.card_number') }}">
+		{!! $errors->first('creditcard.card_number', '<span class="invalid-feedback">:message</span>') !!}
 	</div>
 	<div class="font-size-12 font-weight-500 my-4" style="color: #acacac;">Expiration date</div>
 	<div class="row">
-		<div class="col-md-4">
-			<select class="form-control form-control-lg squared">
-				<option>Month</option>
-				<option>2</option>
-				<option>3</option>
-				<option>4</option>
-				<option>5</option>
+		<div class="col-md-4 @if ($errors->has('creditcard.expiration_month')) has-error @endif">
+			<select class="form-control form-control-lg squared @if ($errors->has('creditcard.expiration_month')) is-invalid @endif" name="creditcard[expiration_month]" >
+				<option value="">Month</option>
+				@for($month = 1; $month <= 12; $month++)
+					<option value="{{ $month }}" @if(old('creditcard.expiration_month') == $month) selected @endif>{{ $month }}</option>
+				@endfor
 			</select>
+			{!! $errors->first('creditcard.expiration_month', '<span class="invalid-feedback">:message</span>') !!}
 		</div>
-		<div class="col-md-4">
-			<select class="form-control form-control-lg squared">
-				<option>Year</option>
-				<option>2</option>
-				<option>3</option>
-				<option>4</option>
-				<option>5</option>
+		<div class="col-md-4 @if ($errors->has('creditcard.expiration_year')) has-error @endif">
+			<select class="form-control form-control-lg squared @if ($errors->has('creditcard.expiration_year')) is-invalid @endif" name="creditcard[expiration_year]">
+				<option value="">Year</option>
+				@for($year = 2018; $year <= 2050; $year++)
+					<option value="{{ $year }}" @if(old('creditcard.expiration_year') == $year) selected @endif>{{ $year }}</option>
+				@endfor
 			</select>
+			{!! $errors->first('creditcard.expiration_year', '<span class="invalid-feedback">:message</span>') !!}
 		</div>
-		<div class="col-md-4">
-			<input type="text" class="form-control form-control-lg squared" placeholder="CVV"/>
+		<div class="col-md-4 @if ($errors->has('creditcard.card_cvv')) has-error @endif">
+			<input type="text" class="form-control form-control-lg squared @if ($errors->has('creditcard.card_cvv')) is-invalid @endif" placeholder="CVV" name="creditcard[card_cvv]" value="{{ old('creditcard.card_cvv') }}"/>
+			{!! $errors->first('creditcard.card_cvv', '<span class="invalid-feedback">:message</span>') !!}
 		</div>
 	</div>
 </div>
-<button type="button" class="btn btn-custom btn-lg btn-block justify-content-center mb-3">PLACE  ORDER</button>
+<button data-loading-text="<i class='fas fa-spinner'></i> Processing Order" type="button" id="submit-with-creditcard" class="btn btn-custom btn-lg btn-block justify-content-center mb-3">PLACE  ORDER</button>

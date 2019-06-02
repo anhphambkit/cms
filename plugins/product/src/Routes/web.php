@@ -70,6 +70,11 @@ $router->group(['prefix' => 'product/checkout', 'middleware' => ['customer']], f
         'uses'       => 'CheckoutController@postCheckout',
     ]);
 
+    $router->post('credit-card', [
+        'as'         => 'public.product.checkout.credit', 
+        'uses'       => 'CheckoutController@postCheckoutCredit',
+    ]);
+
     $router->get('/paypal/callback', [
 		'as'         => 'public.product.checkout.paypal.callback', 
 		'uses'       => 'CheckoutController@callbackPaypalForm',

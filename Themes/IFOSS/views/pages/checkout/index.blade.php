@@ -58,10 +58,12 @@
 
 @section('master-footer')
 	<script>
+		const CHECKOUT_CREDIT_URL = "{{ route('public.product.checkout.credit') }}";
+
 		$(document).ready(function() {
-			$('.btn-tab').on('click', function(event) {
+			$('#tab-card-type .btn-tab').on('click', function(event) {
 				event.preventDefault();
-				$('.btn-tab').removeClass('active');
+				$('#tab-card-type .btn-tab').removeClass('active');
 				$(this).addClass('active');
 			});
 
@@ -69,6 +71,22 @@
 				event.preventDefault();
 				$('#checkout-form').submit();
 			});
+
+			$('#submit-with-creditcard').on('click', function(event) {
+				event.preventDefault();
+				/* replace url post checkout*/
+				$('#checkout-form').attr('action', CHECKOUT_CREDIT_URL);
+				$('#checkout-form').submit();
+			});
+
+			$('#tab-card-type .btn-tab').on('click', function(event) {
+				event.preventDefault();
+				/* replace url post checkout*/
+				let cardType = this.getAttribute('attr-name');
+				$('input[name="creditcard[card_name]"]').val(cardType);
+			});
 		});
+		
+
 	</script>
 @endsection
