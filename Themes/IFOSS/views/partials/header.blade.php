@@ -21,7 +21,10 @@
                                     <a class="dropdown-item" href="{{ route('public.customer.logout') }}">Logout</a>
                                 </div>
                             </li>
-                            <li><a href="javascript:void(0);"><i class="fas fa-shopping-cart"></i></a></li>
+                            <li><a href="{{ route('public.cart') }}" class="shopping-cart-quantity">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </a>
+                            </li>
                         @else
                             <li><a href="{{ route('public.customer.login') }}"><i class="fas fa-user-circle"></i> <span>Sign In</span></a></li>
                         @endif    
@@ -56,7 +59,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="submenu-navigation bg-white">
         <div class="container">
             <ul class="submenu-navigation-wrapper">

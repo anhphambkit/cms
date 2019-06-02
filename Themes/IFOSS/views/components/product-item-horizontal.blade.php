@@ -25,7 +25,9 @@ $attributeValues = $productItem->productStringValueAttribute()->get();
                 <div class="font-size-18">${{ $productItem->min_price }} - ${{ $productItem->max_price }}</div>
             @endif
         </div>
-        <div class="title">{{ $productItem->name }}</div>
+        <div class="title">
+            <a href="{{ route('public.product.detail', [ 'url' => $productItem->url_product ]) }}" class="link-product-detail">{{ $productItem->name }}</a>
+        </div>
         @foreach($attributeValues as $attributeValue)
             <div class="mb-1">{{ $customAttributes->where('id', $attributeValue->custom_attribute_id)->first()->name }}: {{ $attributeValue->name }}</div>
         @endforeach

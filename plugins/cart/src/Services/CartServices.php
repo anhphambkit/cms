@@ -19,14 +19,14 @@ interface CartServices
      * @param bool $isUpdate
      * @throws \Exception
      */
-    public function addOrUpdateProductsToCartOfCustomer(array $products, int $customerId = 0, bool $isGuest = true, bool $isUpdate = true);
+    public function addOrUpdateProductsToCartOfCustomer(array $products, int $customerId = 0, bool $isGuest = false, bool $isUpdate = true);
 
     /**
      * @param int|null $customerId
      * @param bool $isGuest
      * @return mixed
      */
-    public function getBasicInfoCartOfCustomer(int $customerId = null, bool $isGuest = true);
+    public function getBasicInfoCartOfCustomer(int $customerId = null, bool $isGuest = false);
 
     /**
      * @param array $products
@@ -55,7 +55,7 @@ interface CartServices
      * @param bool $isGuest
      * @return mixed
      */
-    public function getTotalItemsInCart(int $customerId, bool $isGuest = true);
+    public function getTotalItemsInCart(int $customerId, bool $isGuest = false);
 
     /**
      * @param int $productId
@@ -64,14 +64,14 @@ interface CartServices
      * @param bool $isUpdate
      * @return mixed
      */
-    public function deleteProductInCart(int $productId, int $customerId = 0, bool $isGuest = true, bool $isUpdate = true);
+    public function deleteProductInCart(int $productId, int $customerId = 0, bool $isGuest = false, bool $isUpdate = true);
 
     /**
      * @param int|null $customerId
      * @param bool $isGuest
      * @return mixed
      */
-    public function getProductsInCartToOrder(int $customerId = null, bool $isGuest = true);
+    public function getProductsInCartToOrder(int $customerId = null, bool $isGuest = false);
 
     /**
      * @param array $idProducts
@@ -79,5 +79,5 @@ interface CartServices
      * @param bool $isGuest
      * @return mixed
      */
-    public function deleteListProductInCart(array $idProducts, int $customerId = null, bool $isGuest = true);
+    public function deleteListProductInCart(array $idProducts, int $customerId = null, bool $isGuest = false);
 }

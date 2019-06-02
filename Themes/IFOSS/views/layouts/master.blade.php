@@ -62,6 +62,15 @@
         </script>
         @section('script-table')
         @show
+        <!-- ========== START PAGE SCRIPTS ========== -->
+        <script>
+            const API_SHOP = {
+                ADD_TO_CART : "{{ route('ajax.product.add_to_cart') }}",
+                {{--VIEW_CART_HEADER : "{{ route('ajax.shop.view_cart_header') }}",--}}
+                {{--DELETE_PRODUCT_IN_CART : "{{ route('ajax.shop.delete_product_in_cart') }}",--}}
+            };
+        </script>
+
         @section('variable-scripts')
         @show
         @section('script-media')

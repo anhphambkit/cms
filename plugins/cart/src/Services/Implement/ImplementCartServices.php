@@ -52,7 +52,7 @@ class ImplementCartServices implements CartServices {
      * @param bool $isUpdate
      * @throws \Exception
      */
-    public function addOrUpdateProductsToCartOfCustomer(array $products, int $customerId = 0, bool $isGuest = true, bool $isUpdate = true) {
+    public function addOrUpdateProductsToCartOfCustomer(array $products, int $customerId = 0, bool $isGuest = false, bool $isUpdate = false) {
         try {
             foreach ($products as $productId => $quantity) {
                 $quantity = intval($quantity) > 0 ? intval($quantity) : 1;
@@ -71,7 +71,7 @@ class ImplementCartServices implements CartServices {
      * @return array|mixed
      * @throws \Exception
      */
-    public function getBasicInfoCartOfCustomer(int $customerId = null, bool $isGuest = true) {
+    public function getBasicInfoCartOfCustomer(int $customerId = null, bool $isGuest = false) {
         try {
             $products = $this->repository->getBasicInfoCartOfCustomer($customerId, $isGuest);
             $productInCarts = $this->productRepositories->findByArrayId($products->pluck('id')->toArray(), [ 'productAttributeValues', 'productCustomAttributes' ]);
@@ -202,7 +202,7 @@ class ImplementCartServices implements CartServices {
      * @return array|mixed
      * @throws \Exception
      */
-    public function getTotalItemsInCart(int $customerId, bool $isGuest = true)
+    public function getTotalItemsInCart(int $customerId, bool $isGuest = false)
     {
         try {
             $totalItems = $this->repository->getTotalItemsInCart($customerId, $isGuest);
@@ -221,7 +221,7 @@ class ImplementCartServices implements CartServices {
      * @return mixed
      * @throws \Exception
      */
-    public function deleteProductInCart(int $productId, int $customerId = 0, bool $isGuest = true, bool $isUpdate = true) {
+    public function deleteProductInCart(int $productId, int $customerId = 0, bool $isGuest = false, bool $isUpdate = false) {
         try {
             return $this->repository->addOrUpdateProductsToCartOfCustomer($productId, 0, $customerId, $isGuest, $isUpdate);
         }
@@ -236,7 +236,7 @@ class ImplementCartServices implements CartServices {
      * @return array|mixed
      * @throws \Exception
      */
-    public function getProductsInCartToOrder(int $customerId = null, bool $isGuest = true) {
+    public function getProductsInCartToOrder(int $customerId = null, bool $isGuest = false) {
         try {
             $products = $this->repository->getBasicInfoCartOfCustomer($customerId, $isGuest);
             $totalItems = $products->sum('quantity');
@@ -322,7 +322,7 @@ class ImplementCartServices implements CartServices {
      * @return mixed
      * @throws \Exception
      */
-    public function deleteListProductInCart(array $idProducts, int $customerId = null, bool $isGuest = true) {
+    public function deleteListProductInCart(array $idProducts, int $customerId = null, bool $isGuest = false) {
 //        try {
         return $this->repository->deleteListProductInCart($idProducts, $customerId, $isGuest);
 //        } catch (\Exception $e) {

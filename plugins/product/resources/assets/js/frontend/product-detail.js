@@ -3,7 +3,6 @@
     ----------------------------------------------------------------------------------------
     Author: Anh Pham
 ==========================================================================================*/
-
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -83,6 +82,32 @@ $(document).ready(function() {
         }
         $('.quantity-product').text(newQuantity);
         $('.quantity-product').data('quantity', newQuantity);
+    });
+
+    $('.add-to-cart-btn').on('click', function (event) {
+        event.preventDefault();
+        let products = {};
+        let newProduct = {};
+        let quantity = $('.quantity-product').data('quantity');
+        newProduct[PRODUCT_ID] = quantity;
+        products = Object.assign(products, newProduct);
+
+        let request = axios.post(API_SHOP.ADD_TO_CART, { 'products' : products, 'is_update_product' : false });
+        request
+            .then(function(data){
+                let totalItems = data.data.total_items;
+                if (totalItems > 0) {
+                    $('.shopping-cart-quantity i').html(`(${totalItems})`);
+                } // Update UI cart number
+                else
+                    $('.shopping-cart-quantity i').html();
+            })
+            .catch(function(data){
+                console.log("error", data);
+            })
+            .then(function(data){
+
+            });
     });
 
     function getAllAttributeValue() {

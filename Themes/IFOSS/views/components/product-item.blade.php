@@ -22,7 +22,7 @@ $productItem = !empty($productItem) ? $productItem : collect([]);
     </div>
     <div class="product-specs">
         <div class="title">
-            <a href="{{ $productItem->url_product }}" class="link-product-detail">{{ $productItem->name }}</a>
+            <a href="{{ route('public.product.detail', [ 'url' => $productItem->url_product ]) }}" class="link-product-detail">{{ $productItem->name }}</a>
         </div>
         <div class="price">
             @if($productItem->type_product !== \Plugins\Product\Contracts\ProductReferenceConfig::PRODUCT_TYPE_VARIANT)

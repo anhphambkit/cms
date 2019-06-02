@@ -1,20 +1,3 @@
 {
-    "/frontend/plugins/product/assets/js/design-idea.js": "/frontend/plugins/product/assets/js/design-idea.js",
-    "/frontend/plugins/product/assets/css/look-book-design.css": "/frontend/plugins/product/assets/css/look-book-design.css",
-    "/frontend/plugins/product/assets/css/product-detail.css": "/frontend/plugins/product/assets/css/product-detail.css",
-    "/backend/plugins/product/assets/css/look-book.css": "/backend/plugins/product/assets/css/look-book.css",
-    "/backend/plugins/product/assets/css/custom-partials.css": "/backend/plugins/product/assets/css/custom-partials.css",
-    "/backend/plugins/product/assets/css/product.css": "/backend/plugins/product/assets/css/product.css",
-    "/backend/plugins/product/assets/js/variants.js": "/backend/plugins/product/assets/js/variants.js",
-    "/backend/plugins/product/assets/js/business-spaces.js": "/backend/plugins/product/assets/js/business-spaces.js",
-    "/backend/plugins/product/assets/js/look-book.js": "/backend/plugins/product/assets/js/look-book.js",
-    "/backend/plugins/product/assets/scripts/switch.min.js": "/backend/plugins/product/assets/scripts/switch.min.js",
-    "/backend/plugins/product/assets/scripts/switch.js": "/backend/plugins/product/assets/scripts/switch.js",
-    "/backend/plugins/product/assets/scripts/picker-color.min.js": "/backend/plugins/product/assets/scripts/picker-color.min.js",
-    "/backend/plugins/product/assets/scripts/picker-color.js": "/backend/plugins/product/assets/scripts/picker-color.js",
-    "/backend/plugins/product/assets/scripts/form-select2.min.js": "/backend/plugins/product/assets/scripts/form-select2.min.js",
-    "/backend/plugins/product/assets/scripts/form-select2.js": "/backend/plugins/product/assets/scripts/form-select2.js",
-    "/frontend/plugins/product/assets/js/product-detail.js": "/frontend/plugins/product/assets/js/product-detail.js",
-    "/backend/plugins/product/assets/js/product.js": "/backend/plugins/product/assets/js/product.js",
-    "/backend/plugins/product/assets/js/select2-helper.js": "/backend/plugins/product/assets/js/select2-helper.js"
+    "/frontend/plugins/cart/assets/css/cart.css": "/frontend/plugins/cart/assets/css/cart.css"
 }

@@ -17,7 +17,7 @@ class EloquentCartRepositories extends RepositoriesAbstract implements CartRepos
      * @return mixed
      * @throws \Exception
      */
-    public function addOrUpdateProductsToCartOfCustomer(int $productId, int $quantity = 1, int $customerId = 0, bool $isGuest = true, bool $isUpdate = true) {
+    public function addOrUpdateProductsToCartOfCustomer(int $productId, int $quantity = 1, int $customerId = 0, bool $isGuest = false, bool $isUpdate = true) {
         try {
             $dataFindOrCreate = [
                 'customer_id'   => $customerId,
@@ -45,7 +45,7 @@ class EloquentCartRepositories extends RepositoriesAbstract implements CartRepos
      * @return mixed
      * @throws \Exception
      */
-    public function getBasicInfoCartOfCustomer(int $customerId = null, bool $isGuest = true) {
+    public function getBasicInfoCartOfCustomer(int $customerId = null, bool $isGuest = false) {
         try {
             $query = $this->model->select('products.id', 'products.name', 'products.slug', 'products.sku',
                 'products.price', 'products.sale_price', "quantity", 'products.image_feature', 'products.sale_start_date', 'products.sale_end_date',
@@ -73,13 +73,13 @@ class EloquentCartRepositories extends RepositoriesAbstract implements CartRepos
      * @return mixed
      * @throws \Exception
      */
-    public function getTotalItemsInCart(int $customerId, bool $isGuest = true) {
+    public function getTotalItemsInCart(int $customerId, bool $isGuest = false) {
         try {
             $query = $this->model->select("quantity")
-                ->leftJoin(ProductConfig::PRODUCT_TBL . ' as products', "product_id", '=', 'products.id')
+                ->leftJoin('products', "product_id", '=', 'products.id')
                 ->where("customer_id", $customerId)
                 ->where("is_guest", $isGuest)
-                ->where('products.is_publish', true)
+                ->where('products.status', true)
                 ->get();
             return $query->sum('quantity');
         }
@@ -95,7 +95,7 @@ class EloquentCartRepositories extends RepositoriesAbstract implements CartRepos
      * @return mixed
      * @throws \Exception
      */
-    public function deleteListProductInCart(array $idProducts, int $customerId = null, bool $isGuest = true) {
+    public function deleteListProductInCart(array $idProducts, int $customerId = null, bool $isGuest = false) {
 //        try {
         return $this->model
             ->where("customer_id", $customerId)

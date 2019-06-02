@@ -14,21 +14,21 @@ interface CartRepositories extends RepositoryInterface
      * @param bool $isUpdate
      * @return mixed
      */
-    public function addOrUpdateProductsToCartOfCustomer(int $productId, int $quantity = 1, int $customerId = 0, bool $isGuest = true, bool $isUpdate = true);
+    public function addOrUpdateProductsToCartOfCustomer(int $productId, int $quantity = 1, int $customerId = 0, bool $isGuest = false, bool $isUpdate = true);
 
     /**
      * @param int|null $customerId
      * @param bool $isGuest
      * @return mixed
      */
-    public function getBasicInfoCartOfCustomer(int $customerId = null, bool $isGuest = true);
+    public function getBasicInfoCartOfCustomer(int $customerId = null, bool $isGuest = false);
 
     /**
      * @param int $customerId
      * @param bool $isGuest
      * @return mixed
      */
-    public function getTotalItemsInCart(int $customerId, bool $isGuest = true);
+    public function getTotalItemsInCart(int $customerId, bool $isGuest = false);
 
     /**
      * @param array $idProducts
@@ -37,5 +37,5 @@ interface CartRepositories extends RepositoryInterface
      * @return mixed
      * @throws \Exception
      */
-    public function deleteListProductInCart(array $idProducts, int $customerId = null, bool $isGuest = true);
+    public function deleteListProductInCart(array $idProducts, int $customerId = null, bool $isGuest = false);
 }

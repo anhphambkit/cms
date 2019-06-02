@@ -46,6 +46,14 @@ class ProductCategory extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function childCategories()
+    {
+        return $this->hasMany(ProductCategory::class, 'parent_id');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      * @author AnhPham
      */

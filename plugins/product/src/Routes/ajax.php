@@ -48,4 +48,5 @@ $router->group(['prefix' => 'product'], function (Router $router) {
         'uses' => 'ProductController@getDetailInfoProduct',
     ]);
 
+    $router->post('/add-to-cart', 'ProductController@addOrUpdateProductsToCartOfCustomer')->name('ajax.product.add_to_cart');
 });
