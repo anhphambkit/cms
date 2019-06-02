@@ -8,6 +8,7 @@
 
 namespace Plugins\Cart\Services\Implement;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Plugins\Cart\Repositories\Interfaces\CartRepositories;
 use Plugins\Cart\Services\CartServices;
@@ -80,6 +81,7 @@ class ImplementCartServices implements CartServices {
             $freeDesignIdeaInfo = $this->calculatorWantingPriceAndTotalFreeDesignIdea($totalPrice);
             return [
                 'products' => $productInCarts,
+                'quantities' => $products->pluck('quantity', 'id')->toArray(),
                 'total_items' => $totalItems,
                 'total_price' => $totalPrice,
                 'saved_price' => $savedPrice,
@@ -122,8 +124,9 @@ class ImplementCartServices implements CartServices {
      */
     public function calculatorTotalPrice(Collection $products) {
         try {
-            $total = $products->sum(function ($product) {
-                $price = ($product->is_has_sale) ? $product->sale_price : $product->price;
+            $now = Carbon::now();
+            $total = $products->sum(function ($product) use ($now) {
+                $price = ($product->sale_price && ($now->lessThan($product->sale_start_date) || $now->greaterThan($product->sale_end_date))) ? $product->sale_price : $product->price;
                 return $price*$product->quantity;
             });
             return $total;

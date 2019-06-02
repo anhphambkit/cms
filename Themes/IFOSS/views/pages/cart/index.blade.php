@@ -30,6 +30,7 @@
                                 @foreach($cart['products'] as $productCartItem)
                                     @component("components.product-item-horizontal")
                                         @slot("productItem", $productCartItem)
+                                        @slot("quantities", $cart['quantities'])
                                     @endcomponent
                                 @endforeach
                             </div>

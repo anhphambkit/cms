@@ -6,6 +6,7 @@
  * Time: 09:49
  */
 $productItem = !empty($productItem) ? $productItem : collect([]);
+$quantities = !empty($quantities) ? $quantities : [];
 $customAttributes = $productItem->productCustomAttributes()->get();
 $attributeValues = $productItem->productStringValueAttribute()->get();
 ?>
@@ -30,7 +31,7 @@ $attributeValues = $productItem->productStringValueAttribute()->get();
         @endforeach
         <div class="d-flex align-items-center">
             Quantity
-            <div class="d-inline-block mx-3">{{ $productItem->quantity }}</div>
+            <div class="d-inline-block mx-3">{{ $quantities[$productItem->id] }}</div>
             <div class="quantity-btn">
                 <a class="btn" href="#"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-top.png') }}" alt=""/></a>
                 <a class="btn" href="#"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-bottom.png') }}" alt=""/></a>
