@@ -11,6 +11,7 @@ namespace Plugins\Cart\Services\Implement;
 use Illuminate\Database\Eloquent\Collection;
 use Plugins\Cart\Repositories\Interfaces\CartRepositories;
 use Plugins\Cart\Services\CartServices;
+use Plugins\Product\Repositories\Interfaces\ProductRepositories;
 use Plugins\Product\Services\ProductServices;
 
 class ImplementCartServices implements CartServices {
@@ -26,14 +27,21 @@ class ImplementCartServices implements CartServices {
     private $productServices;
 
     /**
+     * @var ProductRepositories
+     */
+    private $productRepositories;
+
+    /**
      * ImplementCartServices constructor.
      * @param CartRepositories $cartRepositories
      * @param ProductServices $productServices
+     * @param ProductRepositories $productRepositories
      */
-    public function __construct(CartRepositories $cartRepositories, ProductServices $productServices)
+    public function __construct(CartRepositories $cartRepositories, ProductServices $productServices, ProductRepositories $productRepositories)
     {
         $this->repository = $cartRepositories;
         $this->productServices = $productServices;
+        $this->productRepositories = $productRepositories;
     }
 
     /**
@@ -65,12 +73,13 @@ class ImplementCartServices implements CartServices {
     public function getBasicInfoCartOfCustomer(int $customerId = null, bool $isGuest = true) {
         try {
             $products = $this->repository->getBasicInfoCartOfCustomer($customerId, $isGuest);
+            $productInCarts = $this->productRepositories->findByArrayId($products->pluck('id')->toArray(), [ 'productAttributeValues', 'productCustomAttributes' ]);
             $totalItems = $products->sum('quantity');
             $totalPrice = $this->calculatorTotalPrice($products);
             $savedPrice = $this->calculatorSavedPrice($products, $totalPrice);
             $freeDesignIdeaInfo = $this->calculatorWantingPriceAndTotalFreeDesignIdea($totalPrice);
             return [
-                'products' => $products,
+                'products' => $productInCarts,
                 'total_items' => $totalItems,
                 'total_price' => $totalPrice,
                 'saved_price' => $savedPrice,

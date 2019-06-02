@@ -144,6 +144,19 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
+     * @param array $ids
+     * @param array $with
+     * @return mixed
+     */
+    public function findByArrayId(array $ids, array $with = [])
+    {
+
+        $data = $this->make($with)->whereIn('id', $ids)->get();
+        $this->resetModel();
+        return $data;
+    }
+
+    /**
      * Get all models.
      *
      * @param array $with Eager load related models

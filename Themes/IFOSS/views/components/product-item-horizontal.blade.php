@@ -6,6 +6,8 @@
  * Time: 09:49
  */
 $productItem = !empty($productItem) ? $productItem : collect([]);
+$customAttributes = $productItem->productCustomAttributes()->get();
+$attributeValues = $productItem->productStringValueAttribute()->get();
 ?>
 <div class="item row ml-0 mr-0">
     <div class="thumbnail">
@@ -23,8 +25,9 @@ $productItem = !empty($productItem) ? $productItem : collect([]);
             @endif
         </div>
         <div class="title">{{ $productItem->name }}</div>
-        <div class="mb-1">Color: Red</div>
-        <div class="mb-1">Size: Medium (34" L x 24" W)</div>
+        @foreach($attributeValues as $attributeValue)
+            <div class="mb-1">{{ $customAttributes->where('id', $attributeValue->custom_attribute_id)->first()->name }}: {{ $attributeValue->name }}</div>
+        @endforeach
         <div class="d-flex align-items-center">
             Quantity
             <div class="d-inline-block mx-3">{{ $productItem->quantity }}</div>
