@@ -12,6 +12,9 @@
 */
 use Illuminate\Routing\Router;
 
+$router->get('map/location', function(){
+    return view('map-location');
+});
 
 /** @var Router $router */
 $router->group(['prefix' => 'customer', 'middleware' => ['customer.guest']], function (Router $router) {

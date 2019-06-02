@@ -65,6 +65,16 @@ trait CachePackageRepositoriesTrait
     }
 
     /**
+     * @param array $ids
+     * @param array $with
+     * @return mixed
+     */
+    public function findByArrayId(array $ids, array $with = [])
+    {
+        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function findOrFail($id, array $with = [])
