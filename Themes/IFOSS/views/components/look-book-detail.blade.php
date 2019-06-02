@@ -13,9 +13,10 @@ $tags = !empty($tags) ? $tags : [];
 <div class="item-detail look-book-detail item-look-book">
     <img src="{{ URL::asset($urlImage) }}" class="w-100">
     @foreach($tags as $tag)
-        <div class="tt-hotspot tt-tag-{{ $tag['id'] }}" style="left: {{ $tag['left'] }}%; top: {{ $tag['top'] }}%;" data-left="{{ $tag['left'] }}" data-top="{{ $tag['top'] }}" data-tag-id="{{ $tag['id'] }}">
+        <div class="tt-hotspot look-book-tag-product show-popup tt-tag-{{ $tag['id'] }}" style="left: {{ $tag['left'] }}%; top: {{ $tag['top'] }}%;" data-left="{{ $tag['left'] }}" data-top="{{ $tag['top'] }}" data-tag-id="{{ $tag['id'] }}" data-product-id="{{ $tag['product_id'] }}">
             <div class="tt-btn">
-                <i class="icon-tag fas fa-tag"></i>
+                <i class="icon-tag icon-show-popup fas fa-tag"></i>
+                <i class="icon-tag icon-close-popup fas fa-times"></i>
             </div>
             <input type="number" hidden name="tag[{{ $tag['id'] }}][left]" value="{{ $tag['left'] }}">
             <input type="number" hidden name="tag[{{ $tag['id'] }}][top]" value="{{ $tag['top'] }}">

@@ -19,6 +19,10 @@ class ProductController extends BasePublicController
         $this->productServices = $productServices;
     }
 
+    /**
+     * @param $url
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
 	public function getProductDetail($url) {
         $productId = get_id_from_url($url);
         $productInfo = $this->productServices->getDetailInfoProduct($productId);

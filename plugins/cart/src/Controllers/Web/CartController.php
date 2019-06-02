@@ -22,12 +22,8 @@ class CartController extends BasePublicController
      */
     public function __construct(CartServices $cartServices)
     {
+        parent::__construct();
         $this->cartServices = $cartServices;
-        if (Auth::guard('customer')->check())
-            $totalItems = app()->make(CartServices::class)->getTotalItemsInCart(Auth::guard('customer')->id());
-        else
-            $totalItems = 0;
-        View::share("totalItems", $totalItems);
     }
 
     /**

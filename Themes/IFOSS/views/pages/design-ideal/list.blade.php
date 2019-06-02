@@ -42,9 +42,6 @@
 
 @section('variable-scripts')
     <script>
-        const PRODUCT = {
-            GET_OVERVIEW_INFO_POPUP : "{{ route('ajax.product.get_overview_info_product_popup') }}",
-            DETAIL_PRODUCT : "{{ route('public.product.detail', [ 'url' => '' ]) }}",
-        };
+
     </script>
 @stop

@@ -63,29 +63,27 @@
     <div class="submenu-navigation bg-white">
         <div class="container">
             <ul class="submenu-navigation-wrapper">
-                <?php $menuNavigation = array('furniture','outdoor','lighting','decor','rugs','bed & bath');
-                foreach ($menuNavigation as $key => $value) {
-                    ?>
-                    <li><a href="#"><?php echo $value; ?></a></li>
-                <?php } ?>
-
-                <li class="has-megamenu">
-                    <a href="#">type business</a>
-                    <ul class="mega-menu">
-                        <?php for ($j=0; $j < 2; $j++) { ?>
-                        <li class="col-md-3">
-                            <span class="mega-menu-title">Business Categories</span>
-                            <ul class="sub-menu">
-                                <?php for ($i=0; $i < 4; $i++) { ?>
-                                <li>
-                                    <a href="#">Caterory <?php echo $i+1; ?></a>
-                                </li>
-                                <?php } ?>
-                            </ul>
-                        </li>
-                        <?php } ?>
-                    </ul>
-                </li>
+                @foreach ($menu_categories as $key => $menu_category)
+                    <li class="has-megamenu no-caret">
+                        <a href="#">{{ $menu_category->name }}</a>
+                        <ul class="mega-menu tab-menu">
+                            @foreach ($menu_category->childCategories as $child_menu_category)
+                            <li class="col-md-2">
+                                <a href="#" class="item">
+                                    <img src="{{ get_object_image($child_menu_category->image_feature, 'mediumThumb') }}" class="w-100">
+                                    <div class="title">{{ $child_menu_category->name }}</div>
+                                </a>
+                            </li>
+                            @endforeach
+                            <li class="col-md-2">
+                                <a href="#" class="item">
+                                    <img src="{{ asset('themes/ifoss/assets/images/products/product-chair-tabmenu-7.png') }}" class="w-100">
+                                    <div class="title text-danger">Sale</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endforeach
             </ul>
         </div>
     </div>

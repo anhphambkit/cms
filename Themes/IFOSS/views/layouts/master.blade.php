@@ -70,6 +70,12 @@
                 {{--DELETE_PRODUCT_IN_CART : "{{ route('ajax.shop.delete_product_in_cart') }}",--}}
             };
         </script>
+        <script>
+            const PRODUCT = {
+                GET_OVERVIEW_INFO_POPUP : "{{ route('ajax.product.get_overview_info_product_popup') }}",
+                DETAIL_PRODUCT : "{{ route('public.product.detail', [ 'url' => '' ]) }}",
+            };
+        </script>
 
         @section('variable-scripts')
         @show
