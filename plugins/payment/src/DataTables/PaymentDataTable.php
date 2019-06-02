@@ -17,8 +17,8 @@ class PaymentDataTable extends DataTableAbstract
     {
         $data = $this->datatables
             ->eloquent($this->query())
-            ->editColumn('name', function ($item) {
-                return anchor_link(route('admin.payment.edit', $item->id), $item->name);
+            ->editColumn('paypal_id', function ($item) {
+                return anchor_link(route('admin.payment.edit', $item->id), $item->paypal_id);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
@@ -27,7 +27,13 @@ class PaymentDataTable extends DataTableAbstract
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
             })
             ->editColumn('status', function ($item) {
-                return table_status($item->status);
+                return ucfirst($item->status);
+            })
+            ->editColumn('amount', function ($item) {
+                return  $item->amount;
+            })
+            ->editColumn('payment_method', function ($item) {
+                return ucfirst($item->payment_method);
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, PAYMENT_MODULE_SCREEN_NAME)
@@ -50,7 +56,14 @@ class PaymentDataTable extends DataTableAbstract
        /**
         * @var \Eloquent $model
         */
-       $query = $model->select(['payment.id', 'payment.name', 'payment.created_at', 'payment.status']);
+       $query = $model->select([
+            'payment_transactions.id',
+            'payment_transactions.paypal_id',
+            'payment_transactions.created_at',
+            'payment_transactions.status',
+            'payment_transactions.payment_method',
+            'payment_transactions.amount'
+        ]);
        return $query;
     }
 
@@ -63,27 +76,39 @@ class PaymentDataTable extends DataTableAbstract
     {
         return [
             'id' => [
-                'name' => 'payment.id',
-                'title' => trans('core-base::tables.id'),
+                'name'   => 'payment_transactions.id',
+                'title'  => trans('core-base::tables.id'),
                 'footer' => trans('core-base::tables.id'),
-                'width' => '20px',
-                'class' => 'searchable searchable_id',
+                'width'  => '20px',
+                'class'  => 'searchable searchable_id',
             ],
-            'name' => [
-                'name' => 'payment.name',
-                'title' => trans('core-base::tables.name'),
-                'footer' => trans('core-base::tables.name'),
-                'class' => 'text-left searchable',
+            'paypal_id' => [
+                'name'   => 'payment_transactions.paypal_id',
+                'title'  => __('Paypal ID'),
+                'footer' => __('Paypal ID'),
+                'class'  => 'text-left searchable',
+            ],
+            'payment_method' => [
+                'name'   => 'payment_transactions.payment_method',
+                'title'  => __('Payment method'),
+                'footer' => __('Payment method'),
+                'class'  => 'text-left',
+            ],
+            'amount' => [
+                'name'   => 'payment_transactions.amount',
+                'title'  => __('Amount'),
+                'footer' => __('Amount'),
+                'class'  => 'text-left',
             ],
             'created_at' => [
-                'name' => 'payment.created_at',
-                'title' => trans('core-base::tables.created_at'),
+                'name'   => 'payment_transactions.created_at',
+                'title'  => trans('core-base::tables.created_at'),
                 'footer' => trans('core-base::tables.created_at'),
-                'width' => '100px',
-                'class' => 'searchable',
+                'width'  => '100px',
+                'class'  => 'searchable',
             ],
             'status' => [
-                'name' => 'payment.status',
+                'name' => 'payment_transactions.status',
                 'title' => trans('core-base::tables.status'),
                 'footer' => trans('core-base::tables.status'),
                 'width' => '100px',
@@ -97,13 +122,7 @@ class PaymentDataTable extends DataTableAbstract
      */
     public function buttons()
     {
-        $buttons = [
-            'create' => [
-                'link' => route('admin.payment.create'),
-                'text' => view('core-base::elements.tables.actions.create')->render(),
-            ],
-        ];
-        return $buttons;
+        return [];
     }
 
     /**

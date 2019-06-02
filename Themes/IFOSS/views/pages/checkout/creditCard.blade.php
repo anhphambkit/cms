@@ -58,4 +58,4 @@
 		</div>
 	</div>
 </div>
-<button data-loading-text="<i class='fas fa-spinner'></i> Processing Order" type="button" id="submit-with-creditcard" class="btn btn-custom btn-lg btn-block justify-content-center mb-3">PLACE  ORDER</button>
+<button id="submit-with-creditcard" type="button" class="btn btn-loading btn-custom btn-lg btn-block justify-content-center mb-3" data-loading-text="<i class='fas fa-spinner mr-2 spinner-rotate'></i> Processing Order">PLACE  ORDER</button>

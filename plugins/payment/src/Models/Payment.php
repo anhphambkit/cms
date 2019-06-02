@@ -1,9 +1,8 @@
 <?php
 
 namespace Plugins\Payment\Models;
-
+use Plugins\Customer\Models\Customer;
 use Eloquent;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Plugins\Payment\Models\Payment
@@ -12,8 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Payment extends Eloquent
 {
-    use SoftDeletes;
-
     /**
      * The database table used by the model.
      *
@@ -33,4 +30,13 @@ class Payment extends Eloquent
 		'currency',
 		'paypal_id'
     ];
+
+    /**	
+     * [customer description]
+     * @return [type] [description]
+     */
+    public function customer()
+    {
+    	return $this->belongsTo(Customer::class, 'customer_id');
+    }
 }

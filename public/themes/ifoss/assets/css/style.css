@@ -9204,6 +9204,20 @@ a.text-dark:hover, a.text-dark:focus {
 .font-weight-900 {
   font-weight: 900; }
 
+@-webkit-keyframes spinner-rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes spinner-rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+.spinner-rotate {
+  -webkit-animation: spinner-border .75s linear infinite;
+          animation: spinner-border .75s linear infinite; }
+
 /* Font */
 .font-inherit {
   font-size: inherit; }
@@ -15324,6 +15338,9 @@ body {
 .dropdown-s1 .dropdown-menu {
   border: 1px solid #96c4bd;
   padding: 0; }
+  .dropdown-s1 .dropdown-menu.align-left {
+    left: auto !important;
+    right: 0 !important; }
 
 .dropdown-s1 .dropdown-item {
   padding: .75rem 1.5rem; }
