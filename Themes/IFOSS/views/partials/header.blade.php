@@ -21,7 +21,10 @@
                                     <a class="dropdown-item" href="{{ route('public.customer.logout') }}">Logout</a>
                                 </div>
                             </li>
-                            <li><a href="javascript:void(0);"><i class="fas fa-shopping-cart"></i> (1)</a></li>
+                            <li><a href="{{ route('public.cart') }}" class="shopping-cart-quantity">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </a>
+                            </li>
                         @else
                             <li><a href="{{ route('public.customer.login') }}"><i class="fas fa-user-circle"></i> <span>Sign In</span></a></li>
                         @endif    
@@ -49,19 +52,14 @@
                 <div class="col-lg-6 text-lg-right action-group">
                     <button type="button" class="btn btn-outline-danger action-group-item">Sale</button>
                     <button type="button" class="btn btn-outline-custom action-group-item">free design</button>
-                    <div class="dropdown d-inline-block action-group-item">
-                        <a class="btn btn-outline-custom dropdown-toggle" href="#" role="button" id="dropdownDesignIdeas" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">design ideas</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownDesignIdeas">
-                            <a class="dropdown-item" href="{{ route('public.design-ideal') }}">Design Ideal</a>
-                            <a class="dropdown-item" href="{{ route('public.design-ideal.list') }}">Design Ideal List</a>
-                            <a class="dropdown-item" href="{{ route('public.design-ideal') }}">Design Ideal Detail</a>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-outline-custom action-group-item">
+                        <a class="menu-design-idea menu-link-custom" href="{{ route('public.design-ideal') }}">Design Ideal</a>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="submenu-navigation bg-white">
         <div class="container">
             <ul class="submenu-navigation-wrapper">

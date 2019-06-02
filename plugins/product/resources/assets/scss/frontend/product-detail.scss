@@ -1,0 +1,15 @@
+.product-color-attribute-square-box {
+  width: 48px;
+  height: 48px;
+  z-index: 2;
+  position: absolute;
+}
+
+.btn-custom.disabled, .btn-custom:disabled {
+  cursor: not-allowed;
+}
+
+a.link-product-detail {
+  color: inherit;
+  text-decoration: none;
+}

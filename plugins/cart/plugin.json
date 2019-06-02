@@ -1,0 +1,10 @@
+{
+    "name": "Cart",
+    "provider": "Plugins\\Cart\\Providers\\CartServiceProvider",
+    "plugin": "Plugins\\Cart\\Plugin",
+    "author": "Trinh Le",
+    "version": "1.0",
+    "description": "Cart",
+    "namespace": "Plugins\\Cart\\",
+    "src": "plugins/cart/src"
+}

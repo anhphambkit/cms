@@ -24,5 +24,6 @@ return [
             'normal' => 80,
             'main' => 20,
         ]
-    ]
+    ],
+    'price_get_free_design_idea' => 3000
 ];

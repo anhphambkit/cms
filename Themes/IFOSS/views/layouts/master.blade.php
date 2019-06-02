@@ -20,6 +20,13 @@
 
         @section('styles')
         @show
+        <style>
+            a.menu-link-custom {
+                color: inherit;
+                transition: unset;
+                text-decoration: unset;
+            }
+        </style>
 
         @section('master-head')
         @show
@@ -44,6 +51,9 @@
         @endforeach
         @include('core-base::elements.common')
         <script type="text/javascript">
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -52,6 +62,15 @@
         </script>
         @section('script-table')
         @show
+        <!-- ========== START PAGE SCRIPTS ========== -->
+        <script>
+            const API_SHOP = {
+                ADD_TO_CART : "{{ route('ajax.product.add_to_cart') }}",
+                {{--VIEW_CART_HEADER : "{{ route('ajax.shop.view_cart_header') }}",--}}
+                {{--DELETE_PRODUCT_IN_CART : "{{ route('ajax.shop.delete_product_in_cart') }}",--}}
+            };
+        </script>
+
         @section('variable-scripts')
         @show
         @section('script-media')

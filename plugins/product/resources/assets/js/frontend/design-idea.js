@@ -34,9 +34,9 @@ $(document).on('click', '.look-book-tag-product .icon-show-popup', function (e) 
                                 <a href="${PRODUCT.DETAIL_PRODUCT}/${data.data.slug}.${data.data.id}" class="link-product-detail">${data.data.name}</a>
                             </div>
                             <div class="price">
-                                <div class="main">$${(data.data.is_expired_sale) ? data.data.price : data.data.sale_price}</div>
-                                <div class="discount ${(data.data.is_expired_sale) ? 'd-none' : ''}">$${(data.data.is_expired_sale) ? data.data.price : data.data.sale_price}</div>
-                                <div class="sale ${(data.data.is_expired_sale) ? 'd-none' : ''}">${(data.data.is_expired_sale) ? data.data.percent_sale : 0}% off</div>
+                                <div class="main">$${(data.data.is_has_sale) ? data.data.price : data.data.sale_price}</div>
+                                <div class="discount ${(data.data.is_has_sale) ? 'd-none' : ''}">$${(data.data.is_has_sale) ? data.data.price : data.data.sale_price}</div>
+                                <div class="sale ${(data.data.is_has_sale) ? 'd-none' : ''}">${(data.data.is_has_sale) ? data.data.percent_sale : 0}% off</div>
                             </div>
                         </div>
                     </div>`;

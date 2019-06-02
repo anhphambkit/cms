@@ -58,6 +58,13 @@ interface RepositoryInterface
     public function findById($id, array $with = []);
 
     /**
+     * @param array $ids
+     * @param array $with
+     * @return mixed
+     */
+    public function findByArrayId(array $ids, array $with = []);
+
+    /**
      * @param $id
      * @param array $with
      * @return mixed
