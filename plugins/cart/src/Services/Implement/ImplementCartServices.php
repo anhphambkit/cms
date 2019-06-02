@@ -144,7 +144,7 @@ class ImplementCartServices implements CartServices {
     public function calculatorWantingPriceAndTotalFreeDesignIdea(int $totalPrice) {
         try {
             $freeDesign = (int)floor($totalPrice/config('plugins-product.product.price_get_free_design_idea'));
-            $wantingPrice = abs($totalPrice - ($freeDesign ? $freeDesign : 1)*config('plugins-product.product.price_get_free_design_idea'));
+            $wantingPrice = abs(config('plugins-product.product.price_get_free_design_idea') - ($totalPrice - ($freeDesign ? $freeDesign : 1)*config('plugins-product.product.price_get_free_design_idea')));
             return [
                 'wanting_price' => $wantingPrice,
                 'total_free_design' => $freeDesign,
