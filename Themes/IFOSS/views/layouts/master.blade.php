@@ -20,6 +20,13 @@
 
         @section('styles')
         @show
+        <style>
+            a.menu-link-custom {
+                color: inherit;
+                transition: unset;
+                text-decoration: unset;
+            }
+        </style>
 
         @section('master-head')
         @show
@@ -44,6 +51,9 @@
         @endforeach
         @include('core-base::elements.common')
         <script type="text/javascript">
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

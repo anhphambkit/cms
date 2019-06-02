@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Plugins\CustomAttributes\Contracts\CustomAttributeConfig;
+use Plugins\Product\Contracts\ProductReferenceConfig;
 use Plugins\Product\Models\ProductGallery;
 use Plugins\CustomAttributes\Repositories\Interfaces\CustomAttributesRepositories;
 use Plugins\Product\Repositories\Interfaces\ManufacturerRepositories;
@@ -170,14 +171,16 @@ class ProductController extends BaseAdminController
         $data['created_by'] = Auth::id();
 
         $productMaster = DB::transaction(function () use ($data) {
-            $productMaster = $this->createSingleProduct($data);
-
             // Variant Products:
             $variantProducts = (!empty($data['variant_products']) ? $data['variant_products'] : []);
+            $data['type_product'] = !empty($variantProduct) ? ProductReferenceConfig::PRODUCT_TYPE_VARIANT : ProductReferenceConfig::PRODUCT_TYPE_SIMPLE;
+
+            $productMaster = $this->createSingleProduct($data);
+            
             foreach ($variantProducts as $variantProduct) {
                 // Prepare data variant:
                 $variantProduct['parent_product_id'] = $productMaster->id;
-                $variantProduct['slug'] = $variantProduct['name'];
+                $variantProduct['slug'] = str_slug($variantProduct['name']);
                 $variantProduct['sku'] = "{$data['manufacturer_id']}{$variantProduct['sku']}";
                 $variantProduct['status'] = $data['status'];
                 $variantProduct['category_id'] = $data['category_id'];
@@ -187,11 +190,12 @@ class ProductController extends BaseAdminController
                 $variantProduct['has_assembly'] = $data['has_assembly'];
                 $variantProduct['is_outdoor'] = $data['is_outdoor'];
                 $variantProduct['image_gallery'] = !empty($variantProduct['image_gallery']) ? $variantProduct['image_gallery'] : [];
-                $variantProduct['category_id'] = !empty($variantProduct['category_id']) ? $variantProduct['category_id'] : [];
-                $variantProduct['business_type_id'] = !empty($variantProduct['business_type_id']) ? $variantProduct['business_type_id'] : [];
-                $variantProduct['collection_id'] = !empty($variantProduct['collection_id']) ? $variantProduct['collection_id'] : [];
-                $variantProduct['color_id'] = !empty($variantProduct['color_id']) ? $variantProduct['color_id'] : [];
-                $variantProduct['material_id'] = !empty($variantProduct['material_id']) ? $variantProduct['material_id'] : [];
+                $variantProduct['category_id'] = $data['category_id'];
+                $variantProduct['business_type_id'] = $data['business_type_id'];
+                $variantProduct['collection_id'] = $data['collection_id'];
+                $variantProduct['color_id'] = $data['color_id'];
+                $variantProduct['material_id'] = $data['material_id'];
+                $variantProduct['type_product'] = ProductReferenceConfig::PRODUCT_TYPE_CHILD_VARIANT;
                 $variantProduct['created_by'] = Auth::id();
 
                 foreach ($data as $key => $dataAttribute) {

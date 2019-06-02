@@ -4,6 +4,7 @@ namespace Plugins\Product\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Plugins\Product\Repositories\Interfaces\LookBookRepositories;
+use Plugins\Product\Repositories\Interfaces\ProductAttributeValueRelationRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
 use Plugins\Product\Repositories\Interfaces\ManufacturerRepositories;
 use Plugins\Product\Repositories\Interfaces\BusinessTypeRepositories;
@@ -16,10 +17,12 @@ use Plugins\Product\Repositories\Interfaces\ProductCouponRepositories;
 use Plugins\Product\Services\BusinessTypeServices;
 use Plugins\Product\Services\Implement\ImplementBusinessTypeServices;
 use Plugins\Product\Services\Implement\ImplementLookBookServices;
+use Plugins\Product\Services\Implement\ImplementProductAttributeValueServices;
 use Plugins\Product\Services\Implement\ImplementProductCategoryServices;
 use Plugins\Product\Services\Implement\ImplementProductServices;
 use Plugins\Product\Services\Implement\ImplementProductSpaceServices;
 use Plugins\Product\Services\LookBookServices;
+use Plugins\Product\Services\ProductAttributeValueServices;
 use Plugins\Product\Services\ProductCategoryServices;
 use Plugins\Product\Services\ProductServices;
 use Plugins\Product\Services\ProductSpaceServices;
@@ -55,12 +58,11 @@ class ProductServiceProvider extends ServiceProvider
         $this->app->singleton(ProductCategoryServices::class, ImplementProductCategoryServices::class);
         $this->app->singleton(LookBookServices::class, ImplementLookBookServices::class);
         $this->app->singleton(ProductSpaceServices::class, ImplementProductSpaceServices::class);
+        $this->app->singleton(ProductAttributeValueServices::class, ImplementProductAttributeValueServices::class);
     }
 
     /**
-     * Get config repositories
-     * @author TrinhLe
-     * @return [array] [description]
+     * @return array
      */
     public function getRespositories():array
     {
@@ -75,6 +77,7 @@ class ProductServiceProvider extends ServiceProvider
             LookBookRepositories::class          => \Plugins\Product\Models\LookBook::class,
             ProductSpaceRepositories::class      => \Plugins\Product\Models\ProductSpace::class,
             ProductCouponRepositories::class     => \Plugins\Product\Models\ProductCoupon::class,
+            ProductAttributeValueRelationRepositories::class     => \Plugins\Product\Models\ProductAttributeValueRelation::class,
         ];
     }
 

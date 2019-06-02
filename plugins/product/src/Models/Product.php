@@ -8,6 +8,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Plugins\CustomAttributes\Models\AttributeValueString;
 use Plugins\CustomAttributes\Models\CustomAttributes;
+use Plugins\Product\Contracts\ProductReferenceConfig;
 
 /**
  * Plugins\Product\Models\Product
@@ -52,6 +53,7 @@ class Product extends Eloquent
         'weight_dimension_description',
         'specification',
         'parent_product_id',
+        'type_product',
         'sale_start_date',
         'sale_end_date',
         'created_by',
@@ -65,8 +67,11 @@ class Product extends Eloquent
      * @var array
      */
     protected $appends = [
-        'is_expired_sale',
+        'is_has_sale',
         'percent_sale',
+        'min_price',
+        'max_price',
+        'url_product',
     ];
 
     /**
@@ -167,6 +172,22 @@ class Product extends Eloquent
     }
 
     /**
+     * Get the child product of parent the product.
+     */
+    public function childVariantsProduct()
+    {
+        return $this->hasMany(Product::class, 'parent_product_id');
+    }
+
+    /**
+     * Get the parent product of child product.
+     */
+    public function parentVariantProduct()
+    {
+        return $this->belongsTo(Product::class, 'parent_product_id');
+    }
+
+    /**
      * Get the gallery for the product.
      */
     public function galleries()
@@ -183,14 +204,44 @@ class Product extends Eloquent
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function getIsExpiredSaleAttribute() {
+    public function checkProductHasSale() {
         $now = Carbon::now();
-        return ($now->lessThan($this->sale_start_date) || $now->greaterThan($this->sale_end_date));
+        return ($this->sale_price && ($now->lessThan($this->sale_start_date) || $now->greaterThan($this->sale_end_date)));
+    }
+
+    public function getIsHasSaleAttribute() {
+        return $this->checkProductHasSale();
     }
 
     public function getPercentSaleAttribute() {
         if ($this->sale_price)
-            return round((1 - ($this->sale_price/$this->price)) * 100);
+            return ceil((1 - ($this->sale_price/$this->price)) * 100);
         return 0;
+    }
+
+    public function getUrlProductAttribute() {
+        return "{$this->slug}.{$this->id}";
+    }
+
+    public function getMinPriceAttribute() {
+        $minPrice = ($this->checkProductHasSale() ? $this->sale_price : $this->price);
+        if ($this->type_product === ProductReferenceConfig::PRODUCT_TYPE_VARIANT) {
+            $priceChildVariantsProducts = $this->childVariantsProduct()->get();
+            foreach ($priceChildVariantsProducts as $priceChildVariantsProduct) {
+                $minPrice = ($minPrice > $priceChildVariantsProduct->min_price) ? $priceChildVariantsProduct->min_price : $minPrice;
+            }
+        }
+        return $minPrice;
+    }
+
+    public function getMaxPriceAttribute() {
+        $maxPrice = $this->price;
+        if ($this->type_product === ProductReferenceConfig::PRODUCT_TYPE_VARIANT) {
+            $priceChildVariantsProducts = $this->childVariantsProduct()->get();
+            foreach ($priceChildVariantsProducts as $priceChildVariantsProduct) {
+                $maxPrice = ($maxPrice < $priceChildVariantsProduct->max_price) ? $priceChildVariantsProduct->max_price : $maxPrice;
+            }
+        }
+        return $maxPrice;
     }
 }

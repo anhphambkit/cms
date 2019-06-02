@@ -15,4 +15,8 @@ interface ProductReferenceConfig
     const REFERENCE_LOOK_BOOK_TYPE_LAYOUT               = 'TYPE_LOOK_BOOK_LAYOUT';
     const REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL        = 'Normal';
     const REFERENCE_LOOK_BOOK_TYPE_LAYOUT_VERTICAL      = 'Vertical';
+
+    const PRODUCT_TYPE_SIMPLE                           = 'simple';
+    const PRODUCT_TYPE_VARIANT                          = 'variants';
+    const PRODUCT_TYPE_CHILD_VARIANT                    = 'child_variant';
 }

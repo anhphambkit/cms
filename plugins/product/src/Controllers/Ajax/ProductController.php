@@ -20,6 +20,14 @@ class ProductController extends BaseAdminController
 
 	public function getOverviewInfoProductPopup(Request $request) {
 	    $productId = (int)$request->product_id;
-        return $this->productServices->getOverviewInfoProductPopup($productId);
+        $productInfo = $this->productServices->getOverviewInfoProductPopup($productId);
+        return response()->json($productInfo);
+    }
+
+    public function getDetailInfoProduct(Request $request) {
+        $productAttributes = $request->product_attribute_info;
+        $productId = (int)$request->product_id;
+        $productInfo = $this->productServices->getDetailInfoProductByProductIdAndAttribute($productId, $productAttributes);
+        return response()->json($productInfo);
     }
 }
