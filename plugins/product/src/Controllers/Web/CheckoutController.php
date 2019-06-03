@@ -209,7 +209,7 @@ class CheckoutController extends BasePublicController
 				->setAmountAttribute($invoiceAmount)
 				->createPaymentCredit([], $invoiceId);
 		}catch(PayPalConnectionException $paypalException){
-			// return response()->json(json_decode($paypalException->getData()));
+			 return response()->json(json_decode($paypalException->getData()));
 			return $response
 				->setPreviousUrl(route('homepage'))
 				->setNextUrl(route('homepage'))

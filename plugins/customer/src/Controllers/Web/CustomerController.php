@@ -18,6 +18,7 @@ class CustomerController extends BasePublicController
 
 	public function __construct(CustomerRepositories $customer)
 	{
+        parent::__construct();
 		$this->customerRepositories = $customer;
 	}
 

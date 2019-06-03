@@ -26,8 +26,8 @@ class OrderDataTable extends DataTableAbstract
             ->editColumn('status', function ($item) {
                 return ucfirst($item->status);
             })
-            ->editColumn('amount', function ($item) {
-                return  $item->amount;
+            ->editColumn('total_amount_order', function ($item) {
+                return  $item->total_amount_order;
             })
             ->editColumn('amount_refund', function ($item) {
                 return  $item->amount_refund;
@@ -59,11 +59,10 @@ class OrderDataTable extends DataTableAbstract
        $query = $model->select([
             'customer_orders.id',
             'customer_orders.paypal_id',
-            'customer_orders.amount',
             'customer_orders.payment_method',
             'customer_orders.created_at',
             'customer_orders.status',
-            'customer_orders.amount',
+            'customer_orders.total_amount_order',
             'customer_orders.amount_refund',
             'customer_orders.address_billing'
         ]);
@@ -97,8 +96,8 @@ class OrderDataTable extends DataTableAbstract
                 'footer' => __('Payment method'),
                 'class'  => 'text-left',
             ],
-            'amount' => [
-                'name'   => 'customer_orders.amount',
+            'total_amount_order' => [
+                'name'   => 'customer_orders.total_amount_order',
                 'title'  => __('Amount'),
                 'footer' => __('Amount'),
                 'class'  => 'text-left',

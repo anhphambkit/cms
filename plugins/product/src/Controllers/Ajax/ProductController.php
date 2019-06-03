@@ -60,7 +60,7 @@ class ProductController extends BaseAdminController
         $isUpdate = $request->get('is_update_product');
         $products = $request->get('products');
         $productAttributes = ($isUpdate) ? [] : $request->get('product_attributes');
-        $this->cartServices->addOrUpdateProductsToCartOfCustomer($products, $productAttributes, Auth::guard('customer')->id(), false, $isUpdate);
+        $this->cartServices->addOrUpdateProductsToCartOfCustomer($products, Auth::guard('customer')->id(), false, $isUpdate);
         $basicInfoCart = $this->cartServices->getBasicInfoCartOfCustomer(Auth::guard('customer')->id());
         return response()->json($basicInfoCart);
     }

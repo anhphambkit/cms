@@ -41,7 +41,7 @@ class Order extends Model
         'reason_refund',
         'amount_refund',
         'payment_id',
-        'payal_id',
+        'paypal_id',
         'total_free_design',
     ];
 }
