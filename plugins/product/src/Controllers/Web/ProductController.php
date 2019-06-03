@@ -16,6 +16,7 @@ class ProductController extends BasePublicController
 
     public function __construct(ProductServices $productServices)
     {
+        parent::__construct();
         $this->productServices = $productServices;
     }
 

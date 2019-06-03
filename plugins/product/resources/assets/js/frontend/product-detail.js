@@ -91,8 +91,9 @@ $(document).ready(function() {
         let quantity = $('.quantity-product').data('quantity');
         newProduct[PRODUCT_ID] = quantity;
         products = Object.assign(products, newProduct);
+        let dataAttributes = getAllAttributeValue();
 
-        let request = axios.post(API_SHOP.ADD_TO_CART, { 'products' : products, 'is_update_product' : false });
+        let request = axios.post(API_SHOP.ADD_TO_CART, { 'products' : products, 'is_update_product' : false, 'product_attributes' : dataAttributes });
         request
             .then(function(data){
                 let totalItems = data.data.total_items;
@@ -112,12 +113,13 @@ $(document).ready(function() {
 
     function getAllAttributeValue() {
         let data = [];
-        $('.product-attribute.variant-attribute').each(function (el) {
+        $('.product-attributes .product-attribute').each(function (el) {
             let attributeId = $(this).data('product-attribute');
             let attributeValueId = $(this).data('attribute-selected-id');
             data.push({
                 'attribute_id' : attributeId,
                 'attribute_value_id' : attributeValueId,
+                'product_id' : PRODUCT_ID,
             });
         })
         return data;

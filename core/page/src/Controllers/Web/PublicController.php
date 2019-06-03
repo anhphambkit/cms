@@ -13,7 +13,7 @@ class PublicController extends BasePublicController{
      */
     public function __construct()
     {
-
+        parent::__construct();
     }
 
     /**

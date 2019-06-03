@@ -241,14 +241,18 @@ class ImplementCartServices implements CartServices {
             $products = $this->repository->getBasicInfoCartOfCustomer($customerId, $isGuest);
             $totalItems = $products->sum('quantity');
             $totalPrice = $this->calculatorTotalPrice($products);
-            $subTotal = $this->calculatorTotalOriginalPrice($products);
+            $totalOriginalPrice = $this->calculatorTotalOriginalPrice($products);
             $salePrice = $this->calculatorTotalSalePrice($products);
+            $savedPrice = $this->calculatorSavedPrice($products, $totalPrice);
+            $freeDesignIdeaInfo = $this->calculatorWantingPriceAndTotalFreeDesignIdea($totalPrice);
             return [
                 'products' => $products,
                 'total_items' => $totalItems,
                 'total_price' => $totalPrice,
-                'sub_total' => $subTotal,
-                'discount_on_products' => $salePrice,
+                'total_original_price' => $totalOriginalPrice,
+                'total_sale_price_on_products' => $salePrice,
+                'saved_price' => $savedPrice,
+                'total_free_design' => $freeDesignIdeaInfo['total_free_design'],
             ];
         }
         catch (\Exception $e) {
@@ -323,10 +327,6 @@ class ImplementCartServices implements CartServices {
      * @throws \Exception
      */
     public function deleteListProductInCart(array $idProducts, int $customerId = null, bool $isGuest = false) {
-//        try {
         return $this->repository->deleteListProductInCart($idProducts, $customerId, $isGuest);
-//        } catch (\Exception $e) {
-//            throw new \Exception($e->getMessage());
-//        }
     }
 }

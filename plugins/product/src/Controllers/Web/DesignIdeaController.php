@@ -44,6 +44,7 @@ class DesignIdeaController extends BasePublicController{
      */
     public function __construct(BusinessTypeServices $businessTypeServices, LookBookServices $lookBookServices, ProductSpaceServices $productSpaceServices)
     {
+        parent::__construct();
         $this->businessTypeServices = $businessTypeServices;
         $this->lookBookServices = $lookBookServices;
         $this->productSpaceServices = $productSpaceServices;

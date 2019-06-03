@@ -9,8 +9,11 @@ use Plugins\Customer\Middlewares\RedirectIfNotCustomer;
 use Plugins\Customer\Middlewares\RedirectIfCustomer;
 use Plugins\Customer\Models\Customer;
 use Illuminate\View\View;
+use Plugins\Customer\Repositories\Interfaces\ProductsInOrderRepositories;
+use Plugins\Customer\Services\Excute\ProductsInOrderServices;
 use Plugins\Customer\Services\IOrderService;
 use Plugins\Customer\Services\Excute\OrderService;
+use Plugins\Customer\Services\IProductsInOrderServices;
 
 class CustomerServiceProvider extends ServiceProvider
 {
@@ -66,6 +69,7 @@ class CustomerServiceProvider extends ServiceProvider
 
         register_repositories($this);
         $this->app->singleton(IOrderService::class, OrderService::class);
+        $this->app->singleton(IProductsInOrderServices::class, ProductsInOrderServices::class);
     }
 
     /**
@@ -78,6 +82,7 @@ class CustomerServiceProvider extends ServiceProvider
         return [
             CustomerRepositories::class => \Plugins\Customer\Models\Customer::class,
             OrderRepositories::class    => \Plugins\Customer\Models\Order::class,
+            ProductsInOrderRepositories::class    => \Plugins\Customer\Models\ProductsInOrder::class,
         ];
     }
 

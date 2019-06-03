@@ -69,11 +69,12 @@
                 {{--VIEW_CART_HEADER : "{{ route('ajax.shop.view_cart_header') }}",--}}
                 {{--DELETE_PRODUCT_IN_CART : "{{ route('ajax.shop.delete_product_in_cart') }}",--}}
             };
-        </script>
-        <script>
+
             const PRODUCT = {
                 GET_OVERVIEW_INFO_POPUP : "{{ route('ajax.product.get_overview_info_product_popup') }}",
                 DETAIL_PRODUCT : "{{ route('public.product.detail', [ 'url' => '' ]) }}",
+                GET_DETAIL_PRODUCT : "{{ route('ajax.product.get_detail_info_product') }}",
+                DETAIL_PRODUCT_PAGE : "{{ route('public.product.detail', [ 'url' => '' ]) }}",
             };
         </script>
 

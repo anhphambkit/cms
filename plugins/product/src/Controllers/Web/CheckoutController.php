@@ -190,17 +190,17 @@ class CheckoutController extends BasePublicController
 		]);
 	}
 
-	/**
-	 * Checkout order with credit card same payment paypal checkout
-	 * @param  CheckoutFormRequest $request  [description]
-	 * @param  BaseHttpResponse    $response [description]
-	 * @return Illuminate\View\View
-	 */
+    /**
+     * @param CheckoutFormRequest $request
+     * @param CreditFormRequest $creditRequest
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     * @throws \Exception
+     */
 	public function postCheckoutCredit(CheckoutFormRequest $request, CreditFormRequest $creditRequest, BaseHttpResponse $response)
 	{
 		list($address, $card)            = $this->getCreditPayloadRequest($request, $creditRequest);
 		list($invoiceId, $invoiceAmount) = $this->createOrderInvoice($request, $card['cardType']);
-
 		try{
 			$paymentInfo = $this->paypalCreditService
 				->setAddressAttribute($address)
@@ -249,17 +249,20 @@ class CheckoutController extends BasePublicController
         }
     }
 
-	/**
-	 * Create invoice
-	 * @param  CheckoutFormRequest $request     [description]
-	 * @param  [type]              $paymentType [description]
-	 * @return array
-	 */
+    /**
+     * @param CheckoutFormRequest $request
+     * @param $paymentType
+     * @return array
+     * @throws \Exception
+     */
 	private function createOrderInvoice(CheckoutFormRequest $request, $paymentType)
 	{
-		$invoiceStatus = find_reference_element(OrderReferenceConfig::REFERENCE_ORDER_STATUS_NEW, OrderReferenceConfig::REFERENCE_ORDER_STATUS);
-		$invoiceId     = uniqid();
-		$invoiceAmount = 1000;
+	    $dataCheckout = $request->all();
+	    $invoiceStatus = find_reference_element(OrderReferenceConfig::REFERENCE_ORDER_STATUS_NEW, OrderReferenceConfig::REFERENCE_ORDER_STATUS);
+	    $dataCheckout['invoice_status'] = ($invoiceStatus) ? $invoiceStatus->id : 0;
+	    $dataCheckout['payment_method'] = $paymentType;
+		$invoiceOrder = $this->orderService->createOrderCustomerProduct($dataCheckout, Auth::guard('customer')->id());
+
 
 		// Invoice amount belong to discount code if exist. please countdown if used.
 
@@ -267,7 +270,7 @@ class CheckoutController extends BasePublicController
 
 		//TODO CODE HERE FOR CREATE INVOICE
 
-		return [$invoiceId, $invoiceAmount];
+		return [$invoiceOrder['order_id'], $invoiceOrder['total_amount_order']];
 	}
 
 	/**

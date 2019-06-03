@@ -32,7 +32,7 @@
 	<div class="cart-order-info font-weight-500 mb-0">
 		<div class="text-uppercase mb-2">Coupon DISCOUNT</div>
 		<div class="input-group mb-3">
-			<input type="text" class="form-control rounded-0" placeholder="Enter your code here">
+			<input type="text" name="coupon_code" class="form-control rounded-0" placeholder="Enter your code here">
 			<div class="input-group-append">
 				<button class="btn btn-secondary rounded-0" type="button">apply</button>
 			</div>
