@@ -33,6 +33,8 @@ class CartController extends BasePublicController
         $cart = $this->cartServices->getBasicInfoCartOfCustomer(Auth::guard('customer')->id());
         AssetManager::addAsset('cart-css', 'frontend/plugins/cart/assets/css/cart.css');
         AssetPipeline::requireCss('cart-css');
+        AssetManager::addAsset('cart-js', 'frontend/plugins/cart/assets/js/cart.js');
+        AssetPipeline::requireJs('cart-js');
         return view('pages.cart.index', compact('cart'));
     }
 }

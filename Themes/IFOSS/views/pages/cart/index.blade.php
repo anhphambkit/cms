@@ -24,7 +24,7 @@
                         <div class="mb-4">
                             <div class="d-flex justify-content-between align-items-baseline">
                                 <div class="section-title">My Cart</div>
-                                <a href="#" class="text-custom d-inline-block"><img src="{{ asset('themes/ifoss/assets/images/icons/arrow-left.png') }}" class="mr-2">Continue Shopping</a>
+                                <a href="{{ route('homepage') }}" class="text-custom d-inline-block"><img src="{{ asset('themes/ifoss/assets/images/icons/arrow-left.png') }}" class="mr-2">Continue Shopping</a>
                             </div>
                             <div class="cart-list">
                                 @foreach($cart['products'] as $productCartItem)
@@ -35,37 +35,37 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="mb-4">
-                            <div class="font-weight-500 mb-2">My Saved Items (1 Item)</div>
-                            <div class="cart-list">
-                                <div class="item row ml-0 mr-0">
-                                    <div class="thumbnail">
-                                        <img src="{{ asset('themes/ifoss/assets/images/products/product-cart-1.jpg') }}" alt="">
-                                    </div>
-                                    <div class="content">
-                                        <div class="price">
-                                            <div class="font-size-18">$6282</div>
-                                            <div class="font-size-12 text-line-through">$102.05</div>
-                                        </div>
-                                        <div class="title">Orthopedic Double Pet Pillow</div>
-                                        <div class="mb-1">Color: Red</div>
-                                        <div class="mb-1">Size: Medium (34" L x 24" W)</div>
-                                        <div class="d-flex align-items-center">
-                                            Quantity
-                                            <div class="d-inline-block mx-3">1</div>
-                                            <div class="quantity-btn">
-                                                <a class="btn" href="#"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-top.png') }}" alt=""/></a>
-                                                <a class="btn" href="#"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-bottom.png') }}" alt=""/></a>
-                                            </div>
-                                        </div>
-                                        <div class="mt-3 text-right">
-                                            <a href="#" class="text-custom mr-4"><img src="{{ asset('themes/ifoss/assets/images/icons/bookmark.png') }}" alt="" width="14" /> Save for later</a>
-                                            <a href="#" class="text-custom"><img src="{{ asset('themes/ifoss/assets/images/icons/trash.png') }}" alt="" width="14" /> Remove</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {{--<div class="mb-4">--}}
+                            {{--<div class="font-weight-500 mb-2">My Saved Items (1 Item)</div>--}}
+                            {{--<div class="cart-list">--}}
+                                {{--<div class="item row ml-0 mr-0">--}}
+                                    {{--<div class="thumbnail">--}}
+                                        {{--<img src="{{ asset('themes/ifoss/assets/images/products/product-cart-1.jpg') }}" alt="">--}}
+                                    {{--</div>--}}
+                                    {{--<div class="content">--}}
+                                        {{--<div class="price">--}}
+                                            {{--<div class="font-size-18">$6282</div>--}}
+                                            {{--<div class="font-size-12 text-line-through">$102.05</div>--}}
+                                        {{--</div>--}}
+                                        {{--<div class="title">Orthopedic Double Pet Pillow</div>--}}
+                                        {{--<div class="mb-1">Color: Red</div>--}}
+                                        {{--<div class="mb-1">Size: Medium (34" L x 24" W)</div>--}}
+                                        {{--<div class="d-flex align-items-center">--}}
+                                            {{--Quantity--}}
+                                            {{--<div class="d-inline-block mx-3">1</div>--}}
+                                            {{--<div class="quantity-btn">--}}
+                                                {{--<a class="btn" href="#"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-top.png') }}" alt=""/></a>--}}
+                                                {{--<a class="btn" href="#"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-bottom.png') }}" alt=""/></a>--}}
+                                            {{--</div>--}}
+                                        {{--</div>--}}
+                                        {{--<div class="mt-3 text-right">--}}
+                                            {{--<a href="#" class="text-custom mr-4"><img src="{{ asset('themes/ifoss/assets/images/icons/bookmark.png') }}" alt="" width="14" /> Save for later</a>--}}
+                                            {{--<a href="#" class="text-custom"><img src="{{ asset('themes/ifoss/assets/images/icons/trash.png') }}" alt="" width="14" /> Remove</a>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                     </div>
                     <div class="col-lg-4" style="margin-top: 66px;">
                         <div class="cart-order-info font-weight-500">
@@ -104,7 +104,7 @@
                         <div class="coupon-calc">
                             <div class="font-weight-500 mb-2">We offer free design for qualifying order over ${{ config('plugins-product.product.price_get_free_design_idea') }}</div>
                             <div class="input-group mb-3" style="box-shadow: 0 4px 12px #d6e9e7;">
-                                <input type="text" class="form-control rounded-0 px-2 special-price" value="+  ${{ $cart['free_design']['wanting_price'] }}">
+                                <span type="text" class="wanting-price rounded-0 px-2 special-price">+  ${{ $cart['free_design']['wanting_price'] }}</span>
                                 <div class="input-group-append">
                                     <span class="input-group-text font-size-12 rounded-0" style="background-color: rgba(150,196,189,.2); color: #2a7469;">to qualify for {{ $cart['free_design']['total_free_design'] + 1 }} FREE DESIGN</span>
                                 </div>

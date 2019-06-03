@@ -20,19 +20,5 @@ abstract class BasePublicController extends Controller
      * BasePublicController constructor.
      */
     public function __construct(){
-        $menuCategories = app()->make(ProductCategoryRepositories::class)->allBy([
-            [
-                'parent_id', '=', 0
-            ],
-            [
-                'status', '=', 1
-            ],
-            [
-                'deleted_at', '=', null
-            ]
-        ], ['childCategories'], [
-            'id', 'name', 'slug', 'image_feature'
-        ]);
-        View::share("menu_categories", $menuCategories);
     }
 }

@@ -83,9 +83,9 @@ class OrderService implements IOrderService
                 // Insert products in cart to order:
                 $this->productsInOrderServices->insertProductsInOrder($productsInOder['products']);
                 // Delete products in cart:
-                $this->cartServices->deleteListProductInCart($productsInOder['id_products'], $customerId, false);
+               $this->cartServices->deleteListProductInCart($productsInOder['id_products'], $customerId, false);
                 return [
-                    'order_id' => $orderId,
+                    'order_id'           => $orderId,
                     'total_amount_order' => $dataOrder['total_amount_order']
                 ];
             }, 3);

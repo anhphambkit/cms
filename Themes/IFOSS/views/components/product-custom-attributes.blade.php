@@ -16,7 +16,7 @@ $isVariantAttribute = ($typeProduct === \Plugins\Product\Contracts\ProductRefere
         @php
             $productDefaultValue = !empty($productDefaultAttributeValues[$productAttribute->id]) ? $productDefaultAttributeValues[$productAttribute->id]->first() : null;
         @endphp
-        <div class="product-attribute {{ ($isVariantAttribute) ? 'variant-attribute' : '' }} product-attribute-{{ $productAttribute->id }}" data-product-attribute="{{ $productAttribute->id }}"
+        <div class="product-attribute {{ ($isVariantAttribute) ? 'variant-attribute' : '' }} product-attribute-{{ $productAttribute->id }}" data-attribute-type="{{ $productAttribute->type_render }}" data-product-attribute="{{ $productAttribute->id }}"
              data-is-variant-attribute="{{ $isVariantAttribute }}" data-attribute-selected-id="{{ (!empty($productDefaultValue)) ? $productDefaultValue->id : '' }}">
             @switch($productAttribute->type_render)
                 @case(str_slug(\Plugins\CustomAttributes\Contracts\CustomAttributeConfig::REFERENCE_CUSTOM_ATTRIBUTE_TYPE_RENDER_COLOR_PICKER, '_'))
@@ -30,7 +30,7 @@ $isVariantAttribute = ($typeProduct === \Plugins\Product\Contracts\ProductRefere
                     </div>
                     <div class="color-box">
                         @foreach($productAttributeValues[$productAttribute->id] as $productAttributeValue)
-                            <a href="javascript:void(0);" data-color="{{ $productAttributeValue->name }}" data-attribute-value-id="{{ $productAttributeValue->id }}"
+                            <a href="javascript:void(0);" data-attribute-value-name="{{ $productAttributeValue->name }}" data-attribute-value-id="{{ $productAttributeValue->id }}"
                                class="item item-color-attribute item-product-attribute {{ (!empty($productDefaultValue) && $productDefaultValue->id === $productAttributeValue->id) ? 'active' : '' }}">
                                 @if($productAttributeValue->image_feature)
                                     <img src="{{ asset($productAttributeValue->image_feature) }}" alt="{{ $productAttributeValue->name }}">
@@ -56,7 +56,7 @@ $isVariantAttribute = ($typeProduct === \Plugins\Product\Contracts\ProductRefere
                         <a href="javascript:void(0);" class="action-icon" data-toggle="dropdown"><i class="fas fa-chevron-right"></i></a>
                         <div class="dropdown-menu align-left" aria-labelledby="account-dropdown">
                             @foreach($productAttributeValues[$productAttribute->id] as $productAttributeValue)
-                                <a class="dropdown-item" href="#">{{ $productAttributeValue->name }}</a>
+                                <a class="dropdown-item item-product-attribute" href="javascript:void(0);" data-attribute-value-name="{{ $productAttributeValue->name }}" data-attribute-value-id="{{ $productAttributeValue->id }}">{{ $productAttributeValue->name }}</a>
                             @endforeach
                         </div>
                     </div>

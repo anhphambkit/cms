@@ -66,6 +66,7 @@
         <script>
             const API_SHOP = {
                 ADD_TO_CART : "{{ route('ajax.product.add_to_cart') }}",
+                UPDATE_PRODUCT_IN_CART : "{{ route('ajax.cart.update_product_in_cart') }}",
                 {{--VIEW_CART_HEADER : "{{ route('ajax.shop.view_cart_header') }}",--}}
                 {{--DELETE_PRODUCT_IN_CART : "{{ route('ajax.shop.delete_product_in_cart') }}",--}}
             };

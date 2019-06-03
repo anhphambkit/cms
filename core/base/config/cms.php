@@ -42,7 +42,7 @@ return [
         ],
     ],
     'enable_https_support' => env('ENABLE_HTTPS_SUPPORT', false),
-    'enable_cache_dashboard_menu' => env('ENABLE_CACHE_DASHBOARD_MENU', false),
+    'enable_cache_dashboard_menu' => env('ENABLE_CACHE_DASHBOARD_MENU', true),
     'date_format' => [
         'date' => 'Y-m-d',
         'date_time' => 'Y-m-d H:i:s',
