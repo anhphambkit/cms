@@ -51,6 +51,8 @@ class OrderService implements IOrderService
             // Current Cart:
             $cart = $this->cartServices->getProductsInCartToOrder($customerId);
 
+            if ($cart['products']->isEmpty())
+                abort(404);
             // Get fee shipping:
             $shippingFee = 0;
 
