@@ -20,6 +20,8 @@ use Plugins\Payment\Contracts\PaymentReferenceConfig;
 use Plugins\Customer\Contracts\OrderReferenceConfig;
 use Plugins\Payment\Repositories\Interfaces\PaymentRepositories;
 use Plugins\Customer\Models\Order;
+use AssetManager;
+use AssetPipeline;
 
 class CheckoutController extends BasePublicController
 {	
@@ -88,6 +90,8 @@ class CheckoutController extends BasePublicController
 	 */
 	public function getCheckout(Request $request)
 	{
+        AssetManager::addAsset('checkout-css', 'frontend/plugins/product/assets/css/checkout.css');
+        AssetPipeline::requireCss('checkout-css');
         $cart = $this->cartServices->getBasicInfoCartOfCustomer(Auth::guard('customer')->id());
 		return view('pages.checkout.index', compact('cart'));
 	}

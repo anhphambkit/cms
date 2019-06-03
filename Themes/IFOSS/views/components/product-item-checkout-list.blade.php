@@ -10,7 +10,7 @@ $quantities = !empty($quantities) ? $quantities : [];
 $customAttributes = $productItem->productCustomAttributes()->get();
 $attributeValues = $productItem->productStringValueAttribute()->get();
 ?>
-<div class="list-item">
+<div class="list-item justify-content-start">
     <div class="thumbnail">
         <img src="{{ asset($productItem->image_feature) }}" alt=""/>
     </div>

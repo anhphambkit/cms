@@ -35,4 +35,10 @@ interface ProductServices {
      * @return mixed
      */
     public function getDetailInfoProductByProductIdAndAttribute(int $productId, array $productAttributes);
+
+    /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function getBestSellerProducts($limit = 8);
 }

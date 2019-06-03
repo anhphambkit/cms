@@ -23,32 +23,6 @@
                     </div>
                 @endforeach
             </div>
-            <hr class="bg-custom mb-4">
-            <div class="h6 text-uppercase text-center mb-3">Try something similar</div>
-            <div class="row">
-                <?php for ($j=0; $j < 4; $j++) { ?>
-                    <div class="col-md-3">
-                        <div class="item">
-                            <div class="thumbnail" >
-                                @php
-                                    $indexUrl = $j+1;
-                                    $url = "themes/ifoss/assets/images/products/product{$indexUrl}.jpg";
-                                @endphp
-                                <img src="{{ URL::asset($url) }}">
-                                <div class="mask">
-                                    <button class="btn btn-white">quick view</button>
-                                    <a href="#" class="favourite"><i class="far fa-heart"></i></a>
-                                </div>
-                            </div>
-                            <div class="title">Basics Metal Box Spring</div>
-                            <div class="cost">
-                                <div class="discount">$5560</div>
-                                <div class="original-cost">$4560</div>
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
-            </div>
         </div>
     </section>
 

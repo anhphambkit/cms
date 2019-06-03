@@ -135,34 +135,17 @@
         </div>
         <div class="container">
             <div class="row product-slider--wrapper">
-                <?php for ($i=0; $i < 2; $i++) { ?>
-                    <?php for ($j=0; $j < 4; $j++) { ?>
-                        <div class="col-md-3">
-                            <div class="item">
-                                <div class="thumbnail" >
-                                    @php
-                                        $index = $j + 1;
-                                        $url = "themes/ifoss/assets/images/products/product{$index}.jpg";
-                                    @endphp
-                                    <img src="{{ URL::asset($url) }}">
-                                    <div class="mask">
-                                        <button class="btn btn-white">quick view</button>
-                                        <a href="#" class="favourite"><i class="far fa-heart"></i></a>
-                                    </div>
-                                </div>
-                                <div class="title">Basics Metal Box Spring</div>
-                                <div class="cost">
-                                    <div class="discount">$5560</div>
-                                    <div class="original-cost">$4560</div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php } ?>
-                <?php } ?>
+                @foreach($bestSellerProducts as $bestSellerProduct)
+                    <div class="col-md-3">
+                        @component("components.product-item")
+                            @slot("productItem", $bestSellerProduct)
+                        @endcomponent
+                    </div>
+                @endforeach
             </div>
-            <div class="text-center">
-                <a href="#" class="btn-with-hr">Show all</a>
-            </div>
+            {{--<div class="text-center">--}}
+                {{--<a href="#" class="btn-with-hr">Show all</a>--}}
+            {{--</div>--}}
         </div>
     </section>
 @stop

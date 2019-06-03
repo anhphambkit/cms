@@ -9,8 +9,13 @@ $productItem = !empty($productItem) ? $productItem : collect([]);
 ?>
 <div class="product-item">
     <div class="item mb-3">
+        @if($productItem->is_has_sale)
+            <div class="badge-sale">Sale</div>
+        @endif
         <div class="thumbnail mb-0">
-            <img src="{{ asset($productItem->image_feature) }}">
+            <div class="content">
+                <img src="{{ asset($productItem->image_feature) }}">
+            </div>
             <div class="mask">
                 <div class="text-center">
                     <button class="btn btn-outline-custom background-white mb-3">quick shop</button>

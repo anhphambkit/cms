@@ -1,4 +1,8 @@
 {
-    "/frontend/plugins/cart/assets/js/cart.js": "/frontend/plugins/cart/assets/js/cart.js",
-    "/frontend/plugins/cart/assets/css/cart.css": "/frontend/plugins/cart/assets/css/cart.css"
+    "/frontend/core/user/assets/js/login.js": "/frontend/core/user/assets/js/login.js",
+    "/frontend/core/user/assets/css/login.css": "/frontend/core/user/assets/css/login.css",
+    "/backend/core/user/assets/css/cropper.css": "/backend/core/user/assets/css/cropper.css",
+    "/backend/core/user/assets/css/profile.css": "/backend/core/user/assets/css/profile.css",
+    "/backend/core/user/assets/js/role.js": "/backend/core/user/assets/js/role.js",
+    "/backend/core/user/assets/js/profile.js": "/backend/core/user/assets/js/profile.js"
 }
