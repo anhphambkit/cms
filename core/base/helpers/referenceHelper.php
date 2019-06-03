@@ -19,3 +19,17 @@ if (function_exists('find_reference_element') === false) {
         return $element ?? abort(403, 'reference not found, please make sure seeder running');
     }
 }
+
+if (function_exists('find_reference_by_id') === false) {
+    /**
+     * [find_reference_element description]
+     * @param  [type] $referenceValue [description]
+     * @param  [type] $referenceType  [description]
+     * @return Illuminate\Support\Collection
+     */
+    function find_reference_by_id($id)
+    {
+        $element = DB::table('references')->where('id', $id)->first();
+        return $element ?? abort(403, 'reference not found, please make sure seeder running');
+    }
+}

@@ -25,6 +25,15 @@ return [
 		'parent_id'   => null,
 		'name'        => 'plugins-customer::sidebar.order',
 		'icon'        => 'fas fa-users-cog',
+		'url'         => null,
+		'permissions' => ['order.list']
+    ],
+    [
+		'id'          => 'menu-order-customer',
+		'priority'    => 1,
+		'parent_id'   => 'menu-order-administrator',
+		'name'        => 'plugins-customer::sidebar.order',
+		'icon'        => 'fas fa-users-cog',
 		'url'         => 'admin.order.list',
 		'permissions' => ['order.list']
     ],
