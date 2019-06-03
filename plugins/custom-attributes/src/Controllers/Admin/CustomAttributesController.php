@@ -24,7 +24,7 @@ class CustomAttributesController extends BaseAdminController
     /**
      * @var CustomAttributesRepositories
      */
-    protected $productColorRepository;
+    protected $customAttributesRepositories;
 
     /**
      * @var ReferenceServices
@@ -33,12 +33,12 @@ class CustomAttributesController extends BaseAdminController
 
     /**
      * CustomAttributesController constructor.
-     * @param CustomAttributesRepositories $productColorRepository
+     * @param CustomAttributesRepositories $customAttributesRepositories
      * @param ReferenceServices $referenceServices
      */
-    public function __construct(CustomAttributesRepositories $productColorRepository, ReferenceServices $referenceServices)
+    public function __construct(CustomAttributesRepositories $customAttributesRepositories, ReferenceServices $referenceServices)
     {
-        $this->productColorRepository = $productColorRepository;
+        $this->customAttributesRepositories = $customAttributesRepositories;
         $this->referenceServices = $referenceServices;
         parent::__construct();
     }
@@ -88,7 +88,7 @@ class CustomAttributesController extends BaseAdminController
         $data['created_by'] = Auth::id();
         $data['type_value'] = str_slug(CustomAttributeConfig::REFERENCE_CUSTOM_ATTRIBUTE_TYPE_RENDER_STRING, '_');
 
-        $color = $this->productColorRepository->createOrUpdate($data);
+        $color = $this->customAttributesRepositories->createOrUpdate($data);
 
         do_action(BASE_ACTION_AFTER_CREATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $color);
 
@@ -100,21 +100,26 @@ class CustomAttributesController extends BaseAdminController
     }
 
     /**
-     * Show edit form
-     *
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author AnhPham
      */
     public function getEdit($id)
     {
-        $color = $this->productColorRepository->findById($id);
-        if (empty($color)) {
+        $customAttribute = $this->customAttributesRepositories->findById($id);
+        if (empty($customAttribute)) {
             abort(404);
         }
+        $typeEntities = $this->referenceServices->getReferenceFromAttributeType(CustomAttributeConfig::REFERENCE_CUSTOM_ATTRIBUTE_TYPE_ENTITY)
+            ->pluck('value', 'slug')
+            ->toArray();
+
+        $typeRenders = $this->referenceServices->getReferenceFromAttributeType(CustomAttributeConfig::REFERENCE_CUSTOM_ATTRIBUTE_TYPE_RENDER)
+            ->pluck('value', 'slug')
+            ->toArray();
+
         page_title()->setTitle(trans('plugins-custom-attributes::custom-attributes.edit') . ' #' . $id);
         $this->addDetailAssets();
-        return view('plugins-custom-attributes::custom-attributes.edit', compact('color'));
+        return view('plugins-custom-attributes::edit', compact('customAttribute', 'typeEntities', 'typeRenders'));
     }
 
     /**
@@ -124,15 +129,16 @@ class CustomAttributesController extends BaseAdminController
      */
     public function postEdit($id, CustomAttributesRequest $request)
     {
-        $color = $this->productColorRepository->findById($id);
-        if (empty($color)) {
+        $customAttribute = $this->customAttributesRepositories->findById($id);
+        if (empty($customAttribute)) {
             abort(404);
         }
-        $color->fill(array($request->input(), ['updated_by' => Auth::id()]));
 
-        $this->productColorRepository->createOrUpdate($color);
+        $customAttribute->fill(array($request->all(), ['updated_by' => Auth::id()]));
 
-        do_action(BASE_ACTION_AFTER_UPDATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $color);
+        $this->customAttributesRepositories->createOrUpdate($customAttribute);
+
+        do_action(BASE_ACTION_AFTER_UPDATE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $customAttribute);
 
         if ($request->input('submit') === 'save') {
             return redirect()->route('admin.custom-attributes.list')->with('success_msg', trans('core-base::notices.update_success_message'));
@@ -150,13 +156,13 @@ class CustomAttributesController extends BaseAdminController
     public function getDelete(Request $request, $id)
     {
         try {
-            $color = $this->productColorRepository->findById($id);
-            if (empty($color)) {
+            $customAttribute = $this->customAttributesRepositories->findById($id);
+            if (empty($customAttribute)) {
                 abort(404);
             }
-            $this->productColorRepository->delete($color);
+            $this->customAttributesRepositories->delete($customAttribute);
 
-            do_action(BASE_ACTION_AFTER_DELETE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $color);
+            do_action(BASE_ACTION_AFTER_DELETE_CONTENT, PRODUCT_MODULE_SCREEN_NAME, $request, $customAttribute);
 
             return [
                 'error' => false,
