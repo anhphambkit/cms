@@ -149,4 +149,12 @@ class ImplementProductServices implements ProductServices {
     public function getProductsByWhereAttributesOfVariantProduct(array $listVariantProductId, array $whereAttributes) {
         return $this->productAttributeValueRepositories->getProductsByWhereAttributesOfVariantProduct($listVariantProductId, $whereAttributes);
     }
+
+    /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function getBestSellerProducts($limit = 8) {
+        return $this->repository->getBestSellerProducts($limit);
+    }
 }

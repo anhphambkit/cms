@@ -72,4 +72,19 @@ class EloquentProductRepositories extends RepositoriesAbstract implements Produc
 
         return $query->distinct()->get();
     }
+
+    /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function getBestSellerProducts($limit = 8) {
+        return $this->allBy([
+           [
+               'is_best_seller', '=', true
+           ],
+            [
+                'type_product', '!=', ProductReferenceConfig::PRODUCT_TYPE_VARIANT
+            ]
+        ])->slice(0, $limit);
+    }
 }

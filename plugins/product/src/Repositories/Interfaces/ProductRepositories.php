@@ -38,4 +38,10 @@ interface ProductRepositories extends RepositoryInterface
      * @return mixed
      */
     public function getAllProductInCollections(array $collectionIds, int $limit = null);
+
+    /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function getBestSellerProducts($limit = 8);
 }

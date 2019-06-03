@@ -2,6 +2,8 @@
 namespace Core\Page\Controllers\Web;
 use Core\Base\Controllers\Web\BasePublicController;
 use Illuminate\Http\Request;
+use Plugins\Product\Services\ProductServices;
+
 /**
  * Public controller frontend
  * @author TrinhLe
@@ -9,11 +11,18 @@ use Illuminate\Http\Request;
 class PublicController extends BasePublicController{
 
     /**
-     * PublicController constructor.
+     * @var ProductServices
      */
-    public function __construct()
+    private $productServices;
+
+    /**
+     * PublicController constructor.
+     * @param ProductServices $productServices
+     */
+    public function __construct(ProductServices $productServices)
     {
         parent::__construct();
+        $this->productServices = $productServices;
     }
 
     /**
@@ -24,6 +33,7 @@ class PublicController extends BasePublicController{
 	public function homepage(Request $request)
 	{
         page_title()->setTitle('Ifoss');
-		return view('homepage');
+        $bestSellerProducts = $this->productServices->getBestSellerProducts(8);
+		return view('homepage', compact('bestSellerProducts'));
 	}
 }
