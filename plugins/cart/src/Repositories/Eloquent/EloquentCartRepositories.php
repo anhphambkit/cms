@@ -48,8 +48,8 @@ class EloquentCartRepositories extends RepositoriesAbstract implements CartRepos
     public function getBasicInfoCartOfCustomer(int $customerId = null, bool $isGuest = false) {
         try {
             $query = $this->model->select('products.id', 'products.name', 'products.slug', 'products.sku',
-                'products.price', 'products.sale_price', "quantity", 'products.image_feature', 'products.sale_start_date', 'products.sale_end_date',
-                DB::raw('array_to_json(array_remove(array_agg(DISTINCT lcms_category.*), null)) as categories')
+                'products.price', 'products.sale_price', "quantity", 'products.image_feature', 'products.sale_start_date', 'products.sale_end_date'
+//                DB::raw('array_to_json(array_remove(array_agg(DISTINCT lcms_category.*), null)) as categories')
 //                array_to_json(array_remove(array_agg(DISTINCT lcms_media_tbl.*), null)) as medias
             )
                 ->leftJoin('products', "product_id", '=', 'products.id')
