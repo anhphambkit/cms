@@ -63,6 +63,7 @@ $router->group(['prefix' => 'product/checkout', 'middleware' => ['customer']], f
     $router->get('/', [
         'as'         => 'public.product.checkout', 
         'uses'       => 'CheckoutController@getCheckout',
+        'middleware' => 'checkout'
     ]);
 
     $router->post('/', [

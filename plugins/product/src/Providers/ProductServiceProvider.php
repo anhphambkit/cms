@@ -59,6 +59,8 @@ class ProductServiceProvider extends ServiceProvider
         $this->app->singleton(LookBookServices::class, ImplementLookBookServices::class);
         $this->app->singleton(ProductSpaceServices::class, ImplementProductSpaceServices::class);
         $this->app->singleton(ProductAttributeValueServices::class, ImplementProductAttributeValueServices::class);
+
+        $this->app['router']->aliasMiddleware('checkout', \Plugins\Product\Middlewares\CheckoutMiddleware::class);
     }
 
     /**

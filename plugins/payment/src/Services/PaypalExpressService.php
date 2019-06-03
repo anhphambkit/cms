@@ -13,7 +13,7 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\Payment;
 use PayPal\Api\Payer;
 use PayPal\Api\PaymentExecution;
-use Request;
+use Illuminate\Support\Facades\Session;
 
 class PaypalExpressService extends BasePaymentService implements IPaypalExpressService
 {
@@ -150,8 +150,7 @@ class PaypalExpressService extends BasePaymentService implements IPaypalExpressS
             throw new \Exception($paypalException->getMessage());
         }
 
-        session()->put('paypal_payment_id', $payment->id);
-
+        Session::put('payment_paypal_session_id', $payment->id);
         return $payment->getApprovalLink();
     }
 

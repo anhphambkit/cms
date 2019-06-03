@@ -52,28 +52,28 @@ class OrderService implements IOrderService
             $cart = $this->cartServices->getProductsInCartToOrder($customerId);
 
             if ($cart['products']->isEmpty())
-                abort(404);
+                abort(404, 'cart not empty');
             // Get fee shipping:
             $shippingFee = 0;
 
             // Prepare data for create new order
             $dataOrder = [
-                'customer_id' => $customerId,
-                'is_guest' => $isGuest,
-                'address_shipping' => json_encode($dataCheckouts['address_shipping']),
-                'address_billing' => json_encode($dataCheckouts['address_billing']),
-                'payment_method' => $dataCheckouts['payment_method'],
-                'total_original_price' => $cart['total_original_price'],
-                'discount_price' => 0,
+                'customer_id'                  => $customerId,
+                'is_guest'                     => $isGuest,
+                'address_shipping'             => json_encode($dataCheckouts['address_shipping']),
+                'address_billing'              => json_encode($dataCheckouts['address_billing']),
+                'payment_method'               => $dataCheckouts['payment_method'],
+                'total_original_price'         => $cart['total_original_price'],
+                'discount_price'               => 0,
                 'total_sale_price_on_products' => $cart['total_sale_price_on_products'],
-                'saved_price' => $cart['saved_price'],
-                'coupon_code' => $dataCheckouts['coupon_code'],
-                'total_price' => $cart['total_price'],
-                'total_amount_order' => $cart['total_price'] + $shippingFee,
-                'shipping_fee' => $shippingFee,
-                'is_free_shipping' => ($shippingFee > 0) ? false : true,
-                'updated_at' => $now,
-                'created_at' => $now,
+                'saved_price'                  => $cart['saved_price'],
+                'coupon_code'                  => $dataCheckouts['coupon_code'],
+                'total_price'                  => $cart['total_price'],
+                'total_amount_order'           => $cart['total_price'] + $shippingFee,
+                'shipping_fee'                 => $shippingFee,
+                'is_free_shipping'             => ($shippingFee > 0) ? false : true,
+                'updated_at'                   => $now,
+                'created_at'                   => $now,
             ];
             return DB::transaction(function () use ($dataOrder, $cart, $customerId, $isGuest) {
                 // Create new Order:

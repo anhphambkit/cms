@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,8 @@
 use Illuminate\Routing\Router;
 
 $router->get('map/location', function(){
-    return view('map-location');
+    Session::forget('hello');
+    return Session::get('hello');
 });
 
 /** @var Router $router */

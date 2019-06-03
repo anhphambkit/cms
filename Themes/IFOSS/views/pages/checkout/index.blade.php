@@ -85,6 +85,28 @@
 				let cardType = this.getAttribute('attr-name');
 				$('input[name="creditcard[card_name]"]').val(cardType);
 			});
+
+			@if(setting('enable_test_paypal'))
+
+				let configPaypal = {
+					'card_name' : 'visa',
+					'first_name' : 'Joe',
+					'last_name' : 'Shopper',
+					'card_number' : '4669424246660779',
+					'expiration_month' : 11,
+					'expiration_year' : 2019,
+					'card_cvv' : '012',
+				}
+
+				Object.keys(configPaypal).forEach(function (key) {
+				   // do something with obj[key]
+				   	if(key == 'expiration_month' || key == 'expiration_year')
+				   		$(`select[name="creditcard[${key}]"]`).val(configPaypal[key]);
+				   	else
+				   		$(`input[name="creditcard[${key}]"]`).val(configPaypal[key]);
+				});
+
+			@endif
 		});
 		
 

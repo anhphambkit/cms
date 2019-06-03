@@ -59,6 +59,22 @@ return [
                     ],
                 ],
             ],
+            [
+                'label' => trans('Enable Test Paypal'),
+                'type' => 'onOff',
+                'attributes' => [
+                    'name' => 'enable_test_paypal',
+                    'value' => 0,
+                ],
+            ],
+            [
+                'label' => trans('Disable Checkout Middleware'),
+                'type' => 'onOff',
+                'attributes' => [
+                    'name' => 'disable_checkout_middleware',
+                    'value' => 0,
+                ],
+            ],
         ]
     ],
     'seo' => [

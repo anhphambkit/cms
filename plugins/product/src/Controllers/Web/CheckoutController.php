@@ -124,6 +124,12 @@ class CheckoutController extends BasePublicController
 	 */
 	public function callbackPaypalForm(Request $request, BaseHttpResponse $response)
 	{
+		$sessionPaymentId = Session::get('payment_paypal_session_id');
+		if(!$sessionPaymentId) return $response
+			->setPreviousUrl(route('homepage'))
+			->setNextUrl(route('homepage'));
+
+		Session::forget('payment_paypal_session_id');
 		$paymentInfo = $this->paypalPaymentService->getPaymentStatus($request);
 		return $this->responseAfterChargeOrder($paymentInfo, $response);
 	}
