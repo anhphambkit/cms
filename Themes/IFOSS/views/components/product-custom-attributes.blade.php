@@ -48,7 +48,7 @@ $isVariantAttribute = ($typeProduct === \Plugins\Product\Contracts\ProductRefere
                         <div class="mr-4">
                             <span class="d-inline-block gray-color" style="width: 120px;">Select {{ strtolower($productAttribute->name) }}</span>
                             @foreach($productAttributeValues[$productAttribute->id] as $productAttributeValue)
-                                @if(!empty($productDefaultValue))
+                                @if(!empty($productDefaultValue) && $productDefaultValue->id === $productAttributeValue->id)
                                     <span class="font-weight-600" data-attribute-value-id="{{ $productAttributeValue->id }}">{{  $productAttributeValue->name }}</span>
                                 @endif
                             @endforeach
