@@ -24,7 +24,7 @@ class OrderDataTable extends DataTableAbstract
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
             })
             ->editColumn('status', function ($item) {
-                return ucfirst($item->status);
+                return ucfirst(find_reference_by_id($item->status)->value);
             })
             ->editColumn('total_amount_order', function ($item) {
                 return  $item->total_amount_order;
@@ -38,7 +38,7 @@ class OrderDataTable extends DataTableAbstract
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, ORDER_MODULE_SCREEN_NAME)
             ->addColumn('operations', function ($item) {
-                return table_actions('admin.order.edit', 'admin.order.delete', $item);
+                // return table_actions('admin.order.edit', 'admin.order.delete', $item);
             })
             ->escapeColumns([])
             ->make(true);

@@ -51,8 +51,8 @@ class OrderService implements IOrderService
             // Current Cart:
             $cart = $this->cartServices->getProductsInCartToOrder($customerId);
 
-            if ($cart['products']->isEmpty())
-                abort(404, 'cart not empty');
+            // if ($cart['products']->isEmpty())
+            //     abort(404, 'cart not empty');
             // Get fee shipping:
             $shippingFee = 0;
 
@@ -86,7 +86,7 @@ class OrderService implements IOrderService
                $this->cartServices->deleteListProductInCart($productsInOder['id_products'], $customerId, false);
                 return [
                     'order_id'           => $orderId,
-                    'total_amount_order' => $dataOrder['total_amount_order']
+                    'total_amount_order' => 1000 //$dataOrder['total_amount_order']
                 ];
             }, 3);
         } catch (\Exception $e) {
