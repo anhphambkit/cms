@@ -8,6 +8,7 @@ use Core\Base\Responses\BaseHttpResponse;
 use Illuminate\Support\Facades\Auth;
 use Plugins\Customer\Repositories\Interfaces\CustomerRepositories;
 use Hash;
+use Plugins\Customer\Services\IOrderService;
 
 class OrderController extends BasePublicController
 {
@@ -16,9 +17,16 @@ class OrderController extends BasePublicController
 	 */
 	private $customerRepositories;
 
-	public function __construct(CustomerRepositories $customer)
+	/**
+	 * [$orderService description]
+	 * @var IOrderService
+	 */
+	private $orderService;
+
+	public function __construct(CustomerRepositories $customer, IOrderService $orderService)
 	{
 		$this->customerRepositories = $customer;
+		$this->orderService         = $orderService;
 	}
 
 	/**
@@ -29,6 +37,7 @@ class OrderController extends BasePublicController
 	 */
 	public function getMyOrders(Request $request)
 	{
-		return view("plugins-customer::account.myorders");
+		$myorders = $this->orderService->getMyOrders(get_current_customer()->id);
+		return view("plugins-customer::account.myorders", compact('myorders'));
 	}
 }

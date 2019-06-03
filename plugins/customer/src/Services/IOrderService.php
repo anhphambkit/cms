@@ -18,4 +18,11 @@ interface IOrderService
      * @return mixed
      */
     public function updateOrder(array $conditions, array $data);
+
+    /**
+     * [getMyOrders description]
+     * @param  [type] $customerId [description]
+     * @return [type]             [description]
+     */
+    public function getMyOrders(int $customerId);
 }

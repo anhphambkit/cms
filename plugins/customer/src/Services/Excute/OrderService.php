@@ -33,9 +33,9 @@ class OrderService implements IOrderService
      */
 	public function __construct(OrderRepositories $orderRepository, CartServices $cartServices, IProductsInOrderServices $productsInOrderServices)
 	{
-		$this->orderRepository = $orderRepository;
-		$this->cartServices = $cartServices;
-		$this->productsInOrderServices = $productsInOrderServices;
+        $this->orderRepository         = $orderRepository;
+        $this->cartServices            = $cartServices;
+        $this->productsInOrderServices = $productsInOrderServices;
 	}
 
     /**
@@ -129,5 +129,15 @@ class OrderService implements IOrderService
      */
     public function updateOrder(array $conditions, array $data) {
         return $this->orderRepository->update($conditions, $data);
+    }
+
+    /**
+     * [getMyOrders description]
+     * @param  [type] $customerId [description]
+     * @return [type]             [description]
+     */
+    public function getMyOrders(int $customerId)
+    {
+        return $this->orderRepository->allBy(['customer_id' => $customerId]);
     }
 }

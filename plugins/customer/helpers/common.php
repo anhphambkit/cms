@@ -58,3 +58,54 @@ if (!function_exists('get_address_value_default')) {
         return $address->{$key} ?? $defaultValue;
     }
 }
+
+if (!function_exists('show_fullname_invoce')) {
+    /**
+     * @author TrinhLe
+     * Get default address value
+    */
+    function show_fullname_invoce($invoice, $defaultValue = 'noreply')
+    {
+        $address = json_decode($invoice->address_billing);
+        return $address->fullname ?? $defaultValue;
+    }
+}
+
+if (!function_exists('show_address_invoice')) {
+    /**
+     * @author TrinhLe
+     * Get default address value
+    */
+    function show_address_invoice($invoice)
+    {
+        $address = json_decode($invoice->address_billing);
+        $keys = [
+            'address_1',
+            'address_2',
+            'city',
+            'zip',
+            'phone_number',
+        ];
+
+        foreach ($keys as $value) {
+            $results[] = get_address_value_default($address, $value, null);
+        }
+        return implode(', ', array_filter($results));
+    }
+}
+
+if (!function_exists('show_email_invoice')) {
+    /**
+     * @author TrinhLe
+     * Get default address value
+    */
+    function show_email_invoice($invoice,  $defaultValue = 'noreply@gmail.com')
+    {
+        $address = json_decode($invoice->address_billing);
+        return $address->email ?? $defaultValue;
+    }
+}
+
+
+
+
