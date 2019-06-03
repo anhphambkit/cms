@@ -11,4 +11,11 @@ interface IOrderService
      * @return mixed
      */
     public function createOrderCustomerProduct(array $dataCheckouts, int $customerId, bool $isGuest = false);
+
+    /**
+     * @param array $conditions
+     * @param array $data
+     * @return mixed
+     */
+    public function updateOrder(array $conditions, array $data);
 }

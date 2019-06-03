@@ -31,7 +31,7 @@ class ModifyTableOrder extends Migration
             $table->float('saved_price');
             $table->string('coupon_code')->nullable();
             $table->boolean('is_free_shipping')->default(false);
-            $table->boolean('status')->default(true);
+            $table->integer('status')->default(0);
             $table->string('tracking_product_ids')->nullable();
             $table->string('tracking_number')->nullable();
             $table->integer('transaction_id')->nullable();
@@ -40,7 +40,7 @@ class ModifyTableOrder extends Migration
             $table->decimal('amount_refund')->default(0);
             $table->integer('updated_by')->nullable();
             $table->integer('payment_id')->nullable();
-            $table->integer('payal_id')->nullable();
+            $table->string('paypal_id')->nullable();
             $table->integer('total_free_design')->default(0);
             $table->timestamps();
         });

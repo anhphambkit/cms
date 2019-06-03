@@ -138,19 +138,25 @@ class CheckoutController extends BasePublicController
 		$transaction = $paymentInfo->transactions[0];
 		$orderId = $transaction->invoice_number;
 
+		$conditionsUpdateOrder = [
+		    [
+                'id', '=', $orderId
+            ]
+        ];
+
 		$this->createTransactionPayment($paymentInfo);
 
 		if(in_array($paymentInfo->state ?? '', [
 			PaymentReferenceConfig::REFERENCE_PAYMENT_STATUS_CREATED,
 			PaymentReferenceConfig::REFERENCE_PAYMENT_STATUS_APPROVED
 		])){
-			
 			$invoiceStatus = find_reference_element(OrderReferenceConfig::REFERENCE_ORDER_STATUS_OPEN, OrderReferenceConfig::REFERENCE_ORDER_STATUS);
 			//Success charge order with payment. Change status order to open here
-
-
-			// Create transaction payment
-			
+			$dataUpdate = [
+			    'status' => $invoiceStatus->id,
+			    'paypal_id' => $paymentInfo->id,
+            ];
+			$this->orderService->updateOrder($conditionsUpdateOrder, $dataUpdate);
 			return $response
 				->setPreviousUrl(route('homepage'))
 				->setNextUrl(route('homepage'))
@@ -159,6 +165,13 @@ class CheckoutController extends BasePublicController
 
 		//Failed charge order with payment. Change status order to open here
 		$invoiceStatus = find_reference_element(OrderReferenceConfig::REFERENCE_ORDER_STATUS_PENDING, OrderReferenceConfig::REFERENCE_ORDER_STATUS);
+
+        $dataUpdate = [
+            'status' => $invoiceStatus->id,
+            'paypal_id' => $paymentInfo->id,
+        ];
+
+        $this->orderService->updateOrder($conditionsUpdateOrder, $dataUpdate);
 
 		return $response
 				->setPreviousUrl(route('homepage'))

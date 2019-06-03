@@ -121,4 +121,13 @@ class OrderService implements IOrderService
             throw new \Exception($e->getMessage());
         }
     }
+
+    /**
+     * @param array $conditions
+     * @param array $data
+     * @return mixed
+     */
+    public function updateOrder(array $conditions, array $data) {
+        return $this->orderRepository->update($conditions, $data);
+    }
 }
