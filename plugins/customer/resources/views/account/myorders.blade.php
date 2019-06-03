@@ -18,48 +18,69 @@
 			<div class="h6 font-weight-500 text-custom text-uppercase mb-4">Personal Information</div>
 			<div class="flex-table table-s1 table-responsive-md">
 				<div class="thead">
-					<?php 
-					function setTheadWidth($key){
-						if($key == 0){ 
-							echo 'style="min-width: 100px;"';
-						}
-						else if($key == 2){ 
-							echo 'style="min-width: 110px;"';
-						}
-						else if($key == 1 || $key == 8){ 
-							echo 'style="min-width: 140px;"';
-						}
-						else if($key == 5){ 
-							echo 'style="min-width: 165px;"';
-						}
-					}
-					$thead = array('Order Id', 'Payment Type','Full Name', 'Address', 'Total', 'Tracking Number', 'Email','Status', 'Created Time'); 
-					foreach ($thead as $key => $value) { ?>
-						<div class="th" <?php setTheadWidth($key); ?> ><?php echo $value; ?></div>
-					<?php } ?>
+					@php
+						$configThead = [
+							[
+								'name' => 'Order Id',
+								'style' => 'min-width: 100px;'
+							],
+							[
+								'name' => 'Payment Type',
+								'style' => 'min-width: 100px;'
+							],
+							[
+								'name' => 'Full Name',
+								'style' => 'min-width: 110px;'
+							],
+							[
+								'name' => 'Address',
+								'style' => 'min-width: 200px;'
+							],
+							[
+								'name' => 'Total',
+								'style' => 'min-width: 100px;'
+							],
+							[
+								'name' => 'Tracking Number',
+								'style' => 'min-width: 165px;'
+							],
+							[
+								'name' => 'Email',
+							],
+							[
+								'name' => 'Status',
+							],
+							[
+								'name' => 'Created Time',
+								'style' => 'min-width: 140px;'
+							]
+						];
+					@endphp
+					@foreach($configThead as $thead)
+						<div class="th" style="{{  $thead['style'] ?? '' }}">{{ $thead['name'] ?? '' }}</div>
+					@endforeach
 				</div>
 				<div class="tbody">
-					<?php for ($i=0; $i < 3; $i++) { ?>
+					@foreach($myorders as $order)
 						<div class="tr">
-							<!-- <?php $tbody = array('11065', 'Credit Card','Amber Steel', '40 5th Ave New York, NY 10011, 9177440706', '$138.60', '709709LS46VHA', 'amber.steel@me.com','Shipped', '2019 -04-19  08:56:57'); ?> -->
 							<div class="tr">
-								<div class="td">11065</div>
-								<div class="td">Credit Card</div>
-								<div class="td">Amber Steel</div>
-								<div class="td">40 5th Ave New York, NY 10011, 9177440706</div>
-								<div class="td">$138.60</div>
-								<div class="td"><a href="#" class="text-blue">709709LS46VHA</a></div>
-								<div class="td">amber.steel@me.com</div>
-								<div class="td">Shipped</div>
-								<div class="td">2019 -04-19  08:56:57</div>
-								<span class="td-action text-right">
+								<div class="td">{{ $order->id }}</div>
+								<div class="td">{{ ucfirst($order->payment_method) }}</div>
+								<div class="td">{{ show_fullname_invoce($order) }}</div>
+								<div class="td">{{ show_address_invoice($order) }}</div>
+								<div class="td">$ {{ number_format($order->total_amount_order, 2, ',', '.') }}</div>
+								<div class="td"><a href="#" class="text-blue">{{ $order->tracking_number ?? 'NONE' }}</a></div>
+								<div class="td">{{ show_email_invoice($order) }}</div>
+								<div class="td">{{ ucfirst(find_reference_by_id($order->status)->value) }}</div>
+								<div class="td">{{ $order->created_at }}</div>
+								<!-- <span class="td-action text-right">
 									<a href="#" class="text-blue">View Detail</a>
 									<a href="#" class="text-blue">Issue a refund</a>
 									<a href="#" class="text-yellow" data-toggle="modal" data-target="#resend-confirmation-order">Ressend Comfirmation Order</a>
-								</span>
+								</span> -->
 							</div>
 						</div>
-					<?php } ?>
+					@endforeach
 				</div>
 			</div>
 		</div>
