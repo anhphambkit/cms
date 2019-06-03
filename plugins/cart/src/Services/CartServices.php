@@ -80,4 +80,11 @@ interface CartServices
      * @return mixed
      */
     public function deleteListProductInCart(array $idProducts, int $customerId = null, bool $isGuest = false);
+
+//    /**
+//     * @param int $productId
+//     * @param int $quantity
+//     * @return mixed
+//     */
+//    public function getInfoProductInCart(int $productId, int $quantity);
 }
