@@ -15,9 +15,11 @@ use PayPal\Exception\PayPalConnectionException;
 use Plugins\Payment\Services\IPaypalExpressService;
 use Plugins\Product\Requests\CheckoutFormRequest;
 use Plugins\Product\Requests\CreditFormRequest;
+use Plugins\Product\Requests\RefundRequest;
 use Plugins\Payment\Contracts\PaymentReferenceConfig;
 use Plugins\Customer\Contracts\OrderReferenceConfig;
 use Plugins\Payment\Repositories\Interfaces\PaymentRepositories;
+use Plugins\Customer\Models\Order;
 use AssetManager;
 use AssetPipeline;
 
@@ -163,8 +165,9 @@ class CheckoutController extends BasePublicController
 			$invoiceStatus = find_reference_element(OrderReferenceConfig::REFERENCE_ORDER_STATUS_OPEN, OrderReferenceConfig::REFERENCE_ORDER_STATUS);
 			//Success charge order with payment. Change status order to open here
 			$dataUpdate = [
-			    'status' => $invoiceStatus->id,
-			    'paypal_id' => $paymentInfo->id,
+				'status'         => $invoiceStatus->id,
+				'paypal_id'      => $paymentInfo->id,
+				'transaction_id' => $transaction->related_resources[0]->sale->id
             ];
 			$this->orderService->updateOrder($conditionsUpdateOrder, $dataUpdate);
 			return $response
@@ -177,8 +180,9 @@ class CheckoutController extends BasePublicController
 		$invoiceStatus = find_reference_element(OrderReferenceConfig::REFERENCE_ORDER_STATUS_PENDING, OrderReferenceConfig::REFERENCE_ORDER_STATUS);
 
         $dataUpdate = [
-            'status' => $invoiceStatus->id,
-            'paypal_id' => $paymentInfo->id,
+			'status'         => $invoiceStatus->id,
+			'paypal_id'      => $paymentInfo->id,
+			'transaction_id' => $transaction->related_resources[0]->sale->id
         ];
 
         $this->orderService->updateOrder($conditionsUpdateOrder, $dataUpdate);
@@ -248,15 +252,22 @@ class CheckoutController extends BasePublicController
      * @return BaseHttpResponse
      * @author TrinhLe
      */
-    public function refundOrder(Request $request, $id, BaseHttpResponse $response)
+    public function refundOrder(RefundRequest $request, $id, BaseHttpResponse $response)
     {
         try {
             //TODO REFUND
-
-            $saleId = $id;
+            $invoice = Order::find($id);
+            $saleId = $invoice->transaction_id;
             $paymentInfo = $this->paypalRefundService
-            	->setAmountAttribute(10000)
+            	->setAmountAttribute((float)$request->amount)
             	->createRefundPayment($saleId);
+           	
+            $invoiceStatus = find_reference_element(OrderReferenceConfig::REFERENCE_ORDER_STATUS_REFUND, OrderReferenceConfig::REFERENCE_ORDER_STATUS);
+            $invoice->fill([
+            	'amount_refund' => (float)$invoice->amount_refund + (float)$request->amount,
+            	'status' => $invoiceStatus->id
+            ]);
+            $invoice->save();
             // TODO UPDATE ORDER here	
             return $response->setMessage(trans('Refund success your order'));
         } catch (PayPalConnectionException $ex) {

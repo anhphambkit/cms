@@ -82,9 +82,9 @@ $router->group(['prefix' => 'product/checkout', 'middleware' => ['customer']], f
     ]);
 });
 
-$router->group(['prefix' => 'product/order', 'middleware' => ['customer']], function (Router $router) {
+$router->group(['prefix' => 'product/order', 'middleware' => ['auth']], function (Router $router) {
     
-    $router->get('/refund/{id}', [
+    $router->post('/refund/{id}', [
         'as'         => 'public.product.order.refund', 
         'uses'       => 'CheckoutController@refundOrder',
     ]);

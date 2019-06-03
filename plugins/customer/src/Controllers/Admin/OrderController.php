@@ -33,10 +33,9 @@ class OrderController extends BaseAdminController
      */
     public function getList(OrderDataTable $dataTable)
     {
-
         page_title()->setTitle(trans('plugins-customer::order.list'));
-
-        return $dataTable->renderTable(['title' => trans('plugins-customer::order.list')]);
+        return $dataTable->render('plugins-customer::order.index');
+        // return $dataTable->renderTable(['title' => trans('plugins-customer::order.list')]);
     }
 
     /**
