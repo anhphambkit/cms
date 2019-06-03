@@ -6,19 +6,35 @@ use Plugins\Customer\Repositories\Interfaces\ProductsInOrderRepositories;
 class CacheProductsInOrderRepositories extends CacheAbstractDecorator implements ProductsInOrderRepositories
 {
     /**
-     * @var ApplicationInterface
+     * @var ProductsInOrderRepositories
      */
     protected $repository;
 
     /**
-     * ApplicationCacheDecorator constructor.
-     * @param ApplicationInterface $repository
-     * @author TrinhLe
+     * CacheProductsInOrderRepositories constructor.
+     * @param ProductsInOrderRepositories $repository
      */
     public function __construct(ProductsInOrderRepositories $repository)
     {
         parent::__construct();
         $this->repository = $repository;
-        $this->entityName = 'default'; # Please setup reference name of cache.
+        $this->entityName = 'Cache-Product-In-Cart'; # Please setup reference name of cache.
+    }
+
+    /**
+     * @param array $data
+     * @return mixed
+     * @throws \Exception
+     */
+    public function insertProductsInOrder(array $data) {
+        return $this->flushCacheAndUpdateData(__FUNCTION__, func_get_args());
+    }
+
+    /**
+     * @param int $orderId
+     * @return mixed
+     */
+    public function getAllProductsInOrder(int $orderId) {
+        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
     }
 }

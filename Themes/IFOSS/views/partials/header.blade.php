@@ -22,7 +22,10 @@
                                 </div>
                             </li>
                             <li><a href="{{ route('public.cart') }}" class="shopping-cart-quantity">
-                                    <i class="fas fa-shopping-cart"></i>
+                                    @php
+                                        $totalItemsInCart = get_total_items_in_cart();
+                                    @endphp
+                                    <i class="fas fa-shopping-cart">{{ ($totalItemsInCart ? "({$totalItemsInCart})" : '') }}</i>
                                 </a>
                             </li>
                         @else
@@ -63,6 +66,9 @@
     <div class="submenu-navigation bg-white">
         <div class="container">
             <ul class="submenu-navigation-wrapper">
+                @php
+                    $menu_categories = get_menu_product_categories();
+                @endphp
                 @foreach ($menu_categories as $key => $menu_category)
                     <li class="has-megamenu no-caret">
                         <a href="#">{{ $menu_category->name }}</a>

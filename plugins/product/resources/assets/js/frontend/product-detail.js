@@ -32,11 +32,14 @@ $(document).ready(function() {
         focusOnSelect: true
     });
 
-    $('.item-product-attribute.item-color-attribute').on('click', function(event) {
+    $('.item-product-attribute').on('click', function(event) {
         event.preventDefault();
-        $('.item-product-attribute.item-color-attribute').removeClass('active');
+        let attributeType = $(this).parents('.product-attribute').data('attribute-type');
+        if (attributeType === 'color_picker') {
+            $('.item-product-attribute.item-color-attribute').removeClass('active');
+        }
         $(this).addClass('active');
-        $(this).parents('.product-attribute').find('.attribute-selected-title').text($(this).data('color'));
+        $(this).parents('.product-attribute').find('.attribute-selected-title').text($(this).data('attribute-value-name'));
         $(this).parents('.product-attribute').data('attribute-selected-id', $(this).data('attribute-value-id'));
 
         let isVariant = $(this).parents('.product-attribute').data('is-variant-attribute');
