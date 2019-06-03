@@ -107,7 +107,7 @@ class OrderService implements IOrderService
             foreach ($products as $index => $product) {
                 $products[$index]['order_id'] = $orderId;
                 $products[$index]['product_id'] = $product['id'];
-                $products[$index]['categories'] = json_encode($product['categories']);
+                $products[$index]['categories'] = "";
                 $products[$index]['updated_at'] = $now;
                 $products[$index]['created_at'] = $now;
                 $idProducts[] = $product['id'];
