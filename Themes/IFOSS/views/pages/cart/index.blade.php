@@ -67,11 +67,11 @@
                             {{--</div>--}}
                         {{--</div>--}}
                     </div>
-                    <div class="col-lg-4" style="margin-top: 66px;">
+                    <div class="col-lg-4 cart-info-total" style="margin-top: 66px;">
                         <div class="cart-order-info font-weight-500">
                             <div class="list-item">
                                 Subtotal
-                                <span>${{ $cart['total_price'] }}</span>
+                                <span class="sub-total-cart">${{ $cart['total_price'] }}</span>
                             </div>
                             <div class="list-item">
                                 Shipping fee
@@ -84,11 +84,11 @@
                             <hr>
                             <div class="list-item">
                                 Total
-                                <span class="font-size-24">${{ $cart['total_price'] }}</span>
+                                <span class="font-size-24 total-price-cart">${{ $cart['total_price'] }}</span>
                             </div>
                             <div class="list-item">
                                 Your Save
-                                <span>${{ $cart['saved_price'] }}</span>
+                                <span class="saved-price-cart">${{ $cart['saved_price'] }}</span>
                             </div>
                         </div>
 
@@ -106,7 +106,7 @@
                             <div class="input-group mb-3" style="box-shadow: 0 4px 12px #d6e9e7;">
                                 <span type="text" class="wanting-price rounded-0 px-2 special-price">+  ${{ $cart['free_design']['wanting_price'] }}</span>
                                 <div class="input-group-append">
-                                    <span class="input-group-text font-size-12 rounded-0" style="background-color: rgba(150,196,189,.2); color: #2a7469;">to qualify for {{ $cart['free_design']['total_free_design'] + 1 }} FREE DESIGN</span>
+                                    <span class="input-group-text font-size-12 rounded-0 total-free-designs-cart" style="background-color: rgba(150,196,189,.2); color: #2a7469;">to qualify for {{ $cart['free_design']['total_free_design'] + 1 }} FREE DESIGN</span>
                                 </div>
                             </div>
                             <div class="text-center">

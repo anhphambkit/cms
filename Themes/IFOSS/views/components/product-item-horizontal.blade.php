@@ -10,7 +10,7 @@ $quantities = !empty($quantities) ? $quantities : [];
 $customAttributes = $productItem->productCustomAttributes()->get();
 $attributeValues = $productItem->productStringValueAttribute()->get();
 ?>
-<div class="item row ml-0 mr-0 row-product" data-product-id="{{ $productItem->id }}">
+<div class="item row ml-0 mr-0 row-product row-product-{{ $productItem->id }}" data-product-id="{{ $productItem->id }}">
     <div class="thumbnail">
         <img src="{{ get_object_image($productItem->image_feature, 'mediumThumb') }}" alt="{{ $productItem->name }}" />
     </div>
@@ -37,13 +37,13 @@ $attributeValues = $productItem->productStringValueAttribute()->get();
                 <input type="text" size="9999" min="1" class="quantity-product-item-input" value="{{ $quantities[$productItem->id] }}" />
             </div>
             <div class="quantity-btn">
-                <a class="btn btn-plus-quantity-item" href="#"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-top.png') }}" alt=""/></a>
-                <a class="btn btn-minus-quantity-item" href="#"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-bottom.png') }}" alt=""/></a>
+                <a class="btn btn-plus-quantity-item" href="javascript:void(0);"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-top.png') }}" alt=""/></a>
+                <a class="btn btn-minus-quantity-item" href="javascript:void(0);"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-bottom.png') }}" alt=""/></a>
             </div>
         </div>
         <div class="mt-3 text-right">
-            <a href="#" class="text-custom mr-4"><img src="{{ asset('themes/ifoss/assets/images/icons/bookmark.png') }}" alt="" width="14" /> Save for later</a>
-            <a href="#" class="text-custom"><img src="{{ asset('themes/ifoss/assets/images/icons/trash.png') }}" alt="" width="14" /> Remove</a>
+            <a href="javascript:void(0);" class="text-custom mr-4"><img src="{{ asset('themes/ifoss/assets/images/icons/bookmark.png') }}" alt="" width="14" /> Save for later</a>
+            <a href="javascript:void(0);" class="text-custom btn-remove-product-in-cart"><img src="{{ asset('themes/ifoss/assets/images/icons/trash.png') }}" alt="" width="14" /> Remove</a>
         </div>
     </div>
 </div>

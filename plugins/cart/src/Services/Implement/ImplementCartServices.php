@@ -329,4 +329,13 @@ class ImplementCartServices implements CartServices {
     public function deleteListProductInCart(array $idProducts, int $customerId = null, bool $isGuest = false) {
         return $this->repository->deleteListProductInCart($idProducts, $customerId, $isGuest);
     }
+
+    /**
+     * @param int $productId
+     * @param int $quantity
+     * @return mixed
+     */
+    public function getInfoProductInCart(int $productId, int $quantity) {
+
+    }
 }
