@@ -62,7 +62,7 @@
                             <button type="submit" class="btn btn-outline-custom btn-s1 btn-block justify-content-center mb-3">Save</button>
                         </div>
                         <div class="col-md-6">
-                            <button type="button" class="btn btn-outline-custom btn-s2 btn-block justify-content-center mb-3">Cancel</button>
+                            <button type="button" class="cancel-btn btn btn-outline-custom btn-s2 btn-block justify-content-center mb-3">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -87,6 +87,11 @@
             $(document).on('click', '.attr-item-drop', function(event){
                 event.preventDefault();
                 $(this).closest('.attribute-item').remove()
+            });
+            
+            $(document).on('click', '.cancel-btn', function(event){
+                event.preventDefault();
+                window.location.href = "{{ route('homepage') }}"
             });
 
             if($('.group-address').text().trim() == ""){
