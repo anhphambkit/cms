@@ -74,6 +74,7 @@ class OrderService implements IOrderService
                 'is_free_shipping'             => ($shippingFee > 0) ? false : true,
                 'updated_at'                   => $now,
                 'created_at'                   => $now,
+                'status'                       => $dataCheckouts['invoice_status'],
             ];
             return DB::transaction(function () use ($dataOrder, $cart, $customerId, $isGuest) {
                 // Create new Order:

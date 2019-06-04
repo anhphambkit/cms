@@ -297,7 +297,6 @@ class CheckoutController extends BasePublicController
 	    $dataCheckout['payment_method'] = $paymentType;
 		$invoiceOrder = $this->orderService->createOrderCustomerProduct($dataCheckout, Auth::guard('customer')->id());
 
-
 		// Invoice amount belong to discount code if exist. please countdown if used.
 
 		// 3D free design for this invoice here
