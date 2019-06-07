@@ -75,14 +75,14 @@
                         <ul class="mega-menu tab-menu">
                             @foreach ($menu_category->childCategories as $child_menu_category)
                             <li class="col-md-2">
-                                <a href="#" class="item">
+                                <a href="{{ route('public.category.detail', [ 'url' => $child_menu_category->url_product_category ]) }}" class="item">
                                     <img src="{{ get_object_image($child_menu_category->image_feature, 'mediumThumb') }}" class="w-100">
                                     <div class="title">{{ $child_menu_category->name }}</div>
                                 </a>
                             </li>
                             @endforeach
                             <li class="col-md-2">
-                                <a href="#" class="item">
+                                <a href="{{ route('public.category.sale.page', [ 'url' => $menu_category->url_product_category ]) }}" class="item">
                                     <img src="{{ asset('themes/ifoss/assets/images/products/product-chair-tabmenu-7.png') }}" class="w-100">
                                     <div class="title text-danger">Sale</div>
                                 </a>

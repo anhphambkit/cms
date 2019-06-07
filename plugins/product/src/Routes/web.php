@@ -98,4 +98,9 @@ $router->group(['prefix' => 'category'], function (Router $router) {
         'as'         => 'public.category.detail',
         'uses'       => 'ProductCategoryController@getListProductsOfCategoryPage',
     ]);
+
+    $router->get('/sale/{url}', [
+        'as'         => 'public.category.sale.page',
+        'uses'       => 'ProductCategoryController@getListSaleProductsOfCategoryPage',
+    ]);
 });

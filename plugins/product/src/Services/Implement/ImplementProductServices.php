@@ -170,11 +170,11 @@ class ImplementProductServices implements ProductServices {
 
     /**
      * @param int $productCategoryId
-     * @param int $limit
+     * @param int|null $limit
      * @return array|mixed
      * @throws \Exception
      */
-    public function getListProductsOfCategoryPage(int $productCategoryId, int $limit = 8) {
+    public function getListProductsOfCategoryPage(int $productCategoryId, int $limit = null) {
         $category = $this->productCategoryRepositories->getCategoryById($productCategoryId);
         if (empty($category))
             abort(404);
