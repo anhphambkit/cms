@@ -37,12 +37,21 @@ class ProductCategory extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'url_product_category',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      * @author TrinhLe
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_categories_relation')->select(['products.id', 'name as text', 'image_feature']);
+        return $this->belongsToMany(Product::class, 'product_categories_relation')->select(['products.*', 'products.name as text']);
     }
 
     /**
@@ -55,10 +64,22 @@ class ProductCategory extends Model
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function parentCategory()
+    {
+        return $this->belongsTo(ProductCategory::class, 'parent_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      * @author AnhPham
      */
     public function createdByUser()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function getUrlProductCategoryAttribute() {
+        return "{$this->slug}.{$this->id}";
     }
 }

@@ -89,3 +89,13 @@ $router->group(['prefix' => 'product/order', 'middleware' => ['auth']], function
         'uses'       => 'CheckoutController@refundOrder',
     ]);
 });
+
+/**
+ * Route for category product:
+ */
+$router->group(['prefix' => 'category'], function (Router $router) {
+    $router->get('/{url}', [
+        'as'         => 'public.category.detail',
+        'uses'       => 'ProductCategoryController@getListProductsOfCategoryPage',
+    ]);
+});

@@ -7,3 +7,4 @@ window.iconFormat = function(icon) {
     let $icon = `<img class="image-item-select" src="${imageFeature}" />${icon.text}`
     return $icon;
 }
+

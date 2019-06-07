@@ -71,7 +71,7 @@
                 @endphp
                 @foreach ($menu_categories as $key => $menu_category)
                     <li class="has-megamenu no-caret">
-                        <a href="#">{{ $menu_category->name }}</a>
+                        <a href="{{ route('public.category.detail', [ 'url' => $menu_category->url_product_category ]) }}">{{ $menu_category->name }}</a>
                         <ul class="mega-menu tab-menu">
                             @foreach ($menu_category->childCategories as $child_menu_category)
                             <li class="col-md-2">

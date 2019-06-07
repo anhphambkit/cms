@@ -40,5 +40,12 @@ interface ProductServices {
      * @param int $limit
      * @return mixed
      */
-    public function getBestSellerProducts($limit = 8);
+    public function getBestSellerProducts(int $limit = 8);
+
+    /**
+     * @param int $productCategoryId
+     * @param int $limit
+     * @return mixed
+     */
+    public function getListProductsOfCategoryPage(int $productCategoryId, int $limit = 8);
 }

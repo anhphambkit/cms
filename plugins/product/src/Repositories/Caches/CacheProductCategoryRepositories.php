@@ -6,19 +6,34 @@ use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
 class CacheProductCategoryRepositories extends CacheAbstractDecorator implements ProductCategoryRepositories
 {
     /**
-     * @var ApplicationInterface
+     * @var ProductCategoryRepositories
      */
     protected $repository;
 
     /**
-     * ApplicationCacheDecorator constructor.
-     * @param ApplicationInterface $repository
-     * @author TrinhLe
+     * CacheProductCategoryRepositories constructor.
+     * @param ProductCategoryRepositories $repository
      */
     public function __construct(ProductCategoryRepositories $repository)
     {
         parent::__construct();
         $this->repository = $repository;
-        $this->entityName = 'default'; # Please setup reference name of cache.
+        $this->entityName = 'product-category-cache'; # Please setup reference name of cache.
+    }
+
+    /**
+     * @param int $categoryId
+     * @return mixed
+     */
+    public function getCategoryById(int $categoryId) {
+        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
+    }
+
+    /**
+     * @param int $categoryId
+     * @return mixed
+     */
+    public function getAllSubCategoryIdOfCategory(int $categoryId) {
+        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
     }
 }

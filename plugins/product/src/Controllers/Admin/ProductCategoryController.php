@@ -55,7 +55,11 @@ class ProductCategoryController extends BaseAdminController
      */
     public function getCreate()
     {
-        $categories = $this->productCategoryRepository->pluck('name', 'id');
+        $categories = $this->productCategoryRepository->select(['id', 'name'], [
+            [
+                'parent_id', '=', 0
+            ]
+        ])->pluck('name', 'id');
 
         $categories = [ 0 => "Please select parent product category" ] + $categories;
 
@@ -99,7 +103,7 @@ class ProductCategoryController extends BaseAdminController
     {
         $categories = DB::table('product_categories')->whereNotIn('id', function ($query) use ($id) {
             $query->select('id')->where('parent_id', $id);
-        })->pluck('name', 'id');
+        })->where('parent_id', '!=', 0)->pluck('name', 'id');
 
         $infoCategory = $this->productCategoryRepository->findById($id);
 

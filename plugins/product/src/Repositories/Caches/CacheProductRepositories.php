@@ -71,7 +71,7 @@ class CacheProductRepositories extends CacheAbstractDecorator implements Product
      * @param int $limit
      * @return mixed
      */
-    public function getBestSellerProducts($limit = 8) {
+    public function getBestSellerProducts(int $limit = 8) {
         return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
     }
 }

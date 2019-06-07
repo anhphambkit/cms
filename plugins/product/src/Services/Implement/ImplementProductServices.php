@@ -10,6 +10,7 @@ namespace Plugins\Product\Services\Implement;
 
 use Plugins\Product\Contracts\ProductReferenceConfig;
 use Plugins\Product\Repositories\Interfaces\ProductAttributeValueRelationRepositories;
+use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductRepositories;
 use Plugins\Product\Services\ProductServices;
 
@@ -26,14 +27,23 @@ class ImplementProductServices implements ProductServices {
     private $productAttributeValueRepositories;
 
     /**
+     * @var ProductCategoryRepositories
+     */
+    private $productCategoryRepositories;
+
+    /**
      * ImplementProductServices constructor.
      * @param ProductRepositories $productRepository
      * @param ProductAttributeValueRelationRepositories $productAttributeValueRepositories
+     * @param ProductCategoryRepositories $productCategoryRepositories
      */
-    public function __construct(ProductRepositories $productRepository, ProductAttributeValueRelationRepositories $productAttributeValueRepositories)
+    public function __construct(ProductRepositories $productRepository,
+                                ProductAttributeValueRelationRepositories $productAttributeValueRepositories,
+                                ProductCategoryRepositories $productCategoryRepositories)
     {
         $this->repository = $productRepository;
         $this->productAttributeValueRepositories = $productAttributeValueRepositories;
+        $this->productCategoryRepositories = $productCategoryRepositories;
     }
 
     /**
@@ -154,7 +164,27 @@ class ImplementProductServices implements ProductServices {
      * @param int $limit
      * @return mixed
      */
-    public function getBestSellerProducts($limit = 8) {
+    public function getBestSellerProducts(int $limit = 8) {
         return $this->repository->getBestSellerProducts($limit);
+    }
+
+    /**
+     * @param int $productCategoryId
+     * @param int $limit
+     * @return array|mixed
+     * @throws \Exception
+     */
+    public function getListProductsOfCategoryPage(int $productCategoryId, int $limit = 8) {
+        $category = $this->productCategoryRepositories->getCategoryById($productCategoryId);
+        if (empty($category))
+            abort(404);
+        $subCategories = $category->childCategories;
+        $products = $this->repository->getAllProductsByCategory($subCategories->pluck('id')->toArray());
+        $saleProducts = $products->where('is_has_sale', true)->all();
+        return [
+            'sale_products' => $saleProducts,
+            'sub_categories' => $subCategories,
+            'category' => $category,
+        ];
     }
 }

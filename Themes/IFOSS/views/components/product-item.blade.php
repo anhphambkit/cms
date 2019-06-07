@@ -12,6 +12,9 @@ $productItem = !empty($productItem) ? $productItem : collect([]);
         @if($productItem->is_has_sale)
             <div class="badge-sale">Sale</div>
         @endif
+        @if($productItem->available_3d)
+                {{--<div class="badge-3d"><img src="{{ asset('themes/ifoss/assets/images/icons/3d.png') }}" alt="" class="img-fluid"></div>--}}
+        @endif
         <div class="thumbnail mb-0">
             <div class="content">
                 <img src="{{ asset($productItem->image_feature) }}">
@@ -19,7 +22,11 @@ $productItem = !empty($productItem) ? $productItem : collect([]);
             <div class="mask">
                 <div class="text-center">
                     <button class="btn btn-outline-custom background-white mb-3">quick shop</button>
-                    <button class="btn btn-outline-custom background-white">View in Design Ideas</button>
+                    @php
+                    @endphp
+                    @if($productItem->available_3d)
+                        <button class="btn btn-outline-custom background-white">View in Design Ideas</button>
+                    @endif
                 </div>
                 <a href="#" class="favourite text-custom"><img src="{{ URL::asset('themes/ifoss/assets/images/icons/heart.png') }}" alt="" class="icon-img"></a>
             </div>

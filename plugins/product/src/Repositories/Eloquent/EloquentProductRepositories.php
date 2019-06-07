@@ -17,7 +17,7 @@ class EloquentProductRepositories extends RepositoriesAbstract implements Produc
     public function getAllProductsByCategory(array $categoryIds, int $limit = null)
     {
         $query = $this->model
-            ->select('products.id', 'products.name', 'products.slug', 'products.type_product', 'products.price', 'products.sale_price', 'products.image_feature', 'products.sale_start_date', 'products.sale_end_date')
+            ->select('products.*')
             ->leftJoin('product_categories_relation', 'products.id', '=', 'product_categories_relation.product_id')
             ->whereIn('product_categories_relation.product_category_id', $categoryIds)
             ->where('products.status', true)
@@ -77,7 +77,7 @@ class EloquentProductRepositories extends RepositoriesAbstract implements Produc
      * @param int $limit
      * @return mixed
      */
-    public function getBestSellerProducts($limit = 8) {
+    public function getBestSellerProducts(int $limit = 8) {
         return $this->allBy([
            [
                'is_best_seller', '=', true
