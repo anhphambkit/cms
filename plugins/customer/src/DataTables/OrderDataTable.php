@@ -27,10 +27,13 @@ class OrderDataTable extends DataTableAbstract
                 return ucfirst(find_reference_by_id($item->status)->value);
             })
             ->editColumn('total_amount_order', function ($item) {
-                return  $item->total_amount_order;
+                return  '$'. $item->total_amount_order;
+            })
+            ->editColumn('address_billing', function ($item) {
+                return  show_address_invoice($item);
             })
             ->editColumn('amount_refund', function ($item) {
-                return  $item->amount_refund;
+                return  '$'. $item->amount_refund;
             })
             ->editColumn('payment_method', function ($item) {
                 return ucfirst($item->payment_method);
@@ -85,16 +88,17 @@ class OrderDataTable extends DataTableAbstract
                 'width' => '20px',
                 'class' => 'searchable searchable_id',
             ],
-            'paypal_id' => [
-                'name'   => 'customer_orders.paypal_id',
-                'title'  => __('Paypal ID'),
-                'footer' => __('Paypal ID'),
-                'class'  => 'text-left searchable',
-            ],
             'payment_method' => [
                 'name'   => 'customer_orders.payment_method',
-                'title'  => __('Payment method'),
-                'footer' => __('Payment method'),
+                'title'  => __('Method'),
+                'footer' => __('Method'),
+                'class'  => 'text-left',
+            ],
+            'address_billing' => [
+                'name'   => 'customer_orders.address_billing',
+                'title'  => __('Address'),
+                'footer' => __('Address'),
+                'width' => '300px',
                 'class'  => 'text-left',
             ],
             'total_amount_order' => [
@@ -115,6 +119,12 @@ class OrderDataTable extends DataTableAbstract
                 'footer' => trans('core-base::tables.status'),
                 'width' => '100px',
             ],
+            'created_at' => [
+                'name'   => 'customer_orders.created_at',
+                'title'  => __('CreatedAt'),
+                'footer' => __('CreatedAt'),
+                'class'  => 'text-left searchable',
+            ]
         ];
     }
 
