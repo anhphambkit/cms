@@ -23,9 +23,9 @@
                     <div class="section-title">Sale</div>
                 </div>
                 <div class="product-slider">
-                    <div class="row product-slider-wrapper">
+                    <div class="product-slider-wrapper">
                         @foreach($categoryPageInfo['sale_products'] as $saleProduct)
-                        <div class="col-md-3">
+                        <div class="px-3 product-item-wrapper">
                             @component("components.product-item")
                                 @slot("productItem", $saleProduct)
                                 @slot("productWishListIds", $productWishListIds)
@@ -48,9 +48,9 @@
                         <a href="#" class="btn-with-hr mt-0 mb-2">Show all</a>
                     </div>
                     <div class="product-slider">
-                        <div class="row product-slider-wrapper">
+                        <div class="product-slider-wrapper">
                             @foreach($subCategory->products->slice(0, 8) as $subCategoryProduct)
-                            <div class="col-md-3">
+                            <div class="px-3 product-item-wrapper">
                                 @component("components.product-item")
                                     @slot("productItem", $subCategoryProduct)
                                     @slot("productWishListIds", $productWishListIds)

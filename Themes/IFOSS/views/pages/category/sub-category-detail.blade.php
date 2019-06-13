@@ -59,9 +59,9 @@ $parentCategory = $categoryPageInfo['category']->parentCategory;
                     </div>
                 </div>
                 <div class="product-slider">
-                    <div class="row">
+                    <div class="product-slider-wrapper">
                         @foreach($categoryProducts as $categoryProduct)
-                        <div class="col-md-3">
+                        <div class="px-3 product-item-wrapper">
                             @component("components.product-item")
                                 @slot("productItem", $categoryProduct)
                                 @slot("productWishListIds", $productWishListIds)

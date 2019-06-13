@@ -14,9 +14,9 @@
     <section class="product-wrapper">
         <div class="container">
             <div class="h6 text-uppercase text-center mb-3">Items in This Room</div>
-            <div class="row">
+            <div class="product-slider-wrapper">
                 @foreach($lookBook['look_book_products'] as $lookBookProduct)
-                    <div class="col-md-3">
+                    <div class="px-3 product-item-wrapper">
                         @component("components.product-item")
                             @slot("productItem", json_decode (json_encode ($lookBookProduct), FALSE))
                             @slot("productWishListIds", $productWishListIds)

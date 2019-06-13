@@ -157,9 +157,9 @@
             <div class="container">
                 <div class="h6 text-uppercase text-center mb-3">Other items in collection</div>
                 <div class="product-slider">
-                    <div class="row product-slider-wrapper">
+                    <div class="product-slider-wrapper">
                         @foreach($productInfo['product_in_collection'] as $productItemCollection)
-                            <div class="col-md-3">
+                            <div class="px-3 product-item-wrapper">
                                 @component("components.product-item")
                                     @slot("productItem", $productItemCollection)
                                     @slot("productWishListIds", $productWishListIds)
@@ -177,9 +177,9 @@
             <div class="container">
                 <div class="h6 text-uppercase text-center mb-3">Compare Similar Items</div>
                 <div class="product-slider">
-                    <div class="row product-slider-wrapper">
+                    <div class="product-slider-wrapper">
                         @foreach($productInfo['similar_products'] as $similarProduct)
-                            <div class="col-md-3">
+                            <div class="px-3 product-item-wrapper">
                                 @component("components.product-item")
                                     @slot("productItem", $similarProduct)
                                     @slot("productWishListIds", $productWishListIds)

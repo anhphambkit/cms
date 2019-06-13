@@ -58,9 +58,9 @@ $saleProducts = $categoryPageInfo['sale_products'];
                     </div>
                 </div>
                 <div class="product-slider">
-                    <div class="row">
+                    <div class="product-slider-wrapper">
                         @foreach($saleProducts as $saleProduct)
-                            <div class="col-md-3">
+                            <div class="px-3 product-item-wrapper">
                                 @component("components.product-item")
                                     @slot("productItem", $saleProduct)
                                     @slot("productWishListIds", $productWishListIds)

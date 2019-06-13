@@ -23,9 +23,9 @@
                     <div class="section-title">{{ trans('plugins-product::wish-list.wish_list') }}</div>
                 </div>
                 <div class="product-slider">
-                    <div class="row product-slider-wrapper">
+                    <div class="product-slider-wrapper">
                         @foreach($wishListProducts as $wishListProduct)
-                            <div class="col-md-3">
+                            <div class="px-3 product-item-wrapper">
                                 @component("components.product-item")
                                     @slot("productItem", $wishListProduct->product)
                                     @slot("productWishListIds", $productWishListIds)

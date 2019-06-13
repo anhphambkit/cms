@@ -133,9 +133,9 @@
             <div class="section-title">Best sellers</div>
         </div>
         <div class="container">
-            <div class="row product-slider--wrapper">
+            <div class="product-slider-wrapper">
                 @foreach($bestSellerProducts as $bestSellerProduct)
-                    <div class="col-md-3">
+                    <div class="px-3 px-3 product-item-wrapper">
                         @component("components.product-item")
                             @slot("productItem", $bestSellerProduct)
                             @slot("productWishListIds", $productWishListIds)
