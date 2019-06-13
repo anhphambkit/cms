@@ -29,7 +29,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                 $('.cart-info-total .sub-total-cart').html(`$${data.data.total_price}`);
                 $('.cart-info-total .total-price-cart').html(`$${data.data.total_price}`);
                 $('.cart-info-total .saved-price-cart').html(`$${data.data.saved_price}`);
-                $('.cart-info-total .wanting-price').html(`$${data.data.free_design.wanting_price}`);
+                $('.cart-info-total .wanting-price').html(`+  $${data.data.free_design.wanting_price}`);
                 $('.cart-info-total .total-free-designs-cart').html(`to qualify for ${data.data.free_design.total_free_design + 1} FREE DESIGN`);
             })
             .catch(function(error){
@@ -52,7 +52,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                 $('.cart-info-total .sub-total-cart').html(`$${data.data.total_price}`);
                 $('.cart-info-total .total-price-cart').html(`$${data.data.total_price}`);
                 $('.cart-info-total .saved-price-cart').html(`$${data.data.saved_price}`);
-                $('.cart-info-total .wanting-price').html(`$${data.data.free_design.wanting_price}`);
+                $('.cart-info-total .wanting-price').html(`+  $${data.data.free_design.wanting_price}`);
                 $('.cart-info-total .total-free-designs-cart').html(`to qualify for ${data.data.free_design.total_free_design + 1} FREE DESIGN`);
                 _this.parents('.row-product').remove();
             })
@@ -77,8 +77,8 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
             val = Math.min(val, max);
             val = Math.max(val, min);
             _.val(parseInt(val));
-        })
-        .on("keypress", function( e ) {
+        });
+        $(document).on("keypress", '.quantity-product-item-input', function( e ) {
             if (e.keyCode === 13) {
                 e.preventDefault();
             }

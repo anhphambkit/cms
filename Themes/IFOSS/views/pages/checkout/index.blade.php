@@ -56,6 +56,14 @@
 	{!! Form::close() !!}
 @endsection
 
+@section('variable-scripts')
+	<script>
+		const API = {
+			ADD_COUPON_TO_CART : "{{ route('ajax.product.add_coupon') }}",
+			DELETE_COUPON_IN_CART : "{{ route('ajax.product.delete_coupon') }}",
+		};
+	</script>
+@stop
 @section('master-footer')
 	<script>
 		const CHECKOUT_CREDIT_URL = "{{ route('public.product.checkout.credit') }}";

@@ -35,6 +35,8 @@ class CartController extends BasePublicController
         AssetPipeline::requireCss('cart-css');
         AssetManager::addAsset('cart-js', 'frontend/plugins/cart/assets/js/cart.js');
         AssetPipeline::requireJs('cart-js');
+        AssetManager::addAsset('cart-coupon-js', 'frontend/plugins/cart/assets/js/cart-coupon.js');
+        AssetPipeline::requireJs('cart-coupon-js');
         return view('pages.cart.index', compact('cart'));
     }
 }

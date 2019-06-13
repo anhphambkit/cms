@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Plugins\Cart\Repositories\Interfaces\CartRepositories;
 use Plugins\Cart\Services\CartServices;
+use Plugins\Product\Repositories\Interfaces\ProductCouponRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductRepositories;
 use Plugins\Product\Services\ProductServices;
 
@@ -33,16 +34,24 @@ class ImplementCartServices implements CartServices {
     private $productRepositories;
 
     /**
+     * @var ProductCouponRepositories
+     */
+    private $productCouponRepositories;
+
+    /**
      * ImplementCartServices constructor.
      * @param CartRepositories $cartRepositories
+     * @param ProductCouponRepositories $productCouponRepositories
      * @param ProductServices $productServices
      * @param ProductRepositories $productRepositories
      */
-    public function __construct(CartRepositories $cartRepositories, ProductServices $productServices, ProductRepositories $productRepositories)
+    public function __construct(CartRepositories $cartRepositories, ProductCouponRepositories $productCouponRepositories,
+                                ProductServices $productServices, ProductRepositories $productRepositories)
     {
         $this->repository = $cartRepositories;
         $this->productServices = $productServices;
         $this->productRepositories = $productRepositories;
+        $this->productCouponRepositories = $productCouponRepositories;
     }
 
     /**
@@ -74,9 +83,11 @@ class ImplementCartServices implements CartServices {
     public function getBasicInfoCartOfCustomer(int $customerId = null, bool $isGuest = false) {
         try {
             $products = $this->repository->getBasicInfoCartOfCustomer($customerId, $isGuest);
+            $couponId = $products->pluck('coupon_id')->first();
+            $coupon = $this->productCouponRepositories->findById($couponId);
             $productInCarts = $this->productRepositories->findByArrayId($products->pluck('id')->toArray(), [ 'productAttributeValues', 'productCustomAttributes' ]);
             $totalItems = $products->sum('quantity');
-            $totalPrice = $this->calculatorTotalPrice($products);
+            $totalPrice = $this->calculatorTotalPrice($products, $coupon);
             $savedPrice = $this->calculatorSavedPrice($products, $totalPrice);
             $freeDesignIdeaInfo = $this->calculatorWantingPriceAndTotalFreeDesignIdea($totalPrice);
             return [
@@ -86,6 +97,7 @@ class ImplementCartServices implements CartServices {
                 'total_price' => $totalPrice,
                 'saved_price' => $savedPrice,
                 'free_design' => $freeDesignIdeaInfo,
+                'coupon' => $coupon,
             ];
         }
         catch (\Exception $e) {
@@ -119,14 +131,18 @@ class ImplementCartServices implements CartServices {
 
     /**
      * @param Collection $products
+     * @param null $coupon
      * @return mixed
      * @throws \Exception
      */
-    public function calculatorTotalPrice(Collection $products) {
+    public function calculatorTotalPrice(Collection $products, $coupon = null) {
         try {
             $now = Carbon::now();
-            $total = $products->sum(function ($product) use ($now) {
+            $total = $products->sum(function ($product) use ($now, $coupon) {
                 $price = ($product->sale_price && ($now->lessThan($product->sale_start_date) || $now->greaterThan($product->sale_end_date))) ? $product->sale_price : $product->price;
+                if ($coupon) {
+                    $price = $this->getPriceAfterCoupon($coupon, $price, $product);
+                }
                 return $price*$product->quantity;
             });
             return $total;
@@ -134,6 +150,32 @@ class ImplementCartServices implements CartServices {
         catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
+    }
+
+    /**
+     * @param $coupon
+     * @param int $price
+     * @param $product
+     * @return float|int
+     */
+    public function getPriceAfterCoupon($coupon, int $price, $product) {
+        if ($coupon->is_all_product) {
+            if ($coupon->coupon_type)
+                $price = $price*((100-$coupon->coupon_value)/100);
+            else
+                $price -= $coupon->coupon_value;
+        }
+        else {
+            $categories = $this->productRepositories->findById($product->id, ['productCategories'])->productCategories->pluck('id')->toArray();
+            if (in_array($coupon->product_category, $categories)) {
+
+                if ($coupon->coupon_type)
+                    $price = $price*((100-$coupon->coupon_value)/100);
+                else
+                    $price -= $coupon->coupon_value;
+            }
+        }
+        return ($price) ? $price : 0;
     }
 
     /**
@@ -158,7 +200,7 @@ class ImplementCartServices implements CartServices {
     /**
      * @param Collection $products
      * @param int $totalPrice
-     * @return mixed
+     * @return int|mixed
      * @throws \Exception
      */
     public function calculatorSavedPrice(Collection $products, int $totalPrice) {
@@ -239,12 +281,15 @@ class ImplementCartServices implements CartServices {
     public function getProductsInCartToOrder(int $customerId = null, bool $isGuest = false) {
         try {
             $products = $this->repository->getBasicInfoCartOfCustomer($customerId, $isGuest);
+            $couponId = $products->pluck('coupon_id')->first();
+            $coupon = $this->productCouponRepositories->findById($couponId);
             $totalItems = $products->sum('quantity');
-            $totalPrice = $this->calculatorTotalPrice($products);
+            $totalPrice = $this->calculatorTotalPrice($products, $coupon);
             $totalOriginalPrice = $this->calculatorTotalOriginalPrice($products);
             $salePrice = $this->calculatorTotalSalePrice($products);
             $savedPrice = $this->calculatorSavedPrice($products, $totalPrice);
             $freeDesignIdeaInfo = $this->calculatorWantingPriceAndTotalFreeDesignIdea($totalPrice);
+            $discountPrice = $totalOriginalPrice - $totalPrice - $salePrice;
             return [
                 'products' => $products,
                 'total_items' => $totalItems,
@@ -253,6 +298,8 @@ class ImplementCartServices implements CartServices {
                 'total_sale_price_on_products' => $salePrice,
                 'saved_price' => $savedPrice,
                 'total_free_design' => $freeDesignIdeaInfo['total_free_design'],
+                'coupon' => $coupon,
+                'discount_price' => $discountPrice,
             ];
         }
         catch (\Exception $e) {
@@ -331,11 +378,56 @@ class ImplementCartServices implements CartServices {
     }
 
     /**
-     * @param int $productId
-     * @param int $quantity
+     * @param string $couponCode
+     * @param int $customerId
      * @return mixed
      */
-    public function getInfoProductInCart(int $productId, int $quantity) {
+    public function addCouponToCart(string $couponCode, int $customerId) {
+        $coupon = $this->productCouponRepositories->findCouponValidByCouponCode($couponCode);
+        if ($coupon) {
+            $this->repository->update([
+                [
+                    'customer_id', '=', $customerId
+                ]
+            ], [
+                'coupon_id' => $coupon->id
+            ]);
+            return [
+                'status' => 'success',
+                'message' => "Add coupon success!"
+            ];
+        }
+        else
+            return [
+                'status' => 'fail',
+                'message' => "Coupon not valid!"
+            ];
+    }
 
+    /**
+     * @param int $couponId
+     * @param int $customerId
+     * @return mixed
+     */
+    public function deleteCouponInCart(int $couponId, int $customerId) {
+        $result = $this->repository->update([
+            [
+                'customer_id', '=', $customerId
+            ],
+            [
+                'coupon_id', '=', $couponId
+            ]
+        ], [
+            'coupon_id' => null
+        ]);
+        if ($result)
+            return [
+                'status' => 'success',
+                'message' => "Delete coupon success!"
+            ];
+        return [
+            'status' => 'fail',
+            'message' => "Delete coupon fail!"
+        ];
     }
 }

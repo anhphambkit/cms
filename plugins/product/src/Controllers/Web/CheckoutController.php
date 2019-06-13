@@ -92,15 +92,17 @@ class CheckoutController extends BasePublicController
 	{
         AssetManager::addAsset('checkout-css', 'frontend/plugins/product/assets/css/checkout.css');
         AssetPipeline::requireCss('checkout-css');
+        AssetManager::addAsset('checkout-coupon-js', 'frontend/plugins/product/assets/js/checkout-coupon.js');
+        AssetPipeline::requireJs('checkout-coupon-js');
         $cart = $this->cartServices->getBasicInfoCartOfCustomer(Auth::guard('customer')->id());
 		return view('pages.checkout.index', compact('cart'));
 	}
 
-	/**
-	 * Direct checkout with paypal checkout
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
+    /**
+     * @param CheckoutFormRequest $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
+     */
 	public function postCheckout(CheckoutFormRequest $request)
 	{
 		//TODO CREATE INVOICE ORDER HERE TO GET ORDER_ID WITH PAYMENT TYPE "PAYPAL"

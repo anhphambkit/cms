@@ -81,10 +81,17 @@ interface CartServices
      */
     public function deleteListProductInCart(array $idProducts, int $customerId = null, bool $isGuest = false);
 
-//    /**
-//     * @param int $productId
-//     * @param int $quantity
-//     * @return mixed
-//     */
-//    public function getInfoProductInCart(int $productId, int $quantity);
+    /**
+     * @param string $couponCode
+     * @param int $customerId
+     * @return mixed
+     */
+    public function addCouponToCart(string $couponCode, int $customerId);
+
+    /**
+     * @param int $couponId
+     * @param int $customerId
+     * @return mixed
+     */
+    public function deleteCouponInCart(int $couponId, int $customerId);
 }

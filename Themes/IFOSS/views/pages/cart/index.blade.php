@@ -95,10 +95,23 @@
                         <div class="cart-order-info font-weight-500 mb-0">
                             <div class="text-uppercase mb-2">Coupon DISCOUNT</div>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control rounded-0" placeholder="Enter your code here">
+                                <input type="text" class="form-control rounded-0" placeholder="Enter your code here" id="coupon_code" name="coupon_code">
                                 <div class="input-group-append">
-                                    <button class="btn btn-secondary rounded-0" type="button">apply</button>
+                                    <button class="btn btn-secondary rounded-0 add-coupon-btn" id="add-coupon-btn" type="button">apply</button>
                                 </div>
+                            </div>
+                            <div class="coupon-in-use">
+                                @if($cart['coupon'])
+                                    <div class="row coupon-{{ $cart['coupon']->id }}">
+                                       <div class="text-uppercase mb-2 col-md-8 coupon-code-text">{{ $cart['coupon']->code }}</div>
+                                       <div class="text-uppercase mb-2 col-md-4">
+                                           <a class="action-delete-coupon delete-coupon-{{ $cart['coupon']->id }}" data-coupon-id="{{ $cart['coupon']->id }}">
+                                               <i class="far fa-trash-alt icon-action-delete-coupon"></i>
+                                               {{ trans('core-base::forms.delete') }}
+                                           </a>
+                                       </div>
+                                   </div>
+                                @endif
                             </div>
                         </div>
                         <div class="coupon-calc">
@@ -123,5 +136,10 @@
     </section>
 @stop
 @section('variable-scripts')
-
+    <script>
+        const API = {
+            ADD_COUPON_TO_CART : "{{ route('ajax.product.add_coupon') }}",
+            DELETE_COUPON_IN_CART : "{{ route('ajax.product.delete_coupon') }}",
+        };
+    </script>
 @stop

@@ -7,6 +7,7 @@ use Plugins\Cart\Services\CartServices;
 use Plugins\Customer\Services\IOrderService;
 use Plugins\Customer\Repositories\Interfaces\OrderRepositories;
 use Plugins\Customer\Services\IProductsInOrderServices;
+use Plugins\Product\Repositories\Interfaces\ProductCouponRepositories;
 
 class OrderService implements IOrderService
 {
@@ -26,16 +27,23 @@ class OrderService implements IOrderService
 	private $productsInOrderServices;
 
     /**
+     * @var ProductCouponRepositories
+     */
+	private $productCouponRepositories;
+
+    /**
      * OrderService constructor.
      * @param OrderRepositories $orderRepository
      * @param CartServices $cartServices
      * @param IProductsInOrderServices $productsInOrderServices
+     * @param ProductCouponRepositories $productCouponRepositories
      */
-	public function __construct(OrderRepositories $orderRepository, CartServices $cartServices, IProductsInOrderServices $productsInOrderServices)
+	public function __construct(OrderRepositories $orderRepository, CartServices $cartServices, IProductsInOrderServices $productsInOrderServices, ProductCouponRepositories $productCouponRepositories)
 	{
         $this->orderRepository         = $orderRepository;
         $this->cartServices            = $cartServices;
         $this->productsInOrderServices = $productsInOrderServices;
+        $this->productCouponRepositories = $productCouponRepositories;
 	}
 
     /**
@@ -64,10 +72,10 @@ class OrderService implements IOrderService
                 'address_billing'              => json_encode($dataCheckouts['address_billing']),
                 'payment_method'               => $dataCheckouts['payment_method'],
                 'total_original_price'         => $cart['total_original_price'],
-                'discount_price'               => 0,
+                'discount_price'               => $cart['discount_price'],
                 'total_sale_price_on_products' => $cart['total_sale_price_on_products'],
                 'saved_price'                  => $cart['saved_price'],
-                'coupon_code'                  => $dataCheckouts['coupon_code'],
+                'coupon_code'                  => $cart['coupon'] ? $cart['coupon']->code : null,
                 'total_price'                  => $cart['total_price'],
                 'total_amount_order'           => $cart['total_price'] + $shippingFee,
                 'shipping_fee'                 => $shippingFee,
@@ -76,7 +84,9 @@ class OrderService implements IOrderService
                 'created_at'                   => $now,
                 'status'                       => $dataCheckouts['invoice_status'],
             ];
-            return DB::transaction(function () use ($dataOrder, $cart, $customerId, $isGuest) {
+            $couponId = $cart['coupon'] ? $cart['coupon']->id : null;
+
+            return DB::transaction(function () use ($dataOrder, $cart, $customerId, $couponId, $isGuest) {
                 // Create new Order:
                 $orderId = $this->orderRepository->createNewInvoiceOrder($dataOrder);
                 // Products:
@@ -84,7 +94,11 @@ class OrderService implements IOrderService
                 // Insert products in cart to order:
                 $this->productsInOrderServices->insertProductsInOrder($productsInOder['products']);
                 // Delete products in cart:
-               $this->cartServices->deleteListProductInCart($productsInOder['id_products'], $customerId, false);
+                $this->cartServices->deleteListProductInCart($productsInOder['id_products'], $customerId, false);
+               // Update number use of coupon:
+                if ($couponId) {
+                    $this->productCouponRepositories->updateNumberUseOfCoupon($couponId);
+                }
                 return [
                     'order_id'           => $orderId,
                     'total_amount_order' => $dataOrder['total_amount_order']
@@ -112,7 +126,7 @@ class OrderService implements IOrderService
                 $products[$index]['updated_at'] = $now;
                 $products[$index]['created_at'] = $now;
                 $idProducts[] = $product['id'];
-                unset($products[$index]['id'], $products[$index]['sale_start_date'], $products[$index]['sale_end_date']);
+                unset($products[$index]['id'], $products[$index]['coupon_id'], $products[$index]['sale_start_date'], $products[$index]['sale_end_date']);
             }
             return [
                 'products' => $products,

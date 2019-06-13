@@ -64,4 +64,28 @@ class ProductController extends BaseAdminController
         $basicInfoCart = $this->cartServices->getBasicInfoCartOfCustomer(Auth::guard('customer')->id());
         return response()->json($basicInfoCart);
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function addCoupon(Request $request) {
+        $couponCode = strtolower(trim($request->get('coupon_code')));
+        $coupon = $this->cartServices->addCouponToCart($couponCode, Auth::guard('customer')->id());
+        $basicInfoCart = $this->cartServices->getBasicInfoCartOfCustomer(Auth::guard('customer')->id());
+        return response()->json(array_merge($basicInfoCart, $coupon));
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function deleteCouponInCart(Request $request) {
+        $couponId = (int)($request->get('coupon_id'));
+        $coupon = $this->cartServices->deleteCouponInCart($couponId, Auth::guard('customer')->id());
+        $basicInfoCart = $this->cartServices->getBasicInfoCartOfCustomer(Auth::guard('customer')->id());
+        return response()->json(array_merge($basicInfoCart, $coupon));
+    }
 }

@@ -49,4 +49,7 @@ $router->group(['prefix' => 'product'], function (Router $router) {
     ]);
 
     $router->post('/add-to-cart', 'ProductController@addOrUpdateProductsToCartOfCustomer')->name('ajax.product.add_to_cart');
+
+    $router->post('/add-coupon', 'ProductController@addCoupon')->name('ajax.product.add_coupon');
+    $router->delete('/delete-coupon', 'ProductController@deleteCouponInCart')->name('ajax.product.delete_coupon');
 });
