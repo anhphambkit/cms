@@ -21,3 +21,18 @@ if (!function_exists('get_menu_product_categories')) {
         ]);
     }
 }
+
+if (!function_exists('get_array_product_wish_list')) {
+    /**
+     * @param int $customerId
+     * @return mixed
+     */
+    function get_array_product_wish_list(int $customerId)
+    {
+        return app()->make(\Plugins\Product\Repositories\Interfaces\WishListRepositories::class)->allBy([
+            [
+                'customer_id', '=', $customerId
+            ]
+        ], [], ['id'])->pluck('id')->toArray();
+    }
+}

@@ -6,6 +6,7 @@
  * Time: 07:54
  */
 $productItem = !empty($productItem) ? $productItem : collect([]);
+$productWishListIds = !empty($productWishListIds) ? $productWishListIds : [];
 ?>
 <div class="product-item">
     <div class="item mb-3">
@@ -28,7 +29,9 @@ $productItem = !empty($productItem) ? $productItem : collect([]);
                         <button class="btn btn-outline-custom background-white">View in Design Ideas</button>
                     @endif
                 </div>
-                <a href="#" class="favourite text-custom"><img src="{{ URL::asset('themes/ifoss/assets/images/icons/heart.png') }}" alt="" class="icon-img"></a>
+                <a href="javascript:void(0);" class="add-to-wish-list favourite text-custom" data-product-id="{{ $productItem->id }}">
+                    <i class="{{ in_array($productItem->id, $productWishListIds) ? 'fas' : 'far' }} fa-heart icon-wish-list"></i>
+                </a>
             </div>
         </div>
     </div>

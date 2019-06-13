@@ -48,4 +48,11 @@ interface ProductServices {
      * @return mixed
      */
     public function getListProductsOfCategoryPage(int $productCategoryId, int $limit = null);
+
+    /**
+     * @param int $productId
+     * @param int $customerId
+     * @return mixed
+     */
+    public function addOrRemoveProductToQuickList(int $productId, int $customerId);
 }

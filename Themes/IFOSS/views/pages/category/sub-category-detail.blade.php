@@ -64,6 +64,7 @@ $parentCategory = $categoryPageInfo['category']->parentCategory;
                         <div class="col-md-3">
                             @component("components.product-item")
                                 @slot("productItem", $categoryProduct)
+                                @slot("productWishListIds", $productWishListIds)
                             @endcomponent
                         </div>
                         @endforeach

@@ -1,49 +1,50 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: AnhPham
+ * Date: 2019-06-13
+ * Time: 20:43
+ */
 
 namespace Plugins\Product\Controllers\Web;
-use Illuminate\Http\Request;
+
 use Core\Base\Controllers\Web\BasePublicController;
 use Illuminate\Support\Facades\Auth;
 use Plugins\Product\Repositories\Interfaces\WishListRepositories;
-use Plugins\Product\Services\ProductServices;
 use AssetManager;
 use AssetPipeline;
 
-class ProductController extends BasePublicController
+class WishListController extends BasePublicController
 {
-    /**
-     * @var ProductServices
-     */
-    protected $productServices;
-
     /**
      * @var WishListRepositories
      */
     protected $wishListRepositories;
 
     /**
-     * ProductController constructor.
-     * @param ProductServices $productServices
+     * WishListController constructor.
      * @param WishListRepositories $wishListRepositories
      */
-    public function __construct(ProductServices $productServices, WishListRepositories $wishListRepositories)
+    public function __construct(WishListRepositories $wishListRepositories)
     {
-        $this->productServices = $productServices;
         $this->wishListRepositories = $wishListRepositories;
     }
 
     /**
-     * @param $url
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-	public function getProductDetail($url) {
-        $productId = get_id_from_url($url);
-        $productInfo = $this->productServices->getDetailInfoProduct($productId);
-        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer(Auth::guard('customer')->id());
+    public function getProductWishList() {
+        $customerId = Auth::guard('customer')->id();
+        $wishListProducts = $this->wishListRepositories->allBy([
+            [
+                'customer_id', '=', $customerId
+            ]
+        ], ['product'], ['*']);
+        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer($customerId);
         AssetManager::addAsset('product-detail-js', 'frontend/plugins/product/assets/js/product-detail.js');
         AssetPipeline::requireJs('product-detail-js');
         AssetManager::addAsset('product-detail-css', 'frontend/plugins/product/assets/css/product-detail.css');
         AssetPipeline::requireCss('product-detail-css');
-        return view('pages.product.detail', compact('productInfo', 'productWishListIds'));
+        return view('pages.wish-list.wish-list', compact('wishListProducts', 'productWishListIds'));
     }
 }

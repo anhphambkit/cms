@@ -1,7 +1,6 @@
 @extends("layouts.master")
 
 @section('content')
-
     <section class="banner-slider">
         <?php for ($i=0; $i < 3; $i++) { ?>
             <div class="item">
@@ -139,6 +138,7 @@
                     <div class="col-md-3">
                         @component("components.product-item")
                             @slot("productItem", $bestSellerProduct)
+                            @slot("productWishListIds", $productWishListIds)
                         @endcomponent
                     </div>
                 @endforeach

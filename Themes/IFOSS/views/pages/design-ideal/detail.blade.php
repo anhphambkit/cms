@@ -19,6 +19,7 @@
                     <div class="col-md-3">
                         @component("components.product-item")
                             @slot("productItem", json_decode (json_encode ($lookBookProduct), FALSE))
+                            @slot("productWishListIds", $productWishListIds)
                         @endcomponent
                     </div>
                 @endforeach

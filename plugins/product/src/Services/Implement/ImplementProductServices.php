@@ -12,6 +12,7 @@ use Plugins\Product\Contracts\ProductReferenceConfig;
 use Plugins\Product\Repositories\Interfaces\ProductAttributeValueRelationRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductRepositories;
+use Plugins\Product\Repositories\Interfaces\WishListRepositories;
 use Plugins\Product\Services\ProductServices;
 
 class ImplementProductServices implements ProductServices {
@@ -32,18 +33,25 @@ class ImplementProductServices implements ProductServices {
     private $productCategoryRepositories;
 
     /**
+     * @var WishListRepositories
+     */
+    private $wishListRepositories;
+
+    /**
      * ImplementProductServices constructor.
      * @param ProductRepositories $productRepository
      * @param ProductAttributeValueRelationRepositories $productAttributeValueRepositories
      * @param ProductCategoryRepositories $productCategoryRepositories
+     * @param WishListRepositories $wishListRepositories
      */
     public function __construct(ProductRepositories $productRepository,
                                 ProductAttributeValueRelationRepositories $productAttributeValueRepositories,
-                                ProductCategoryRepositories $productCategoryRepositories)
+                                ProductCategoryRepositories $productCategoryRepositories, WishListRepositories $wishListRepositories)
     {
         $this->repository = $productRepository;
         $this->productAttributeValueRepositories = $productAttributeValueRepositories;
         $this->productCategoryRepositories = $productCategoryRepositories;
+        $this->wishListRepositories = $wishListRepositories;
     }
 
     /**
@@ -185,6 +193,19 @@ class ImplementProductServices implements ProductServices {
             'sale_products' => $saleProducts,
             'sub_categories' => $subCategories,
             'category' => $category,
+        ];
+    }
+
+    /**
+     * @param int $productId
+     * @param int $customerId
+     * @return mixed
+     */
+    public function addOrRemoveProductToQuickList(int $productId, int $customerId) {
+        $result = $this->wishListRepositories->addOrRemoveProductToQuickList($productId, $customerId);
+        return [
+            'type_update' => $result,
+            'message' => trans('plugins-product::wish-list.update_wish_list_success')
         ];
     }
 }

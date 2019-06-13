@@ -9,6 +9,8 @@
 namespace Plugins\Product\Controllers\Web;
 use Core\Base\Controllers\Web\BasePublicController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Plugins\Product\Repositories\Interfaces\WishListRepositories;
 use Plugins\Product\Services\BusinessTypeServices;
 use Plugins\Product\Services\LookBookServices;
 use AssetManager;
@@ -37,17 +39,25 @@ class DesignIdeaController extends BasePublicController{
     protected $productSpaceServices;
 
     /**
-     * PublicController constructor.
+     * @var WishListRepositories
+     */
+    protected $wishListRepositories;
+
+    /**
+     * DesignIdeaController constructor.
      * @param BusinessTypeServices $businessTypeServices
      * @param LookBookServices $lookBookServices
      * @param ProductSpaceServices $productSpaceServices
+     * @param WishListRepositories $wishListRepositories
      */
-    public function __construct(BusinessTypeServices $businessTypeServices, LookBookServices $lookBookServices, ProductSpaceServices $productSpaceServices)
+    public function __construct(BusinessTypeServices $businessTypeServices, LookBookServices $lookBookServices,
+                                ProductSpaceServices $productSpaceServices, WishListRepositories $wishListRepositories)
     {
         parent::__construct();
         $this->businessTypeServices = $businessTypeServices;
         $this->lookBookServices = $lookBookServices;
         $this->productSpaceServices = $productSpaceServices;
+        $this->wishListRepositories = $wishListRepositories;
     }
 
     /**
@@ -182,11 +192,11 @@ class DesignIdeaController extends BasePublicController{
     {
         $lookBookId = get_id_from_url($url);
         $lookBook = $this->lookBookServices->getDetailLookBook($lookBookId);
-//        $lookBookProducts = $lookBook->lookBookProducts();
+        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer(Auth::guard('customer')->id());
         AssetManager::addAsset('look-book-design-css', 'frontend/plugins/product/assets/css/look-book-design.css');
         AssetPipeline::requireCss('look-book-design-css');
         AssetManager::addAsset('design-idea-js', 'frontend/plugins/product/assets/js/design-idea.js');
         AssetPipeline::requireJs('design-idea-js');
-        return view('pages.design-ideal.detail', compact('lookBook'));
+        return view('pages.design-ideal.detail', compact('lookBook', 'productWishListIds'));
     }
 }

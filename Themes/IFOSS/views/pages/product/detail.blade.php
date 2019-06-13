@@ -162,6 +162,7 @@
                             <div class="col-md-3">
                                 @component("components.product-item")
                                     @slot("productItem", $productItemCollection)
+                                    @slot("productWishListIds", $productWishListIds)
                                 @endcomponent
                             </div>
                         @endforeach
@@ -181,6 +182,7 @@
                             <div class="col-md-3">
                                 @component("components.product-item")
                                     @slot("productItem", $similarProduct)
+                                    @slot("productWishListIds", $productWishListIds)
                                 @endcomponent
                             </div>
                         @endforeach

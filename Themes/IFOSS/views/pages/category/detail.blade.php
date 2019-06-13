@@ -28,6 +28,7 @@
                         <div class="col-md-3">
                             @component("components.product-item")
                                 @slot("productItem", $saleProduct)
+                                @slot("productWishListIds", $productWishListIds)
                             @endcomponent
                         </div>
                         @endforeach
@@ -52,6 +53,7 @@
                             <div class="col-md-3">
                                 @component("components.product-item")
                                     @slot("productItem", $subCategoryProduct)
+                                    @slot("productWishListIds", $productWishListIds)
                                 @endcomponent
                             </div>
                             @endforeach

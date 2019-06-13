@@ -82,6 +82,17 @@ class ProductController extends BaseAdminController
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
+    public function addOrRemoveProductToQuickList(Request $request) {
+        $productId = strtolower(trim($request->get('product_id')));
+        $result = $this->productServices->addOrRemoveProductToQuickList($productId, Auth::guard('customer')->id());
+        return response()->json($result);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function deleteCouponInCart(Request $request) {
         $couponId = (int)($request->get('coupon_id'));
         $coupon = $this->cartServices->deleteCouponInCart($couponId, Auth::guard('customer')->id());

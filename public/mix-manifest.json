@@ -6,6 +6,7 @@
     "/backend/plugins/product/assets/css/look-book.css": "/backend/plugins/product/assets/css/look-book.css",
     "/backend/plugins/product/assets/css/custom-partials.css": "/backend/plugins/product/assets/css/custom-partials.css",
     "/backend/plugins/product/assets/css/product.css": "/backend/plugins/product/assets/css/product.css",
+    "/frontend/plugins/product/assets/js/product.js": "/frontend/plugins/product/assets/js/product.js",
     "/frontend/plugins/product/assets/js/product-detail.js": "/frontend/plugins/product/assets/js/product-detail.js",
     "/frontend/plugins/product/assets/js/design-idea.js": "/frontend/plugins/product/assets/js/design-idea.js",
     "/backend/plugins/product/assets/js/variants.js": "/backend/plugins/product/assets/js/variants.js",

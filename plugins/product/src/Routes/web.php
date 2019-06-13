@@ -58,8 +58,15 @@ $router->group(['prefix' => 'product'], function (Router $router) {
     ]);
 });
 
+$router->group(['prefix' => 'wish-list', 'middleware' => ['customer']], function (Router $router) {
+    $router->get('/', [
+        'as'         => 'public.product.wish_list',
+        'uses'       => 'WishListController@getProductWishList',
+    ]);
+});
+
 $router->group(['prefix' => 'product/checkout', 'middleware' => ['customer']], function (Router $router) {
-    
+
     $router->get('/', [
         'as'         => 'public.product.checkout', 
         'uses'       => 'CheckoutController@getCheckout',

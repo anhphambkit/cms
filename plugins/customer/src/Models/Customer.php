@@ -6,6 +6,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Plugins\Product\Models\WishList;
 
 /**
  * Plugins\Customer\Models\Customer
@@ -66,6 +67,15 @@ class Customer extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * @param int $customerId
+     * @return mixed
+     */
+    public function wishListProducts(int $customerId)
+    {
+        return $this->hasMany(WishList::class)->where('customer_id', $customerId);
+    }
 
     /**
      * Send the password reset notification.

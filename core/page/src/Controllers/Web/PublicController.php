@@ -2,6 +2,8 @@
 namespace Core\Page\Controllers\Web;
 use Core\Base\Controllers\Web\BasePublicController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Plugins\Product\Repositories\Interfaces\WishListRepositories;
 use Plugins\Product\Services\ProductServices;
 
 /**
@@ -16,13 +18,19 @@ class PublicController extends BasePublicController{
     private $productServices;
 
     /**
+     * @var WishListRepositories
+     */
+    private $wishListRepositories;
+
+    /**
      * PublicController constructor.
      * @param ProductServices $productServices
+     * @param WishListRepositories $wishListRepositories
      */
-    public function __construct(ProductServices $productServices)
+    public function __construct(ProductServices $productServices, WishListRepositories $wishListRepositories)
     {
-        parent::__construct();
         $this->productServices = $productServices;
+        $this->wishListRepositories = $wishListRepositories;
     }
 
     /**
@@ -34,6 +42,7 @@ class PublicController extends BasePublicController{
 	{
         page_title()->setTitle('Ifoss');
         $bestSellerProducts = $this->productServices->getBestSellerProducts(8);
-		return view('homepage', compact('bestSellerProducts'));
+        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer(Auth::guard('customer')->id());
+		return view('homepage', compact('bestSellerProducts', 'productWishListIds'));
 	}
 }
