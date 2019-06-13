@@ -2,7 +2,7 @@
     <div class="container">
         <div class="wrapper row">
             <div class="col-md-6">
-                <div class="news-letter-title" style="max-width: 300px;">Subscribe for updates, new products & specials offers.</div>
+                <div class="news-letter-title">Subscribe for updates, new products & specials offers.</div>
             </div>
             <div class="col-md-6">
                 <form>
@@ -19,7 +19,6 @@
                 </form>
             </div>
         </div>
-        <a href="javascript:void(0);" class="btn-link close-subscribe-news"><i class="fas fa-times"></i></a>
     </div>
 </section>
 
@@ -70,3 +69,6 @@
         </div>
     </div>
 </footer>
+<script type="text/javascript">
+    
+</script>

@@ -16,18 +16,6 @@
 		<a href="#" class="btn-tab w-100 p-0 mr-2" attr-name="{{ $cardType['discover'] }}"><img src="{{ URL::asset('themes/ifoss/assets/images/icons/amex-logo.png') }}" class="w-100"></a>
 		<a href="#" class="btn-tab w-100 p-0" attr-name="{{ $cardType['amex'] }}"><img src="{{ URL::asset('themes/ifoss/assets/images/icons/discover-logo.png') }}" class="w-100"></a>
 	</div>
-	<div class="form-group-fl @if ($errors->has('creditcard.card_name')) has-error @endif">
-		<input type="text" class="form-control-fl @if ($errors->has('creditcard.card_name')) is-invalid @endif" placeholder="Name on card *" name="creditcard[card_name]" value="{{ old('creditcard.card_name') }}">
-		{!! $errors->first('creditcard.card_name', '<span class="invalid-feedback">:message</span>') !!}
-	</div>
-	<div class="form-group-fl @if ($errors->has('creditcard.first_name')) has-error @endif">
-		<input type="text" class="form-control-fl @if ($errors->has('creditcard.first_name')) is-invalid @endif" placeholder="First Name *" name="creditcard[first_name]" value="{{ old('creditcard.first_name') }}">
-		{!! $errors->first('creditcard.first_name', '<span class="invalid-feedback">:message</span>') !!}
-	</div>
-	<div class="form-group-fl @if ($errors->has('creditcard.last_name')) has-error @endif">
-		<input type="text" class="form-control-fl @if ($errors->has('creditcard.last_name')) is-invalid @endif" placeholder="Last Name *" name="creditcard[last_name]" value="{{ old('creditcard.last_name') }}">
-		{!! $errors->first('creditcard.last_name', '<span class="invalid-feedback">:message</span>') !!}
-	</div>
 	<div class="form-group-fl @if ($errors->has('creditcard.card_number')) has-error @endif">
 		<input type="text" class="form-control-fl @if ($errors->has('creditcard.card_number')) is-invalid @endif" placeholder="Card number *" name="creditcard[card_number]" value="{{ old('creditcard.card_number') }}">
 		{!! $errors->first('creditcard.card_number', '<span class="invalid-feedback">:message</span>') !!}

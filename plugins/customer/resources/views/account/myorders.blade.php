@@ -29,10 +29,6 @@
 								'style' => 'min-width: 100px;'
 							],
 							[
-								'name' => 'Full Name',
-								'style' => 'min-width: 110px;'
-							],
-							[
 								'name' => 'Address',
 								'style' => 'min-width: 200px;'
 							],
@@ -66,18 +62,17 @@
 							<div class="tr">
 								<div class="td">{{ $order->id }}</div>
 								<div class="td">{{ ucfirst($order->payment_method) }}</div>
-								<div class="td">{{ show_fullname_invoce($order) }}</div>
 								<div class="td">{{ show_address_invoice($order) }}</div>
 								<div class="td">$ {{ number_format($order->total_amount_order, 2, ',', '.') }}</div>
 								<div class="td"><a href="#" class="text-blue">{{ $order->tracking_number ?? 'NONE' }}</a></div>
 								<div class="td">{{ show_email_invoice($order) }}</div>
 								<div class="td">{{ ucfirst(find_reference_by_id($order->status)->value) }}</div>
 								<div class="td">{{ $order->created_at }}</div>
-								<!-- <span class="td-action text-right">
+								<span class="td-action text-right">
 									<a href="#" class="text-blue">View Detail</a>
 									<a href="#" class="text-blue">Issue a refund</a>
 									<a href="#" class="text-yellow" data-toggle="modal" data-target="#resend-confirmation-order">Ressend Comfirmation Order</a>
-								</span> -->
+								</span>
 							</div>
 						</div>
 					@endforeach

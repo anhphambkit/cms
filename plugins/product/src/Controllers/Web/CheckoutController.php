@@ -318,7 +318,7 @@ class CheckoutController extends BasePublicController
 	{
 		$address  = [
 			'address1'    => $request->address_billing['address_1'],
-			'address2'    => $request->address_billing['address_2'],
+			'address2'    => $request->address_billing['address_2'] ?? '',
 			'city'        => $request->address_billing['city'],
 			'state'       => $request->address_billing['state'],
 			'postalCode'  => $request->address_billing['zip'],
@@ -327,13 +327,13 @@ class CheckoutController extends BasePublicController
 		];
 
 		$card = [
-			'cardType'           => $creditRequest->creditcard['card_name'],
+			'cardType'           => 'visa',
 			'cardNumber'         => $creditRequest->creditcard['card_number'],
 			'cardExpireMonth'    => $creditRequest->creditcard['expiration_month'],
 			'cardExpireYear'     => $creditRequest->creditcard['expiration_year'],
 			'cardCvv'            => $creditRequest->creditcard['card_cvv'],
-			'cardFirstName'      => $creditRequest->creditcard['first_name'],
-			'cardLastName'       => $creditRequest->creditcard['last_name'],
+			'cardFirstName'      => $request->address_billing['first_name'],
+			'cardLastName'       => $request->address_billing['last_name'],
 			'cardBillingCountry' => 'US'
 		];
 		return [$address, $card];

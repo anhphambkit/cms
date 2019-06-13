@@ -2,13 +2,22 @@
 	$address = get_customer_address_default(false);
 @endphp
 
-<div class="form-group row @if ($errors->has('address_billing.fullname')) has-error @endif">
-	<label class="col-sm-3 col-form-label align-items-center d-flex">Full Name <span class="text-red">*</span></label>
+<div class="form-group row @if ($errors->has('address_billing.first_name')) has-error @endif">
+	<label class="col-sm-3 col-form-label align-items-center d-flex">FirstName <span class="text-red">*</span></label>
 	<div class="col-sm-9">
-		<input name="address_billing[fullname]" type="text" value="{{ get_current_customer()->username }}" class="form-control form-control-lg squared @if ($errors->has('address_billing.fullname')) is-invalid @endif" placeholder=""/>
-		{!! $errors->first('address_billing.fullname', '<span class="invalid-feedback">:message</span>') !!}
+		<input name="address_billing[first_name]" type="text" value="{{ old('address_billing.first_name') }}" class="form-control form-control-lg squared @if ($errors->has('address_billing.first_name')) is-invalid @endif" placeholder=""/>
+		{!! $errors->first('address_billing.first_name', '<span class="invalid-feedback">:message</span>') !!}
 	</div>
 </div>
+
+<div class="form-group row @if ($errors->has('address_billing.last_name')) has-error @endif">
+	<label class="col-sm-3 col-form-label align-items-center d-flex">LastName <span class="text-red">*</span></label>
+	<div class="col-sm-9">
+		<input name="address_billing[last_name]" type="text" value="{{ old('address_billing.last_name') }}" class="form-control form-control-lg squared @if ($errors->has('address_billing.last_name')) is-invalid @endif" placeholder=""/>
+		{!! $errors->first('address_billing.last_name', '<span class="invalid-feedback">:message</span>') !!}
+	</div>
+</div>
+
 <div class="form-group row @if ($errors->has('address_billing.address_1')) has-error @endif">
 	<label class="col-sm-3 col-form-label align-items-center d-flex">Address Line 1 <span class="text-red">*</span></label>
 	<div class="col-sm-9">

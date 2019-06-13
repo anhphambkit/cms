@@ -9,6 +9,7 @@ use Core\Media\Image\ThumbnailManager;
 use Core\Media\Models\MediaFile as File;
 use Illuminate\Support\Collection;
 use Core\Media\Repositories\Interfaces\MediaFolderRepositories;
+
 class BFileService
 {
     /**
@@ -277,5 +278,42 @@ class BFileService
         $path = config('core-media.media.upload.files-path') . app(MediaFolderRepositories::class)->getFullPath($folder->id, auth()->id());
         $this->filesystem->disk('s3')->deleteDirectory($path);
         $this->filesystem->disk('local')->deleteDirectory("/public{$path}");
+    }
+
+    /**
+     * Get csv data line by line
+     * @param type $filePath 
+     * @param type $callback 
+     * @author TrinhLe
+     */
+    public function readCsvFile($filePath, $callback = null)
+    {
+        if (($handle = fopen("$filePath", "r")) !== FALSE) {
+            $lineNumber = 1;
+            while (($line = fgetcsv($handle)) !== false) {
+                if ($line && array(null) !== $line) {
+                    if (is_callable($callback))
+                        call_user_func($callback, $line, $lineNumber);
+                }
+                $lineNumber++;
+            }
+            fclose($handle);
+        }
+    }
+
+    /**
+     * Convert array php to csv file
+     * @author TrinhLe
+     * @param type $array 
+     * @param type|string $filename 
+     */
+    public function putArrayToCsv(array $array = [], array $headers = [], $filename = "invalid-state.csv")
+    {
+        $file = fopen(public_path($filename),"w");
+        fputcsv($file, $headers);
+        foreach ($array as $line) {
+            fputcsv($file, $line);
+        }
+        fclose($file);
     }
 }
