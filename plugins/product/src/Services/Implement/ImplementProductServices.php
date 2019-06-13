@@ -8,10 +8,13 @@
 
 namespace Plugins\Product\Services\Implement;
 
+use Illuminate\Support\Facades\DB;
+use Plugins\Cart\Repositories\Interfaces\CartRepositories;
 use Plugins\Product\Contracts\ProductReferenceConfig;
 use Plugins\Product\Repositories\Interfaces\ProductAttributeValueRelationRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductRepositories;
+use Plugins\Product\Repositories\Interfaces\SaveForLaterRepositories;
 use Plugins\Product\Repositories\Interfaces\WishListRepositories;
 use Plugins\Product\Services\ProductServices;
 
@@ -38,20 +41,34 @@ class ImplementProductServices implements ProductServices {
     private $wishListRepositories;
 
     /**
+     * @var SaveForLaterRepositories
+     */
+    private $saveForLaterRepositories;
+
+    /**
+     * @var CartRepositories
+     */
+    private $cartRepositories;
+
+    /**
      * ImplementProductServices constructor.
      * @param ProductRepositories $productRepository
      * @param ProductAttributeValueRelationRepositories $productAttributeValueRepositories
+     * @param SaveForLaterRepositories $saveForLaterRepositories
      * @param ProductCategoryRepositories $productCategoryRepositories
      * @param WishListRepositories $wishListRepositories
+     * @param CartRepositories $cartRepositories
      */
     public function __construct(ProductRepositories $productRepository,
-                                ProductAttributeValueRelationRepositories $productAttributeValueRepositories,
-                                ProductCategoryRepositories $productCategoryRepositories, WishListRepositories $wishListRepositories)
+                                ProductAttributeValueRelationRepositories $productAttributeValueRepositories, SaveForLaterRepositories $saveForLaterRepositories,
+                                ProductCategoryRepositories $productCategoryRepositories, WishListRepositories $wishListRepositories, CartRepositories $cartRepositories)
     {
         $this->repository = $productRepository;
         $this->productAttributeValueRepositories = $productAttributeValueRepositories;
         $this->productCategoryRepositories = $productCategoryRepositories;
         $this->wishListRepositories = $wishListRepositories;
+        $this->saveForLaterRepositories = $saveForLaterRepositories;
+        $this->cartRepositories = $cartRepositories;
     }
 
     /**
@@ -207,5 +224,65 @@ class ImplementProductServices implements ProductServices {
             'type_update' => $result,
             'message' => trans('plugins-product::wish-list.update_wish_list_success')
         ];
+    }
+
+    /**
+     * @param array $products
+     * @param int $customerId
+     * @return mixed
+     */
+    public function saveProductForLater(array $products, int $customerId) {
+        foreach ($products as $productId => $quantity) {
+            $quantity = intval($quantity) > 0 ? intval($quantity) : 1;
+            DB::transaction(function () use ($productId, $quantity, $customerId) {
+                $this->saveForLaterRepositories->saveProductForLater(intval($productId), $quantity, $customerId);
+                $this->cartRepositories->addOrUpdateProductsToCartOfCustomer(intval($productId), 0, $customerId, false, true);
+            }, 3);
+        }
+        return [
+            'message' => trans('plugins-product::save-for-later.save_product_later_success')
+        ];
+    }
+
+    /**
+     * @param int $productId
+     * @param int $customerId
+     * @return array|mixed
+     */
+    public function moveProductToCart(int $productId, int $customerId) {
+        $conditions = [
+            [
+                'product_id', '=', $productId
+            ],
+            [
+                'customer_id', '=', $customerId
+            ],
+        ];
+        $productSaveForLater = $this->saveForLaterRepositories->getFirstBy($conditions);
+        if ($productSaveForLater) {
+            DB::transaction(function () use ($productId, $customerId, $productSaveForLater, $conditions) {
+                $this->cartRepositories->addOrUpdateProductsToCartOfCustomer(intval($productId), $productSaveForLater->quantity, $customerId, false, true);
+                $this->saveForLaterRepositories->deleteBy($conditions);
+            }, 3);
+        }
+        return [
+            'message' => trans('plugins-product::save-for-later.save_product_later_success')
+        ];
+    }
+
+    /**
+     * @param int $productId
+     * @param int $customerId
+     * @return mixed
+     */
+    public function deleteProductSaved(int $productId, int $customerId) {
+        return $this->saveForLaterRepositories->deleteBy([
+            [
+                'product_id', '=', $productId
+            ],
+            [
+                'customer_id', '=', $customerId
+            ],
+        ]);
     }
 }

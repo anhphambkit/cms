@@ -83,8 +83,41 @@ class ProductController extends BaseAdminController
      * @throws \Exception
      */
     public function addOrRemoveProductToQuickList(Request $request) {
-        $productId = strtolower(trim($request->get('product_id')));
+        $productId = (int)($request->get('product_id'));
         $result = $this->productServices->addOrRemoveProductToQuickList($productId, Auth::guard('customer')->id());
+        return response()->json($result);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function saveProductForLater(Request $request) {
+        $products = $request->get('products');
+        $result = $this->productServices->saveProductForLater($products, Auth::guard('customer')->id());
+        return response()->json($result);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function moveProductToCart(Request $request) {
+        $productId = (int)($request->get('product_id'));
+        $result = $this->productServices->moveProductToCart($productId, Auth::guard('customer')->id());
+        return response()->json($result);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function deleteProductSaved(Request $request) {
+        $productId = (int)($request->get('product_id'));
+        $result = $this->productServices->deleteProductSaved($productId, Auth::guard('customer')->id());
         return response()->json($result);
     }
 

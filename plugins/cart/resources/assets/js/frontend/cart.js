@@ -9,6 +9,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 (function(window, document, $) {
     'use strict';
+    // Update quantity product in cart
     $(document).on('change', '.quantity-product-item-input', function(e) {
         let products = {};
         let newProduct = {};
@@ -38,6 +39,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
             });
     });
 
+    // Remove product in cart
     $(document).on('click', '.btn-remove-product-in-cart', function(e) {
         let productId = $(this).parents('.row-product').data('product-id');
         let _this = $(this);
@@ -55,6 +57,57 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                 $('.cart-info-total .wanting-price').html(`+  $${data.data.free_design.wanting_price}`);
                 $('.cart-info-total .total-free-designs-cart').html(`to qualify for ${data.data.free_design.total_free_design + 1} FREE DESIGN`);
                 _this.parents('.row-product').remove();
+            })
+            .catch(function(error){
+            })
+            .then(function(data){ // Finally
+            });
+    });
+
+    // Save product for later
+    $(document).on('click', '.btn-save-product-later', function(e) {
+        let products = {};
+        let newProduct = {};
+        let productId = $(this).parents('.row-product').data('product-id');
+        let quantity = $(this).parents('.row-product').find('.quantity-product-item-input').val();
+        newProduct[productId] = quantity;
+        products = Object.assign(products, newProduct);
+        let _this = $(this);
+        let request = axios.post(API.SAVE_PRODUCT_FOR_LATER, { 'products' : products });
+
+        request
+            .then(function(data){
+                location.reload();
+            })
+            .catch(function(error){
+            })
+            .then(function(data){ // Finally
+            });
+    });
+
+    // Move product from saved to cart
+    $(document).on('click', '.btn-move-product-to-cart', function(e) {
+        let productId = $(this).parents('.row-product').data('product-id');
+        let _this = $(this);
+        let request = axios.post(API.MOVE_PRODUCT_TO_CART, { 'product_id' : productId });
+        request
+            .then(function(data){
+                location.reload();
+            })
+            .catch(function(error){
+            })
+            .then(function(data){ // Finally
+            });
+    });
+
+    // Delete product saved
+    $(document).on('click', '.btn-remove-product-in-save-for-later', function(e) {
+        let productId = $(this).parents('.row-product').data('product-id');
+        let _this = $(this);
+        let request = axios.post(API.DELETE_PRODUCT_SAVED, { 'product_id' : productId });
+        request
+            .then(function(data){
+                location.reload();
             })
             .catch(function(error){
             })

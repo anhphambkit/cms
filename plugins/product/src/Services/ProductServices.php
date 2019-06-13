@@ -55,4 +55,25 @@ interface ProductServices {
      * @return mixed
      */
     public function addOrRemoveProductToQuickList(int $productId, int $customerId);
+
+    /**
+     * @param array $products
+     * @param int $customerId
+     * @return mixed
+     */
+    public function saveProductForLater(array $products, int $customerId);
+
+    /**
+     * @param int $productId
+     * @param int $customerId
+     * @return mixed
+     */
+    public function moveProductToCart(int $productId, int $customerId);
+
+    /**
+     * @param int $productId
+     * @param int $customerId
+     * @return mixed
+     */
+    public function deleteProductSaved(int $productId, int $customerId);
 }

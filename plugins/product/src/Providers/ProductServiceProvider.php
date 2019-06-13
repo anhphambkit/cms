@@ -14,6 +14,7 @@ use Plugins\Product\Repositories\Interfaces\ProductMaterialRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductSpaceRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCouponRepositories;
+use Plugins\Product\Repositories\Interfaces\SaveForLaterRepositories;
 use Plugins\Product\Repositories\Interfaces\WishListRepositories;
 use Plugins\Product\Services\BusinessTypeServices;
 use Plugins\Product\Services\Implement\ImplementBusinessTypeServices;
@@ -82,6 +83,7 @@ class ProductServiceProvider extends ServiceProvider
             ProductCouponRepositories::class     => \Plugins\Product\Models\ProductCoupon::class,
             ProductAttributeValueRelationRepositories::class     => \Plugins\Product\Models\ProductAttributeValueRelation::class,
             WishListRepositories::class     => \Plugins\Product\Models\WishList::class,
+            SaveForLaterRepositories::class     => \Plugins\Product\Models\SaveForLater::class,
         ];
     }
 

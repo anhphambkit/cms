@@ -51,6 +51,9 @@ $router->group(['prefix' => 'product'], function (Router $router) {
     $router->post('/add-to-cart', 'ProductController@addOrUpdateProductsToCartOfCustomer')->name('ajax.product.add_to_cart');
 
     $router->post('/add-or-remove-product-to-quick-list', 'ProductController@addOrRemoveProductToQuickList')->name('ajax.product.add_or_remove_product_to_quick_list');
+    $router->post('/save-product-for-later', 'ProductController@saveProductForLater')->name('ajax.product.save_product_for_later');
+    $router->post('/move-product-to-cart', 'ProductController@moveProductToCart')->name('ajax.product.move_product_to_cart');
+    $router->post('/delete-product-saved', 'ProductController@deleteProductSaved')->name('ajax.product.delete_product_saved');
 
     $router->post('/add-coupon', 'ProductController@addCoupon')->name('ajax.product.add_coupon');
     $router->delete('/delete-coupon', 'ProductController@deleteCouponInCart')->name('ajax.product.delete_coupon');

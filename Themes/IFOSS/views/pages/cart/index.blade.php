@@ -35,37 +35,16 @@
                                 @endforeach
                             </div>
                         </div>
-                        {{--<div class="mb-4">--}}
-                            {{--<div class="font-weight-500 mb-2">My Saved Items (1 Item)</div>--}}
-                            {{--<div class="cart-list">--}}
-                                {{--<div class="item row ml-0 mr-0">--}}
-                                    {{--<div class="thumbnail">--}}
-                                        {{--<img src="{{ asset('themes/ifoss/assets/images/products/product-cart-1.jpg') }}" alt="">--}}
-                                    {{--</div>--}}
-                                    {{--<div class="content">--}}
-                                        {{--<div class="price">--}}
-                                            {{--<div class="font-size-18">$6282</div>--}}
-                                            {{--<div class="font-size-12 text-line-through">$102.05</div>--}}
-                                        {{--</div>--}}
-                                        {{--<div class="title">Orthopedic Double Pet Pillow</div>--}}
-                                        {{--<div class="mb-1">Color: Red</div>--}}
-                                        {{--<div class="mb-1">Size: Medium (34" L x 24" W)</div>--}}
-                                        {{--<div class="d-flex align-items-center">--}}
-                                            {{--Quantity--}}
-                                            {{--<div class="d-inline-block mx-3">1</div>--}}
-                                            {{--<div class="quantity-btn">--}}
-                                                {{--<a class="btn" href="#"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-top.png') }}" alt=""/></a>--}}
-                                                {{--<a class="btn" href="#"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-bottom.png') }}" alt=""/></a>--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                        {{--<div class="mt-3 text-right">--}}
-                                            {{--<a href="#" class="text-custom mr-4"><img src="{{ asset('themes/ifoss/assets/images/icons/bookmark.png') }}" alt="" width="14" /> Save for later</a>--}}
-                                            {{--<a href="#" class="text-custom"><img src="{{ asset('themes/ifoss/assets/images/icons/trash.png') }}" alt="" width="14" /> Remove</a>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
+                        <div class="mb-4">
+                            <div class="font-weight-500 mb-2">My Saved Items ({{ $savedProducts->count() }} Item)</div>
+                            <div class="cart-list">
+                                @foreach($savedProducts as $savedProduct)
+                                    @component("components.product-item-save-for-later")
+                                        @slot("productItem", $savedProduct->product)
+                                    @endcomponent
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-4 cart-info-total" style="margin-top: 66px;">
                         <div class="cart-order-info font-weight-500">
@@ -140,6 +119,9 @@
         const API = {
             ADD_COUPON_TO_CART : "{{ route('ajax.product.add_coupon') }}",
             DELETE_COUPON_IN_CART : "{{ route('ajax.product.delete_coupon') }}",
+            SAVE_PRODUCT_FOR_LATER : "{{ route('ajax.product.save_product_for_later') }}",
+            MOVE_PRODUCT_TO_CART : "{{ route('ajax.product.move_product_to_cart') }}",
+            DELETE_PRODUCT_SAVED : "{{ route('ajax.product.delete_product_saved') }}",
         };
     </script>
 @stop

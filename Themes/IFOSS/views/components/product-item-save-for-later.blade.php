@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: AnhPham
- * Date: 2019-06-02
- * Time: 09:49
+ * Date: 2019-06-13
+ * Time: 21:43
  */
 $productItem = !empty($productItem) ? $productItem : collect([]);
 $quantities = !empty($quantities) ? $quantities : [];
@@ -32,18 +32,18 @@ $attributeValues = $productItem->productStringValueAttribute()->get();
             <div class="mb-1">{{ $customAttributes->where('id', $attributeValue->custom_attribute_id)->first()->name }}: {{ $attributeValue->name }}</div>
         @endforeach
         <div class="d-flex align-items-center quantity-product-item">
-            Quantity
-            <div class="d-inline-block mx-3">
-                <input type="text" size="9999" min="1" class="quantity-product-item-input" value="{{ $quantities[$productItem->id] }}" />
-            </div>
-            <div class="quantity-btn">
-                <a class="btn btn-plus-quantity-item" href="javascript:void(0);"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-top.png') }}" alt=""/></a>
-                <a class="btn btn-minus-quantity-item" href="javascript:void(0);"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-bottom.png') }}" alt=""/></a>
-            </div>
+            {{--Quantity--}}
+            {{--<div class="d-inline-block mx-3">--}}
+                {{--<input type="text" size="9999" min="1" class="quantity-product-item-input" value="{{ $quantities[$productItem->id] }}" />--}}
+            {{--</div>--}}
+            {{--<div class="quantity-btn">--}}
+                {{--<a class="btn btn-plus-quantity-item" href="javascript:void(0);"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-top.png') }}" alt=""/></a>--}}
+                {{--<a class="btn btn-minus-quantity-item" href="javascript:void(0);"><img src="{{ asset('themes/ifoss/assets/images/icons/chervon-bottom.png') }}" alt=""/></a>--}}
+            {{--</div>--}}
         </div>
         <div class="mt-3 text-right">
-            <a href="javascript:void(0);" class="text-custom mr-4 btn-save-product-later"><img src="{{ asset('themes/ifoss/assets/images/icons/bookmark.png') }}" alt="" width="14" /> Save for later</a>
-            <a href="javascript:void(0);" class="text-custom btn-remove-product-in-cart"><img src="{{ asset('themes/ifoss/assets/images/icons/trash.png') }}" alt="" width="14" /> Remove</a>
+            <a href="javascript:void(0);" class="text-custom mr-4 btn-move-product-to-cart"><i class="fas fa-shopping-cart"></i> Move to cart</a>
+            <a href="javascript:void(0);" class="text-custom btn-remove-product-in-save-for-later"><img src="{{ asset('themes/ifoss/assets/images/icons/trash.png') }}" alt="" width="14" /> Remove</a>
         </div>
     </div>
 </div>
