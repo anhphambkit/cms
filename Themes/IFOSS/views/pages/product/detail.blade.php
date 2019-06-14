@@ -131,7 +131,7 @@
                                     <hr>
                                 </div>
                                 <div class="d-flex">
-                                    <button class="btn btn-outline-custom mr-2"><i class="fas fa-heart mr-2"></i> Wishlist</button>
+                                    <button class="btn btn-outline-custom mr-2 add-to-wish-list" data-product-id="{{ $productInfo['product']->id }}"><i class="{{ in_array($productInfo['product']->id, $productWishListIds) ? 'fas' : 'far' }} fa-heart mr-2 icon-wish-list"></i> Wishlist</button>
                                     <button class="btn btn-custom btn-block justify-content-center {{ ($productInfo['product']->type_product === \Plugins\Product\Contracts\ProductReferenceConfig::PRODUCT_TYPE_VARIANT) ? 'disabled' : 'add-to-cart-btn' }}"
                                             data-toggle="tooltip" data-placement="top"
                                             title="{{ ($productInfo['product']->type_product === \Plugins\Product\Contracts\ProductReferenceConfig::PRODUCT_TYPE_VARIANT) ? 'Please select full product attribute!' : '' }}">Add to Bag</button>
