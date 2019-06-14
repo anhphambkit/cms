@@ -34,6 +34,10 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                 $('.cart-info-total .total-free-designs-cart').html(`to qualify for ${data.data.free_design.total_free_design + 1} FREE DESIGN`);
             })
             .catch(function(error){
+                if (error.response.status === 401)
+                    Lcms.showNotice('error', "Please login to use this feature!", Lcms.languages.notices_msg.error);
+                else
+                    Lcms.showNotice('error', "Please contact IT support!", Lcms.languages.notices_msg.error);
             })
             .then(function(data){ // Finally
             });
@@ -59,6 +63,10 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                 _this.parents('.row-product').remove();
             })
             .catch(function(error){
+                if (error.response.status === 401)
+                    Lcms.showNotice('error', "Please login to use this feature!", Lcms.languages.notices_msg.error);
+                else
+                    Lcms.showNotice('error', "Please contact IT support!", Lcms.languages.notices_msg.error);
             })
             .then(function(data){ // Finally
             });
@@ -80,6 +88,10 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                 location.reload();
             })
             .catch(function(error){
+                if (error.response.status === 401)
+                    Lcms.showNotice('error', "Please login to use this feature!", Lcms.languages.notices_msg.error);
+                else
+                    Lcms.showNotice('error', "Please contact IT support!", Lcms.languages.notices_msg.error);
             })
             .then(function(data){ // Finally
             });
@@ -95,6 +107,10 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                 location.reload();
             })
             .catch(function(error){
+                if (error.response.status === 401)
+                    Lcms.showNotice('error', "Please login to use this feature!", Lcms.languages.notices_msg.error);
+                else
+                    Lcms.showNotice('error', "Please contact IT support!", Lcms.languages.notices_msg.error);
             })
             .then(function(data){ // Finally
             });
@@ -110,6 +126,10 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                 location.reload();
             })
             .catch(function(error){
+                if (error.response.status === 401)
+                    Lcms.showNotice('error', "Please login to use this feature!", Lcms.languages.notices_msg.error);
+                else
+                    Lcms.showNotice('error', "Please contact IT support!", Lcms.languages.notices_msg.error);
             })
             .then(function(data){ // Finally
             });

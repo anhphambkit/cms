@@ -12,7 +12,7 @@
 */
 use Illuminate\Routing\Router;
 
-$router->group(['prefix' => 'cart'], function (Router $router) {
+$router->group(['prefix' => 'cart', 'middleware' => ['customer']], function (Router $router) {
     $router->post('/update-product-in-cart', 'CartController@updateProductsInCartOfCustomer')->name('ajax.cart.update_product_in_cart');
     $router->post('/delete-product-in-cart', 'CartController@deleteProductInCart')->name('ajax.cart.delete_product_in_cart');
 });

@@ -12,7 +12,7 @@
 */
 use Illuminate\Routing\Router;
 
-$router->get('/cart', 'CartController@cart')->name('public.cart');
+$router->get('/cart', 'CartController@cart')->name('public.cart')->middleware('customer');
 
 ///************ Router Shop ************** */
 //Route::prefix('shop')->group(function () {

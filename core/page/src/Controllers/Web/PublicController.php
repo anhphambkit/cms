@@ -42,7 +42,7 @@ class PublicController extends BasePublicController{
 	{
         page_title()->setTitle('Ifoss');
         $bestSellerProducts = $this->productServices->getBestSellerProducts(8);
-        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer(Auth::guard('customer')->id());
+        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
 		return view('homepage', compact('bestSellerProducts', 'productWishListIds'));
 	}
 }

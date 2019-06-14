@@ -39,7 +39,7 @@ class ProductController extends BasePublicController
 	public function getProductDetail($url) {
         $productId = get_id_from_url($url);
         $productInfo = $this->productServices->getDetailInfoProduct($productId);
-        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer(Auth::guard('customer')->id());
+        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
         AssetManager::addAsset('product-detail-js', 'frontend/plugins/product/assets/js/product-detail.js');
         AssetPipeline::requireJs('product-detail-js');
         AssetManager::addAsset('product-detail-css', 'frontend/plugins/product/assets/css/product-detail.css');

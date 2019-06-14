@@ -43,7 +43,10 @@ $(document).on('click', '#add-coupon-btn', function (e) {
             }
         })
         .catch(function(data){
-            console.log("error", data);
+            if (data.response.status === 401)
+                Lcms.showNotice('error', "Please login to use this feature!", Lcms.languages.notices_msg.error);
+            else
+                Lcms.showNotice('error', "Please contact IT support!", Lcms.languages.notices_msg.error);
         })
         .then(function(data){
 
@@ -73,7 +76,10 @@ $(document).on('click', '.action-delete-coupon', function (e) {
             }
         })
         .catch(function(data){
-            console.log("error", data);
+            if (data.response.status === 401)
+                Lcms.showNotice('error', "Please login to use this feature!", Lcms.languages.notices_msg.error);
+            else
+                Lcms.showNotice('error', "Please contact IT support!", Lcms.languages.notices_msg.error);
         })
         .then(function(data){
 

@@ -34,7 +34,7 @@ class WishListController extends BasePublicController
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getProductWishList() {
-        $customerId = Auth::guard('customer')->id();
+        $customerId = (int)Auth::guard('customer')->id();
         $wishListProducts = $this->wishListRepositories->allBy([
             [
                 'customer_id', '=', $customerId

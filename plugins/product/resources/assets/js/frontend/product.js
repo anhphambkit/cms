@@ -21,7 +21,10 @@ $(document).on('click', '.add-to-wish-list', function(e) {
             Lcms.showNotice('success', data.data.message, Lcms.languages.notices_msg.success);
         })
         .catch(function(error){
-            Lcms.showNotice('error', data.data.message, Lcms.languages.notices_msg.error);
+            if (error.response.status === 401)
+                Lcms.showNotice('error', "Please login to use this feature!", Lcms.languages.notices_msg.error);
+            else
+                Lcms.showNotice('error', "Please contact IT support!", Lcms.languages.notices_msg.error);
         })
         .then(function(data){ // Finally
         });
