@@ -76,7 +76,7 @@ class OrderService implements IOrderService
                 'total_sale_price_on_products' => $cart['total_sale_price_on_products'],
                 'saved_price'                  => $cart['saved_price'],
                 'coupon_code'                  => $cart['coupon'] ? $cart['coupon']->code : null,
-                'total_price'                  => $cart['total_price'],
+                'total_price'                  => $cart['sub_total'],
                 'total_amount_order'           => $cart['total_price'] + $shippingFee,
                 'shipping_fee'                 => $shippingFee,
                 'is_free_shipping'             => ($shippingFee > 0) ? false : true,
