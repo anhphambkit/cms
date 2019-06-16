@@ -10,6 +10,7 @@ namespace Plugins\Product\Controllers\Web;
 use Core\Base\Controllers\Web\BasePublicController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Plugins\Product\Repositories\Interfaces\ProductRepositories;
 use Plugins\Product\Repositories\Interfaces\WishListRepositories;
 use Plugins\Product\Services\BusinessTypeServices;
 use Plugins\Product\Services\LookBookServices;
@@ -44,20 +45,28 @@ class DesignIdeaController extends BasePublicController{
     protected $wishListRepositories;
 
     /**
+     * @var ProductRepositories
+     */
+    protected $productRepositories;
+
+    /**
      * DesignIdeaController constructor.
      * @param BusinessTypeServices $businessTypeServices
      * @param LookBookServices $lookBookServices
      * @param ProductSpaceServices $productSpaceServices
+     * @param ProductRepositories $productRepositories
      * @param WishListRepositories $wishListRepositories
      */
     public function __construct(BusinessTypeServices $businessTypeServices, LookBookServices $lookBookServices,
-                                ProductSpaceServices $productSpaceServices, WishListRepositories $wishListRepositories)
+                                ProductSpaceServices $productSpaceServices, ProductRepositories $productRepositories,
+                                WishListRepositories $wishListRepositories)
     {
         parent::__construct();
         $this->businessTypeServices = $businessTypeServices;
         $this->lookBookServices = $lookBookServices;
         $this->productSpaceServices = $productSpaceServices;
         $this->wishListRepositories = $wishListRepositories;
+        $this->productRepositories = $productRepositories;
     }
 
     /**
@@ -169,9 +178,8 @@ class DesignIdeaController extends BasePublicController{
     }
 
     /**
-     * [pageDesignIdeal show]
-     * @param  Request $request [description]
-     * @return Illuminate\View\View
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function pageDesignIdealList(Request $request)
     {
@@ -185,6 +193,28 @@ class DesignIdeaController extends BasePublicController{
     }
 
     /**
+     * @param $url
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getProductDesignIdea($url, Request $request)
+    {
+        $productId = get_id_from_url($url);
+        $product = $this->productRepositories->findById($productId);
+        if (!$product)
+            abort(404);
+
+        AssetManager::addAsset('look-book-design-css', 'frontend/plugins/product/assets/css/look-book-design.css');
+        AssetPipeline::requireCss('look-book-design-css');
+        AssetManager::addAsset('design-idea-js', 'frontend/plugins/product/assets/js/design-idea.js');
+        AssetPipeline::requireJs('design-idea-js');
+        $listRender = $this->lookBookServices->getBlockRenderLookBook(0, [], [], [], true, [$productId]);
+
+        return view('pages.design-ideal.product-design-idea', compact('listRender', 'product'));
+    }
+
+    /**
+     * @param $url
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

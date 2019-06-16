@@ -14,9 +14,10 @@ class EloquentLookBookRepositories extends RepositoriesAbstract implements LookB
      * @param array $businessTypes
      * @param array $spaces
      * @param array $exceptBusinessType
+     * @param array $productIds
      * @return mixed
      */
-    public function getAllLookBookByTypeLayout(string $type, bool $isMain = false, int $take = 0, array $businessTypes = [], array $spaces = [], array $exceptBusinessType = []) {
+    public function getAllLookBookByTypeLayout(string $type, bool $isMain = false, int $take = 0, array $businessTypes = [], array $spaces = [], array $exceptBusinessType = [], array $productIds = []) {
         $query = $this->model
                     ->select('look_books.*')
                     ->leftJoin('look_book_business_type_space_relation', 'look_book_business_type_space_relation.look_book_id', '=', 'look_books.id')
@@ -33,6 +34,10 @@ class EloquentLookBookRepositories extends RepositoriesAbstract implements LookB
 
         if (!empty($exceptBusinessType))
             $query = $query->whereNotIn('look_book_business_type_space_relation.business_type_id', $exceptBusinessType);
+
+        if (!empty($productIds))
+            $query = $query->leftJoin('look_book_tags', 'look_book_tags.look_book_id', '=', 'look_books.id')
+                            ->whereIn('look_book_tags.product_id', $productIds);
 
         if ($take)
             $query = $query->take($take);

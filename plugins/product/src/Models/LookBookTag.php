@@ -39,4 +39,12 @@ class LookBookTag extends Model
     {
         return $this->belongsTo(LookBook::class);
     }
+
+    /**
+     * Get the product in the look book tag.
+     */
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

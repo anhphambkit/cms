@@ -4,18 +4,17 @@ namespace Plugins\Product\Models;
 
 use Carbon\Carbon;
 use Core\User\Models\User;
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Plugins\CustomAttributes\Models\AttributeValueString;
 use Plugins\CustomAttributes\Models\CustomAttributes;
 use Plugins\Product\Contracts\ProductReferenceConfig;
 
 /**
- * Plugins\Product\Models\Product
- *
- * @mixin \Eloquent
+ * Class Product
+ * @package Plugins\Product\Models
  */
-class Product extends Eloquent
+class Product extends Model
 {
     use SoftDeletes;
 
@@ -72,6 +71,7 @@ class Product extends Eloquent
         'min_price',
         'max_price',
         'url_product',
+        'has_look_book',
     ];
 
     /**
@@ -196,6 +196,14 @@ class Product extends Eloquent
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function productLookBooks()
+    {
+        return $this->hasMany(LookBookTag::class);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      * @author AnhPham
      */
@@ -204,25 +212,40 @@ class Product extends Eloquent
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    /**
+     * @return bool
+     */
     public function checkProductHasSale() {
         $now = Carbon::now();
         return ($this->sale_price && ($now->lessThan($this->sale_start_date) || $now->greaterThan($this->sale_end_date)));
     }
 
+    /**
+     * @return bool
+     */
     public function getIsHasSaleAttribute() {
         return $this->checkProductHasSale();
     }
 
+    /**
+     * @return float|int
+     */
     public function getPercentSaleAttribute() {
         if ($this->sale_price)
             return ceil((1 - ($this->sale_price/$this->price)) * 100);
         return 0;
     }
 
+    /**
+     * @return string
+     */
     public function getUrlProductAttribute() {
         return "{$this->slug}.{$this->id}";
     }
 
+    /**
+     * @return mixed
+     */
     public function getMinPriceAttribute() {
         $minPrice = ($this->checkProductHasSale() ? $this->sale_price : $this->price);
         if ($this->type_product === ProductReferenceConfig::PRODUCT_TYPE_VARIANT) {
@@ -234,6 +257,9 @@ class Product extends Eloquent
         return $minPrice;
     }
 
+    /**
+     * @return mixed
+     */
     public function getMaxPriceAttribute() {
         $maxPrice = $this->price;
         if ($this->type_product === ProductReferenceConfig::PRODUCT_TYPE_VARIANT) {
@@ -243,5 +269,12 @@ class Product extends Eloquent
             }
         }
         return $maxPrice;
+    }
+
+    /**
+     *
+     */
+    public function getHasLookBookAttribute() {
+        return $this->productLookBooks->isNotEmpty() ? true : false;
     }
 }
