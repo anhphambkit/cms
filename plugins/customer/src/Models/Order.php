@@ -3,6 +3,8 @@
 namespace Plugins\Customer\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Plugins\Product\Models\Product;
+use Plugins\Customer\Models\ProductsInOrder;
 
 /**
  * Class Order
@@ -44,4 +46,13 @@ class Order extends Model
         'paypal_id',
         'total_free_design',
     ];
+
+    /**
+     * [products description]
+     * @return [type] [description]
+     */
+    public function products()
+    {
+        return $this->hasMany(ProductsInOrder::class, 'order_id');
+    }
 }

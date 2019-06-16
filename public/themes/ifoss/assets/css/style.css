@@ -14150,6 +14150,18 @@ readers do not read off random characters that represent icons */
     .panel {
       padding: 2rem 15px; } }
 
+.panel-s1 {
+  margin-bottom: 15px; }
+  .panel-s1 .panel-title {
+    background-color: rgba(150, 196, 189, 0.2);
+    padding: 15px;
+    color: #2a7469;
+    font-weight: 600;
+    margin-bottom: 10px; }
+  .panel-s1 .panel-content {
+    padding: 15px;
+    border: 1px solid rgba(150, 196, 189, 0.4); }
+
 /* =============
    Checkbox and Radios
 ============= */
@@ -14209,7 +14221,7 @@ readers do not read off random characters that represent icons */
   .checkbox input[type="checkbox"]:checked + label::after {
     content: "";
     position: absolute;
-    top: 3px;
+    top: 0px;
     left: 7px;
     display: table;
     width: 5px;
@@ -15148,6 +15160,81 @@ select.form-control, select.form-control-fl {
         .table-s1 .tbody .tr .td-action > a:not(:last-child) {
           margin-right: 30px; }
 
+.pure-table-s1 {
+  font-size: 12px;
+  border: 1px solid rgba(150, 196, 189, 0.4); }
+  .pure-table-s1 thead th {
+    background-color: rgba(150, 196, 189, 0.2);
+    text-align: center;
+    padding: 15px;
+    color: #2a7469;
+    font-weight: 600; }
+    .pure-table-s1 thead th:not(:last-child) {
+      border-right: 1px solid #2a7469; }
+
+.progress-steps {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+     -moz-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap; }
+  .progress-steps .item {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    color: #ccc; }
+    .progress-steps .item:not(:last-child) {
+      margin-right: 15px; }
+    .progress-steps .item .progress-shape {
+      width: 50px;
+      margin-left: 15px;
+      position: relative;
+      height: 15px; }
+      .progress-steps .item .progress-shape .dot {
+        width: 15px;
+        height: 15px;
+        background-color: #ccc;
+        border-radius: 50%;
+        position: absolute;
+        right: 0; }
+      .progress-steps .item .progress-shape .line {
+        content: '';
+        background-color: #ccc;
+        height: 1px;
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+                transform: translateY(-50%); }
+      @media (max-width: 767.98px) {
+        .progress-steps .item .progress-shape {
+          width: auto;
+          margin-left: 5px; }
+          .progress-steps .item .progress-shape .dot {
+            position: static; } }
+    .progress-steps .item.active {
+      color: #96c4bd; }
+      .progress-steps .item.active .dot {
+        background-color: #96c4bd; }
+      .progress-steps .item.active .line {
+        background-color: #96c4bd; }
+
 body {
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif; }
 
@@ -15359,6 +15446,66 @@ a {
   color: #96c4bd; }
   a:hover {
     color: #2a7469; }
+
+.dot-popup .popup-content {
+  position: absolute;
+  bottom: 40px;
+  background: #fff;
+  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  width: 560px;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 66;
+  -webkit-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  transition: all .3s ease; }
+  .dot-popup .popup-content .wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex; }
+    .dot-popup .popup-content .wrapper .description {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+         -moz-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+         -moz-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      width: calc(100% - 150px); }
+    .dot-popup .popup-content .wrapper .thumbnail {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      width: 150px;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+         -moz-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -webkit-flex-flow: wrap;
+          -ms-flex-flow: wrap;
+              flex-flow: wrap; }
+      .dot-popup .popup-content .wrapper .thumbnail > img {
+        width: 100%; }
+
+.dot-popup:hover .popup-content {
+  opacity: 1;
+  visibility: visible; }
 
 .top-navigation {
   background-color: #96c4bd;

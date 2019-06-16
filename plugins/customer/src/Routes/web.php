@@ -68,6 +68,14 @@ $router->group(['prefix' => 'account', 'middleware' => ['customer']], function (
         'as' => 'public.customer.dashboard',
         'uses' => 'CustomerController@postMyAccount',
     ]);
+});
+
+$router->group(['prefix' => 'order', 'middleware' => ['customer']], function (Router $router) {
+    
+    $router->get('detail/{id}', [
+        'as'         => 'public.order.detail', 
+        'uses'       => 'OrderController@myOrderDetail',
+    ]);
 
     $router->get('/my-orders', [
         'as' => 'public.customer.my-orders',

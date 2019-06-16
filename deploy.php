@@ -24,9 +24,9 @@ host($env->getEnv('DEPLOY_HOST'))
     
 task('deploy:dev', [
     'deploy:start',
-    'deploy:upload',
+    // 'deploy:upload',
 //    'deploy:build',
-    'deploy:permission',
+    // 'deploy:permission',
 ]);
 
 task('deploy:start', function(){ // 
