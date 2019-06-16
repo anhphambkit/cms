@@ -105,9 +105,11 @@
                                 <a href="#" class="text-blue text-uppercase text-underline">Learn more</a>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-outline-custom btn-s1 btn-block justify-content-center mb-3">
-                            <a href="{{ route('public.product.checkout') }}">Checkout</a>
-                        </button>
+                        <a href="{{ route('public.product.checkout') }}">
+                            <button type="button" class="btn btn-outline-custom btn-s1 btn-block justify-content-center mb-3">
+                                Checkout
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>

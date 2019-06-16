@@ -48,6 +48,11 @@ $router->group(['prefix' => 'design-ideal'], function (Router $router) {
         'as'         => 'public.design-ideal.detail_look_book',
         'uses'       => 'DesignIdeaController@pageDetailDesignIdea',
     ]);
+
+    $router->get('/product/{url}', [
+        'as'         => 'public.design-ideal.product_design_idea',
+        'uses'       => 'DesignIdeaController@getProductDesignIdea',
+    ]);
 });
 
 /** @var Router $router */

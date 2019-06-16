@@ -13,9 +13,6 @@ $productWishListIds = !empty($productWishListIds) ? $productWishListIds : [];
         @if($productItem->is_has_sale)
             <div class="badge-sale">Sale</div>
         @endif
-        @if($productItem->available_3d)
-                {{--<div class="badge-3d"><img src="{{ asset('themes/ifoss/assets/images/icons/3d.png') }}" alt="" class="img-fluid"></div>--}}
-        @endif
         <div class="thumbnail mb-0">
             <div class="content">
                 <img src="{{ asset($productItem->image_feature) }}">
@@ -25,8 +22,10 @@ $productWishListIds = !empty($productWishListIds) ? $productWishListIds : [];
                     <button class="btn btn-outline-custom background-white mb-3">quick shop</button>
                     @php
                     @endphp
-                    @if($productItem->available_3d)
-                        <button class="btn btn-outline-custom background-white">View in Design Ideas</button>
+                    @if($productItem->has_look_book)
+                        <a href="{{ route('public.design-ideal.product_design_idea', [ 'url' => $productItem->url_product ]) }}">
+                            <button class="btn btn-outline-custom background-white">View in Design Ideas</button>
+                        </a>
                     @endif
                 </div>
                 <a href="javascript:void(0);" class="add-to-wish-list favourite text-custom" data-product-id="{{ $productItem->id }}">
@@ -34,6 +33,9 @@ $productWishListIds = !empty($productWishListIds) ? $productWishListIds : [];
                 </a>
             </div>
         </div>
+        @if($productItem->available_3d)
+            <div class="badge-3d-custom"><img src="{{ asset('themes/ifoss/assets/images/icons/3d.png') }}" alt="" class="img-fluid"></div>
+        @endif
     </div>
     <div class="product-specs">
         <div class="title">

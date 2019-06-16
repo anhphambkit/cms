@@ -26,6 +26,12 @@
                 transition: unset;
                 text-decoration: unset;
             }
+            .badge-3d-custom {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                z-index: 9;
+            }
         </style>
 
         @section('master-head')

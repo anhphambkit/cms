@@ -41,15 +41,17 @@ class ImplementLookBookServices implements LookBookServices {
      * @param array $spaces
      * @param array $exceptBusinessType
      * @param bool $hasFirstMainBlock
+     * @param array $productIds
      * @return array|mixed
      */
-    public function getBlockRenderLookBook(int $numberBlock = 0, array $businessTypes = [], array $spaces = [], array $exceptBusinessType = [], bool $hasFirstMainBlock = true) {
+    public function getBlockRenderLookBook(int $numberBlock = 0, array $businessTypes = [], array $spaces = [],
+                                           array $exceptBusinessType = [], bool $hasFirstMainBlock = true, array $productIds = []) {
         $takeNormalLookBook = $numberBlock*6;
         $takeVerticalLookBook = $numberBlock*3;
         $takeMainLookBook = $numberBlock*1;
-        $mainLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL, true, $takeMainLookBook, $businessTypes, $spaces, $exceptBusinessType)->toArray();
-        $normalLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL, false, $takeNormalLookBook, $businessTypes, $spaces, $exceptBusinessType)->toArray();
-        $verticalLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_VERTICAL, false, $takeVerticalLookBook, $businessTypes, $spaces, $exceptBusinessType)->toArray();
+        $mainLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL, true, $takeMainLookBook, $businessTypes, $spaces, $exceptBusinessType, $productIds)->toArray();
+        $normalLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL, false, $takeNormalLookBook, $businessTypes, $spaces, $exceptBusinessType, $productIds)->toArray();
+        $verticalLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_VERTICAL, false, $takeVerticalLookBook, $businessTypes, $spaces, $exceptBusinessType, $productIds)->toArray();
         $listFullPercents = config('plugins-product.product.percent_layout_look_book.full');
         $listWeights = config('plugins-product.product.weight_layout_look_book');
         $blocks = array();

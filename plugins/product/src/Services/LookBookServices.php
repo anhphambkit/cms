@@ -23,9 +23,11 @@ interface LookBookServices {
      * @param array $spaces
      * @param array $exceptBusinessType
      * @param bool $hasFirstMainBlock
-     * @return array|mixed
+     * @param array $productIds
+     * @return mixed
      */
-    public function getBlockRenderLookBook(int $numberBlock = 0, array $businessTypes = [], array $spaces = [], array $exceptBusinessType = [], bool $hasFirstMainBlock = true);
+    public function getBlockRenderLookBook(int $numberBlock = 0, array $businessTypes = [], array $spaces = [],
+                                           array $exceptBusinessType = [], bool $hasFirstMainBlock = false, array $productIds = []);
 
     /**
      * @param int $lookBookId
