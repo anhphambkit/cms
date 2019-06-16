@@ -290,6 +290,7 @@ class ImplementCartServices implements CartServices {
             $savedPrice = $this->calculatorSavedPrice($products, $totalPrice);
             $freeDesignIdeaInfo = $this->calculatorWantingPriceAndTotalFreeDesignIdea($totalPrice);
             $discountPrice = $totalOriginalPrice - $totalPrice - $salePrice;
+            $subTotal = $totalPrice - $discountPrice;
             return [
                 'products' => $products,
                 'total_items' => $totalItems,
@@ -300,6 +301,7 @@ class ImplementCartServices implements CartServices {
                 'total_free_design' => $freeDesignIdeaInfo['total_free_design'],
                 'coupon' => $coupon,
                 'discount_price' => $discountPrice,
+                'sub_total' => $subTotal,
             ];
         }
         catch (\Exception $e) {
