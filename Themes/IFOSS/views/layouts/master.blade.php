@@ -94,5 +94,35 @@
         @show
         @section('master-footer')
         @show
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $( "#input-email-subscribe" ).keyup(function(e) {
+                    if(e.which == 13){
+                        // Send request here
+                        $.ajax({
+                            url : "{{ route('web.newsletter.create') }}",
+                            type : "post",
+                            data : {
+                                _token : _token,
+                                email : $("#input-email-subscribe").val()
+                            },
+                            success : function (data){
+                                Lcms.showNotice('success', 'Send email subscribe success', Lcms.languages.notices_msg.success);  
+                                $('#input-email-subscribe').val('');
+                            },
+                            error: function(error) { // if error occured
+                                let validations = error.responseJSON.data || {};
+                                Object.keys(validations).forEach(function(key) {
+                                    validations[key].forEach(message =>{
+                                        Lcms.showNotice('error', message, Lcms.languages.notices_msg.error);  
+                                    })
+                                });
+                            }
+                        });
+                    }
+                });
+            })
+        </script>
     </body>
 </html>

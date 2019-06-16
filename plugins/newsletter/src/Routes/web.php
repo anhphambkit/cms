@@ -11,3 +11,12 @@
 |
 */
 use Illuminate\Routing\Router;
+$router->group(['prefix' => 'newsletter'], function (Router $router) {
+    
+    $router->post('/create', [
+        'as' => 'web.newsletter.create',
+        'uses' => 'NewsletterController@create',
+    ]);
+   
+});
+
