@@ -1,20 +1,17 @@
 @extends("layouts.master")
 @section('styles')
-    <style type="text/css">
-        body{ background-color: #f5f5f5;}
-    </style>
 @endsection
 @section('content')
 	<div class="container">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
 				@php
-					$menuItems = array('My account','My orders', 'View detail');
+					$menuItems = array('My account','My orders');
 				@endphp
 				@foreach($menuItems as $item)
 					<li class="breadcrumb-item"><a href="#">{{ $item }}</a></li>
 				@endforeach
-				<li class="breadcrumb-item active" aria-current="page">Order Id : {{ $order->id }}</li>
+				<li class="breadcrumb-item active" aria-current="page">Order Id - #{{ $order->id }}</li>
 			</ol>
 		</nav>
 		<div class="my-5">
@@ -117,20 +114,16 @@
 					<div class="cart-order-info font-weight-500 p-0">
 						<div class="list-item">
 							Subtotal
-							<span>$125.64</span>
+							<span>${{ number_format($order->total_price, 2, ',', '.') }}</span>
 						</div>
 						<div class="list-item">
 							Discount
-							<span>-$0.00</span>
-						</div>
-						<div class="list-item">
-							Tax (7.5%)
-							<span>-$13.20</span>
+							<span>${{ number_format($order->discount_price, 2, ',', '.') }}</span>
 						</div>
 						<hr>
 						<div class="list-item">
 							Total
-							<span class="font-size-24">$135.06</span>
+							<span class="font-size-24">${{ number_format($order->total_amount_order, 2, ',', '.') }}</span>
 						</div>
 					</div>
 				</div>

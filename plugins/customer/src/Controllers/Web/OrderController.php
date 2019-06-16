@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Plugins\Customer\Repositories\Interfaces\CustomerRepositories;
 use Plugins\Customer\Services\IOrderService;
 use Plugins\Customer\Repositories\Interfaces\OrderRepositories;
+use Plugins\Customer\Events\EventConfirmOrder;
 
 class OrderController extends BasePublicController
 {
@@ -63,5 +64,23 @@ class OrderController extends BasePublicController
 
 		if(!$order) abort(404, 'not found your order');
 		return view('pages.order.detail', compact('order'));
+	}
+
+	/**
+	 * [resendConfirmation description]
+	 * @param  [type]  $id      [description]
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function resendConfirmation(Request $request)
+	{
+		$id = $request->id;
+		$order = $this->orderRepositories->getFirstBy([
+			'id'           => (int)$id,
+			'customer_id'  => get_current_customer()->id,
+		]);
+
+		if(!$order) return abort(404, 'notfound');
+		return event(new EventConfirmOrder($order));
 	}
 }

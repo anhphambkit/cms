@@ -77,6 +77,11 @@ $router->group(['prefix' => 'order', 'middleware' => ['customer']], function (Ro
         'uses'       => 'OrderController@myOrderDetail',
     ]);
 
+    $router->post('resend_confirmation', [
+        'as'         => 'public.order.resend_confirmation', 
+        'uses'       => 'OrderController@resendConfirmation',
+    ]);
+
     $router->get('/my-orders', [
         'as' => 'public.customer.my-orders',
         'uses' => 'OrderController@getMyOrders',

@@ -12,7 +12,7 @@
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <a href="javascript:void(0);" class="btn-link text-custom"><i class="fas fa-chevron-right"></i></a>
+                        <a onclick="subscribeEmail()" href="javascript:void(0);" class="btn-link text-custom"><i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
             </div>

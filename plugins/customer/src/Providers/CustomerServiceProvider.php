@@ -14,7 +14,9 @@ use Plugins\Customer\Services\Excute\ProductsInOrderServices;
 use Plugins\Customer\Services\IOrderService;
 use Plugins\Customer\Services\Excute\OrderService;
 use Plugins\Customer\Services\IProductsInOrderServices;
-
+use Illuminate\Support\Facades\Event;
+use Plugins\Customer\Events\ConfirmOrderNotification;
+use Plugins\Customer\Events\EventConfirmOrder;
 class CustomerServiceProvider extends ServiceProvider
 {
     /**
@@ -70,6 +72,8 @@ class CustomerServiceProvider extends ServiceProvider
         register_repositories($this);
         $this->app->singleton(IOrderService::class, OrderService::class);
         $this->app->singleton(IProductsInOrderServices::class, ProductsInOrderServices::class);
+
+        Event::listen(EventConfirmOrder::class, ConfirmOrderNotification::class);
     }
 
     /**

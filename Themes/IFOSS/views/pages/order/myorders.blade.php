@@ -70,8 +70,8 @@
 								<div class="td">{{ $order->created_at }}</div>
 								<span class="td-action text-right">
 									<a target="_blank" href="{{ route('public.order.detail', $order->id) }}" class="text-blue">View Detail</a>
-									<a href="#" class="text-blue">Issue a refund</a>
-									<a href="#" class="text-yellow" data-toggle="modal" data-target="#resend-confirmation-order">Ressend Comfirmation Order</a>
+									<a href="#" class="text-blue" data-toggle="modal" data-target="#resend-confirmation-order">Issue a refund</a>
+									<a href="javascript:void(0)" class="text-yellow" onclick="resendConfirmation({{ $order->id}})">Ressend Comfirmation Order</a>
 								</span>
 							</div>
 						</div>
@@ -97,5 +97,22 @@
 				});
 			});
 		});
+
+		let resendConfirmation = function (id){
+			$.ajax({
+                url : "{{ route('public.order.resend_confirmation') }}",
+                type : "post",
+                data : {
+                    _token : _token,
+                    id : id
+                },
+                success : function (data){
+                    Lcms.showNotice('success', 'Ressend Confirmation success.', Lcms.languages.notices_msg.success);  
+                },
+                error: function(error) { // if error occured
+                    Lcms.showNotice('error', 'Cannot Ressend Confirmation for this order.', Lcms.languages.notices_msg.error);  
+                }
+            });
+		}
 	</script>
 @endsection
