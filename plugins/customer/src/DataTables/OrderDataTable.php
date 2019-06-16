@@ -26,8 +26,11 @@ class OrderDataTable extends DataTableAbstract
             ->editColumn('status', function ($item) {
                 return ucfirst(find_reference_by_id($item->status)->value);
             })
+            ->editColumn('email', function ($item) {
+                return show_email_invoice($item);
+            })
             ->editColumn('total_amount_order', function ($item) {
-                return  '$'. $item->total_amount_order;
+                return  '$'. number_format($item->total_amount_order, 2, ',', '.');
             })
             ->editColumn('address_billing', function ($item) {
                 return  show_address_invoice($item);
@@ -41,8 +44,9 @@ class OrderDataTable extends DataTableAbstract
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, ORDER_MODULE_SCREEN_NAME)
             ->addColumn('operations', function ($item) {
-                // return table_actions('admin.order.edit', 'admin.order.delete', $item);
-                return view('plugins-customer::order.refund', compact('item'))->render();
+                $action =  table_actions('admin.order.edit', 'admin.order.delete', $item);
+                $refund = view('plugins-customer::order.refund', compact('item'))->render();
+                return $action . $refund;
             })
             ->escapeColumns([])
             ->make(true);
@@ -68,7 +72,8 @@ class OrderDataTable extends DataTableAbstract
             'customer_orders.status',
             'customer_orders.total_amount_order',
             'customer_orders.amount_refund',
-            'customer_orders.address_billing'
+            'customer_orders.address_billing',
+            'customer_orders.address_shipping',
         ]);
        return $query;
     }
@@ -94,6 +99,7 @@ class OrderDataTable extends DataTableAbstract
                 'footer' => __('Method'),
                 'class'  => 'text-left',
             ],
+
             'address_billing' => [
                 'name'   => 'customer_orders.address_billing',
                 'title'  => __('Address'),
@@ -109,8 +115,8 @@ class OrderDataTable extends DataTableAbstract
             ],
             'amount_refund' => [
                 'name'   => 'customer_orders.amount_refund',
-                'title'  => __('Amount refund'),
-                'footer' => __('Amount refund'),
+                'title'  => __('Refund'),
+                'footer' => __('Refund'),
                 'class'  => 'text-left',
             ],
             'status' => [
@@ -118,6 +124,13 @@ class OrderDataTable extends DataTableAbstract
                 'title' => trans('core-base::tables.status'),
                 'footer' => trans('core-base::tables.status'),
                 'width' => '100px',
+            ],
+            'email' => [
+                'name'   => 'customer_orders.address_billing',
+                'width' => '50px',
+                'title'  => __('Email'),
+                'footer' => __('Email'),
+                'class'  => 'text-left',
             ],
             'created_at' => [
                 'name'   => 'customer_orders.created_at',

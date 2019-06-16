@@ -76,9 +76,9 @@ if (!function_exists('show_address_invoice')) {
      * @author TrinhLe
      * Get default address value
     */
-    function show_address_invoice($invoice)
+    function show_address_invoice($invoice, $addressType = 'address_billing')
     {
-        $address = json_decode($invoice->address_billing);
+        $address = json_decode($invoice->$addressType);
         $keys = [
             'address_1',
             'address_2',
@@ -101,11 +101,7 @@ if (!function_exists('show_email_invoice')) {
     */
     function show_email_invoice($invoice,  $defaultValue = 'noreply@gmail.com')
     {
-        $address = json_decode($invoice->address_billing);
+        $address = json_decode($invoice->address_shipping);
         return $address->email ?? $defaultValue;
     }
 }
-
-
-
-

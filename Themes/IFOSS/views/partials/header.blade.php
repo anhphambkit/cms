@@ -94,4 +94,7 @@
         </div>
     </div>
 </header>
+<script type="text/javascript">
+    const _token = "{{ csrf_token() }}";
+</script>
     

@@ -41,11 +41,21 @@ class ProductsInOrder extends Model
 
     public $timestamps = true;
 
+    /**
+     * [getCategoriesAttribute description]
+     * @param  [type] $value [description]
+     * @return [type]        [description]
+     */
     public function getCategoriesAttribute($value)
     {
         return json_decode($value, true);
     }
 
+    /**
+     * [getMediasAttribute description]
+     * @param  [type] $value [description]
+     * @return [type]        [description]
+     */
     public function getMediasAttribute($value)
     {
         return json_decode($value, true);

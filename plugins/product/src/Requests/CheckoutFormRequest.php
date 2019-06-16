@@ -15,7 +15,9 @@ class CheckoutFormRequest extends CoreRequest
     {
         return [
             'address_shipping'              => 'required|array',
-            'address_shipping.fullname'     => 'required|min:3|max:100',
+            'address_shipping.last_name'    => 'required|min:3|max:100',
+            'address_shipping.email'        => 'required|min:3|max:100',
+            'address_shipping.first_name'   => 'required|min:3|max:100',
             'address_shipping.address_1'    => 'required|min:3|max:255',
             'address_shipping.city'         => 'required|min:3|max:255',
             'address_shipping.state'        => 'required',
@@ -23,8 +25,8 @@ class CheckoutFormRequest extends CoreRequest
             'address_shipping.phone_number' => 'required|min:3|max:50',
 
             'address_billing'              => 'required|array',
-            'address_billing.first_name'     => 'required|min:3|max:100',
-            'address_billing.last_name'     => 'required|min:3|max:100',
+            'address_billing.first_name'   => 'required|min:3|max:100',
+            'address_billing.last_name'    => 'required|min:3|max:100',
             'address_billing.address_1'    => 'required|min:3|max:255',
             'address_billing.city'         => 'required|min:3|max:255',
             'address_billing.state'        => 'required',

@@ -7,8 +7,8 @@ use Plugins\Customer\Requests\UpdateMyAccountRequest;
 use Core\Base\Responses\BaseHttpResponse;
 use Illuminate\Support\Facades\Auth;
 use Plugins\Customer\Repositories\Interfaces\CustomerRepositories;
-use Hash;
 use Plugins\Customer\Services\IOrderService;
+use Plugins\Customer\Repositories\Interfaces\OrderRepositories;
 
 class OrderController extends BasePublicController
 {
@@ -23,10 +23,17 @@ class OrderController extends BasePublicController
 	 */
 	private $orderService;
 
-	public function __construct(CustomerRepositories $customer, IOrderService $orderService)
+	/**
+	 * [$orderRepositories description]
+	 * @var [type]
+	 */
+	private $orderRepositories;
+
+	public function __construct(CustomerRepositories $customer, IOrderService $orderService, OrderRepositories $orderRepositories)
 	{
 		$this->customerRepositories = $customer;
 		$this->orderService         = $orderService;
+		$this->orderRepositories    = $orderRepositories;
 	}
 
 	/**
@@ -38,6 +45,23 @@ class OrderController extends BasePublicController
 	public function getMyOrders(Request $request)
 	{
 		$myorders = $this->orderService->getMyOrders(get_current_customer()->id);
-		return view("plugins-customer::account.myorders", compact('myorders'));
+		return view('pages.order.myorders', compact('myorders'));
+	}
+
+	/**
+	 * [detail description]
+	 * @param  [type]  $id      [description]
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function myOrderDetail($id, Request $request)
+	{
+		$order = $this->orderRepositories->getFirstBy([
+			'id' => (int)$id,
+			'customer_id' => get_current_customer()->id
+		]);
+
+		if(!$order) abort(404, 'not found your order');
+		return view('pages.order.detail', compact('order'));
 	}
 }

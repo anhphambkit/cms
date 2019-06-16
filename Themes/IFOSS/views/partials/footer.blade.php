@@ -5,18 +5,16 @@
                 <div class="news-letter-title">Subscribe for updates, new products & specials offers.</div>
             </div>
             <div class="col-md-6">
-                <form>
-                    <div class="row align-items-center">
-                        <div class="col-sm-8">
-                            <div class="form-group-fl mb-0">
-                                <input type="text" class="form-control-fl" placeholder="Email address">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <a href="javascript:void(0);" class="btn-link text-custom"><i class="fas fa-chevron-right"></i></a>
+                <div class="row align-items-center">
+                    <div class="col-sm-8">
+                        <div class="form-group-fl mb-0">
+                            <input type="email" class="form-control-fl" placeholder="Email address" id="input-email-subscribe" required>
                         </div>
                     </div>
-                </form>
+                    <div class="col-sm-4">
+                        <a href="javascript:void(0);" class="btn-link text-custom"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -2,11 +2,25 @@
 	$address = get_customer_address_default();
 @endphp
 
-<div class="form-group row @if ($errors->has('address_shipping.fullname')) has-error @endif">
-	<label class="col-sm-3 col-form-label align-items-center d-flex">Full Name <span class="text-red">*</span></label>
+<div class="form-group row @if ($errors->has('address_shipping.first_name')) has-error @endif">
+	<label class="col-sm-3 col-form-label align-items-center d-flex">First Name <span class="text-red">*</span></label>
 	<div class="col-sm-9">
-		<input name="address_shipping[fullname]" type="text" value="{{ get_current_customer()->username }}" class="form-control form-control-lg squared @if ($errors->has('address_shipping.fullname')) is-invalid @endif" placeholder=""/>
-		{!! $errors->first('address_shipping.fullname', '<span class="invalid-feedback">:message</span>') !!}
+		<input name="address_shipping[first_name]" type="text" value="{{ old('address_shipping.first_name') }}" class="form-control form-control-lg squared @if ($errors->has('address_shipping.first_name')) is-invalid @endif" placeholder=""/>
+		{!! $errors->first('address_shipping.first_name', '<span class="invalid-feedback">:message</span>') !!}
+	</div>
+</div>
+<div class="form-group row @if ($errors->has('address_shipping.last_name')) has-error @endif">
+	<label class="col-sm-3 col-form-label align-items-center d-flex">Last Name <span class="text-red">*</span></label>
+	<div class="col-sm-9">
+		<input name="address_shipping[last_name]" type="text" value="{{ old('address_shipping.last_name') }}" class="form-control form-control-lg squared @if ($errors->has('address_shipping.last_name')) is-invalid @endif" placeholder=""/>
+		{!! $errors->first('address_shipping.last_name', '<span class="invalid-feedback">:message</span>') !!}
+	</div>
+</div>
+<div class="form-group row @if ($errors->has('address_shipping.email')) has-error @endif">
+	<label class="col-sm-3 col-form-label align-items-center d-flex">Email <span class="text-red">*</span></label>
+	<div class="col-sm-9">
+		<input name="address_shipping[email]" type="text" value="{{ old('address_shipping.email') }}" class="form-control form-control-lg squared @if ($errors->has('address_shipping.email')) is-invalid @endif" placeholder=""/>
+		{!! $errors->first('address_shipping.email', '<span class="invalid-feedback">:message</span>') !!}
 	</div>
 </div>
 <div class="form-group row @if ($errors->has('address_shipping.address_1')) has-error @endif">
@@ -32,6 +46,14 @@
 		<input name="address_shipping[city]" value="{{ get_address_value_default($address, 'city') }}" type="text" class="form-control form-control-lg squared @if ($errors->has('address_shipping.city')) is-invalid @endif" placeholder="Apartment, suite, unit, building, floor, etc"/>
 		{!! $errors->first('address_shipping.city', '<span class="invalid-feedback">:message</span>') !!}
 		<div class="ml-3 mt-1 font-size-12 font-weight-500">Ex: Apartment, suite, unit, building, floor, etc</div>
+	</div>
+</div>
+
+<div class="form-group row @if ($errors->has('address_shipping.company_name')) has-error @endif">
+	<label class="col-sm-3 col-form-label align-items-center d-flex">Company Name</label>
+	<div class="col-sm-9">
+		<input name="address_shipping[company_name]" value="{{ get_address_value_default($address, 'company_name') }}" type="text" class="form-control form-control-lg squared @if ($errors->has('address_shipping.company_name')) is-invalid @endif" placeholder="Apartment, suite, unit, building, floor, etc"/>
+		{!! $errors->first('address_shipping.company_name', '<span class="invalid-feedback">:message</span>') !!}
 	</div>
 </div>
 <div class="form-group row @if ($errors->has('address_shipping.state')) has-error @endif">
