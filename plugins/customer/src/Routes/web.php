@@ -86,4 +86,9 @@ $router->group(['prefix' => 'order', 'middleware' => ['customer']], function (Ro
         'as' => 'public.customer.my-orders',
         'uses' => 'OrderController@getMyOrders',
     ]);
+
+    $router->post('send_refund_email/{id?}', [
+        'as' => 'public.order.send_refund_email',
+        'uses' => 'OrderController@sendRefundOrder',
+    ]);
 });

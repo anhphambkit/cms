@@ -1,0 +1,1 @@
+<a href="#" class="text-blue sendRefundDialog" data-toggle="modal" data-refund-url="{{ route('public.order.send_refund_email', $item->id) }}">Issue a refund</a>

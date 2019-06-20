@@ -70,7 +70,7 @@
 								<div class="td">{{ $order->created_at }}</div>
 								<span class="td-action text-right">
 									<a target="_blank" href="{{ route('public.order.detail', $order->id) }}" class="text-blue">View Detail</a>
-									<a href="#" class="text-blue" data-toggle="modal" data-target="#resend-confirmation-order">Issue a refund</a>
+									{!! view('pages.order.refund-modal', ['item' => $order])->render() !!}
 									<a href="javascript:void(0)" class="text-yellow" onclick="resendConfirmation({{ $order->id}})">Ressend Comfirmation Order</a>
 								</span>
 							</div>
@@ -114,5 +114,14 @@
                 }
             });
 		}
+
 	</script>
+	<script type="text/javascript">
+        $(document).on('click', '.sendRefundDialog', function (event) {
+            event.preventDefault();
+            $('#form-refund-order')[0].reset();
+            $('#form-refund-order').attr('action', $(this).data('refund-url'));
+            $('#refund-order-modal').modal('show');
+        });
+    </script>
 @endsection

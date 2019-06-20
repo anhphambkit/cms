@@ -10,6 +10,7 @@ use Plugins\Customer\Repositories\Interfaces\CustomerRepositories;
 use Plugins\Customer\Services\IOrderService;
 use Plugins\Customer\Repositories\Interfaces\OrderRepositories;
 use Plugins\Customer\Events\EventConfirmOrder;
+use Plugins\Customer\Events\EventSendRefundOrder;
 
 class OrderController extends BasePublicController
 {
@@ -82,5 +83,23 @@ class OrderController extends BasePublicController
 
 		if(!$order) return abort(404, 'notfound');
 		return event(new EventConfirmOrder($order));
+	}
+
+	/**
+	 * [resendConfirmation description]
+	 * @param  [type]  $id      [description]
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function sendRefundOrder(Request $request)
+	{
+		$id = $request->id;
+		$order = $this->orderRepositories->getFirstBy([
+			'id'           => (int)$id,
+			'customer_id'  => get_current_customer()->id,
+		]);
+
+		if(!$order) return abort(404, 'notfound');
+		return event(new EventSendRefundOrder($order));
 	}
 }
