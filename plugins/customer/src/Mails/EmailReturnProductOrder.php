@@ -6,7 +6,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Plugins\Customer\Models\Order;
 
-class EmailRefundOrder extends Mailable implements ShouldQueue
+class EmailReturnProductOrder extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -49,6 +49,6 @@ class EmailRefundOrder extends Mailable implements ShouldQueue
         # link to order detail here
     	$link = '';
         return $this->subject( 'Request Refund Order' )
-                    ->view('plugins-customer::emails.order.send_refund', compact('link'));
+                    ->view('plugins-customer::emails.order.send_return', compact('link'));
     }
 }

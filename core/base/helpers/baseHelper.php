@@ -174,3 +174,21 @@ if (function_exists('get_id_from_url') === false) {
         return (int)$id;
     }
 }
+
+if (function_exists('get_emails_option') === false) {
+    /**
+     * Get id from url with delimiter default = "." (get last element of delimiter)
+     * Ex:
+     * url: http:example.com/this-09-is.456-url-test.123 => return id = 123
+     * @param string $url
+     * @param string $delimiter
+     * @return mixed
+     */
+    function get_emails_option(string $optionKey)
+    {
+        $optionEmails      = theme_option($optionKey);
+        $optionAdminEmails = theme_option('admin_email');
+        if($optionEmails) return array_values(explode(',', $optionEmails));
+        if($optionAdminEmails) return array_values(explode(',', $optionAdminEmails));
+    }
+}

@@ -425,7 +425,21 @@ theme_option()->setSection([
                 ]
             ],
         ],
-    ],
+        [
+            'id' => 'refund_order_mail',
+            'type' => 'text',
+            'label' => __('Refund Order Email (separated by ",")'),
+            'attributes' => [
+                'name' => 'refund_order_mail',
+                'value' => null,
+                'options' => [
+                    'class' => 'form-control',
+                    'placeholder' => '',
+                    'data-counter' => 120,
+                ]
+            ],
+        ]
+    ]
 ]);
 
 theme_option()->setArgs(['debug' => false]);

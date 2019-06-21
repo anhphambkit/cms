@@ -81,7 +81,7 @@
 		</div>
 	</div>
 	<!-- Modal -->
-	@include('pages.order.confirm-modal')
+	
 @endsection
 @section('master-footer')
 	<script>
@@ -124,4 +124,6 @@
             $('#refund-order-modal').modal('show');
         });
     </script>
+    
+    @include('pages.order.confirm-modal')
 @endsection

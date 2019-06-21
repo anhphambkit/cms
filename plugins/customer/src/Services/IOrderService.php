@@ -25,4 +25,11 @@ interface IOrderService
      * @return [type]             [description]
      */
     public function getMyOrders(int $customerId);
+
+    /** 
+     * [findOrderCustomer description]
+     * @param  int    $id [description]
+     * @return [type]     [description]
+     */
+    public function findOrderCustomer(int $id);
 }

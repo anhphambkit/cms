@@ -17,6 +17,8 @@ use Plugins\Customer\Services\IProductsInOrderServices;
 use Illuminate\Support\Facades\Event;
 use Plugins\Customer\Events\ConfirmOrderNotification;
 use Plugins\Customer\Events\EventConfirmOrder;
+use Plugins\Customer\Events\EventSendRefundOrder;
+use Plugins\Customer\Events\SendRefundOrder;
 class CustomerServiceProvider extends ServiceProvider
 {
     /**
@@ -74,6 +76,7 @@ class CustomerServiceProvider extends ServiceProvider
         $this->app->singleton(IProductsInOrderServices::class, ProductsInOrderServices::class);
 
         Event::listen(EventConfirmOrder::class, ConfirmOrderNotification::class);
+        Event::listen(EventSendRefundOrder::class, SendRefundOrder::class);
     }
 
     /**

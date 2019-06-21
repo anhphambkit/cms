@@ -58,12 +58,7 @@ class OrderController extends BasePublicController
 	 */
 	public function myOrderDetail($id, Request $request)
 	{
-		$order = $this->orderRepositories->getFirstBy([
-			'id' => (int)$id,
-			'customer_id' => get_current_customer()->id
-		]);
-
-		if(!$order) abort(404, 'not found your order');
+		$order = $this->orderService->findOrderCustomer((int)$id);
 		return view('pages.order.detail', compact('order'));
 	}
 
@@ -75,13 +70,7 @@ class OrderController extends BasePublicController
 	 */
 	public function resendConfirmation(Request $request)
 	{
-		$id = $request->id;
-		$order = $this->orderRepositories->getFirstBy([
-			'id'           => (int)$id,
-			'customer_id'  => get_current_customer()->id,
-		]);
-
-		if(!$order) return abort(404, 'notfound');
+		$order = $this->orderService->findOrderCustomer((int)$request->id);
 		return event(new EventConfirmOrder($order));
 	}
 
@@ -91,15 +80,14 @@ class OrderController extends BasePublicController
 	 * @param  Request $request [description]
 	 * @return [type]           [description]
 	 */
-	public function sendRefundOrder(Request $request)
+	public function sendRefundOrder($id, Request $request, BaseHttpResponse $response)
 	{
-		$id = $request->id;
-		$order = $this->orderRepositories->getFirstBy([
-			'id'           => (int)$id,
-			'customer_id'  => get_current_customer()->id,
-		]);
+		$order = $this->orderService->findOrderCustomer((int)$id);
+		event(new EventSendRefundOrder($order));
 
-		if(!$order) return abort(404, 'notfound');
-		return event(new EventSendRefundOrder($order));
+		return $response
+            ->setPreviousUrl(route('public.customer.my-orders'))
+            ->setNextUrl(route('public.customer.my-orders'))
+            ->setMessage(trans('Send refund order success.'));
 	}
 }

@@ -1,37 +1,29 @@
 <?php
 namespace Plugins\Customer\Events;
 
-use Illuminate\Contracts\Mail\Mailer;
-use Plugins\Customer\Mails\EmailRefundOrder;
+use Plugins\Customer\Models\Order;
 
 class EventSendRefundOrder
 {
-    /*
-      * @var Mailer
+	/**
+	 * [$order description]
+	 * @var [type]
+	 */
+   	public $order;
+
+    /**
+     * [$order description]
+     * @var [type]
      */
-    private $mailer;
+    public $data;
 
-    public function __construct(Mailer $mailer)
+   	/**
+   	 * [__construct description]
+   	 * @param Order $order [description]
+   	 */
+    public function __construct(Order $order, array $data = [])
     {
-        $this->mailer = $mailer;
-    }
-
-    /** 
-     * [handle description]
-     * @param  ArcEmployeeCreated $event [description]
-     * @return [type]                    [description]
-     */
-    public function handle(SendRefundOrder $event)
-    {
-        $emails = ( !empty(theme_option('refund_order_mail')) )
-                    ? explode(',', theme_option('refund_order_mail'))
-                    : theme_option('admin_email');
-
-        if($emails) {
-            return $this->mailer
-                ->to($emails)
-                ->send((new EmailRefundOrder( $event->order, $event->data ))
-                ->onQueue('emails'));
-        }
+        $this->order = $order;
+        $this->data  = $data;
     }
 }

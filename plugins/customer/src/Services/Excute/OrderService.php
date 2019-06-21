@@ -155,4 +155,18 @@ class OrderService implements IOrderService
     {
         return $this->orderRepository->allBy(['customer_id' => $customerId]);
     }
+
+    /** 
+     * [findOrderCustomer description]
+     * @param  int    $id [description]
+     * @return [type]     [description]
+     */
+    public function findOrderCustomer(int $id)
+    {
+        $order = $this->orderRepositories->getFirstBy([
+            'id'           => $id,
+            'customer_id'  => get_current_customer()->id,
+        ]);
+        return $order ?? abort(404, 'notfound');
+    }
 }
