@@ -11,6 +11,7 @@ use Plugins\Customer\Services\IOrderService;
 use Plugins\Customer\Repositories\Interfaces\OrderRepositories;
 use Plugins\Customer\Events\EventConfirmOrder;
 use Plugins\Customer\Events\EventSendRefundOrder;
+use Plugins\Customer\Events\EventSendOrderProduct;
 
 class OrderController extends BasePublicController
 {
@@ -58,7 +59,7 @@ class OrderController extends BasePublicController
 	 */
 	public function myOrderDetail($id, Request $request)
 	{
-		$order = $this->orderService->findOrderCustomer((int)$id);
+		$order = $this->orderService->findOrderCustomer(['id' => (int)$id]);
 		return view('pages.order.detail', compact('order'));
 	}
 
@@ -70,7 +71,7 @@ class OrderController extends BasePublicController
 	 */
 	public function resendConfirmation(Request $request)
 	{
-		$order = $this->orderService->findOrderCustomer((int)$request->id);
+		$order = $this->orderService->findOrderCustomer(['id' => (int)$request->id]);
 		return event(new EventConfirmOrder($order));
 	}
 
@@ -82,12 +83,60 @@ class OrderController extends BasePublicController
 	 */
 	public function sendRefundOrder($id, Request $request, BaseHttpResponse $response)
 	{
-		$order = $this->orderService->findOrderCustomer((int)$id);
+		$order = $this->orderService->findOrderCustomer(['id' => (int)$id]);
 		event(new EventSendRefundOrder($order));
 
 		return $response
             ->setPreviousUrl(route('public.customer.my-orders'))
             ->setNextUrl(route('public.customer.my-orders'))
             ->setMessage(trans('Send refund order success.'));
+	}
+
+	/**
+	 * [returnProductOrder description]
+	 * @param  [type]           $idOrder   [description]
+	 * @param  [type]           $idProduct [description]
+	 * @param  Request          $request   [description]
+	 * @param  BaseHttpResponse $response  [description]
+	 * @return [type]                      [description]
+	 */
+	public function returnProductOrder($idOrder, $idProduct, Request $request, BaseHttpResponse $response)
+	{
+		$order = $this->orderService->findOrderCustomer(['id' => (int)$idOrder]);
+		event(new EventSendOrderProduct($order, EMAIL_RETURN_PRODUCT_ORDER));
+		return $response
+                ->setMessage(trans('Send Refund Order Success.'));
+	}
+
+	/**
+	 * [replaceProductOrder description]
+	 * @param  [type]           $idOrder   [description]
+	 * @param  [type]           $idProduct [description]
+	 * @param  Request          $request   [description]
+	 * @param  BaseHttpResponse $response  [description]
+	 * @return [type]                      [description]
+	 */
+	public function replaceProductOrder($idOrder, $idProduct, Request $request, BaseHttpResponse $response)
+	{
+		$order = $this->orderService->findOrderCustomer(['id' => (int)$idOrder]);
+		event(new EventSendOrderProduct($order, EMAIL_REPLACE_PRODUCT_ORDER));
+		return $response
+                ->setMessage(trans('Send Replace Order Success.'));
+	}
+
+	/**
+	 * [cancelProductOrder description]
+	 * @param  [type]           $idOrder   [description]
+	 * @param  [type]           $idProduct [description]
+	 * @param  Request          $request   [description]
+	 * @param  BaseHttpResponse $response  [description]
+	 * @return [type]                      [description]
+	 */
+	public function cancelProductOrder($idOrder, $idProduct, Request $request, BaseHttpResponse $response)
+	{
+		$order = $this->orderService->findOrderCustomer(['id' => (int)$idOrder]);
+		event(new EventSendOrderProduct($order, EMAIL_CANCEL_PRODUCT_ORDER));
+		return $response
+                ->setMessage(trans('Send Cancel Order Success.'));
 	}
 }

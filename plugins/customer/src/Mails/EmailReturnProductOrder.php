@@ -48,7 +48,7 @@ class EmailReturnProductOrder extends Mailable implements ShouldQueue
     {   
         # link to order detail here
     	$link = '';
-        return $this->subject( 'Request Refund Order' )
+        return $this->subject( 'Request Return Order' )
                     ->view('plugins-customer::emails.order.send_return', compact('link'));
     }
 }

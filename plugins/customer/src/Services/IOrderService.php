@@ -26,10 +26,10 @@ interface IOrderService
      */
     public function getMyOrders(int $customerId);
 
-    /** 
+    /**
      * [findOrderCustomer description]
-     * @param  int    $id [description]
-     * @return [type]     [description]
+     * @param  array  $conditions [description]
+     * @return [type]             [description]
      */
-    public function findOrderCustomer(int $id);
+    public function findOrderCustomer(array $conditions = []);
 }

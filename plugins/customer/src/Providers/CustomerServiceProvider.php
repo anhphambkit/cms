@@ -19,6 +19,8 @@ use Plugins\Customer\Events\ConfirmOrderNotification;
 use Plugins\Customer\Events\EventConfirmOrder;
 use Plugins\Customer\Events\EventSendRefundOrder;
 use Plugins\Customer\Events\SendRefundOrder;
+use Plugins\Customer\Events\EventSendOrderProduct;
+use Plugins\Customer\Events\SendOrderProduct;
 class CustomerServiceProvider extends ServiceProvider
 {
     /**
@@ -77,6 +79,7 @@ class CustomerServiceProvider extends ServiceProvider
 
         Event::listen(EventConfirmOrder::class, ConfirmOrderNotification::class);
         Event::listen(EventSendRefundOrder::class, SendRefundOrder::class);
+        Event::listen(EventSendOrderProduct::class, SendOrderProduct::class);
     }
 
     /**

@@ -426,11 +426,11 @@ theme_option()->setSection([
             ],
         ],
         [
-            'id' => 'refund_order_mail',
+            'id' => 'order_emails',
             'type' => 'text',
-            'label' => __('Refund Order Email (separated by ",")'),
+            'label' => __('Order Emails (separated by ",")'),
             'attributes' => [
-                'name' => 'refund_order_mail',
+                'name' => 'order_emails',
                 'value' => null,
                 'options' => [
                     'class' => 'form-control',

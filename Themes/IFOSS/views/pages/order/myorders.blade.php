@@ -107,10 +107,10 @@
                     id : id
                 },
                 success : function (data){
-                    Lcms.showNotice('success', 'Ressend Confirmation success.', Lcms.languages.notices_msg.success);  
+                    Lcms.showNotice('success', 'Resend Confirmation success.', Lcms.languages.notices_msg.success);  
                 },
                 error: function(error) { // if error occured
-                    Lcms.showNotice('error', 'Cannot Ressend Confirmation for this order.', Lcms.languages.notices_msg.error);  
+                    Lcms.showNotice('error', 'Cannot Resend Confirmation for this order.', Lcms.languages.notices_msg.error);  
                 }
             });
 		}

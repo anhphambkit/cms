@@ -156,17 +156,17 @@ class OrderService implements IOrderService
         return $this->orderRepository->allBy(['customer_id' => $customerId]);
     }
 
-    /** 
+    /**
      * [findOrderCustomer description]
-     * @param  int    $id [description]
-     * @return [type]     [description]
+     * @param  array  $conditions [description]
+     * @return [type]             [description]
      */
-    public function findOrderCustomer(int $id)
+    public function findOrderCustomer(array $conditions = [])
     {
-        $order = $this->orderRepositories->getFirstBy([
-            'id'           => $id,
-            'customer_id'  => get_current_customer()->id,
+        $conditions = array_merge($conditions,[
+            'customer_id'  => get_current_customer()->id
         ]);
+        $order = $this->orderRepository->getFirstBy($conditions);
         return $order ?? abort(404, 'notfound');
     }
 }

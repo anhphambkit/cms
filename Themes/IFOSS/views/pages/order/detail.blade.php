@@ -104,7 +104,11 @@
 									<td class="text-right">${{ number_format($product->price, 2, ',', '.') }}</td>
 									<td class="text-right">{{ $product->quantity }}</td>
 									<td class="text-right">${{ number_format($product->price * $product->quantity, 2, ',', '.') }}</td>
-									<td><a href="" class="text-blue px-2">Return</a> <a href="" class="text-blue px-2">Replace</a> <a href="" class="px-2">Cancel</a></td>
+									<td>
+										<a href="javascript:void(0)" class="send-email-product-order text-blue px-2" data-refund-url="{{ route('public.order.send_return_order', [ 'id' => $order->id, 'idProduct' => $product->product_id] ) }}">Return</a> 
+										<a href="javascript:void(0)" class="send-email-product-order text-blue px-2" data-refund-url="{{ route('public.order.send_replace_order', [ 'id' => $order->id, 'idProduct' => $product->product_id]) }}">Replace</a> 
+										<a href="javascript:void(0)" class="send-email-product-order px-2" data-refund-url="{{ route('public.order.send_cancel_order', [ 'id' => $order->id, 'idProduct' => $product->product_id]) }}">Cancel</a>
+									</td>
 								</tr>
 							@endforeach
 						</tbody>
@@ -130,11 +134,37 @@
 			</div>
 		</div>
 	</div>
-	<!-- Modal -->
-	@include('pages.order.confirm-modal')
 @endsection
 @section('master-footer')
 <script>
+	let sendEmailForProductOrder = function (url, reason){
+		$.ajax({
+            url : url,
+            type : "post",
+            data : { _token : _token, reason: reason },
+            success : function (data){
+            	if(!data.error){
+            		$('#refund-order-modal').modal('hide');
+                	Lcms.showNotice('success', data.message, Lcms.languages.notices_msg.success);  
+            	}
+                else
+                	Lcms.showNotice('error', data.message, Lcms.languages.notices_msg.error);
+            },
+            error: function(error) { // if error occured
+                Lcms.showNotice('error', error.message || 'Cannot send email for this order.', Lcms.languages.notices_msg.error);  
+            }
+        });
+	}
+
+	$(document).on('click', '.send-email-product-order', function (event) {
+        event.preventDefault();
+        let urlSendEmail = $(this).data('refund-url');
+        $('#form-refund-order')[0].reset();
+        $('#form-refund-order').attr('action', urlSendEmail);
+        $('#refund-order-modal').modal('show');
+    });
+
+
 	$(document).ready(function() {
 		var tbodyWidth = [];
 		$('.flex-table .thead .th').each(function(index, el) {
@@ -148,4 +178,14 @@
 		});
 	});
 </script>
+<script type="text/javascript">
+	$(document).on('click', '#btn-send-refund', function(event){
+	    event.preventDefault();
+	    let reason = $('input[name="reason"]:checked').val();
+	    if(!reason) return Lcms.showNotice('error', 'Please choose reason to send refund.', Lcms.languages.notices_msg.error);
+	    var formAction = $("#form-refund-order").attr('action');
+	    sendEmailForProductOrder(formAction, reason);
+	});
+</script>
+	@include('pages.order.confirm-modal')
 @endsection

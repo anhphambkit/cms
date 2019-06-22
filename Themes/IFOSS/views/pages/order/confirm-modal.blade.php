@@ -13,7 +13,7 @@
 			</div>
 			{!! Form::open(['id' => 'form-refund-order']) !!}
 			<div class="modal-body px-s1">
-				<div class="text-uppercase text-custom mb-3">return reason</div>
+				<div class="text-uppercase text-custom mb-3">Reason</div>
 				<div class="mb-3">
 					@foreach($reasons as $key => $reason)
 						<div class="form-group">
@@ -30,13 +30,3 @@
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-	$(document).on('click', '#btn-send-refund', function(event){
-	    event.preventDefault();
-	    let reason = $('input[name="reason"]:checked').val();
-	    if(!reason)
-	    	return Lcms.showNotice('error', 'Please choose reason to send refund.', Lcms.languages.notices_msg.error);
-	    $('#form-refund-order').submit();
-	});
-</script>

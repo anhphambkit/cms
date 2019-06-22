@@ -77,18 +77,23 @@ $router->group(['prefix' => 'order', 'middleware' => ['customer']], function (Ro
         'uses'       => 'OrderController@myOrderDetail',
     ]);
 
-    $router->post('resend_confirmation', [
-        'as'         => 'public.order.resend_confirmation', 
-        'uses'       => 'OrderController@resendConfirmation',
-    ]);
-
     $router->get('/my-orders', [
         'as' => 'public.customer.my-orders',
         'uses' => 'OrderController@getMyOrders',
     ]);
 
-    $router->post('send_refund_email/{id?}', [
-        'as' => 'public.order.send_refund_email',
-        'uses' => 'OrderController@sendRefundOrder',
+    $router->post('send_return_order/{id?}/{idProduct?}', [
+        'as' => 'public.order.send_return_order',
+        'uses' => 'OrderController@returnProductOrder',
+    ]);
+
+    $router->post('send_replace_order/{id?}/{idProduct?}', [
+        'as' => 'public.order.send_replace_order',
+        'uses' => 'OrderController@replaceProductOrder',
+    ]);
+
+    $router->post('send_cancel_order/{id?}/{idProduct?}', [
+        'as' => 'public.order.send_cancel_order',
+        'uses' => 'OrderController@cancelProductOrder',
     ]);
 });

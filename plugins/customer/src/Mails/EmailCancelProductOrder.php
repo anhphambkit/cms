@@ -48,7 +48,7 @@ class EmailCancelProductOrder extends Mailable implements ShouldQueue
     {   
         # link to order detail here
     	$link = '';
-        return $this->subject( 'Request Refund Order' )
+        return $this->subject( 'Request Cancel Order' )
                     ->view('plugins-customer::emails.order.send_cancel', compact('link'));
     }
 }

@@ -48,7 +48,7 @@ class EmailReplaceProductOrder extends Mailable implements ShouldQueue
     {   
         # link to order detail here
     	$link = '';
-        return $this->subject( 'Request Refund Order' )
+        return $this->subject( 'Request Replace Order' )
                     ->view('plugins-customer::emails.order.send_replace', compact('link'));
     }
 }
