@@ -21,3 +21,7 @@
     </div>
   </div>
 </nav>
+<script type="text/javascript">
+    const _token = "{{ csrf_token() }}";
+</script>
+    

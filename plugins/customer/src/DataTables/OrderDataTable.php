@@ -32,9 +32,9 @@ class OrderDataTable extends DataTableAbstract
             ->editColumn('total_amount_order', function ($item) {
                 return  '$'. number_format($item->total_amount_order, 2, ',', '.');
             })
-            ->editColumn('address_billing', function ($item) {
-                return  show_address_invoice($item);
-            })
+            // ->editColumn('address_billing', function ($item) {
+            //     return  show_address_invoice($item);
+            // })
             ->editColumn('amount_refund', function ($item) {
                 return  '$'. $item->amount_refund;
             })
@@ -45,8 +45,8 @@ class OrderDataTable extends DataTableAbstract
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, ORDER_MODULE_SCREEN_NAME)
             ->addColumn('operations', function ($item) {
                 $action =  table_actions('admin.order.edit', 'admin.order.delete', $item);
-                $refund = view('plugins-customer::order.refund', compact('item'))->render();
-                return $action . $refund;
+                $actionOrder = view('plugins-customer::order.action-order', compact('item'))->render();
+                return $action . $actionOrder;
             })
             ->escapeColumns([])
             ->make(true);
@@ -100,13 +100,13 @@ class OrderDataTable extends DataTableAbstract
                 'class'  => 'text-left',
             ],
 
-            'address_billing' => [
-                'name'   => 'customer_orders.address_billing',
-                'title'  => __('Address'),
-                'footer' => __('Address'),
-                'width' => '300px',
-                'class'  => 'text-left',
-            ],
+            // 'address_billing' => [
+            //     'name'   => 'customer_orders.address_billing',
+            //     'title'  => __('Address'),
+            //     'footer' => __('Address'),
+            //     'width' => '300px',
+            //     'class'  => 'text-left',
+            // ],
             'total_amount_order' => [
                 'name'   => 'customer_orders.total_amount_order',
                 'title'  => __('Amount'),

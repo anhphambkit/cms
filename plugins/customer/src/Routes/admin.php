@@ -80,3 +80,11 @@ $router->group(['prefix' => 'order'], function (Router $router) {
         'uses' => 'OrderController@getDelete',
     ]);
 });
+
+$router->group(['prefix' => 'manage-order'], function (Router $router) {
+    
+    $router->post('resend_confirmation/{id}', [
+        'as'         => 'admin.order.resend_confirmation', 
+        'uses'       => 'ManageOrderController@resendConfirmation',
+    ]);
+});

@@ -9,6 +9,7 @@ use Plugins\Customer\DataTables\OrderDataTable;
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Plugins\Customer\Services\IOrderService;
 use Core\Base\Responses\BaseHttpResponse;
+use Plugins\Customer\Events\EventConfirmOrder;
 
 class ManageOrderController extends BaseAdminController
 {
@@ -28,9 +29,10 @@ class ManageOrderController extends BaseAdminController
      * @param OrderRepositories $orderRepository
      * @author TrinhLe
      */
-    public function __construct(OrderRepositories $orderRepository)
+    public function __construct(OrderRepositories $orderRepository, IOrderService $orderService)
     {
         $this->orderRepository = $orderRepository;
+        $this->orderService    = $orderService;
     }
 
     /**
@@ -48,4 +50,18 @@ class ManageOrderController extends BaseAdminController
             ->setNextUrl(route('public.customer.my-orders'))
             ->setMessage(trans('Apply tracking number success.'));
 	}
+
+    /**
+     * [resendConfirmation description]
+     * @param  [type]  $id      [description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function resendConfirmation($id, Request $request, BaseHttpResponse $response)
+    {
+        $order = $this->orderRepository->findOrFail((int)$id);
+        event(new EventConfirmOrder($order));
+        return $response
+                ->setMessage(trans('Send Confirm Order Success.'));
+    }
 }

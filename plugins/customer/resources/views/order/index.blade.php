@@ -33,7 +33,6 @@
             </div>
         </div>
     </div>
-    <!-- /form modal -->
 </div>
 @endsection
 @section('master-footer')
@@ -44,5 +43,32 @@
             $('#form-refund-order').attr('action', $(this).data('refund-url'));
             $('#refund-order-modal').modal('show');
         });
+    </script>
+
+    <script type="text/javascript">
+        let sendEmailForOrder = function (url){
+            $.ajax({
+                url : url,
+                type : "post",
+                data : { _token : _token},
+                success : function (data){
+                    if(!data.error){
+                        Lcms.showNotice('success', data.message, Lcms.languages.notices_msg.success);  
+                    }
+                    else
+                        Lcms.showNotice('error', data.message, Lcms.languages.notices_msg.error);
+                },
+                error: function(error) { // if error occured
+                    Lcms.showNotice('error', error.message || 'Cannot send email for this order.', Lcms.languages.notices_msg.error);  
+                }
+            });
+        }
+
+        $(document).on('click', '.confirmOrder', function (event) {
+            event.preventDefault();
+            let urlEmail = $(this).data('refund-url');
+            sendEmailForOrder(urlEmail);
+        });
+
     </script>
 @endsection

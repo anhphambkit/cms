@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Plugins\Customer\Repositories\Interfaces\CustomerRepositories;
 use Plugins\Customer\Services\IOrderService;
 use Plugins\Customer\Repositories\Interfaces\OrderRepositories;
-use Plugins\Customer\Events\EventConfirmOrder;
 use Plugins\Customer\Events\EventSendRefundOrder;
 use Plugins\Customer\Events\EventSendOrderProduct;
 
@@ -61,35 +60,6 @@ class OrderController extends BasePublicController
 	{
 		$order = $this->orderService->findOrderCustomer(['id' => (int)$id]);
 		return view('pages.order.detail', compact('order'));
-	}
-
-	/**
-	 * [resendConfirmation description]
-	 * @param  [type]  $id      [description]
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
-	public function resendConfirmation(Request $request)
-	{
-		$order = $this->orderService->findOrderCustomer(['id' => (int)$request->id]);
-		return event(new EventConfirmOrder($order));
-	}
-
-	/**
-	 * [resendConfirmation description]
-	 * @param  [type]  $id      [description]
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
-	public function sendRefundOrder($id, Request $request, BaseHttpResponse $response)
-	{
-		$order = $this->orderService->findOrderCustomer(['id' => (int)$id]);
-		event(new EventSendRefundOrder($order));
-
-		return $response
-            ->setPreviousUrl(route('public.customer.my-orders'))
-            ->setNextUrl(route('public.customer.my-orders'))
-            ->setMessage(trans('Send refund order success.'));
 	}
 
 	/**

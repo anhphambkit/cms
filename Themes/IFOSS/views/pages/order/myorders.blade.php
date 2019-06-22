@@ -70,8 +70,6 @@
 								<div class="td">{{ $order->created_at }}</div>
 								<span class="td-action text-right">
 									<a target="_blank" href="{{ route('public.order.detail', $order->id) }}" class="text-blue">View Detail</a>
-									{!! view('pages.order.refund-modal', ['item' => $order])->render() !!}
-									<a href="javascript:void(0)" class="text-yellow" onclick="resendConfirmation({{ $order->id}})">Ressend Comfirmation Order</a>
 								</span>
 							</div>
 						</div>
@@ -97,33 +95,5 @@
 				});
 			});
 		});
-
-		let resendConfirmation = function (id){
-			$.ajax({
-                url : "{{ route('public.order.resend_confirmation') }}",
-                type : "post",
-                data : {
-                    _token : _token,
-                    id : id
-                },
-                success : function (data){
-                    Lcms.showNotice('success', 'Resend Confirmation success.', Lcms.languages.notices_msg.success);  
-                },
-                error: function(error) { // if error occured
-                    Lcms.showNotice('error', 'Cannot Resend Confirmation for this order.', Lcms.languages.notices_msg.error);  
-                }
-            });
-		}
-
 	</script>
-	<script type="text/javascript">
-        $(document).on('click', '.sendRefundDialog', function (event) {
-            event.preventDefault();
-            $('#form-refund-order')[0].reset();
-            $('#form-refund-order').attr('action', $(this).data('refund-url'));
-            $('#refund-order-modal').modal('show');
-        });
-    </script>
-    
-    @include('pages.order.confirm-modal')
 @endsection
