@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
-
+use Plugins\Customer\Models\Order;
 
 if (!function_exists('get_current_customer')) {
     /**
@@ -20,17 +20,6 @@ if (!function_exists('get_customer_address_default')) {
     /**
      * @author TrinhLe
      * Get default address customer
-     * stdClass Object
-        (
-            [address_1] => Address 1
-            [address_2] => Address 1
-            [city] => HO CHI MINH
-            [state] => 4
-            [zip] => 700000
-            [company_name] => LHT
-            [phone_number] => 0345818874
-            [is_default_shipping] => on
-        )
     */
     function get_customer_address_default(bool $isShipping = true)
     {
@@ -45,6 +34,18 @@ if (!function_exists('get_customer_address_default')) {
         			return $_address;
         	}
         }
+    }
+}
+
+if (!function_exists('get_order_address_default')) {
+    /**
+     * @author TrinhLe
+     * Get default address order
+    */
+    function get_order_address_default(Order $order, string $addressKey = '')
+    {
+        $address = json_decode($order->$addressKey);
+        return $address;
     }
 }
 

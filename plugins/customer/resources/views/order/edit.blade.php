@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="col-md-3 right-sidebar">
-                @include('core-base::elements.forms.status', ['selected' => $order->status])
+                <!-- @include('core-base::elements.forms.status', ['selected' => $order->status]) -->
             </div>
             <div class="col-md-3 right-sidebar">
                 @include('core-base::elements.form-actions')
@@ -56,10 +56,14 @@
                         <div class="card-body">
                             <div class="form-body">
                                 <div class="row">
-                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('name')) has-error @endif">
-                                        <label for="name">{{ trans('core-base::forms.name') }}</label>
-                                        {!! Form::text('name', $order->name, ['class' => 'form-control', 'id' => 'name', 'placeholder' => trans('core-base::forms.name_placeholder'), 'data-counter' => 120]) !!}
-                                        {!! Form::error('name', $errors) !!}
+                                    <div class="col-md-6">
+                                        <h5 class="text-center">Address Shipping</h5>
+                                        @include('plugins-customer::partials.order_address',['addressKey' => 'address_shipping'])
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <h5 class="text-center">Address Billing</h5>
+                                        @include('plugins-customer::partials.order_address')
                                     </div>
                                 </div>
                             </div>

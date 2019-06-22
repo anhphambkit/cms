@@ -48,9 +48,13 @@ class OrderController extends BaseAdminController
     public function getEdit($id)
     {
         $order = $this->orderRepository->findOrFail($id);
-        page_title()->setTitle(trans('plugins-customer::order.edit') . ' #' . $id);
+        $listStates = get_states();
+        foreach($listStates as $state){
+            $states[$state->id] = $state->name;
+        }
 
-        return view('plugins-customer::order.edit', compact('order'));
+        page_title()->setTitle(trans('plugins-customer::order.edit') . ' #' . $id);
+        return view('plugins-customer::order.edit', compact('order', 'states'));
     }
 
     /**
@@ -61,13 +65,13 @@ class OrderController extends BaseAdminController
      */
     public function postEdit($id, OrderRequest $request, BaseHttpResponse $response)
     {
-        $order = $this->orderRepository->findOrFail($id);
+        // $order = $this->orderRepository->findOrFail($id);
       
-        $order->fill($request->input());
+        // $order->fill($request->input());
 
-        $this->orderRepository->createOrUpdate($order);
+        // $this->orderRepository->createOrUpdate($order);
 
-        do_action(BASE_ACTION_AFTER_UPDATE_CONTENT, ORDER_MODULE_SCREEN_NAME, $request, $order);
+        // do_action(BASE_ACTION_AFTER_UPDATE_CONTENT, ORDER_MODULE_SCREEN_NAME, $request, $order);
 
         return $response
             ->setPreviousUrl(route('admin.order.list'))
