@@ -3,10 +3,34 @@
     {!! Form::open(['route' => ['admin.order.edit', $order->id]]) !!}
         @php do_action(BASE_FILTER_BEFORE_RENDER_FORM, ORDER_MODULE_SCREEN_NAME, request(), $order) @endphp
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-6 right-sidebar">
+                <!-- Customer Order Information -->
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-order::order.edit') }}</h4>
+                        <h4 class="card-title">
+                            <span>Customer Information</span>
+                        </h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                    </div>
+                    <div class="card-content collpase show">
+                        <div class="card-body">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 right-sidebar">
+                @include('core-base::elements.forms.status', ['selected' => $order->status])
+            </div>
+            <div class="col-md-3 right-sidebar">
+                @include('core-base::elements.form-actions')
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="from-actions-bottom-right">{{ trans('plugins-customer::order.edit') }}</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -32,12 +56,7 @@
                     @php do_action(BASE_ACTION_META_BOXES, ORDER_MODULE_SCREEN_NAME, 'advanced') @endphp
                 </div>
             </div>
-            <div class="col-md-3 right-sidebar">
-                @include('core-base::elements.form-actions')
-                @include('core-base::elements.forms.status', ['selected' => $order->status])
-                @php do_action(BASE_ACTION_META_BOXES, ORDER_MODULE_SCREEN_NAME, 'top', $order) @endphp
-                @php do_action(BASE_ACTION_META_BOXES, ORDER_MODULE_SCREEN_NAME, 'side', $order) @endphp
-            </div>
+            
         </div>
     {!! Form::close() !!}
 @stop

@@ -96,6 +96,20 @@ if (!function_exists('table_actions')) {
     }
 }
 
+if (!function_exists('table_dropdown_actions')) {
+    /**
+     * @param $edit
+     * @param $delete
+     * @param $item
+     * @return string
+     * @author TrinhLe
+     */
+    function table_dropdown_actions($edit, $delete, $item, $appendActions = false)
+    {
+        return view('core-base::elements.tables.dropdown-actions', compact('edit', 'delete', 'item', 'appendActions'))->render();
+    }
+}
+
 if (!function_exists('anchor_link')) {
     /**
      * @param $link

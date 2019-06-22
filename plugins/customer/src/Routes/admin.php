@@ -55,16 +55,6 @@ $router->group(['prefix' => 'order'], function (Router $router) {
         'uses' => 'OrderController@getList',
     ]);
 
-    $router->get('/create', [
-        'as' => 'admin.order.create',
-        'uses' => 'OrderController@getCreate',
-    ]);
-
-    $router->post('/create', [
-        'as' => 'admin.order.create',
-        'uses' => 'OrderController@postCreate',
-    ]);
-
     $router->get('/edit/{id}', [
         'as' => 'admin.order.edit',
         'uses' => 'OrderController@getEdit',
