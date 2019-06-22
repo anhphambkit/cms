@@ -35,8 +35,6 @@
 
 <div class="form-group col-md-12 mb-2 @if ($errors->has("{$addressKey}.state")) has-error @endif">
     <label for="{{ $addressKey }}[state]">{{ trans('plugins-customer::order.forms.state') }}</label>
-    <!-- {!! Form::text("{$addressKey}[state]", get_address_value_default($address, 'state'), ['class' => 'form-control', 'placeholder' => trans('plugins-customer::order.forms.state'), 'data-counter' => 120]) !!} -->
-
     {!! Form::select("{$addressKey}[state]", $states , get_address_value_default($address, 'state'), ['class' => 'form-control roles-list']) !!}
     {!! Form::error("{$addressKey}.state", $errors) !!}
 </div>

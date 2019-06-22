@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="col-md-3 right-sidebar">
-                <!-- @include('core-base::elements.forms.status', ['selected' => $order->status]) -->
+                @include('core-base::elements.forms.status', ['selected' => $order->status])
             </div>
             <div class="col-md-3 right-sidebar">
                 @include('core-base::elements.form-actions')
@@ -56,6 +56,94 @@
                         <div class="card-body">
                             <div class="form-body">
                                 <div class="row">
+                                    <div class="table-responsive col-sm-12">
+                                        <table class="table">
+                                          <thead>
+                                            <tr>
+                                              <th>SKU</th>
+                                              <th>Item name</th>
+                                              <th class="text-right">Item price</th>
+                                              <th class="text-right">Item quantity</th>
+                                              <th class="text-right">Total</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            @php
+                                                $products = $order->products()->get();
+                                            @endphp
+                                            @foreach($products as $key => $product)
+                                                <tr>
+                                                  <th scope="row">#{{ $product->sku }}</th>
+                                                  <td>
+                                                    <p>{{ $product->name }}</p>
+                                                  </td>
+                                                  <td class="text-right">$ {{ number_format($product->price, 2, ',', '.') }}</td>
+                                                  <td class="text-right">{{ $product->quantity }}</td>
+                                                  <td class="text-right">${{ number_format($product->price * $product->quantity, 2, ',', '.') }}</td>
+                                                </tr>
+                                            @endforeach
+                                          </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    @if(!empty($order->payment_method))
+                                        <div class="col-md-7 col-sm-12 text-center text-md-left">
+                                            <p class="lead">Payment Methods:</p>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-borderless table-sm">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Method:</td>
+                                                            <td>{{ $order->payment_method }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Paypal Id:</td>
+                                                            <td>#{{ $order->paypal_id }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                        
+                                    <div class="col-md-5 col-sm-12">
+                                        <p class="lead">Total due</p>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                              <tbody>
+                                                <tr>
+                                                    <td>Sub Total</td>
+                                                    <td class="text-right">$ 14,900.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>TAX (12%)</td>
+                                                    <td class="text-right">$ 1,788.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-bold-800">Total</td>
+                                                    <td class="text-bold-800 text-right"> $ 16,688.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Payment Made</td>
+                                                    <td class="pink text-right">(-) $ 4,688.00</td>
+                                                </tr>
+                                                <tr class="bg-grey bg-lighten-4">
+                                                    <td class="text-bold-800">Balance Due</td>
+                                                    <td class="text-bold-800 text-right">$ 12,000.00</td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
                                     <div class="col-md-6">
                                         <h5 class="text-center">Address Shipping</h5>
                                         @include('plugins-customer::partials.order_address',['addressKey' => 'address_shipping'])
@@ -66,6 +154,7 @@
                                         @include('plugins-customer::partials.order_address')
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
