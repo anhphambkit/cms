@@ -77,4 +77,9 @@ $router->group(['prefix' => 'manage-order'], function (Router $router) {
         'as'         => 'admin.order.resend_confirmation', 
         'uses'       => 'ManageOrderController@resendConfirmation',
     ]);
+
+    $router->post('tracking_number/{id}', [
+        'as'         => 'admin.order.tracking_number', 
+        'uses'       => 'ManageOrderController@applyTrackingNumber',
+    ]);
 });

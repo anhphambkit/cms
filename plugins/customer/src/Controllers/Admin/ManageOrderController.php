@@ -10,6 +10,7 @@ use Core\Base\Controllers\Admin\BaseAdminController;
 use Plugins\Customer\Services\IOrderService;
 use Core\Base\Responses\BaseHttpResponse;
 use Plugins\Customer\Events\EventConfirmOrder;
+use Plugins\Customer\Requests\TrackingNumberRequest;
 
 class ManageOrderController extends BaseAdminController
 {
@@ -42,13 +43,22 @@ class ManageOrderController extends BaseAdminController
 	 * @param  BaseHttpResponse $response [description]
 	 * @return [type]                     [description]
 	 */
-	public function applyTrackingNumber($id, Request $request, BaseHttpResponse $response)
+	public function applyTrackingNumber($id, TrackingNumberRequest $request, BaseHttpResponse $response)
 	{
-		$order = $this->findOrder($id);
-		return $response
-            ->setPreviousUrl(route('public.customer.my-orders'))
-            ->setNextUrl(route('public.customer.my-orders'))
-            ->setMessage(trans('Apply tracking number success.'));
+		$order = $this->orderRepository->findOrFail((int)$id);
+        if($order->tracking_number){
+            return $response
+                ->setError()
+                ->setMessage(trans('Tracking number was added.'));
+        }
+
+        $order->fill([
+            'tracking_number' => $request->tracking_number
+        ]);
+        $this->orderRepository->createOrUpdate($order);
+
+        return $response
+                ->setMessage(trans('Add tracking number success.'));
 	}
 
     /**

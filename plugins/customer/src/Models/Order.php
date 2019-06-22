@@ -5,6 +5,7 @@ namespace Plugins\Customer\Models;
 use Illuminate\Database\Eloquent\Model;
 use Plugins\Product\Models\Product;
 use Plugins\Customer\Models\ProductsInOrder;
+use Plugins\Customer\Models\Customer;
 
 /**
  * Class Order
@@ -54,5 +55,14 @@ class Order extends Model
     public function products()
     {
         return $this->hasMany(ProductsInOrder::class, 'order_id');
+    }
+
+    /**
+     * [customer description]
+     * @return [type] [description]
+     */
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 }
