@@ -82,4 +82,15 @@ $router->group(['prefix' => 'manage-order'], function (Router $router) {
         'as'         => 'admin.order.tracking_number', 
         'uses'       => 'ManageOrderController@applyTrackingNumber',
     ]);
+
+    $router->delete('product/delete/{idProductOrder}', [
+        'as'         => 'admin.order.product.delete', 
+        'uses'       => 'ManageOrderController@removeProductOrder',
+    ]);
+
+    $router->post('product/add/{id}', [
+        'as'         => 'admin.order.product.add', 
+        'uses'       => 'ManageOrderController@addProductOrder',
+    ]);
+
 });

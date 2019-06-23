@@ -56,6 +56,11 @@
                         <div class="card-body">
                             <div class="form-body">
                                 <div class="row">
+                                    <div class="form-group col-sm-12 text-right">
+                                        <button type="button" class="btn btn-outline-secondary round btn-min-width mr-1 mb-1">Add Product</button>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="table-responsive col-sm-12">
                                         <table class="table">
                                           <thead>
@@ -82,7 +87,7 @@
                                                   <td class="text-right">{{ $product->quantity }}</td>
                                                   <td class="text-right">${{ number_format($product->price * $product->quantity, 2, ',', '.') }}</td>
                                                   <td class="text-right">
-                                                      <button type="button" class="btn-danger round">Remove</button>
+                                                    <button type="button" class="btn-danger round deleteDialog tip" data-toggle="modal" data-section="{{ route('admin.order.product.delete', $product->id) }}">Remove</button>
                                                   </td>
                                                 </tr>
                                             @endforeach
@@ -122,24 +127,16 @@
                                             <table class="table">
                                               <tbody>
                                                 <tr>
+                                                    <td>Coupon Code</td>
+                                                    <td class="text-right">{{ $order->coupon_code }}</td>
+                                                </tr>
+                                                <tr>
                                                     <td>Sub Total</td>
                                                     <td class="text-right">$ 14,900.00</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>TAX (12%)</td>
-                                                    <td class="text-right">$ 1,788.00</td>
-                                                </tr>
-                                                <tr>
                                                     <td class="text-bold-800">Total</td>
                                                     <td class="text-bold-800 text-right"> $ 16,688.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Payment Made</td>
-                                                    <td class="pink text-right">(-) $ 4,688.00</td>
-                                                </tr>
-                                                <tr class="bg-grey bg-lighten-4">
-                                                    <td class="text-bold-800">Balance Due</td>
-                                                    <td class="text-bold-800 text-right">$ 12,000.00</td>
                                                 </tr>
                                               </tbody>
                                             </table>
@@ -204,6 +201,37 @@
             event.preventDefault();
             $('.input-tracking-number').val("");
             $('#tracking-number-order-modal').modal('show');
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).on('click', '.deleteDialog', function (event) {
+            event.preventDefault();
+
+            $('#delete-crud-entry').data('section', $(this).data('section'));
+            $('#delete-crud-modal').modal('show');
+        });
+
+        $('#delete-crud-entry').on('click', function (event) {
+            event.preventDefault();
+            $('#delete-crud-modal').modal('hide');
+
+            let deleteURL = $(this).data('section');
+
+            $.ajax({
+                url: deleteURL,
+                type: 'DELETE',
+                success: function (data) {
+                    if (data.error) {
+                        Lcms.showNotice('error', data.message, Lcms.languages.notices_msg.error);
+                    } else {
+                        $('button[data-section="' + deleteURL + '"]').closest('tr').remove();
+                        Lcms.showNotice('success', data.message, Lcms.languages.notices_msg.success);
+                    }
+                },
+                error: function (data) {
+                    Lcms.handleError(data);
+                }
+            });
         });
     </script>
 @endsection

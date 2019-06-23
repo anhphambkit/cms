@@ -11,6 +11,7 @@ use Plugins\Customer\Services\IOrderService;
 use Core\Base\Responses\BaseHttpResponse;
 use Plugins\Customer\Events\EventConfirmOrder;
 use Plugins\Customer\Requests\TrackingNumberRequest;
+use Plugins\Customer\Repositories\Interfaces\ProductsInOrderRepositories;
 
 class ManageOrderController extends BaseAdminController
 {
@@ -20,29 +21,36 @@ class ManageOrderController extends BaseAdminController
     protected $orderRepository;
 
     /**
-     * [$orderService description]
+     * IOrderService
      * @var [type]
      */
     protected $orderService;
+
+    /**
+     * ProductsInOrderRepositories
+     * @var [type]
+     */
+    protected $productOrderRepository;
 
     /**
      * OrderController constructor.
      * @param OrderRepositories $orderRepository
      * @author TrinhLe
      */
-    public function __construct(OrderRepositories $orderRepository, IOrderService $orderService)
+    public function __construct(OrderRepositories $orderRepository, IOrderService $orderService, ProductsInOrderRepositories $productOrderRepository)
     {
-        $this->orderRepository = $orderRepository;
-        $this->orderService    = $orderService;
+        $this->orderRepository        = $orderRepository;
+        $this->orderService           = $orderService;
+        $this->productOrderRepository = $productOrderRepository;
     }
 
     /**
-	 * [applyTrackingNumber description]
-	 * @param  [type]           $id       [description]
-	 * @param  Request          $request  [description]
-	 * @param  BaseHttpResponse $response [description]
-	 * @return [type]                     [description]
-	 */
+     * applyTrackingNumber
+     * @param type $id 
+     * @param TrackingNumberRequest $request 
+     * @param BaseHttpResponse $response 
+     * @return \Illuminate\Http\JsonResponse
+     */
 	public function applyTrackingNumber($id, TrackingNumberRequest $request, BaseHttpResponse $response)
 	{
 		$order = $this->orderRepository->findOrFail((int)$id);
@@ -62,10 +70,11 @@ class ManageOrderController extends BaseAdminController
 	}
 
     /**
-     * [resendConfirmation description]
-     * @param  [type]  $id      [description]
-     * @param  Request $request [description]
-     * @return [type]           [description]
+     * resendConfirmation
+     * @param type $id 
+     * @param Request $request 
+     * @param BaseHttpResponse $response 
+     * @return \Illuminate\Http\JsonResponse
      */
     public function resendConfirmation($id, Request $request, BaseHttpResponse $response)
     {
@@ -73,5 +82,41 @@ class ManageOrderController extends BaseAdminController
         event(new EventConfirmOrder($order));
         return $response
                 ->setMessage(trans('Send Confirm Order Success.'));
+    }
+
+    /**
+     * removeProductOrder
+     * @param type $id 
+     * @param type $idProductOrder 
+     * @param Request $request 
+     * @param BaseHttpResponse $response 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function removeProductOrder($idProductOrder, Request $request, BaseHttpResponse $response)
+    {
+        try {
+            $productOrder = $this->productOrderRepository->findOrFail((int)$idProductOrder);
+            // $this->productOrderRepository->delete($productOrder);
+
+            return $response
+                ->setMessage(trans('core-base::notices.delete_success_message'));
+        } catch (Exception $exception) {
+            return $response
+                ->setError()
+                ->setMessage(trans('core-base::notices.cannot_delete'));
+        }
+       
+    }
+
+    /**
+     * addProductOrder
+     * @param type $id 
+     * @param Request $request 
+     * @param BaseHttpResponse $response 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addProductOrder($id, Request $request, BaseHttpResponse $response)
+    {
+
     }
 }
