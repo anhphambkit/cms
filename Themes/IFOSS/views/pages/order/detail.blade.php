@@ -101,9 +101,9 @@
 								<tr class="tr">
 									<td>{{ $product->sku }}</td>
 									<td>{{ $product->name }}</td>
-									<td class="text-right">${{ number_format($product->price, 2, ',', '.') }}</td>
+									<td class="text-right">$ {{ number_format($product->price, 2, ',', '.') }}</td>
 									<td class="text-right">{{ $product->quantity }}</td>
-									<td class="text-right">${{ number_format($product->price * $product->quantity, 2, ',', '.') }}</td>
+									<td class="text-right">$ {{ number_format($product->price * $product->quantity, 2, ',', '.') }}</td>
 									<td>
 										<a href="javascript:void(0)" class="send-email-product-order text-blue px-2" data-refund-url="{{ route('public.order.send_return_order', [ 'id' => $order->id, 'idProduct' => $product->product_id] ) }}">Return</a> 
 										<a href="javascript:void(0)" class="send-email-product-order text-blue px-2" data-refund-url="{{ route('public.order.send_replace_order', [ 'id' => $order->id, 'idProduct' => $product->product_id]) }}">Replace</a> 

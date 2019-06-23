@@ -57,7 +57,7 @@
                             <div class="form-body">
                                 <div class="row">
                                     <div class="form-group col-sm-12 text-right">
-                                        <button type="button" class="btn btn-outline-secondary round btn-min-width mr-1 mb-1">Add Product</button>
+                                        <button type="button" class="btn btn-outline-secondary round btn-min-width mr-1 mb-1 addProductDialog">Add Product</button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -85,7 +85,7 @@
                                                   </td>
                                                   <td class="text-right">$ {{ number_format($product->price, 2, ',', '.') }}</td>
                                                   <td class="text-right">{{ $product->quantity }}</td>
-                                                  <td class="text-right">${{ number_format($product->price * $product->quantity, 2, ',', '.') }}</td>
+                                                  <td class="text-right">$ {{ number_format($product->price * $product->quantity, 2, ',', '.') }}</td>
                                                   <td class="text-right">
                                                     <button type="button" class="btn-danger round deleteDialog tip" data-toggle="modal" data-section="{{ route('admin.order.product.delete', $product->id) }}">Remove</button>
                                                   </td>
@@ -132,11 +132,11 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Sub Total</td>
-                                                    <td class="text-right">$ 14,900.00</td>
+                                                    <td class="text-right">$ {{ number_format($order->total_price, 2, ',', '.') }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-bold-800">Total</td>
-                                                    <td class="text-bold-800 text-right"> $ 16,688.00</td>
+                                                    <td class="text-bold-800 text-right">$ {{ number_format($order->total_amount_order, 2, ',', '.') }}</td>
                                                 </tr>
                                               </tbody>
                                             </table>
@@ -165,7 +165,7 @@
             
         </div>
     {!! Form::close() !!}
-    <!-- Form modal -->
+    <!-- Form modal tracking number -->
     <div id="tracking-number-order-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -193,6 +193,34 @@
         </div>
     </div>
 
+    <!-- Form modal product order -->
+    <div id="add-product-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-info white">
+                        <h4 class="modal-title white" id="myModalLabel11"><i class="la la-tree"></i>{{ trans('Add Product') }}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-dismiss-modal="#add-product-modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {!! Form::open(['route' => ['admin.order.product.add', $order->id], 'id' => 'form-new-product-order']) !!}
+                    <div class="modal-body with-padding">
+                        <div class="form-group">
+                            <label>{{ trans('Quantity') }}</label>
+                            {!! Form::number('quantity', null, ['class' => 'form-control input-tracking-number']) !!}
+                        </div>
+                        <div class="form-actions text-right">
+                            <button data-dismiss="modal"
+                                    class="btn btn-light">{{ trans('core-base::system.user.cancel') }}</button>
+                            <button type="submit" class="btn btn-info">{{ trans('Save') }}</button>
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
+
 @stop
 
 @section('master-footer')
@@ -204,6 +232,12 @@
         });
     </script>
     <script type="text/javascript">
+        $(document).on('click', '.addProductDialog', function (event) {
+            event.preventDefault();
+            $('#form-new-product-order')[0].reset();
+            $('#add-product-modal').modal('show');
+        });
+
         $(document).on('click', '.deleteDialog', function (event) {
             event.preventDefault();
 

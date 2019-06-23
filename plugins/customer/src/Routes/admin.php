@@ -88,7 +88,7 @@ $router->group(['prefix' => 'manage-order'], function (Router $router) {
         'uses'       => 'ManageOrderController@removeProductOrder',
     ]);
 
-    $router->post('product/add/{id}', [
+    $router->post('product/add/{idOrder}', [
         'as'         => 'admin.order.product.add', 
         'uses'       => 'ManageOrderController@addProductOrder',
     ]);

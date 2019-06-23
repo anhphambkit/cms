@@ -115,7 +115,7 @@ class ManageOrderController extends BaseAdminController
      * @param BaseHttpResponse $response 
      * @return \Illuminate\Http\JsonResponse
      */
-    public function addProductOrder($id, Request $request, BaseHttpResponse $response)
+    public function addProductOrder($idOrder, Request $request, BaseHttpResponse $response)
     {
 
     }
