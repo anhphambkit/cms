@@ -55,11 +55,11 @@
                     <div class="card-content collpase show">
                         <div class="card-body">
                             <div class="form-body">
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="form-group col-sm-12 text-right">
                                         <button type="button" class="btn btn-outline-secondary round btn-min-width mr-1 mb-1 addProductDialog">Add Product</button>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row">
                                     <div class="table-responsive col-sm-12">
                                         <table class="table">
@@ -70,7 +70,7 @@
                                               <th class="text-right">Item price</th>
                                               <th class="text-right">Item quantity</th>
                                               <th class="text-right">Total</th>
-                                              <th class="text-right">Action</th>
+                                              <!-- <th class="text-right">Action</th> -->
                                             </tr>
                                           </thead>
                                           <tbody>
@@ -86,9 +86,9 @@
                                                   <td class="text-right">$ {{ number_format($product->price, 2, ',', '.') }}</td>
                                                   <td class="text-right">{{ $product->quantity }}</td>
                                                   <td class="text-right">$ {{ number_format($product->price * $product->quantity, 2, ',', '.') }}</td>
-                                                  <td class="text-right">
+                                                  <!-- <td class="text-right">
                                                     <button type="button" class="btn-danger round deleteDialog tip" data-toggle="modal" data-section="{{ route('admin.order.product.delete', $product->id) }}">Remove</button>
-                                                  </td>
+                                                  </td> -->
                                                 </tr>
                                             @endforeach
                                           </tbody>

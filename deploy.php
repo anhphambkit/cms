@@ -24,9 +24,9 @@ host($env->getEnv('DEPLOY_HOST'))
     
 task('deploy:dev', [
     'deploy:start',
-    // 'deploy:upload',
-//    'deploy:build',
-    // 'deploy:permission',
+    'deploy:upload',
+    'deploy:build',
+    'deploy:permission',
 ]);
 
 task('deploy:start', function(){ // 
@@ -36,18 +36,18 @@ task('deploy:start', function(){ //
 task('deploy:upload', function(){ // 
     writeln('Start upload');
     $folders = [
-       'app',
-       'config',
+       // 'app',
+       // 'config',
        'core',
        'Themes',
-       'database//seeds',
+       // 'database//seeds',
        'plugins',
-       'public//themes',
-       'public//backend',
-       'public//frontend',
-       'public//libs',
-       'public//vendor',
-       'Themes',
+       // 'public//themes',
+       // 'public//backend',
+       // 'public//frontend',
+       // 'public//libs',
+       // 'public//vendor',
+       // 'Themes',
        'webpack'
     ];
     $path = get('deploy_path');

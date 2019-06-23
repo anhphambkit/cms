@@ -134,6 +134,14 @@ class ProductDataTable extends DataTableAbstract
                 'link' => route('admin.product.create'),
                 'text' => view('core-base::elements.tables.actions.create')->render(),
             ],
+            'export-inventory' => [
+                'link' => '#',
+                'text' => view('plugins-product::partials.export-inventory')->render(),
+            ],
+            'import-inventory' => [
+                'link' => '#',
+                'text' => view('plugins-product::partials.import-inventory')->render(),
+            ],
         ];
         return $buttons;
     }

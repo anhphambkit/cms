@@ -142,7 +142,7 @@
                 } else if (action === 'delete') {
                     $('#delete-many-entry').data('href', url);
                     $('#delete-many-modal').modal('show');
-                } else if (action === 'add-supper' || action === 'invite') {
+                } else if (action === 'add-supper' || action === 'invite' || action === 'export-inventory' || action === 'import-inventory') {
 
                 } else {
                     let ids = [];

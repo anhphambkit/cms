@@ -75,7 +75,8 @@ class OrderController extends BaseAdminController
         
         $order->fill($request->only([
             'address_billing',
-            'address_shipping'
+            'address_shipping',
+            'status'
         ]));
 
         $this->orderRepository->createOrUpdate($order);

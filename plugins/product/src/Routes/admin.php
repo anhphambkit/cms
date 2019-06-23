@@ -351,6 +351,20 @@ $router->group(['prefix' => 'product'], function (Router $router) {
         ]);
     });
 
+    $router->group(['prefix' => 'inventory'], function (Router $router) {
+
+        $router->get('export', [
+            'as' => 'admin.product.inventory.export',
+            'uses' => 'InventoryController@export',
+        ]);
+
+        $router->get('import', [
+            'as' => 'admin.product.inventory.import',
+            'uses' => 'InventoryController@import',
+        ]);
+    });
 });
+
+
 
 	
