@@ -24,6 +24,7 @@ class AddOrderStatusSeeder extends Seeder
 			OrderReferenceConfig::REFERENCE_ORDER_STATUS_SHIPPED,
 			OrderReferenceConfig::REFERENCE_ORDER_STATUS_CANCEL,
 			OrderReferenceConfig::REFERENCE_ORDER_STATUS_REFUND,
+            OrderReferenceConfig::REFERENCE_ORDER_STATUS_DELIVERED,
         ];
 
         foreach ($references as $reference) {

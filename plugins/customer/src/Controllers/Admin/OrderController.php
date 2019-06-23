@@ -8,6 +8,7 @@ use Plugins\Customer\Repositories\Interfaces\OrderRepositories;
 use Plugins\Customer\DataTables\OrderDataTable;
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Core\Base\Responses\BaseHttpResponse;
+use Plugins\Customer\Contracts\OrderReferenceConfig;
 
 class OrderController extends BaseAdminController
 {
@@ -53,8 +54,13 @@ class OrderController extends BaseAdminController
             $states[$state->id] = $state->name;
         }
 
+        $listStatus = get_reference_by_type(OrderReferenceConfig::REFERENCE_ORDER_STATUS);
+        foreach($listStatus as $status){
+            $orderStatus[$status->id] = $status->value;
+        }
+
         page_title()->setTitle(trans('plugins-customer::order.edit') . ' #' . $id);
-        return view('plugins-customer::order.edit', compact('order', 'states'));
+        return view('plugins-customer::order.edit', compact('order', 'states', 'orderStatus'));
     }
 
     /**
@@ -65,13 +71,16 @@ class OrderController extends BaseAdminController
      */
     public function postEdit($id, OrderRequest $request, BaseHttpResponse $response)
     {
-        // $order = $this->orderRepository->findOrFail($id);
-      
-        // $order->fill($request->input());
+        $order = $this->orderRepository->findOrFail($id);
+        
+        $order->fill($request->only([
+            'address_billing',
+            'address_shipping'
+        ]));
 
-        // $this->orderRepository->createOrUpdate($order);
+        $this->orderRepository->createOrUpdate($order);
 
-        // do_action(BASE_ACTION_AFTER_UPDATE_CONTENT, ORDER_MODULE_SCREEN_NAME, $request, $order);
+        do_action(BASE_ACTION_AFTER_UPDATE_CONTENT, ORDER_MODULE_SCREEN_NAME, $request, $order);
 
         return $response
             ->setPreviousUrl(route('admin.order.list'))

@@ -15,5 +15,6 @@ return [
 		'company_name' => 'Company Name',
 		'zip'          => 'Zip',
 		'phone_number' => 'Phone Number',
+		'email'        => 'Email',
     ]
 ];

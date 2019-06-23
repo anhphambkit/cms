@@ -33,3 +33,16 @@ if (function_exists('find_reference_by_id') === false) {
         return $element ?? abort(403, 'reference not found, please make sure seeder running');
     }
 }
+
+if (function_exists('get_reference_by_type') === false) {
+    /**
+     * [find_reference_element description]
+     * @param  [type] $referenceValue [description]
+     * @param  [type] $referenceType  [description]
+     * @return Illuminate\Support\Collection
+     */
+    function get_reference_by_type($type)
+    {
+        return DB::table('references')->where('type', $type)->get();
+    }
+}

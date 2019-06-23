@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="col-md-3 right-sidebar">
-                @include('core-base::elements.forms.status', ['selected' => $order->status])
+                @include('core-base::elements.forms.status', [ 'values' => $orderStatus ,'selected' => $order->status])
             </div>
             <div class="col-md-3 right-sidebar">
                 @include('core-base::elements.form-actions')
@@ -65,6 +65,7 @@
                                               <th class="text-right">Item price</th>
                                               <th class="text-right">Item quantity</th>
                                               <th class="text-right">Total</th>
+                                              <th class="text-right">Action</th>
                                             </tr>
                                           </thead>
                                           <tbody>
@@ -80,6 +81,9 @@
                                                   <td class="text-right">$ {{ number_format($product->price, 2, ',', '.') }}</td>
                                                   <td class="text-right">{{ $product->quantity }}</td>
                                                   <td class="text-right">${{ number_format($product->price * $product->quantity, 2, ',', '.') }}</td>
+                                                  <td class="text-right">
+                                                      <button type="button" class="btn-danger round">Remove</button>
+                                                  </td>
                                                 </tr>
                                             @endforeach
                                           </tbody>

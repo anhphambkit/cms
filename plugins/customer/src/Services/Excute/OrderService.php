@@ -68,8 +68,8 @@ class OrderService implements IOrderService
             $dataOrder = [
                 'customer_id'                  => $customerId,
                 'is_guest'                     => $isGuest,
-                'address_shipping'             => json_encode($dataCheckouts['address_shipping']),
-                'address_billing'              => json_encode($dataCheckouts['address_billing']),
+                'address_shipping'             => $dataCheckouts['address_shipping'],
+                'address_billing'              => $dataCheckouts['address_billing'],
                 'payment_method'               => $dataCheckouts['payment_method'],
                 'total_original_price'         => $cart['total_original_price'],
                 'discount_price'               => $cart['discount_price'],

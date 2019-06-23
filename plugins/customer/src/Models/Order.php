@@ -65,4 +65,26 @@ class Order extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
+
+    /**
+     * [setAddressBillingAttribute description]
+     * @param [type] $value [description]
+     */
+    public function setAddressBillingAttribute($value)
+    {
+        $value = is_array($value) ? json_encode($value) : $value;
+        $this->attributes['address_billing'] = $value;
+    }
+
+    /**
+     * [setAddressBillingAttribute description]
+     * @param [type] $value [description]
+     */
+    public function setAddressShippingAttribute($value)
+    {
+        $value = is_array($value) ? json_encode($value) : $value;
+        $this->attributes['address_shipping'] = $value;
+    }
+
+
 }

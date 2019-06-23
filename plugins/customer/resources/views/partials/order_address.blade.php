@@ -21,6 +21,14 @@
     {!! Form::error("{$addressKey}.address_1", $errors) !!}
 </div>
 
+@if($addressKey == 'address_shipping')
+	<div class="form-group col-md-12 mb-2 @if ($errors->has("{$addressKey}.email")) has-error @endif">
+	    <label for="{{ $addressKey }}[email]">{{ trans('plugins-customer::order.forms.email') }}</label>
+	    {!! Form::text("{$addressKey}[email]", get_address_value_default($address, 'email'), ['class' => 'form-control', 'placeholder' => trans('plugins-customer::order.forms.email'), 'data-counter' => 120]) !!}
+	    {!! Form::error("{$addressKey}.email", $errors) !!}
+	</div>	
+@endif
+
 <div class="form-group col-md-12 mb-2 @if ($errors->has("{$addressKey}.address_2")) has-error @endif">
     <label for="{{ $addressKey }}[address_2]">{{ trans('plugins-customer::order.forms.address_2') }}</label>
     {!! Form::text("{$addressKey}[address_2]", get_address_value_default($address, 'address_2'), ['class' => 'form-control', 'placeholder' => trans('plugins-customer::order.forms.address_2'), 'data-counter' => 120]) !!}

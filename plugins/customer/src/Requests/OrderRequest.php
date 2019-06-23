@@ -15,7 +15,6 @@ class OrderRequest extends CoreRequest
     public function rules()
     {
         return [
-            'name' => 'required',
             'address_shipping'              => 'required|array',
             'address_shipping.last_name'    => 'required|min:3|max:100',
             'address_shipping.email'        => 'required|min:3|max:100',

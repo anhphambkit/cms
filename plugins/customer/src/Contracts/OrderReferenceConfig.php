@@ -11,4 +11,5 @@ interface OrderReferenceConfig
 	const REFERENCE_ORDER_STATUS_SHIPPED = 'Shipped';
 	const REFERENCE_ORDER_STATUS_CANCEL  = 'Cancel';
 	const REFERENCE_ORDER_STATUS_REFUND  = 'Refund';
+	const REFERENCE_ORDER_STATUS_DELIVERED  = 'Delivered';
 }
