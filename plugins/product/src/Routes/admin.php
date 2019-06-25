@@ -358,7 +358,7 @@ $router->group(['prefix' => 'product'], function (Router $router) {
             'uses' => 'InventoryController@export',
         ]);
 
-        $router->get('import', [
+        $router->post('import', [
             'as' => 'admin.product.inventory.import',
             'uses' => 'InventoryController@import',
         ]);

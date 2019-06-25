@@ -107,10 +107,8 @@ class ProductController extends BaseAdminController
      */
     public function getList(ProductDataTable $dataTable)
     {
-
         page_title()->setTitle(trans('plugins-product::product.list'));
-
-        return $dataTable->renderTable(['title' => trans('plugins-product::product.list')]);
+        return $dataTable->render('plugins-product::product.index');
     }
 
     /**

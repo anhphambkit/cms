@@ -1,1 +1,1 @@
-<button data-toggle="modal" class="btn-secondary" type="button" href="#import_inventory">{{ trans('Import Inventory') }}</button>
+<button data-toggle="modal" class="btn-secondary" type="button" href="#import_inventory" >{{ trans('Import Inventory') }}</button>
