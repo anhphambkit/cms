@@ -75,6 +75,15 @@ class Product extends Model
     ];
 
     /**
+     * [keywords description]
+     * @return [type] [description]
+     */
+    public function keywords()
+    {
+        return $this->hasMany(ProductKeyword::class, 'product_id', 'id');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      * @author TrinhLe
      */

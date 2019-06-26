@@ -26,6 +26,14 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="form-group col-md-12 mb-2 @if ($errors->has('tag')) has-error @endif">
+                                        <label for="name">{{ trans('plugins-product::product.form.keyword') }}</label>
+                                        <div class="clearfix"></div>
+                                        {!! Form::text('keywords', $keywords, ['class' => 'form-control', 'id' => 'keywords', 'data-role' => 'tagsinput', 'placeholder' => trans('plugins-product::product.form.keyword')]) !!}
+                                        {!! Form::error('tag', $errors) !!}
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="form-group col-md-6 mb-2 @if ($errors->has('upc')) has-error @endif">
                                         <label class="control-label required" for="role">{{ trans('plugins-product::product.form.upc') }}</label>
                                         {!! Form::text('upc', $product->upc, ['class' => 'form-control', 'id' => 'upc', 'placeholder' => trans('plugins-product::product.form.upc_placeholder'), 'data-counter' => 60]) !!}

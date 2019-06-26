@@ -20,6 +20,11 @@
     @foreach($cssFiles as $css)
         <link media="all" type="text/css" rel="stylesheet" href="{{ URL::asset($css) }}">
     @endforeach
+    <style type="text/css">
+        .bootstrap-tagsinput{
+            width: 100%
+        }
+    </style>
 
     @section('styles')
     @show

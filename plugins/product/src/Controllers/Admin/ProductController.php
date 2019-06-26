@@ -20,6 +20,7 @@ use Plugins\Product\Requests\ProductRequest;
 use Plugins\Product\Repositories\Interfaces\ProductRepositories;
 use Plugins\Product\DataTables\ProductDataTable;
 use Core\Base\Controllers\Admin\BaseAdminController;
+use Plugins\Product\Services\StoreKeywordService;
 use AssetManager;
 use AssetPipeline;
 
@@ -359,6 +360,9 @@ class ProductController extends BaseAdminController
             abort(404);
         }
 
+        $keywords = $product->keywords()->get()->pluck('name')->all();
+        $keywords = implode(',', $keywords);
+
         page_title()->setTitle(trans('plugins-product::product.edit') . ' #' . $id);
 
         $this->addDetailAssets();
@@ -366,7 +370,7 @@ class ProductController extends BaseAdminController
         return view('plugins-product::product.edit', compact('product', 'categories', 'manufacturer', 'colors',
                     'businessTypes', 'collections', 'materials', 'spaces', 'productAttributes',
                     'selectedProductCategories', 'selectedProductBusinessTypes', 'businessSpaces', 'allSpaces',
-                    'selectedProductCollections', 'selectedProductColors', 'selectedProductMaterials', 'galleries'));
+                    'selectedProductCollections', 'selectedProductColors', 'selectedProductMaterials', 'galleries', 'keywords'));
     }
 
     /**
@@ -375,14 +379,14 @@ class ProductController extends BaseAdminController
      * @return \Illuminate\Http\RedirectResponse
      * @author AnhPham
      */
-    public function postEdit($id, ProductRequest $request)
+    public function postEdit($id, ProductRequest $request, StoreKeywordService $keywordService)
     {
         $product = $this->productRepository->findById($id);
         if (empty($product)) {
             abort(404);
         }
 
-
+        $keywordService->execute($request, $product);
         $data = $request->input();
 
         $data['slug'] = str_slug($data['name']);
