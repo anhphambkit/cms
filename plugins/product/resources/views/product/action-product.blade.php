@@ -1,0 +1,3 @@
+<a href="javascript:void(0)" class="dropdown-item importKeywordDialog tip" data-toggle="modal" data-keyword-url="{{ route('admin.product.keyword.import', $item->id) }}"><i class="fas fa-upload"></i> Import Keywords</a>
+<a href="javascript:void(0)" class="dropdown-item b-download-media tip" data-url="{{ route('admin.product.keyword.export', $item->id) }}">
+	<i class="fas fa-download"></i> Export Keywords</a>

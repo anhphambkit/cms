@@ -32,7 +32,9 @@ class ProductDataTable extends DataTableAbstract
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, PRODUCT_MODULE_SCREEN_NAME)
             ->addColumn('operations', function ($item) {
-                return table_actions('admin.product.edit', 'admin.product.delete', $item);
+                $actionProduct = view('plugins-product::product.action-product', compact('item'))->render();
+                $action      =  table_dropdown_actions('admin.product.edit', 'admin.product.delete', $item, $actionProduct);
+                return $action;
             })
             ->escapeColumns([])
             ->make(true);

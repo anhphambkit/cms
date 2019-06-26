@@ -316,4 +316,40 @@ class BFileService
         }
         fclose($file);
     }
+
+    /** 
+     * [array_to_csv_download description]
+     * @param  [type] $items     [description]
+     * @param  string $filename  [description]
+     * @param  string $delimiter [description]
+     * @return file
+     */
+    public function arrayToCsvDownload($items, $filename = "export.csv") 
+    {
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header('Content-Description: File Transfer');
+        header("Content-type: text/csv");
+        header('Content-Disposition: attachment; filename="'.$filename.'"');
+        $f = @fopen( 'php://output', 'w' );
+
+        foreach ($items as $line) {
+            fputcsv($f, $line);
+        }
+        fclose($f);
+        exit;
+    }
+
+    /**
+     * Generate config header with columns
+     * @author TrinhLe
+     */
+    public function generateColumnNumberHeader($mappingColumns, $row):array
+    {
+        foreach ($mappingColumns as $key => $column) {
+            # code...
+            $index = array_search($column, $row);
+            $headers[$key] = $index;
+        }
+        return $headers ?? [];
+    }
 }

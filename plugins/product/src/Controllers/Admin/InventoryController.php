@@ -66,7 +66,7 @@ class InventoryController extends BaseAdminController
             ];
         }
         $timeline = Carbon::now()->toDateTimeString();
-        return $this->arrayToCsvDownload($items, "inventory-{$timeline}.csv");
+        return BFileService::arrayToCsvDownload($items, "inventory-{$timeline}.csv");
     }
 
     /**
@@ -79,7 +79,7 @@ class InventoryController extends BaseAdminController
         $isHeader = true;
         \BFileService::readCsvFile($file->getRealPath(), function($row, $lineNumber) use(&$isHeader){
             if($isHeader) {
-                $this->generateColumnNumberHeader($row);
+                $this->headers = BFileService::generateColumnNumberHeader($this->mappingColumns, $row);
                 return $isHeader = false;
             }
 
@@ -102,40 +102,5 @@ class InventoryController extends BaseAdminController
         return $response
                 ->setMessage(trans('Import inventory success.'));
             
-    }
-
-    /** 
-     * [array_to_csv_download description]
-     * @param  [type] $items     [description]
-     * @param  string $filename  [description]
-     * @param  string $delimiter [description]
-     * @return file
-     */
-    protected function arrayToCsvDownload($items, $filename = "export.csv") 
-    {
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header('Content-Description: File Transfer');
-        header("Content-type: text/csv");
-        header('Content-Disposition: attachment; filename="'.$filename.'"');
-        $f = @fopen( 'php://output', 'w' );
-
-        foreach ($items as $line) {
-            fputcsv($f, $line);
-        }
-        fclose($f);
-        exit;
-    }
-
-    /**
-     * Generate config header with columns
-     * @author TrinhLe
-     */
-    protected function generateColumnNumberHeader($row)
-    {
-        foreach ($this->mappingColumns as $key => $column) {
-            # code...
-            $index = array_search($column, $row);
-            $this->headers[$key] = $index;
-        }
     }
 }

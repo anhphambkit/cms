@@ -363,6 +363,19 @@ $router->group(['prefix' => 'product'], function (Router $router) {
             'uses' => 'InventoryController@import',
         ]);
     });
+
+    $router->group(['prefix' => 'keyword'], function (Router $router) {
+
+        $router->get('export/{id}', [
+            'as' => 'admin.product.keyword.export',
+            'uses' => 'ProductKeywordController@export',
+        ]);
+
+        $router->post('import/{id}', [
+            'as' => 'admin.product.keyword.import',
+            'uses' => 'ProductKeywordController@import',
+        ]);
+    });
 });
 
 

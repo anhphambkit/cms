@@ -43,7 +43,7 @@ task('deploy:upload', function(){ //
        // 'database//seeds',
        'plugins',
        // 'public//themes',
-       // 'public//backend',
+       'public//backend',
        // 'public//frontend',
        // 'public//libs',
        // 'public//vendor',
