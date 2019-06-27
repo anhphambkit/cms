@@ -12,11 +12,11 @@ class Webmasters implements WebmastersContract
      * @var array
      */
     protected $supported = [
-        'google' => 'google-site-verification',
-        'bing' => 'msvalidate.01',
-        'alexa' => 'alexaVerifyID',
+        'google'    => 'google-site-verification',
+        'bing'      => 'msvalidate.01',
+        'alexa'     => 'alexaVerifyID',
         'pinterest' => 'p:domain_verify',
-        'yandex' => 'yandex-verification'
+        'yandex'    => 'yandex-verification',
     ];
 
     /**
@@ -26,11 +26,10 @@ class Webmasters implements WebmastersContract
 
     /**
      * Create Webmasters instance.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct()
     {
-
         $this->reset();
     }
 
@@ -40,9 +39,9 @@ class Webmasters implements WebmastersContract
      * @param  string $webmaster
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function getWebmasterName($webmaster)
+    protected function getWebmasterName($webmaster)
     {
         if ($this->isSupported($webmaster)) {
             return $this->supported[$webmaster];
@@ -56,12 +55,12 @@ class Webmasters implements WebmastersContract
      *
      * @param  array $webmasters
      *
-     * @return \Botble\SeoHelper\Entities\Webmasters
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\Webmasters
+     * @author ARCANEDEV
      */
     public static function make(array $webmasters = [])
     {
-        return new self($webmasters);
+        return new self();
     }
 
     /**
@@ -70,13 +69,13 @@ class Webmasters implements WebmastersContract
      * @param  string $webmaster
      * @param  string $content
      *
-     * @return \Botble\SeoHelper\Entities\Webmasters
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\Webmasters
+     * @author ARCANEDEV
      */
     public function add($webmaster, $content)
     {
         if (!empty($name = $this->getWebmasterName($webmaster))) {
-            $this->meta->add($name, $content);
+            $this->meta->add(compact('name', 'content'));
         }
 
         return $this;
@@ -85,8 +84,8 @@ class Webmasters implements WebmastersContract
     /**
      * Reset the webmaster collection.
      *
-     * @return \Botble\SeoHelper\Entities\Webmasters
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\Webmasters
+     * @author ARCANEDEV
      */
     public function reset()
     {
@@ -99,7 +98,7 @@ class Webmasters implements WebmastersContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
@@ -110,7 +109,7 @@ class Webmasters implements WebmastersContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {
@@ -123,9 +122,9 @@ class Webmasters implements WebmastersContract
      * @param  string $webmaster
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function isSupported($webmaster)
+    protected function isSupported($webmaster)
     {
         return array_key_exists($webmaster, $this->supported);
     }

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * Class SeoHelperFacade
- * @package Botble\SEO\Facade
+ * @package Core\SEO\Facade
  * @author TrinhLe
  * @since 02/12/2015 14:08 PM
  */

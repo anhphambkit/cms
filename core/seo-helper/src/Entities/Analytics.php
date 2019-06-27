@@ -18,8 +18,8 @@ class Analytics implements AnalyticsContract
      *
      * @param  string $code
      *
-     * @return \Botble\SeoHelper\Entities\Analytics
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\Analytics
+     * @author ARCANEDEV
      */
     public function setGoogle($code)
     {
@@ -32,7 +32,7 @@ class Analytics implements AnalyticsContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
@@ -45,7 +45,7 @@ class Analytics implements AnalyticsContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {
@@ -56,7 +56,7 @@ class Analytics implements AnalyticsContract
      * Render the Google Analytics tracking script.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function renderGoogleScript()
     {

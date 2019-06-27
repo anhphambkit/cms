@@ -4,11 +4,12 @@ namespace Core\SeoHelper\Entities;
 
 use Core\SeoHelper\Contracts\Entities\TitleContract;
 use Core\SeoHelper\Exceptions\InvalidArgumentException;
+use Illuminate\Support\Str;
 
 /**
  * Class     Title
  *
- * @package  Botble\SeoHelper\Entities
+ * @package  Core\SeoHelper\Entities
  */
 class Title implements TitleContract
 {
@@ -52,31 +53,38 @@ class Title implements TitleContract
      * Make the Title instance.
      *
      * @param  array $configs
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
+     * @throws InvalidArgumentException
      */
-    public function __construct(array $configs = [])
+    public function __construct()
     {
         $this->init();
     }
 
     /**
      * Start the engine.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
+     * @throws InvalidArgumentException
      */
-    private function init()
+    protected function init()
     {
-        $this->set(setting('site_title', ''));
-        $this->setSiteName(setting('site_title', ''));
-        $this->setSeparator(config('seo-helper.title.separator', '-'));
-        $this->switchPosition(config('seo-helper.title.first', true));
-        $this->setMax(config('seo-helper.title.max', 55));
+        $this->set(null);
+        if (setting('show_site_name', false)) {
+            $this->setSiteName(setting('site_title', ''));
+            if (setting('seo_title')) {
+                $this->setSiteName(setting('seo_title'));
+            }
+        }
+        $this->setSeparator(config('packages.seo-helper.general.title.separator', '-'));
+        $this->switchPosition(config('packages.seo-helper.general.title.first', true));
+        $this->setMax(config('packages.seo-helper.general.title.max', 55));
     }
 
     /**
      * Get title only (without site name or separator).
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getTitleOnly()
     {
@@ -88,8 +96,8 @@ class Title implements TitleContract
      *
      * @param  string $title
      *
-     * @return \Botble\SeoHelper\Entities\Title
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\Title
+     * @author ARCANEDEV
      */
     public function set($title)
     {
@@ -102,7 +110,7 @@ class Title implements TitleContract
      * Get site name.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getSiteName()
     {
@@ -114,8 +122,8 @@ class Title implements TitleContract
      *
      * @param  string $siteName
      *
-     * @return \Botble\SeoHelper\Entities\Title
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\Title
+     * @author ARCANEDEV
      */
     public function setSiteName($siteName)
     {
@@ -128,7 +136,7 @@ class Title implements TitleContract
      * Get title separator.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getSeparator()
     {
@@ -140,8 +148,8 @@ class Title implements TitleContract
      *
      * @param  string $separator
      *
-     * @return \Botble\SeoHelper\Entities\Title
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\Title
+     * @author ARCANEDEV
      */
     public function setSeparator($separator)
     {
@@ -153,8 +161,8 @@ class Title implements TitleContract
     /**
      * Set title first.
      *
-     * @return \Botble\SeoHelper\Entities\Title
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\Title
+     * @author ARCANEDEV
      */
     public function setFirst()
     {
@@ -164,8 +172,8 @@ class Title implements TitleContract
     /**
      * Set title last.
      *
-     * @return \Botble\SeoHelper\Entities\Title
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\Title
+     * @author ARCANEDEV
      */
     public function setLast()
     {
@@ -177,10 +185,10 @@ class Title implements TitleContract
      *
      * @param  bool $first
      *
-     * @return \Botble\SeoHelper\Entities\Title
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\Title
+     * @author ARCANEDEV
      */
-    private function switchPosition($first)
+    protected function switchPosition($first)
     {
         $this->titleFirst = boolval($first);
 
@@ -191,7 +199,7 @@ class Title implements TitleContract
      * Check if title is first.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function isTitleFirst()
     {
@@ -202,7 +210,7 @@ class Title implements TitleContract
      * Get title max length.
      *
      * @return int
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getMax()
     {
@@ -214,8 +222,9 @@ class Title implements TitleContract
      *
      * @param  int $max
      *
-     * @return \Botble\SeoHelper\Entities\Title
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\Title
+     * @author ARCANEDEV
+     * @throws InvalidArgumentException
      */
     public function setMax($max)
     {
@@ -233,33 +242,32 @@ class Title implements TitleContract
      * @param  string $siteName
      * @param  string $separator
      *
-     * @return \Botble\SeoHelper\Entities\Title
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\Title
+     * @author ARCANEDEV
+     * @throws InvalidArgumentException
      */
     public static function make($title, $siteName = '', $separator = '-')
     {
-        return new self([
-            'default' => $title,
-            'site-name' => $siteName,
-            'separator' => $separator,
-            'first' => true
-        ]);
+        return new self();
     }
 
     /**
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
-        $separator = $this->renderSeparator();
+        $separator = null;
+        if ($this->getTitleOnly()) {
+            $separator = $this->renderSeparator();
+        }
         $output = $this->isTitleFirst()
             ? $this->renderTitleFirst($separator)
             : $this->renderTitleLast($separator);
 
-        $output = str_limit(strip_tags($output), $this->getMax());
+        $output = Str::limit(strip_tags($output), $this->getMax());
 
         return '<title>' . e($output) . '</title>';
     }
@@ -268,7 +276,7 @@ class Title implements TitleContract
      * Render the separator.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function renderSeparator()
     {
@@ -279,7 +287,7 @@ class Title implements TitleContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {
@@ -291,10 +299,10 @@ class Title implements TitleContract
      *
      * @param  int $max
      *
-     * @throws \Botble\SeoHelper\Exceptions\InvalidArgumentException
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @throws \Core\SeoHelper\Exceptions\InvalidArgumentException
+     * @author ARCANEDEV
      */
-    private function checkMax($max)
+    protected function checkMax($max)
     {
         if (!is_int($max)) {
             throw new InvalidArgumentException('The title maximum lenght must be integer.');
@@ -311,9 +319,9 @@ class Title implements TitleContract
      * @param  string $separator
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function renderTitleFirst($separator)
+    protected function renderTitleFirst($separator)
     {
         $output = [];
         $output[] = $this->getTitleOnly();
@@ -332,9 +340,9 @@ class Title implements TitleContract
      * @param  string $separator
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function renderTitleLast($separator)
+    protected function renderTitleLast($separator)
     {
         $output = [];
 
@@ -352,9 +360,9 @@ class Title implements TitleContract
      * Check if site name exists.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function hasSiteName()
+    protected function hasSiteName()
     {
         return !empty($this->getSiteName());
     }

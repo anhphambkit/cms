@@ -23,18 +23,18 @@ class Keywords implements KeywordsContract
 
     /**
      * Make Description instance.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct()
     {
-        $this->set((array) setting('seo_keywords', []));
+        $this->set((array)setting('seo_keywords', []));
     }
 
     /**
      * Get raw keywords content.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getContent()
     {
@@ -45,7 +45,7 @@ class Keywords implements KeywordsContract
      * Get keywords content.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function get()
     {
@@ -58,7 +58,7 @@ class Keywords implements KeywordsContract
      * @param  array|string $content
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function set($content)
     {
@@ -83,11 +83,11 @@ class Keywords implements KeywordsContract
      * @param  array|string $keywords
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public static function make($keywords)
     {
-        return new self(['default' => $keywords]);
+        return new self();
     }
 
     /**
@@ -96,7 +96,7 @@ class Keywords implements KeywordsContract
      * @param  string $keyword
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function add($keyword)
     {
@@ -111,7 +111,7 @@ class Keywords implements KeywordsContract
      * @param  array $keywords
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addMany(array $keywords)
     {
@@ -126,7 +126,7 @@ class Keywords implements KeywordsContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
@@ -141,7 +141,7 @@ class Keywords implements KeywordsContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {
@@ -152,9 +152,9 @@ class Keywords implements KeywordsContract
      * Check if keywords has content.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function hasContent()
+    protected function hasContent()
     {
         return !empty($this->getContent());
     }
@@ -165,9 +165,9 @@ class Keywords implements KeywordsContract
      * @param  string $value
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function clean($value)
+    protected function clean($value)
     {
         return trim(strip_tags($value));
     }

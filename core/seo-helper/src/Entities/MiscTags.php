@@ -17,26 +17,26 @@ class MiscTags implements MiscTagsContract
     /**
      * Meta collection.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\MetaCollectionContract
+     * @var \Core\SeoHelper\Contracts\Entities\MetaCollectionContract
      */
     protected $meta;
 
     /**
      * Make MiscTags instance.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct()
     {
         $this->meta = new MetaCollection;
         $this->addCanonical();
-        $this->addMany(config('seo-helper.misc.default', []));
+        $this->addMany(config('packages.seo-helper.general.misc.default', []));
     }
 
     /**
      * Get the current URL.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getUrl()
     {
@@ -48,8 +48,8 @@ class MiscTags implements MiscTagsContract
      *
      * @param  string $url
      *
-     * @return \Botble\SeoHelper\Entities\MiscTags
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\MiscTags
+     * @author ARCANEDEV
      */
     public function setUrl($url)
     {
@@ -64,14 +64,12 @@ class MiscTags implements MiscTagsContract
      *
      * @param  array $defaults
      *
-     * @return \Botble\SeoHelper\Entities\MiscTags
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\MiscTags
+     * @author ARCANEDEV
      */
     public static function make(array $defaults = [])
     {
-        return new self([
-            'default' => $defaults,
-        ]);
+        return new self();
     }
 
     /**
@@ -80,12 +78,12 @@ class MiscTags implements MiscTagsContract
      * @param  string $name
      * @param  string $content
      *
-     * @return \Botble\SeoHelper\Entities\MiscTags
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\MiscTags
+     * @author ARCANEDEV
      */
     public function add($name, $content)
     {
-        $this->meta->add($name, $content);
+        $this->meta->add(compact('name', 'content'));
 
         return $this;
     }
@@ -95,8 +93,8 @@ class MiscTags implements MiscTagsContract
      *
      * @param  array $meta
      *
-     * @return \Botble\SeoHelper\Entities\MiscTags
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\MiscTags
+     * @author ARCANEDEV
      */
     public function addMany(array $meta)
     {
@@ -110,8 +108,8 @@ class MiscTags implements MiscTagsContract
      *
      * @param  array|string $names
      *
-     * @return \Botble\SeoHelper\Entities\MiscTags
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\MiscTags
+     * @author ARCANEDEV
      */
     public function remove($names)
     {
@@ -123,8 +121,8 @@ class MiscTags implements MiscTagsContract
     /**
      * Reset the meta collection.
      *
-     * @return \Botble\SeoHelper\Entities\MiscTags
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\MiscTags
+     * @author ARCANEDEV
      */
     public function reset()
     {
@@ -137,7 +135,7 @@ class MiscTags implements MiscTagsContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
@@ -148,7 +146,7 @@ class MiscTags implements MiscTagsContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {
@@ -159,9 +157,9 @@ class MiscTags implements MiscTagsContract
      * Check if has the current URL.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function hasUrl()
+    protected function hasUrl()
     {
         return !empty($this->getUrl());
     }
@@ -169,10 +167,10 @@ class MiscTags implements MiscTagsContract
     /**
      * Add the canonical link.
      *
-     * @return \Botble\SeoHelper\Entities\MiscTags
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\MiscTags
+     * @author ARCANEDEV
      */
-    private function addCanonical()
+    protected function addCanonical()
     {
         if ($this->hasUrl()) {
             $this->add('canonical', $this->currentUrl);

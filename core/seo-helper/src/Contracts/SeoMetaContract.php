@@ -14,50 +14,50 @@ interface SeoMetaContract extends RenderableContract
     /**
      * Set the Title instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\TitleContract $title
+     * @param  \Core\SeoHelper\Contracts\Entities\TitleContract $title
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function title(TitleContract $title);
 
     /**
      * Set the Description instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\DescriptionContract $description
+     * @param  \Core\SeoHelper\Contracts\Entities\DescriptionContract $description
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function description(DescriptionContract $description);
 
     /**
      * Set the Keywords instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\KeywordsContract $keywords
+     * @param  \Core\SeoHelper\Contracts\Entities\KeywordsContract $keywords
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function keywords(KeywordsContract $keywords);
 
     /**
      * Set the MiscTags instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\MiscTagsContract $misc
+     * @param  \Core\SeoHelper\Contracts\Entities\MiscTagsContract $misc
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function misc(MiscTagsContract $misc);
 
     /**
      * Set the Webmasters instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\WebmastersContract $webmasters
+     * @param  \Core\SeoHelper\Contracts\Entities\WebmastersContract $webmasters
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function webmasters(WebmastersContract $webmasters);
 
@@ -69,7 +69,7 @@ interface SeoMetaContract extends RenderableContract
      * @param  string $separator
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setTitle($title, $siteName = null, $separator = null);
 
@@ -79,7 +79,7 @@ interface SeoMetaContract extends RenderableContract
      * @param  string $content
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setDescription($content);
 
@@ -89,7 +89,7 @@ interface SeoMetaContract extends RenderableContract
      * @param  array|string $content
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setKeywords($content);
 
@@ -99,7 +99,7 @@ interface SeoMetaContract extends RenderableContract
      * @param  string $keyword
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addKeyword($keyword);
 
@@ -109,7 +109,7 @@ interface SeoMetaContract extends RenderableContract
      * @param  array $keywords
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addKeywords(array $keywords);
 
@@ -120,7 +120,7 @@ interface SeoMetaContract extends RenderableContract
      * @param  string $content
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addWebmaster($webmaster, $content);
 
@@ -130,7 +130,7 @@ interface SeoMetaContract extends RenderableContract
      * @param  string $url
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setUrl($url);
 
@@ -140,7 +140,7 @@ interface SeoMetaContract extends RenderableContract
      * @param  string $code
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setGoogleAnalytics($code);
 
@@ -151,7 +151,7 @@ interface SeoMetaContract extends RenderableContract
      * @param  string $content
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addMeta($name, $content);
 
@@ -161,7 +161,7 @@ interface SeoMetaContract extends RenderableContract
      * @param  array $meta
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addMetas(array $meta);
 }

@@ -6,44 +6,44 @@ use Core\SeoHelper\Contracts\SeoHelperContract;
 use Core\SeoHelper\Contracts\SeoMetaContract;
 use Core\SeoHelper\Contracts\SeoOpenGraphContract;
 use Core\SeoHelper\Contracts\SeoTwitterContract;
+use Exception;
 
 class SeoHelper implements SeoHelperContract
 {
     /**
      * The SeoMeta instance.
      *
-     * @var \Botble\SeoHelper\Contracts\SeoMetaContract
+     * @var \Core\SeoHelper\Contracts\SeoMetaContract
      */
     private $seoMeta;
 
     /**
      * The SeoOpenGraph instance.
      *
-     * @var \Botble\SeoHelper\Contracts\SeoOpenGraphContract
+     * @var \Core\SeoHelper\Contracts\SeoOpenGraphContract
      */
     private $seoOpenGraph;
 
     /**
      * The SeoTwitter instance.
      *
-     * @var \Botble\SeoHelper\Contracts\SeoTwitterContract
+     * @var \Core\SeoHelper\Contracts\SeoTwitterContract
      */
     private $seoTwitter;
 
     /**
      * Make SeoHelper instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\SeoMetaContract $seoMeta
-     * @param  \Botble\SeoHelper\Contracts\SeoOpenGraphContract $seoOpenGraph
-     * @param  \Botble\SeoHelper\Contracts\SeoTwitterContract $seoTwitter
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @param  \Core\SeoHelper\Contracts\SeoMetaContract $seoMeta
+     * @param  \Core\SeoHelper\Contracts\SeoOpenGraphContract $seoOpenGraph
+     * @param  \Core\SeoHelper\Contracts\SeoTwitterContract $seoTwitter
+     * @author ARCANEDEV
      */
     public function __construct(
         SeoMetaContract $seoMeta,
         SeoOpenGraphContract $seoOpenGraph,
         SeoTwitterContract $seoTwitter
-    )
-    {
+    ) {
         $this->setSeoMeta($seoMeta);
         $this->setSeoOpenGraph($seoOpenGraph);
         $this->setSeoTwitter($seoTwitter);
@@ -52,8 +52,8 @@ class SeoHelper implements SeoHelperContract
     /**
      * Get SeoMeta instance.
      *
-     * @return \Botble\SeoHelper\Contracts\SeoMetaContract
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Contracts\SeoMetaContract
+     * @author ARCANEDEV
      */
     public function meta()
     {
@@ -63,10 +63,10 @@ class SeoHelper implements SeoHelperContract
     /**
      * Set SeoMeta instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\SeoMetaContract $seoMeta
+     * @param  \Core\SeoHelper\Contracts\SeoMetaContract $seoMeta
      *
-     * @return \Botble\SeoHelper\SeoHelper
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoHelper
+     * @author ARCANEDEV
      */
     public function setSeoMeta(SeoMetaContract $seoMeta)
     {
@@ -78,8 +78,8 @@ class SeoHelper implements SeoHelperContract
     /**
      * Get SeoOpenGraph instance.
      *
-     * @return \Botble\SeoHelper\Contracts\SeoOpenGraphContract
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Contracts\SeoOpenGraphContract
+     * @author ARCANEDEV
      */
     public function openGraph()
     {
@@ -89,10 +89,10 @@ class SeoHelper implements SeoHelperContract
     /**
      * Get SeoOpenGraph instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\SeoOpenGraphContract $seoOpenGraph
+     * @param  \Core\SeoHelper\Contracts\SeoOpenGraphContract $seoOpenGraph
      *
-     * @return \Botble\SeoHelper\SeoHelper
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoHelper
+     * @author ARCANEDEV
      */
     public function setSeoOpenGraph(SeoOpenGraphContract $seoOpenGraph)
     {
@@ -104,8 +104,8 @@ class SeoHelper implements SeoHelperContract
     /**
      * Get SeoTwitter instance.
      *
-     * @return \Botble\SeoHelper\Contracts\SeoTwitterContract
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Contracts\SeoTwitterContract
+     * @author ARCANEDEV
      */
     public function twitter()
     {
@@ -115,10 +115,10 @@ class SeoHelper implements SeoHelperContract
     /**
      * Set SeoTwitter instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\SeoTwitterContract $seoTwitter
+     * @param  \Core\SeoHelper\Contracts\SeoTwitterContract $seoTwitter
      *
-     * @return \Botble\SeoHelper\SeoHelper
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoHelper
+     * @author ARCANEDEV
      */
     public function setSeoTwitter(SeoTwitterContract $seoTwitter)
     {
@@ -134,8 +134,8 @@ class SeoHelper implements SeoHelperContract
      * @param  string|null $siteName
      * @param  string|null $separator
      *
-     * @return \Botble\SeoHelper\SeoHelper
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoHelper
+     * @author ARCANEDEV
      */
     public function setTitle($title, $siteName = null, $separator = null)
     {
@@ -152,8 +152,8 @@ class SeoHelper implements SeoHelperContract
      *
      * @param  string $description
      *
-     * @return \Botble\SeoHelper\Contracts\SeoHelperContract
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Contracts\SeoHelperContract
+     * @author ARCANEDEV
      */
     public function setDescription($description)
     {
@@ -169,8 +169,8 @@ class SeoHelper implements SeoHelperContract
      *
      * @param  array|string $keywords
      *
-     * @return \Botble\SeoHelper\SeoHelper
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoHelper
+     * @author ARCANEDEV
      */
     public function setKeywords($keywords)
     {
@@ -183,7 +183,7 @@ class SeoHelper implements SeoHelperContract
      * Render all seo tags.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
@@ -198,7 +198,7 @@ class SeoHelper implements SeoHelperContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {
@@ -206,19 +206,61 @@ class SeoHelper implements SeoHelperContract
     }
 
     /**
+     * @param $screen
+     * @param \Illuminate\Http\Request $request
+     * @param $object
+     * @return bool
      * @author TrinhLe
-     * @since 2.3
      */
-    public function screenUsingSEOHelper()
+    public function saveMetaData($screen, $request, $object)
     {
-        $default = [];
-        
-        if (defined('BLOG_POST_MODULE_SCREEN_NAME')) {
-            $default[] = BLOG_POST_MODULE_SCREEN_NAME;
+        if (in_array($screen, config('packages.seo-helper.general.supported'))) {
+            try {
+                if (empty($request->input('seo_meta'))) {
+                    delete_meta_data($object->id, 'seo_meta', $screen);
+                    return false;
+                }
+                save_meta_data($object->id, 'seo_meta', $request->input('seo_meta'), $screen);
+                return true;
+            } catch (Exception $ex) {
+                return false;
+            }
         }
-        if (defined('PRODUCT_MODULE_SCREEN_NAME')) {
-            $default[] = PRODUCT_MODULE_SCREEN_NAME;
+        return false;
+    }
+
+    /**
+     * @param $screen
+     * @param $object
+     * @return bool
+     * @author TrinhLe
+     */
+    public function deleteMetaData($screen, $object)
+    {
+        try {
+            if (in_array($screen, config('packages.seo-helper.general.supported'))) {
+                delete_meta_data($object->id, 'seo_meta', $screen);
+            }
+            return true;
+        } catch (Exception $ex) {
+            return false;
         }
-        return apply_filters(SEO_HELPER_FILTER_SCREEN_USING, $default);
+    }
+
+    /**
+     * @param string | array $screen
+     * @return SeoHelper
+     * @author TrinhLe
+     */
+    public function registerModule($screen)
+    {
+        if (!is_array($screen)) {
+            $screen = [$screen];
+        }
+        config([
+            'packages.seo-helper.general.supported' => array_merge(config('packages.seo-helper.general.supported'),
+                $screen),
+        ]);
+        return $this;
     }
 }

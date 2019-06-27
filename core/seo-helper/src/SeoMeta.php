@@ -16,48 +16,54 @@ class SeoMeta implements SeoMetaContract
     /**
      * The Title instance.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\TitleContract
+     * @var \Core\SeoHelper\Contracts\Entities\TitleContract
      */
     protected $title;
 
     /**
      * The Description instance.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\DescriptionContract
+     * @var \Core\SeoHelper\Contracts\Entities\DescriptionContract
      */
     protected $description;
 
     /**
      * The Keywords instance.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\KeywordsContract
+     * @var \Core\SeoHelper\Contracts\Entities\KeywordsContract
      */
     protected $keywords;
 
     /**
      * The MiscTags instance.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\MiscTagsContract
+     * @var \Core\SeoHelper\Contracts\Entities\MiscTagsContract
      */
     protected $misc;
 
     /**
      * The Webmasters instance.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\WebmastersContract
+     * @var \Core\SeoHelper\Contracts\Entities\WebmastersContract
      */
     protected $webmasters;
 
     /**
      * The Analytics instance.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\AnalyticsContract
+     * @var \Core\SeoHelper\Contracts\Entities\AnalyticsContract
      */
     protected $analytics;
 
     /**
+     * @var null
+     */
+    protected $currentUrl = null;
+
+    /**
      * Make SeoMeta instance.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
+     * @throws Exceptions\InvalidArgumentException
      */
     public function __construct()
     {
@@ -72,10 +78,10 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the Title instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\TitleContract $title
+     * @param  \Core\SeoHelper\Contracts\Entities\TitleContract $title
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function title(TitleContract $title)
     {
@@ -87,10 +93,10 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the Description instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\DescriptionContract $description
+     * @param  \Core\SeoHelper\Contracts\Entities\DescriptionContract $description
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function description(DescriptionContract $description)
     {
@@ -102,10 +108,10 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the Keywords instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\KeywordsContract $keywords
+     * @param  \Core\SeoHelper\Contracts\Entities\KeywordsContract $keywords
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function keywords(KeywordsContract $keywords)
     {
@@ -117,10 +123,10 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the MiscTags instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\MiscTagsContract $misc
+     * @param  \Core\SeoHelper\Contracts\Entities\MiscTagsContract $misc
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function misc(MiscTagsContract $misc)
     {
@@ -132,10 +138,10 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the Webmasters instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\WebmastersContract $webmasters
+     * @param  \Core\SeoHelper\Contracts\Entities\WebmastersContract $webmasters
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function webmasters(WebmastersContract $webmasters)
     {
@@ -147,12 +153,12 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the Analytics instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\AnalyticsContract $analytics
+     * @param  \Core\SeoHelper\Contracts\Entities\AnalyticsContract $analytics
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
-    private function analytics(AnalyticsContract $analytics)
+    protected function analytics(AnalyticsContract $analytics)
     {
         $this->analytics = $analytics;
 
@@ -162,7 +168,7 @@ class SeoMeta implements SeoMetaContract
     /**
      * @param $code
      * @return $this
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setGoogle($code)
     {
@@ -177,8 +183,8 @@ class SeoMeta implements SeoMetaContract
      * @param  string $siteName
      * @param  string $separator
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function setTitle($title, $siteName = null, $separator = null)
     {
@@ -202,8 +208,8 @@ class SeoMeta implements SeoMetaContract
      *
      * @param  string $content
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function setDescription($content)
     {
@@ -217,8 +223,8 @@ class SeoMeta implements SeoMetaContract
      *
      * @param  array|string $content
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function setKeywords($content)
     {
@@ -232,8 +238,8 @@ class SeoMeta implements SeoMetaContract
      *
      * @param  string $keyword
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function addKeyword($keyword)
     {
@@ -247,8 +253,8 @@ class SeoMeta implements SeoMetaContract
      *
      * @param  array $keywords
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function addKeywords(array $keywords)
     {
@@ -263,8 +269,8 @@ class SeoMeta implements SeoMetaContract
      * @param  string $webmaster
      * @param  string $content
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function addWebmaster($webmaster, $content)
     {
@@ -278,8 +284,8 @@ class SeoMeta implements SeoMetaContract
      *
      * @param  string $url
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function setUrl($url)
     {
@@ -294,8 +300,8 @@ class SeoMeta implements SeoMetaContract
      *
      * @param  string $code
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function setGoogleAnalytics($code)
     {
@@ -310,8 +316,8 @@ class SeoMeta implements SeoMetaContract
      * @param  string $name
      * @param  string $content
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function addMeta($name, $content)
     {
@@ -325,8 +331,8 @@ class SeoMeta implements SeoMetaContract
      *
      * @param  array $meta
      *
-     * @return \Botble\SeoHelper\SeoMeta
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\SeoMeta
+     * @author ARCANEDEV
      */
     public function addMetas(array $meta)
     {
@@ -339,7 +345,7 @@ class SeoMeta implements SeoMetaContract
      * Render all seo tags.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
@@ -357,7 +363,7 @@ class SeoMeta implements SeoMetaContract
      * Render all seo tags.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {

@@ -11,8 +11,15 @@ if (!function_exists('add_meta_box')) {
      * @param null $callback_args
      * @author TrinhLe
      */
-    function add_meta_box($id, $title, $callback, $screen = null, $context = 'advanced', $priority = 'default', $callback_args = null)
-    {
+    function add_meta_box(
+        $id,
+        $title,
+        $callback,
+        $screen = null,
+        $context = 'advanced',
+        $priority = 'default',
+        $callback_args = null
+    ) {
         MetaBox::addMetaBox($id, $title, $callback, $screen, $context, $priority, $callback_args);
     }
 }

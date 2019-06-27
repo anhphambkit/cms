@@ -11,7 +11,7 @@ interface MetaContract extends RenderableContract
      * Get the meta name.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function key();
 
@@ -21,7 +21,7 @@ interface MetaContract extends RenderableContract
      * @param  string $prefix
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPrefix($prefix);
 
@@ -31,7 +31,7 @@ interface MetaContract extends RenderableContract
      * @param  string $nameProperty
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setNameProperty($nameProperty);
 
@@ -51,7 +51,7 @@ interface MetaContract extends RenderableContract
      * Check if meta is valid.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function isValid();
 }

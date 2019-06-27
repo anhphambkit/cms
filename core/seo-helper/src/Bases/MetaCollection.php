@@ -2,11 +2,11 @@
 
 namespace Core\SeoHelper\Bases;
 
+use Core\Base\Master\Collection;
 use Core\SeoHelper\Contracts\Entities\MetaCollectionContract;
 use Core\SeoHelper\Contracts\Helpers\MetaContract;
 use Core\SeoHelper\Contracts\RenderableContract;
 use Core\SeoHelper\Helpers\Meta;
-use Core\Master\Supports\Collection;
 
 abstract class MetaCollection extends Collection implements MetaCollectionContract
 {
@@ -44,8 +44,8 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      *
      * @param  string $prefix
      *
-     * @return \Botble\SeoHelper\Bases\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Bases\MetaCollection
+     * @author ARCANEDEV
      */
     public function setPrefix($prefix)
     {
@@ -59,13 +59,13 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      *
      * @param  array $meta
      *
-     * @return \Botble\SeoHelper\Bases\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Bases\MetaCollection
+     * @author ARCANEDEV
      */
     public function addMany(array $meta)
     {
         foreach ($meta as $name => $content) {
-            $this->add($name, $content);
+            $this->add(compact('name', 'content'));
         }
 
         return $this;
@@ -77,16 +77,20 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * @param  string $name
      * @param  string $content
      *
-     * @return \Botble\SeoHelper\Bases\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Bases\MetaCollection
+     * @author ARCANEDEV
      */
-    public function add($name, $content)
+    public function add($item)
     {
-        if (empty($name) || empty($content)) {
+        if (empty($item)) {
             return $this;
         }
 
-        return $this->addMeta($name, $content);
+        if (!is_array($item)) {
+            dd($item);
+        }
+
+        return $this->addMeta($item);
     }
 
     /**
@@ -95,12 +99,12 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * @param  string $name
      * @param  string $content
      *
-     * @return \Botble\SeoHelper\Bases\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Bases\MetaCollection
+     * @author ARCANEDEV
      */
-    protected function addMeta($name, $content)
+    protected function addMeta(array $meta)
     {
-        $meta = Meta::make($name, $content, $this->nameProperty, $this->prefix);
+        $meta = Meta::make($meta['name'], $meta['content'], $this->nameProperty, $this->prefix);
 
         $this->put($meta->key(), $meta);
 
@@ -112,8 +116,8 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      *
      * @param  array|string $names
      *
-     * @return \Botble\SeoHelper\Bases\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Bases\MetaCollection
+     * @author ARCANEDEV
      */
     public function remove($names)
     {
@@ -126,7 +130,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
@@ -141,7 +145,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {
@@ -154,7 +158,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * @param  string $name
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function isIgnored($name)
     {
@@ -166,8 +170,8 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      *
      * @param  string|array $keys
      *
-     * @return \Botble\SeoHelper\Bases\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Bases\MetaCollection
+     * @author ARCANEDEV
      */
     public function forget($keys)
     {
@@ -181,10 +185,10 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
     /**
      * Refresh meta collection items.
      *
-     * @return \Botble\SeoHelper\Bases\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Bases\MetaCollection
+     * @author ARCANEDEV
      */
-    private function refresh()
+    protected function refresh()
     {
         return $this->map(function (MetaContract $meta) {
             return $meta->setPrefix($this->prefix);
@@ -197,7 +201,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
      * @param  array|string $names
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     protected function prepareName($names)
     {

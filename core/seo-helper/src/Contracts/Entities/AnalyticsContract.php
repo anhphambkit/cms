@@ -12,7 +12,7 @@ interface AnalyticsContract extends RenderableContract
      * @param  string $code
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setGoogle($code);
 }

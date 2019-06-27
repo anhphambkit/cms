@@ -10,7 +10,7 @@ interface KeywordsContract extends RenderableContract
      * Get content.
      *
      * @return array
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getContent();
 
@@ -20,7 +20,7 @@ interface KeywordsContract extends RenderableContract
      * @param  array|string $content
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function set($content);
 
@@ -30,7 +30,7 @@ interface KeywordsContract extends RenderableContract
      * @param  array|string $keywords
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public static function make($keywords);
 
@@ -40,7 +40,7 @@ interface KeywordsContract extends RenderableContract
      * @param  string $keyword
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function add($keyword);
 
@@ -50,7 +50,7 @@ interface KeywordsContract extends RenderableContract
      * @param  array $keywords
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addMany(array $keywords);
 }

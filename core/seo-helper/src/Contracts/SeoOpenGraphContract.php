@@ -9,10 +9,10 @@ interface SeoOpenGraphContract extends RenderableContract
     /**
      * Set the Open Graph instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\OpenGraphContract $openGraph
+     * @param  \Core\SeoHelper\Contracts\Entities\OpenGraphContract $openGraph
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setOpenGraph(OpenGraphContract $openGraph);
 
@@ -22,7 +22,7 @@ interface SeoOpenGraphContract extends RenderableContract
      * @param  string $prefix
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setPrefix($prefix);
 
@@ -32,7 +32,7 @@ interface SeoOpenGraphContract extends RenderableContract
      * @param  string $type
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setType($type);
 
@@ -42,7 +42,7 @@ interface SeoOpenGraphContract extends RenderableContract
      * @param  string $title
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setTitle($title);
 
@@ -52,7 +52,7 @@ interface SeoOpenGraphContract extends RenderableContract
      * @param  string $description
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setDescription($description);
 
@@ -62,7 +62,7 @@ interface SeoOpenGraphContract extends RenderableContract
      * @param  string $url
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setUrl($url);
 
@@ -72,7 +72,7 @@ interface SeoOpenGraphContract extends RenderableContract
      * @param  string $image
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setImage($image);
 
@@ -82,7 +82,7 @@ interface SeoOpenGraphContract extends RenderableContract
      * @param  string $siteName
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setSiteName($siteName);
 
@@ -92,7 +92,7 @@ interface SeoOpenGraphContract extends RenderableContract
      * @param  array $properties
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addProperties(array $properties);
 
@@ -103,7 +103,7 @@ interface SeoOpenGraphContract extends RenderableContract
      * @param  string $content
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addProperty($property, $content);
 }

@@ -3,13 +3,15 @@
 namespace Core\SeoHelper\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Exception;
-use Illuminate\Http\Request;
 use SeoHelper;
 use MetaBox;
 
 class HookServiceProvider extends ServiceProvider
 {
+    /**
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
 
     /**
      * Boot the service provider.
@@ -18,11 +20,9 @@ class HookServiceProvider extends ServiceProvider
     public function boot()
     {
         add_action(BASE_ACTION_META_BOXES, [$this, 'addMetaBox'], 12, 3);
-        add_action(BASE_ACTION_AFTER_CREATE_CONTENT, [$this, 'saveMetaData'], 20, 3);
-        add_action(BASE_ACTION_AFTER_UPDATE_CONTENT, [$this, 'saveMetaData'], 20, 3);
-        add_action(BASE_ACTION_AFTER_DELETE_CONTENT, [$this, 'deleteMetaData'], 55, 2);
         add_action(BASE_ACTION_PUBLIC_RENDER_SINGLE, [$this, 'setSeoMeta'], 56, 2);
-        app()->booted(function () {
+
+        $this->app->booted(function () {
             add_action(BASE_ACTION_META_BOXES, [MetaBox::class, 'doMetaBoxes'], 8, 3);
         });
     }
@@ -33,8 +33,9 @@ class HookServiceProvider extends ServiceProvider
      */
     public function addMetaBox($screen)
     {
-        if (in_array($screen, SeoHelper::screenUsingSEOHelper())) {
-            add_meta_box('seo_wrap', trans('core-seo-helper::seo-helper.meta_box_header'), [$this, 'seoMetaBox'], $screen);
+        if (in_array($screen, config('core-seo-helper.general.supported'))) {
+            add_meta_box('seo_wrap', trans('core-seo-helper::seo-helper.meta_box_header'), [$this, 'seoMetaBox'],
+                $screen, 'advanced', 'low');
         }
     }
 
@@ -45,8 +46,7 @@ class HookServiceProvider extends ServiceProvider
     public function seoMetaBox()
     {
         $meta = [
-            'seo_title' => null,
-            'seo_keyword' => null,
+            'seo_title'       => null,
             'seo_description' => null,
         ];
 
@@ -59,48 +59,9 @@ class HookServiceProvider extends ServiceProvider
             $meta = array_merge($meta, $meta_data);
         }
 
-        return view('core-seo-helper::meta_box', compact('meta'));
-    }
+        $object = $args[0];
 
-    /**
-     * @param $screen
-     * @param Request $request
-     * @param $object
-     * @return bool
-     * @author TrinhLe
-     */
-    public function saveMetaData($screen, Request $request, $object)
-    {
-        if (in_array($screen, SeoHelper::screenUsingSEOHelper())) {
-            try {
-                if (empty($request->input('seo_meta'))) {
-                    delete_meta_data($object->id, 'seo_meta', $screen);
-                    return false;
-                }
-                save_meta_data($object->id, 'seo_meta', $request->input('seo_meta'), $screen);
-                return true;
-            } catch (Exception $ex) {
-                return false;
-            }
-        }
-    }
-
-    /**
-     * @param $screen
-     * @param $object
-     * @return bool
-     * @author TrinhLe
-     */
-    public function deleteMetaData($screen, $object)
-    {
-        try {
-            if (in_array($screen, SeoHelper::screenUsingSEOHelper())) {
-                delete_meta_data($object->id, 'seo_meta', $screen);
-            }
-            return true;
-        } catch (Exception $ex) {
-            return false;
-        }
+        return view('core-seo-helper::meta_box', compact('meta', 'object'));
     }
 
     /**
@@ -114,10 +75,6 @@ class HookServiceProvider extends ServiceProvider
         if (!empty($meta)) {
             if (!empty($meta['seo_title'])) {
                 SeoHelper::setTitle($meta['seo_title']);
-            }
-
-            if (!empty($meta['seo_keyword'])) {
-                SeoHelper::setKeywords($meta['seo_keyword']);
             }
 
             if (!empty($meta['seo_description'])) {

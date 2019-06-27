@@ -13,7 +13,8 @@ class MetaCollection extends BaseMetaCollection
      * @var array
      */
     protected $ignored = [
-        'description', 'keywords'
+        'description',
+        'keywords',
     ];
 
     /**
@@ -22,14 +23,14 @@ class MetaCollection extends BaseMetaCollection
      * @param  string $name
      * @param  string $content
      *
-     * @return \Botble\SeoHelper\Entities\MetaCollection
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\MetaCollection
+     * @author ARCANEDEV
      */
-    public function add($name, $content)
+    public function add($item)
     {
-        $meta = Meta::make($name, $content);
+        $meta = Meta::make($item['name'], $item['content']);
 
-        if ($meta->isValid() && !$this->isIgnored($name)) {
+        if ($meta->isValid() && !$this->isIgnored($item['name'])) {
             $this->put($meta->key(), $meta);
         }
 

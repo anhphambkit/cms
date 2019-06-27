@@ -9,13 +9,13 @@ class Graph implements OpenGraphContract
     /**
      * The Open Graph meta collection.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\MetaCollectionContract
+     * @var \Core\SeoHelper\Contracts\Entities\MetaCollectionContract
      */
     protected $meta;
 
     /**
      * Make Graph instance.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __construct()
     {
@@ -27,8 +27,8 @@ class Graph implements OpenGraphContract
      *
      * @param  string $prefix
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\OpenGraph\Graph
+     * @author ARCANEDEV
      */
     public function setPrefix($prefix)
     {
@@ -42,8 +42,8 @@ class Graph implements OpenGraphContract
      *
      * @param  string $type
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\OpenGraph\Graph
+     * @author ARCANEDEV
      */
     public function setType($type)
     {
@@ -55,8 +55,8 @@ class Graph implements OpenGraphContract
      *
      * @param  string $title
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\OpenGraph\Graph
+     * @author ARCANEDEV
      */
     public function setTitle($title)
     {
@@ -68,8 +68,8 @@ class Graph implements OpenGraphContract
      *
      * @param  string $description
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\OpenGraph\Graph
+     * @author ARCANEDEV
      */
     public function setDescription($description)
     {
@@ -81,8 +81,8 @@ class Graph implements OpenGraphContract
      *
      * @param  string $url
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\OpenGraph\Graph
+     * @author ARCANEDEV
      */
     public function setUrl($url)
     {
@@ -94,8 +94,8 @@ class Graph implements OpenGraphContract
      *
      * @param  string $image
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\OpenGraph\Graph
+     * @author ARCANEDEV
      */
     public function setImage($image)
     {
@@ -107,8 +107,8 @@ class Graph implements OpenGraphContract
      *
      * @param  string $siteName
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\OpenGraph\Graph
+     * @author ARCANEDEV
      */
     public function setSiteName($siteName)
     {
@@ -120,8 +120,8 @@ class Graph implements OpenGraphContract
      *
      * @param  array $properties
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\OpenGraph\Graph
+     * @author ARCANEDEV
      */
     public function addProperties(array $properties)
     {
@@ -133,15 +133,15 @@ class Graph implements OpenGraphContract
     /**
      * Add an open graph property.
      *
-     * @param  string $property
+     * @param  string $name
      * @param  string $content
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @return \Core\SeoHelper\Entities\OpenGraph\Graph
+     * @author ARCANEDEV
      */
-    public function addProperty($property, $content)
+    public function addProperty($name, $content)
     {
-        $this->meta->add($property, $content);
+        $this->meta->add(compact('name', 'content'));
 
         return $this;
     }
@@ -150,7 +150,7 @@ class Graph implements OpenGraphContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
@@ -161,7 +161,7 @@ class Graph implements OpenGraphContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {

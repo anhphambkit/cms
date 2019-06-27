@@ -10,7 +10,7 @@ class MetaBox
     /**
      * @var array
      */
-    protected $meta_boxes = [];
+    protected $metaBoxes = [];
 
     /**
      * @var MetaBoxInterface
@@ -36,26 +36,33 @@ class MetaBox
      * @param null $callback_args
      * @author TrinhLe
      */
-    public function addMetaBox($id, $title, $callback, $screen = null, $context = 'advanced', $priority = 'default', $callback_args = null)
+    public function addMetaBox(
+        $id,
+        $title,
+        $callback,
+        $screen = null,
+        $context = 'advanced',
+        $priority = 'default',
+        $callback_args = null
+    )
     {
-
-        if (!isset($this->meta_boxes[$screen])) {
-            $this->meta_boxes[$screen] = [];
+        if (!isset($this->metaBoxes[$screen])) {
+            $this->metaBoxes[$screen] = [];
         }
-        if (!isset($this->meta_boxes[$screen][$context])) {
-            $this->meta_boxes[$screen][$context] = [];
+        if (!isset($this->metaBoxes[$screen][$context])) {
+            $this->metaBoxes[$screen][$context] = [];
         }
 
-        foreach (array_keys($this->meta_boxes[$screen]) as $a_context) {
+        foreach (array_keys($this->metaBoxes[$screen]) as $a_context) {
             foreach (['high', 'core', 'default', 'low'] as $a_priority) {
-                if (!isset($this->meta_boxes[$screen][$a_context][$a_priority][$id])) {
+                if (!isset($this->metaBoxes[$screen][$a_context][$a_priority][$id])) {
                     continue;
                 }
 
                 // If a core box was previously added or removed by a plugin, don't add.
                 if ('core' == $priority) {
                     // If core box previously deleted, don't add
-                    if (false === $this->meta_boxes[$screen][$a_context][$a_priority][$id]) {
+                    if (false === $this->metaBoxes[$screen][$a_context][$a_priority][$id]) {
                         return;
                     }
 
@@ -64,26 +71,26 @@ class MetaBox
                      * maintain sort order.
                      */
                     if ('default' == $a_priority) {
-                        $this->meta_boxes[$screen][$a_context]['core'][$id] = $this->meta_boxes[$screen][$a_context]['default'][$id];
-                        unset($this->meta_boxes[$screen][$a_context]['default'][$id]);
+                        $this->metaBoxes[$screen][$a_context]['core'][$id] = $this->metaBoxes[$screen][$a_context]['default'][$id];
+                        unset($this->metaBoxes[$screen][$a_context]['default'][$id]);
                     }
                     return;
                 }
-                // If no priority given and id already present, use existing priority.
+                /* If no priority given and id already present, use existing priority.
+                 *
+                 * Else, if we're adding to the sorted priority, we don't know the title
+                 * or callback. Grab them from the previously added context/priority.
+                 */
                 if (empty($priority)) {
                     $priority = $a_priority;
-                    /*
-                     * Else, if we're adding to the sorted priority, we don't know the title
-                     * or callback. Grab them from the previously added context/priority.
-                     */
                 } elseif ('sorted' == $priority) {
-                    $title = $this->meta_boxes[$screen][$a_context][$a_priority][$id]['title'];
-                    $callback = $this->meta_boxes[$screen][$a_context][$a_priority][$id]['callback'];
-                    $callback_args = $this->meta_boxes[$screen][$a_context][$a_priority][$id]['args'];
+                    $title = $this->metaBoxes[$screen][$a_context][$a_priority][$id]['title'];
+                    $callback = $this->metaBoxes[$screen][$a_context][$a_priority][$id]['callback'];
+                    $callback_args = $this->metaBoxes[$screen][$a_context][$a_priority][$id]['args'];
                 }
                 // An id can be in only one priority and one context.
                 if ($priority != $a_priority || $context != $a_context) {
-                    unset($this->meta_boxes[$screen][$a_context][$a_priority][$id]);
+                    unset($this->metaBoxes[$screen][$a_context][$a_priority][$id]);
                 }
             }
         }
@@ -92,11 +99,16 @@ class MetaBox
             $priority = 'low';
         }
 
-        if (!isset($this->meta_boxes[$screen][$context][$priority])) {
-            $this->meta_boxes[$screen][$context][$priority] = [];
+        if (!isset($this->metaBoxes[$screen][$context][$priority])) {
+            $this->metaBoxes[$screen][$context][$priority] = [];
         }
 
-        $this->meta_boxes[$screen][$context][$priority][$id] = ['id' => $id, 'title' => $title, 'callback' => $callback, 'args' => $callback_args];
+        $this->metaBoxes[$screen][$context][$priority][$id] = [
+            'id'       => $id,
+            'title'    => $title,
+            'callback' => $callback,
+            'args'     => $callback_args,
+        ];
     }
 
     /**
@@ -105,23 +117,29 @@ class MetaBox
      * @param string $screen Screen identifier
      * @param string $context box context
      * @param mixed $object gets passed to the box callback function as first parameter
-     * @return int number of meta_boxes
+     * @return int number of metaBoxes
      * @author TrinhLe
+     * @throws \Throwable
      */
     public function doMetaBoxes($screen, $context, $object = null)
     {
         $index = 0;
         $data = '';
-        if (isset($this->meta_boxes[$screen][$context])) {
+        if (isset($this->metaBoxes[$screen][$context])) {
             foreach (['high', 'sorted', 'core', 'default', 'low'] as $priority) {
-                if (isset($this->meta_boxes[$screen][$context][$priority])) {
-                    foreach ((array) $this->meta_boxes[$screen][$context][$priority] as $box) {
-                        if (false == $box || !$box['title']) {
-                            continue;
-                        }
-                        $index++;
-                        $data .= view('core-base::elements.forms.meta-box-wrap', ['box' => $box, 'callback' => call_user_func_array($box['callback'], [$object, $screen, $box])])->render();
+                if (!isset($this->metaBoxes[$screen][$context][$priority])) {
+                    continue;
+                }
+
+                foreach ((array)$this->metaBoxes[$screen][$context][$priority] as $box) {
+                    if (false == $box || !$box['title']) {
+                        continue;
                     }
+                    $index++;
+                    $data .= view('core-base::elements.forms.meta-box-wrap', [
+                        'box'      => $box,
+                        'callback' => call_user_func_array($box['callback'], [$object, $screen, $box]),
+                    ])->render();
                 }
             }
         }
@@ -129,7 +147,6 @@ class MetaBox
         echo view('core-base::elements.forms.meta-box', compact('data', 'context'))->render();
 
         return $index;
-
     }
 
     /**
@@ -142,17 +159,16 @@ class MetaBox
      */
     public function removeMetaBox($id, $screen, $context)
     {
-        if (!isset($this->meta_boxes[$screen])) {
-            $this->meta_boxes[$screen] = [];
+        if (!isset($this->metaBoxes[$screen])) {
+            $this->metaBoxes[$screen] = [];
         }
 
-        if (!isset($this->meta_boxes[$screen][$context])) {
-            $this->meta_boxes[$screen][$context] = [];
+        if (!isset($this->metaBoxes[$screen][$context])) {
+            $this->metaBoxes[$screen][$context] = [];
         }
-
 
         foreach (['high', 'core', 'default', 'low'] as $priority) {
-            $this->meta_boxes[$screen][$context][$priority][$id] = false;
+            $this->metaBoxes[$screen][$context][$priority][$id] = false;
         }
     }
 
@@ -171,8 +187,8 @@ class MetaBox
         try {
             $field_meta = $this->metaBoxRepository->getFirstBy([
                 'content_id' => $content_id,
-                'meta_key' => $key,
-                'reference' => $reference,
+                'meta_key'   => $key,
+                'reference'  => $reference,
             ]);
             if (!$field_meta) {
                 $field_meta = $this->metaBoxRepository->getModel();
@@ -204,16 +220,15 @@ class MetaBox
      */
     public function getMetaData($content_id, $key, $reference, $single = false, $select = ['meta_value'])
     {
-        $field =  $this->getMeta($content_id, $key, $reference, $select);
+        $field = $this->getMeta($content_id, $key, $reference, $select);
         if (!$field) {
             return $single ? '' : [];
         }
 
         if ($single) {
             return $field->meta_value[0];
-        } else {
-            return $field->meta_value;
         }
+        return $field->meta_value;
     }
 
     /**
@@ -226,8 +241,13 @@ class MetaBox
      */
     public function getMeta($content_id, $key, $reference, $select = ['meta_value'])
     {
-        return $this->metaBoxRepository->getFirstBy(['content_id' => $content_id, 'meta_key' => $key, 'reference' => $reference], $select);
+        return $this->metaBoxRepository->getFirstBy([
+            'content_id' => $content_id,
+            'meta_key'   => $key,
+            'reference'  => $reference,
+        ], $select);
     }
+
     /**
      * @param $content_id
      * @param $key
@@ -237,6 +257,10 @@ class MetaBox
      */
     public function deleteMetaData($content_id, $key, $reference)
     {
-        return $this->metaBoxRepository->deleteBy(['content_id' => $content_id, 'meta_key' => $key, 'reference' => $reference]);
+        return $this->metaBoxRepository->deleteBy([
+            'content_id' => $content_id,
+            'meta_key'   => $key,
+            'reference'  => $reference,
+        ]);
     }
 }

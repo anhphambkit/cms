@@ -5,10 +5,10 @@ return [
      |  Title
      | ------------------------------------------------------------------------------------------------
      */
-    'title' => [
+    'title'       => [
         'separator' => '-',
-        'first' => true,
-        'max' => 120,
+        'first'     => true,
+        'max'       => 120,
     ],
 
     /* ------------------------------------------------------------------------------------------------
@@ -16,19 +16,19 @@ return [
      | ------------------------------------------------------------------------------------------------
      */
     'description' => [
-        'max' => 120,
+        'max' => 386,
     ],
 
     /* ------------------------------------------------------------------------------------------------
      |  Miscellaneous
      | ------------------------------------------------------------------------------------------------
      */
-    'misc' => [
+    'misc'        => [
         'canonical' => true,
-        'robots' => false,  // Tell robots not to index the content if it's not on live
-        'default' => [
-            'viewport' => 'width=device-width, initial-scale=1', // Responsive design thing
-            'author' => '', // https://plus.google.com/[YOUR PERSONAL G+ PROFILE HERE]
+        'robots'    => false,  // Tell robots not to index the content if it's not on live
+        'default'   => [
+            'viewport'  => 'width=device-width, initial-scale=1', // Responsive design thing
+            'author'    => '', // https://plus.google.com/[YOUR PERSONAL G+ PROFILE HERE]
             'publisher' => '', // https://plus.google.com/[YOUR PERSONAL G+ PROFILE HERE]
         ],
     ],
@@ -37,21 +37,21 @@ return [
      |  Webmaster Tools
      | ------------------------------------------------------------------------------------------------
      */
-    'webmasters' => [
-        'google' => '',
-        'bing' => '',
-        'alexa' => '',
+    'webmasters'  => [
+        'google'    => '',
+        'bing'      => '',
+        'alexa'     => '',
         'pinterest' => '',
-        'yandex' => '',
+        'yandex'    => '',
     ],
 
     /* ------------------------------------------------------------------------------------------------
      |  Open Graph
      | ------------------------------------------------------------------------------------------------
      */
-    'open-graph' => [
-        'prefix' => 'og:',
-        'type' => 'website',
+    'open-graph'  => [
+        'prefix'     => 'og:',
+        'type'       => 'website',
         'properties' => [],
     ],
 
@@ -60,17 +60,22 @@ return [
      | ------------------------------------------------------------------------------------------------
      |  Supported card types : 'app', 'gallery', 'photo', 'player', 'product', 'summary', 'summary_large_image'.
      */
-    'twitter' => [
+    'twitter'     => [
         'prefix' => 'twitter:',
-        'card' => 'summary',
-        'metas' => [],
+        'card'   => 'summary',
+        'metas'  => [],
     ],
 
     /* ------------------------------------------------------------------------------------------------
      |  Analytics
      | ------------------------------------------------------------------------------------------------
      */
-    'analytics' => [
+    'analytics'   => [
         'google' => '', // UA-XXXXXXXX-X
     ],
+
+    'supported' => [
+        PRODUCT_MODULE_SCREEN_NAME
+    ],
+
 ];

@@ -10,7 +10,7 @@ interface MiscTagsContract extends RenderableContract
      * Get the current URL.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getUrl();
 
@@ -20,7 +20,7 @@ interface MiscTagsContract extends RenderableContract
      * @param  string $url
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function setUrl($url);
 
@@ -30,7 +30,7 @@ interface MiscTagsContract extends RenderableContract
      * @param  array $defaults
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public static function make(array $defaults = []);
 
@@ -41,7 +41,7 @@ interface MiscTagsContract extends RenderableContract
      * @param  string $content
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function add($name, $content);
 
@@ -51,7 +51,7 @@ interface MiscTagsContract extends RenderableContract
      * @param  array $meta
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function addMany(array $meta);
 
@@ -61,7 +61,7 @@ interface MiscTagsContract extends RenderableContract
      * @param  array|string $names
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function remove($names);
 
@@ -69,7 +69,7 @@ interface MiscTagsContract extends RenderableContract
      * Reset the meta collection.
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function reset();
 }

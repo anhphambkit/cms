@@ -5,6 +5,7 @@ namespace Core\SeoHelper\Entities;
 use Core\SeoHelper\Contracts\Entities\DescriptionContract;
 use Core\SeoHelper\Exceptions\InvalidArgumentException;
 use Core\SeoHelper\Helpers\Meta;
+use Illuminate\Support\Str;
 
 class Description implements DescriptionContract
 {
@@ -28,23 +29,24 @@ class Description implements DescriptionContract
      *
      * @var int
      */
-    protected $max = 155;
+    protected $max = 386;
 
     /**
      * Make Description instance.
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
+     * @throws InvalidArgumentException
      */
     public function __construct()
     {
         $this->set(setting('seo_description', ''));
-        $this->setMax(config('seo-helper.description.max', 155));
+        $this->setMax(config('packages.seo-helper.general.description.max', 386));
     }
 
     /**
      * Get raw description content.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getContent()
     {
@@ -55,11 +57,11 @@ class Description implements DescriptionContract
      * Get description content.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function get()
     {
-        return str_limit($this->getContent(), $this->getMax());
+        return Str::limit($this->getContent(), $this->getMax());
     }
 
     /**
@@ -68,7 +70,7 @@ class Description implements DescriptionContract
      * @param  string $content
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function set($content)
     {
@@ -81,7 +83,7 @@ class Description implements DescriptionContract
      * Get description max length.
      *
      * @return int
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function getMax()
     {
@@ -94,7 +96,8 @@ class Description implements DescriptionContract
      * @param  int $max
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
+     * @throws InvalidArgumentException
      */
     public function setMax($max)
     {
@@ -112,21 +115,19 @@ class Description implements DescriptionContract
      * @param  int $max
      *
      * @return self
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
+     * @throws InvalidArgumentException
      */
-    public static function make($content, $max = 155)
+    public static function make($content, $max = 386)
     {
-        return new self([
-            'default' => $content,
-            'max' => $max
-        ]);
+        return new self();
     }
 
     /**
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function render()
     {
@@ -141,7 +142,7 @@ class Description implements DescriptionContract
      * Render the tag.
      *
      * @return string
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
     public function __toString()
     {
@@ -152,9 +153,9 @@ class Description implements DescriptionContract
      * Check if description has content.
      *
      * @return bool
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @author ARCANEDEV
      */
-    private function hasContent()
+    protected function hasContent()
     {
         return !empty($this->get());
     }
@@ -164,10 +165,10 @@ class Description implements DescriptionContract
      *
      * @param  int $max
      *
-     * @throws \Botble\SeoHelper\Exceptions\InvalidArgumentException
-     * @author ARCANEDEV <arcanedev.maroc@gmail.com>
+     * @throws \Core\SeoHelper\Exceptions\InvalidArgumentException
+     * @author ARCANEDEV
      */
-    private function checkMax($max)
+    protected function checkMax($max)
     {
         if (!is_int($max)) {
             throw new InvalidArgumentException(
