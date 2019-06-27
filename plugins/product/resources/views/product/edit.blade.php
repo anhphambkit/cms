@@ -256,7 +256,7 @@
                     </div>
                 </div>
                 {{--End Weight/dimensions and specifications--}}
-                @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'advanced') @endphp
+                @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'advanced', $product) @endphp
             </div>
             <div class="col-md-3 right-sidebar">
                 @include('core-base::elements.form-actions')

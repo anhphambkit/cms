@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Seo\Models;
+namespace Core\SeoHelper\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

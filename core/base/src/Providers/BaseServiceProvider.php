@@ -18,6 +18,7 @@ use Core\Base\Repositories\Interfaces\PluginRepositories;
 use Core\Base\Repositories\Eloquent\EloquentPluginRepositories;
 use Core\Base\Repositories\Cache\CachePluginRepositories;
 use Illuminate\Support\Facades\Validator;
+use Core\SeoHelper\Providers\SeoHelperServiceProvider;
 use Event;
 
 class BaseServiceProvider extends ServiceProvider
@@ -75,6 +76,7 @@ class BaseServiceProvider extends ServiceProvider
 		$this->pushlishData();
 		$this->publishesAssetRegister();
 
+        $this->app->register(SeoHelperServiceProvider::class);
 		$this->app->register(CommandServiceProvider::class);
 		$this->app->register(BreadcrumbsServiceProvider::class);
 		$this->app->register(RouteServiceProvider::class);
