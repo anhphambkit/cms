@@ -75,9 +75,9 @@ class Title implements TitleContract
                 $this->setSiteName(setting('seo_title'));
             }
         }
-        $this->setSeparator(config('packages.seo-helper.general.title.separator', '-'));
-        $this->switchPosition(config('packages.seo-helper.general.title.first', true));
-        $this->setMax(config('packages.seo-helper.general.title.max', 55));
+        $this->setSeparator(config('core-seo-helper.general.title.separator', '-'));
+        $this->switchPosition(config('core-seo-helper.general.title.first', true));
+        $this->setMax(config('core-seo-helper.general.title.max', 55));
     }
 
     /**

@@ -29,7 +29,7 @@ class MiscTags implements MiscTagsContract
     {
         $this->meta = new MetaCollection;
         $this->addCanonical();
-        $this->addMany(config('packages.seo-helper.general.misc.default', []));
+        $this->addMany(config('core-seo-helper.general.misc.default', []));
     }
 
     /**

@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Plugins\Product\Repositories\Interfaces\WishListRepositories;
 use Plugins\Product\Services\ProductServices;
+use SeoHelper;
 
 /**
  * Public controller frontend
@@ -40,7 +41,8 @@ class PublicController extends BasePublicController{
 	 */
 	public function homepage(Request $request)
 	{
-        page_title()->setTitle('Ifoss');
+        SeoHelper::setTitle('Ifoss Homepage')
+                    ->setDescription('Ifoss homepage ne');
         $bestSellerProducts = $this->productServices->getBestSellerProducts(8);
         $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
 		return view('homepage', compact('bestSellerProducts', 'productWishListIds'));

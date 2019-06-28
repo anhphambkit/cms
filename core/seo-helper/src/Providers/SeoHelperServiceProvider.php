@@ -48,6 +48,7 @@ class SeoHelperServiceProvider extends ServiceProvider
     {
         $loader = AliasLoader::getInstance();
         $loader->alias('MetaBox', MetaBoxFacade::class);
+        $loader->alias('SeoHelper', SeoHelperFacade::class);
 
         register_repositories($this);
         $this->app->bind(SeoMetaContract::class, SeoMeta::class);

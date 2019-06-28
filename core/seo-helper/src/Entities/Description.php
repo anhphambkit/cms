@@ -39,7 +39,7 @@ class Description implements DescriptionContract
     public function __construct()
     {
         $this->set(setting('seo_description', ''));
-        $this->setMax(config('packages.seo-helper.general.description.max', 386));
+        $this->setMax(config('core-seo-helper.general.description.max', 386));
     }
 
     /**

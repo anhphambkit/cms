@@ -2,7 +2,7 @@
 
 namespace Core\SeoHelper\Bases;
 
-use Core\Base\Master\Collection;
+use Core\Master\Supports\Collection;
 use Core\SeoHelper\Contracts\Entities\MetaCollectionContract;
 use Core\SeoHelper\Contracts\Helpers\MetaContract;
 use Core\SeoHelper\Contracts\RenderableContract;

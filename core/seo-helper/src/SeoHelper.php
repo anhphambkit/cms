@@ -214,7 +214,7 @@ class SeoHelper implements SeoHelperContract
      */
     public function saveMetaData($screen, $request, $object)
     {
-        if (in_array($screen, config('packages.seo-helper.general.supported'))) {
+        if (in_array($screen, config('core-seo-helper.general.supported'))) {
             try {
                 if (empty($request->input('seo_meta'))) {
                     delete_meta_data($object->id, 'seo_meta', $screen);
@@ -238,7 +238,7 @@ class SeoHelper implements SeoHelperContract
     public function deleteMetaData($screen, $object)
     {
         try {
-            if (in_array($screen, config('packages.seo-helper.general.supported'))) {
+            if (in_array($screen, config('core-seo-helper.general.supported'))) {
                 delete_meta_data($object->id, 'seo_meta', $screen);
             }
             return true;
@@ -258,7 +258,7 @@ class SeoHelper implements SeoHelperContract
             $screen = [$screen];
         }
         config([
-            'packages.seo-helper.general.supported' => array_merge(config('packages.seo-helper.general.supported'),
+            'packages.seo-helper.general.supported' => array_merge(config('core-seo-helper.general.supported'),
                 $screen),
         ]);
         return $this;
