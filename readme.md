@@ -69,10 +69,10 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 [program:email-queue]
 process_name=%(program_name)s_%(process_num)02d
-command=php /home/ifossinc/public_html/demo/artisan queue:work --queue=emails
+command=php /home/ifossinc/public_html/demo/artisan queue:work --queue=emails --tries=3
 autostart=true
 autorestart=true
-user=www-data
+user=ifossinc:ifossinc
 numprocs=1
 redirect_stderr=true
 stdout_logfile=/home/ifossinc/public_html/demo/storage/logs/queue.log

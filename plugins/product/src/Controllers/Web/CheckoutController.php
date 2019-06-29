@@ -22,6 +22,7 @@ use Plugins\Payment\Repositories\Interfaces\PaymentRepositories;
 use Plugins\Customer\Models\Order;
 use AssetManager;
 use AssetPipeline;
+use Plugins\Customer\Events\EventConfirmOrder;
 
 class CheckoutController extends BasePublicController
 {	
