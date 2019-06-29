@@ -125,9 +125,15 @@
 									<td class="text-right">{{ $product->quantity }}</td>
 									<td class="text-right">$ {{ number_format($product->price * $product->quantity, 2, ',', '.') }}</td>
 									<td>
-										<a href="javascript:void(0)" class="send-email-product-order text-blue px-2" data-refund-url="{{ route('public.order.send_return_order', [ 'id' => $order->id, 'idProduct' => $product->product_id] ) }}">Return</a> 
-										<a href="javascript:void(0)" class="send-email-product-order text-blue px-2" data-refund-url="{{ route('public.order.send_replace_order', [ 'id' => $order->id, 'idProduct' => $product->product_id]) }}">Replace</a> 
-										<a href="javascript:void(0)" class="send-email-product-order px-2" data-refund-url="{{ route('public.order.send_cancel_order', [ 'id' => $order->id, 'idProduct' => $product->product_id]) }}">Cancel</a>
+										@if(!$product->is_return)
+											<a href="javascript:void(0)" class="send-email-product-order text-blue px-2" data-refund-url="{{ route('public.order.send_return_order', [ 'id' => $order->id, 'idProduct' => $product->product_id] ) }}">Return</a> 
+										@endif
+										@if(!$product->is_replace)
+											<a href="javascript:void(0)" class="send-email-product-order text-blue px-2" data-refund-url="{{ route('public.order.send_replace_order', [ 'id' => $order->id, 'idProduct' => $product->product_id]) }}">Replace</a> 
+										@endif
+										@if(!$product->is_cancel)
+											<a href="javascript:void(0)" class="send-email-product-order px-2" data-refund-url="{{ route('public.order.send_cancel_order', [ 'id' => $order->id, 'idProduct' => $product->product_id]) }}">Cancel</a>
+										@endif
 									</td>
 								</tr>
 							@endforeach
@@ -166,6 +172,7 @@
             success : function (data){
             	if(!data.error){
             		$('#refund-order-modal').modal('hide');
+            		$(`a[data-refund-url="${url}"]`).remove();
                 	Lcms.showNotice('success', data.message, Lcms.languages.notices_msg.success);  
             	}
                 else
