@@ -150,7 +150,7 @@ class EloquentProductRepositories extends RepositoriesAbstract implements Produc
     public function searchProduct(string $keySearch, array $filterPageLoad) {
         $query = $this->model
                         ->where('name', 'ILIKE', "%{$keySearch}%")
-                        ->orWhere('slug', 'ILIKE', "%{$keySearch}%")
+                        ->orWhere('sku', 'ILIKE', "%{$keySearch}%")
                         ->orWhere('keywords', 'ILIKE', "%{$keySearch}%");
         $dataPageLoad = $this->getDataPageLoad($filterPageLoad);
         $result = $this->getResultSearchWithDataPageLoad($query, $dataPageLoad);
