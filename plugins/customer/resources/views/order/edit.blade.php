@@ -72,7 +72,7 @@
                                               <th class="text-right">Item price</th>
                                               <th class="text-right">Item quantity</th>
                                               <th class="text-right">Total</th>
-                                              <!-- <th class="text-right">Action</th> -->
+                                              <th class="text-right">Status</th>
                                             </tr>
                                           </thead>
                                           <tbody>
@@ -88,9 +88,17 @@
                                                   <td class="text-right">$ {{ number_format($product->price, 2, ',', '.') }}</td>
                                                   <td class="text-right">{{ $product->quantity }}</td>
                                                   <td class="text-right">$ {{ number_format($product->price * $product->quantity, 2, ',', '.') }}</td>
-                                                  <!-- <td class="text-right">
-                                                    <button type="button" class="btn-danger round deleteDialog tip" data-toggle="modal" data-section="{{ route('admin.order.product.delete', $product->id) }}">Remove</button>
-                                                  </td> -->
+                                                  <td class="text-right">
+                                                    @if($product->is_return)
+                                                        <button type="button" class="btn-outline-warning round btn-glow">Return</button>
+                                                    @endif
+                                                    @if($product->is_replace)
+                                                        <button type="button" class="btn-outline-danger round btn-glow">Replace</button>
+                                                    @endif
+                                                    @if($product->is_cancel)
+                                                        <button type="button" class="btn-outline-purple round btn-glow">Cancel</button>
+                                                    @endif
+                                                  </td>
                                                 </tr>
                                             @endforeach
                                           </tbody>

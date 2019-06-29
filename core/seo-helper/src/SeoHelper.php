@@ -47,6 +47,7 @@ class SeoHelper implements SeoHelperContract
         $this->setSeoMeta($seoMeta);
         $this->setSeoOpenGraph($seoOpenGraph);
         $this->setSeoTwitter($seoTwitter);
+        $this->setTitle(page_title()->getTitle());
     }
 
     /**

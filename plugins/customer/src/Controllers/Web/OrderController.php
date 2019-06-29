@@ -11,6 +11,7 @@ use Plugins\Customer\Services\IOrderService;
 use Plugins\Customer\Repositories\Interfaces\OrderRepositories;
 use Plugins\Customer\Events\EventSendRefundOrder;
 use Plugins\Customer\Events\EventSendOrderProduct;
+use Plugins\Customer\Repositories\Interfaces\ProductsInOrderRepositories;
 
 class OrderController extends BasePublicController
 {
@@ -20,22 +21,26 @@ class OrderController extends BasePublicController
 	private $customerRepositories;
 
 	/**
-	 * [$orderService description]
 	 * @var IOrderService
 	 */
 	private $orderService;
 
 	/**
-	 * [$orderRepositories description]
-	 * @var [type]
+	 * @var OrderRepositories
 	 */
 	private $orderRepositories;
 
-	public function __construct(CustomerRepositories $customer, IOrderService $orderService, OrderRepositories $orderRepositories)
+	/**	
+	 * @var ProductsInOrderRepositories
+	 */
+	private $productOrder;
+
+	public function __construct(CustomerRepositories $customer, IOrderService $orderService, OrderRepositories $orderRepositories, ProductsInOrderRepositories $productOrder)
 	{
 		$this->customerRepositories = $customer;
 		$this->orderService         = $orderService;
 		$this->orderRepositories    = $orderRepositories;
+		$this->productOrder         = $productOrder;
 	}
 
 	/**
@@ -73,6 +78,12 @@ class OrderController extends BasePublicController
 	public function returnProductOrder($idOrder, $idProduct, Request $request, BaseHttpResponse $response)
 	{
 		$order = $this->orderService->findOrderCustomer(['id' => (int)$idOrder]);
+
+		$this->productOrder->update([
+			'order_id' => (int)$idOrder,
+			'product_id' => (int)$idProduct
+		],['is_return' => true]);
+
 		event(new EventSendOrderProduct($order, EMAIL_RETURN_PRODUCT_ORDER));
 		return $response
                 ->setMessage(trans('Send Refund Order Success.'));
@@ -89,6 +100,12 @@ class OrderController extends BasePublicController
 	public function replaceProductOrder($idOrder, $idProduct, Request $request, BaseHttpResponse $response)
 	{
 		$order = $this->orderService->findOrderCustomer(['id' => (int)$idOrder]);
+
+		$this->productOrder->update([
+			'order_id' => (int)$idOrder,
+			'product_id' => (int)$idProduct
+		],['is_replace' => true]);
+
 		event(new EventSendOrderProduct($order, EMAIL_REPLACE_PRODUCT_ORDER));
 		return $response
                 ->setMessage(trans('Send Replace Order Success.'));
@@ -105,6 +122,12 @@ class OrderController extends BasePublicController
 	public function cancelProductOrder($idOrder, $idProduct, Request $request, BaseHttpResponse $response)
 	{
 		$order = $this->orderService->findOrderCustomer(['id' => (int)$idOrder]);
+
+		$this->productOrder->update([
+			'order_id' => (int)$idOrder,
+			'product_id' => (int)$idProduct
+		],['is_cancel' => true]);
+		
 		event(new EventSendOrderProduct($order, EMAIL_CANCEL_PRODUCT_ORDER));
 		return $response
                 ->setMessage(trans('Send Cancel Order Success.'));
