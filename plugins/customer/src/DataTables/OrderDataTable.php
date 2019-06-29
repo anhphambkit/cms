@@ -24,7 +24,7 @@ class OrderDataTable extends DataTableAbstract
                 return date_from_database($item->created_at, config('core-base.cms.date_format.date'));
             })
             ->editColumn('status', function ($item) {
-                return ucfirst(find_reference_by_id($item->status)->value);
+                return ucfirst(find_reference_by_id($item->status)->display_value);
             })
             ->editColumn('email', function ($item) {
                 return show_email_invoice($item);

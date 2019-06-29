@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 right-sidebar">
+            <div class="col-md-3 right-sidebar order-status">
                 @include('core-base::elements.forms.status', [ 'values' => $orderStatus ,'selected' => $order->status])
             </div>
             <div class="col-md-3 right-sidebar">
@@ -148,11 +148,12 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h5 class="text-center">Address Shipping</h5>
+                                        <h5 class="text-center">Address Shipping 
+                                        </h5>
                                         @include('plugins-customer::partials.order_address',['addressKey' => 'address_shipping'])
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 tab-address-billing">
                                         <h5 class="text-center">Address Billing</h5>
                                         @include('plugins-customer::partials.order_address')
                                     </div>
@@ -232,6 +233,11 @@
             $('.input-tracking-number').val("");
             $('#tracking-number-order-modal').modal('show');
         });
+
+        $(document).ready(function(){
+            $('.tab-address-billing input, .tab-address-billing select').prop("disabled", true);
+            $('.order-status select').prop("disabled", true);
+        })
     </script>
     <script type="text/javascript">
         $(document).on('click', '.addProductDialog', function (event) {
