@@ -6,11 +6,6 @@
 <div class="modal fade" id="refund-order-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<div class="modal-header border-0">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true"><img src="{{ $iconClose }}" alt=""></span>
-				</button>
-			</div>
 			{!! Form::open(['id' => 'form-refund-order']) !!}
 			<div class="modal-body px-s1">
 				<div class="text-uppercase text-custom mb-3">Reason</div>

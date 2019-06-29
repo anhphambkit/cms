@@ -1,5 +1,14 @@
 var Lcms = window.Lcms || {};
 
+Lcms.beginLoading = function(element)
+{
+    $(element).append('<div class="lht-loading loading"><div class="spinner-wrapper"><span class="spinner-text">LOADING</span><span class="spinner"></span></div></div>')
+}
+Lcms.endLoading = function(element)
+{
+    $(element).find(".lht-loading").remove();
+}
+
 Lcms.blockUI = function (options) {
     options = $.extend(true, {}, options);
     var html = '';

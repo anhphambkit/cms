@@ -27,6 +27,7 @@ task('deploy:dev', [
     'deploy:upload',
     // 'deploy:build',
     'deploy:permission',
+    'restart:supervisor',
 ]);
 
 task('deploy:start', function(){ // 
@@ -35,26 +36,26 @@ task('deploy:start', function(){ //
 
 task('deploy:upload', function(){ // 
     writeln('Start upload');
-    // $folders = [
-    //    // 'app',
-    //    // 'config',
-    //    'core',
-    //    'Themes',
-    //    // 'database//seeds',
-    //    'plugins',
-    //    // 'public//themes',
-    //    'public//backend',
-    //    // 'public//frontend',
-    //    // 'public//libs',
-    //    // 'public//vendor',
-    //    // 'Themes',
-    //    'webpack'
-    // ];
-    // $path = get('deploy_path');
-    // foreach ($folders as $key => $folder) {
-    //     # code...
-    //     upload("{$folder}//", $path."//{$folder}");
-    // }
+    $folders = [
+       // 'app',
+       // 'config',
+       'core',
+       'Themes',
+       'database//seeds',
+       'plugins',
+       // 'public//themes',
+       // 'public//backend',
+       // 'public//frontend',
+       // 'public//libs',
+       // 'public//vendor',
+       // 'Themes',
+       // 'webpack'
+    ];
+    $path = get('deploy_path');
+    foreach ($folders as $key => $folder) {
+        # code...
+        upload("{$folder}//", $path."//{$folder}");
+    }
    upload("composer.json", $path."//composer.json");
 //    upload("composer.lock", $path."//");
 });
@@ -86,6 +87,11 @@ task('deploy:permission', function(){
         # code...
         run('chown -R '.$permission.' '.$path. "/{$folder}");
     }
+});
+
+
+task('restart:supervisor', function(){
+    run('service supervisord restart');
 });
 
 task('deploy:restore', function(){

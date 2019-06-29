@@ -14,11 +14,12 @@ class AddDisplayReference extends Migration
     public function up()
     {
         if(Schema::hasTable('references')) {
-            Schema::table('references', function (Blueprint $table) {
-                $table->text('display_value')->nullable();
-            });
-
-             Artisan::call('db:seed', [
+            if (!Schema::hasColumn('references', 'display_value')) {
+                Schema::table('references', function (Blueprint $table) {
+                    $table->text('display_value')->nullable();
+                });
+            }
+            Artisan::call('db:seed', [
                 '--class' => UpdateStatusOrder::class,
             ]);
         }
@@ -31,6 +32,10 @@ class AddDisplayReference extends Migration
      */
     public function down()
     {
-        //
+        if(Schema::hasTable('references')) {
+            Schema::table('references', function (Blueprint $table) {
+                $table->dropColumn('display_value');
+            });
+        }
     }
 }

@@ -158,6 +158,7 @@
 @section('master-footer')
 <script>
 	let sendEmailForProductOrder = function (url, reason){
+		Lcms.beginLoading('#form-refund-order');
 		$.ajax({
             url : url,
             type : "post",
@@ -173,7 +174,9 @@
             error: function(error) { // if error occured
                 Lcms.showNotice('error', error.message || 'Cannot send email for this order.', Lcms.languages.notices_msg.error);  
             }
-        });
+        }).done(function() {
+			Lcms.endLoading('#form-refund-order');
+		});
 	}
 
 	$(document).on('click', '.send-email-product-order', function (event) {

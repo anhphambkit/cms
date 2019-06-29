@@ -55,6 +55,7 @@ return [
 
 		/* css */
 		'vendor-css' => ['theme' => 'assets/css/style.min.css'],
+		'loading-css' => ['cdn' => 'frontend/core/base/assets/css/loading-component.css'],
 		'toastr-css' => ['cdn' => '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css'],
 	],
 
@@ -62,6 +63,7 @@ return [
 		'css' => [
 			'vendor-css',
 			'toastr-css',
+			'loading-css'
 		],
 		'js' => [
 			'vendor-js',
