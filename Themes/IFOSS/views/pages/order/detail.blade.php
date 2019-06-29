@@ -1,3 +1,7 @@
+@php
+	use Plugins\Customer\Contracts\OrderReferenceConfig;
+@endphp
+
 @extends("layouts.master")
 @section('styles')
 @endsection
@@ -20,26 +24,42 @@
 				<span>Placed on <b>{{ $order->created_at }}</b></span>
 			</div>
 			<div class="mb-3">
-				<div class="progress-steps">
-					<div class="item active">PAID
-						<div class="progress-shape">
-							<div class="dot"></div>
-							<div class="line"></div>
+				@php
+					$orderStatus = find_reference_by_id($order->status)->value;
+					$statusActive = [
+						OrderReferenceConfig::REFERENCE_ORDER_STATUS_OPEN,
+						OrderReferenceConfig::REFERENCE_ORDER_STATUS_SHIPPED,
+						OrderReferenceConfig::REFERENCE_ORDER_STATUS_DELIVERED
+					];	
+					$write = true;			
+				@endphp
+
+				@if(in_array($orderStatus, $statusActive))
+					<div class="progress-steps">
+						@foreach($statusActive as $status)
+							<div class="item @if($write) active @endif" >{{ $status }}
+								<div class="progress-shape">
+									<div class="dot"></div>
+									<div class="line"></div>
+								</div>
+							</div>
+							@if($orderStatus == $status)
+								@php
+									$write = false
+								@endphp
+							@endif
+						@endforeach
+					</div>
+				@else
+					<div class="progress-steps">
+						<div class="item @if($write) active @endif" >{{ find_reference_by_id($order->status)->display_value }}
+							<div class="progress-shape">
+								<div class="dot"></div>
+								<div class="line"></div>
+							</div>
 						</div>
 					</div>
-					<div class="item">SHIPPED
-						<div class="progress-shape">
-							<div class="dot"></div>
-							<div class="line"></div>
-						</div>
-					</div>
-					<div class="item">DELIVERED
-						<div class="progress-shape">
-							<div class="dot"></div>
-							<div class="line"></div>
-						</div>
-					</div>
-				</div>
+				@endif
 			</div>
 			<div class="row mb-3">
 				<div class="col-md-6">
