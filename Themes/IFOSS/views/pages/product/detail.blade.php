@@ -172,13 +172,13 @@
         </section>
     @endif
 
-    @if($productInfo['similar_products']->count() > 0)
+    @if($productInfo['similar_products']['data']->count() > 0)
         <section class="mb-5">
             <div class="container">
                 <div class="h6 text-uppercase text-center mb-3">Compare Similar Items</div>
                 <div class="product-slider">
                     <div class="product-slider-wrapper">
-                        @foreach($productInfo['similar_products'] as $similarProduct)
+                        @foreach($productInfo['similar_products']['data'] as $similarProduct)
                             <div class="px-3 product-item-wrapper">
                                 @component("components.product-item")
                                     @slot("productItem", $similarProduct)

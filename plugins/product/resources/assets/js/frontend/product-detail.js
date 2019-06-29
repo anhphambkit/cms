@@ -105,6 +105,21 @@ $(document).ready(function() {
                 } // Update UI cart number
                 else
                     $('.shopping-cart-quantity i').html();
+
+                $('ul.menu-info-customer').append(
+                    `<li class="noti-added-to-cart">
+                        <a href="javascript:void(0);">
+                            <i class="fas fa-shopping-cart"></i> (1)
+                            <div class="add-to-cart-success">
+                                <span class="close close-noti-added-to-cart"><i class="fas fa-times"></i></span>
+                                <div class="mb-2">Your item(s) have been added to cart</div>
+                                <a href="/cart" class="go-to-cart">
+                                    <button class="btn btn-custom btn-sm btn-block justify-content-center">Go to Cart and Checkout</button>
+                                </a>
+                            </div>
+                        </a>
+                    </li>`
+                );
             })
             .catch(function(data){
                 if (data.response.status === 401)
@@ -115,6 +130,10 @@ $(document).ready(function() {
             .then(function(data){
 
             });
+    });
+
+    $(document).on('click', '.close-noti-added-to-cart', function () {
+       $('.noti-added-to-cart').remove();
     });
 
     function getAllAttributeValue() {

@@ -7,7 +7,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 top-navigation-left">{{ theme_option('header') }}</div>
                 <div class="col-lg-6 top-navigation-right text-lg-right">
-                    <ul>
+                    <ul class="menu-info-customer">
                         <li><a href="javascript:void(0);" class="call">call now {{ theme_option('phone') }}</a></li>
                         @if(Auth::guard('customer')->check())
                             <li class="dropdown dropdown-s1">
@@ -30,7 +30,7 @@
                             </li>
                         @else
                             <li><a href="{{ route('public.customer.login') }}"><i class="fas fa-user-circle"></i> <span>Sign In</span></a></li>
-                        @endif    
+                        @endif
                     </ul>
                 </div>
             </div>
