@@ -49,6 +49,10 @@
         @section('content')
         @show
 
+        <div class="ajax-load text-center" style="display:none">
+            <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
+        </div>
+
         @include("partials.footer")
         
         @foreach($jsFiles as $js)

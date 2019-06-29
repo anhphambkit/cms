@@ -49,7 +49,8 @@ class ProductController extends BasePublicController
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     * @throws \Throwable
      */
     public function searchProduct(Request $request) {
 	    $keySearch = trim($request->get('search'));
@@ -58,6 +59,11 @@ class ProductController extends BasePublicController
 
         $products = $this->productServices->searchProduct($keySearch, $request->all());
         $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
+//        if ($request->ajax()) {
+//            $products = $products['data'];
+//            $view = view('partials.list-product-items',compact('productWishListIds', 'products'))->render();
+//            return response()->json(['html'=>$view]);
+//        }
         $this->addAssetListPage();
         return view('pages.product.list-search-products', compact('keySearch', 'products', 'productWishListIds'));
     }
@@ -68,6 +74,8 @@ class ProductController extends BasePublicController
     public function addAssetListPage() {
         AssetManager::addAsset('product-detail-js', 'frontend/plugins/product/assets/js/product-detail.js');
         AssetPipeline::requireJs('product-detail-js');
+//        AssetManager::addAsset('auto-scroll-loading-product-js', 'frontend/plugins/product/assets/js/auto-scroll-loading-product.js');
+//        AssetPipeline::requireJs('auto-scroll-loading-product-js');
         AssetManager::addAsset('product-detail-css', 'frontend/plugins/product/assets/css/product-detail.css');
         AssetPipeline::requireCss('product-detail-css');
     }

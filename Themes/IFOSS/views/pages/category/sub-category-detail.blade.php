@@ -49,7 +49,7 @@ $parentCategory = $categoryPageInfo['category']->parentCategory;
                     </div>
                 </div>
                 <div class="product-slider">
-                    <div class="row">
+                    <div class="row list-products" id="list-products">
                         @foreach($categoryPageInfo['products'] as $categoryProduct)
                             <div class="col-md-3">
                                 @component("components.product-item")
