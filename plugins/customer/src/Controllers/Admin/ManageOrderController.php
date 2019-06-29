@@ -10,6 +10,7 @@ use Core\Base\Controllers\Admin\BaseAdminController;
 use Plugins\Customer\Services\IOrderService;
 use Core\Base\Responses\BaseHttpResponse;
 use Plugins\Customer\Events\EventConfirmOrder;
+use Plugins\Customer\Events\EventSendTrackingNumber;
 use Plugins\Customer\Requests\TrackingNumberRequest;
 use Plugins\Customer\Repositories\Interfaces\ProductsInOrderRepositories;
 
@@ -64,7 +65,7 @@ class ManageOrderController extends BaseAdminController
             'tracking_number' => $request->tracking_number
         ]);
         $this->orderRepository->createOrUpdate($order);
-
+        event(new EventSendTrackingNumber($order));
         return $response
                 ->setMessage(trans('Add tracking number success.'));
 	}
@@ -96,8 +97,6 @@ class ManageOrderController extends BaseAdminController
     {
         try {
             $productOrder = $this->productOrderRepository->findOrFail((int)$idProductOrder);
-            // $this->productOrderRepository->delete($productOrder);
-
             return $response
                 ->setMessage(trans('core-base::notices.delete_success_message'));
         } catch (Exception $exception) {

@@ -2,9 +2,9 @@
 namespace Plugins\Customer\Events;
 
 use Illuminate\Contracts\Mail\Mailer;
-use Plugins\Customer\Mails\EmailRefundOrder;
+use Plugins\Customer\Mails\EmailTrackingNumberOrder;
 
-class SendRefundOrder
+class SendTrackingNumber
 {
     /*
       * @var Mailer
@@ -21,14 +21,14 @@ class SendRefundOrder
      * @param  ArcEmployeeCreated $event [description]
      * @return [type]                    [description]
      */
-    public function handle(EventSendRefundOrder $event)
+    public function handle(EventSendTrackingNumber $event)
     {
-        $emails = get_emails_option('order_emails');
-        if($emails) {
-            return $this->mailer
-                ->to($emails)
-                ->send((new EmailRefundOrder( $event->order, $event->data ))
-                ->onQueue('emails'));
-        }
+        $order = $event->order;
+        $email = show_email_invoice($order);
+
+        return $this->mailer
+            ->to($email)
+            ->send((new EmailTrackingNumberOrder( $order ))
+            ->onQueue('emails'));
     }
 }
