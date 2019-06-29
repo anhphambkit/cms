@@ -5,21 +5,22 @@
  * Date: 2019-06-29
  * Time: 08:02
  */
+$connectParameterChar = !empty($connectParameterChar) ? $connectParameterChar : "?";
 $arraySorts = [
     'name_asc' => [
-        'route' => "{$currentRoute}?orderBy=name&sortOrder=asc",
+        'route' => "{$currentRoute}{$connectParameterChar}orderBy=name&sortOrder=asc",
         'title' => trans('plugins-product::front-end.sort_title.alphabet_asc')
     ],
     'name_desc' => [
-        'route' => "{$currentRoute}?orderBy=name&sortOrder=desc",
+        'route' => "{$currentRoute}{$connectParameterChar}orderBy=name&sortOrder=desc",
         'title' => trans('plugins-product::front-end.sort_title.alphabet_desc')
     ],
     'price_asc' => [
-        'route' => "{$currentRoute}?orderBy=price&sortOrder=asc",
+        'route' => "{$currentRoute}{$connectParameterChar}orderBy=price&sortOrder=asc",
         'title' => trans('plugins-product::front-end.sort_title.price_asc')
     ],
     'price_desc' => [
-        'route' => "{$currentRoute}?orderBy=price&sortOrder=desc",
+        'route' => "{$currentRoute}{$connectParameterChar}orderBy=price&sortOrder=desc",
         'title' => trans('plugins-product::front-end.sort_title.price_desc')
     ]
 ];

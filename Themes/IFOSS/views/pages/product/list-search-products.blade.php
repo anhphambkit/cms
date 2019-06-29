@@ -30,7 +30,7 @@
                     <div class="product-filter-content">
                         <div class="gray-color text-uppercase mr-3">Sort</div>
                         <div class="filter-action">
-                            @include("pages.partials.sort-order-list-page", [ 'currentRoute' => route('public.product.search', [ 'search' => $keySearch ]) ])
+                            @include("pages.partials.sort-order-list-page", [ 'currentRoute' => route('public.product.search', [ 'search' => $keySearch]), 'connectParameterChar' => "&" ])
                             <div class="dropdown dropdown-s1">
                                 <button class="btn btn-outline-custom dropdown-toggle" type="button" id="dropdownMenuButton-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Filter
