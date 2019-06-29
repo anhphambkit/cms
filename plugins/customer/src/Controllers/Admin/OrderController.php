@@ -56,7 +56,7 @@ class OrderController extends BaseAdminController
 
         $listStatus = get_reference_by_type(OrderReferenceConfig::REFERENCE_ORDER_STATUS);
         foreach($listStatus as $status){
-            $orderStatus[$status->id] = $status->value;
+            $orderStatus[$status->id] = $status->display_value;
         }
 
         page_title()->setTitle(trans('plugins-customer::order.edit') . ' #' . $id);

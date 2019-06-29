@@ -45,7 +45,9 @@ class OrderDataTable extends DataTableAbstract
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, ORDER_MODULE_SCREEN_NAME)
             ->addColumn('operations', function ($item) {
                 $actionOrder = view('plugins-customer::order.action-order', compact('item'))->render();
-                $action      =  table_dropdown_actions('admin.order.edit', 'admin.order.delete', $item, $actionOrder);
+                $action      =  table_dropdown_actions('admin.order.edit', 'admin.order.delete', $item, $actionOrder, [
+                    trans('plugins-customer::order.edit-item')
+                ]);
                 return $action;
             })
             ->escapeColumns([])

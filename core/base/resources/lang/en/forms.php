@@ -51,5 +51,6 @@ return [
     'show_hide_editor'        => 'Show/Hide Editor',
     'basic_info_title'        => 'Basic information',
     'code_placeholder'        => 'Code',
-    'code'        => 'Code',
+    'code'                    => 'Code',
+    'edit-item'               => 'Edit Item'
 ];

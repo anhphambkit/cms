@@ -1,10 +1,11 @@
 <?php
 
 return [
-    'name' => 'Order',
-    'create' => 'New order',
-    'edit' => 'Edit order',
-    'list' => 'List order',
+	'name'      => 'Order',
+	'create'    => 'New order',
+	'edit'      => 'Edit order',
+	'list'      => 'List order',
+	'edit-item' => 'Order Detail',
     'forms' => [
 		'first_name'   => 'Frist Name',
 		'last_name'    => 'Last Name',

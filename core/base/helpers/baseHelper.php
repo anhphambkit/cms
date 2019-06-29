@@ -1,5 +1,6 @@
 <?php
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 if (!function_exists('format_time')) {
     /**
@@ -190,5 +191,26 @@ if (function_exists('get_emails_option') === false) {
         $optionAdminEmails = theme_option('admin_email');
         if($optionEmails) return array_values(explode(',', $optionEmails));
         if($optionAdminEmails) return array_values(explode(',', $optionAdminEmails));
+    }
+}
+
+if (function_exists('clear_cache_system') === false) {
+    /**
+     * [clear_cache_system description]
+     * @param  string $cacheKey [description]
+     */
+    function clear_cache_system(string $cacheKey = '') {
+        return $cacheKey ? Cache::forget($cacheKey) : Cache::flush();        
+    }
+}
+
+if (function_exists('generate_tracking_shipping_link') === false) {
+    /**
+     * [generate description]
+     * @param  string $cacheKey [description]
+     */
+    function generate_tracking_shipping_link($trackingNumber) {
+
+        return "https://www.ups.com/track?loc=en_US&tracknum={$trackingNumber}";
     }
 }

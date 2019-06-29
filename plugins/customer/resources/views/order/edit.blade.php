@@ -20,7 +20,9 @@
                                         <li class="text-bold-800">Customer : {{ $order->customer->username }} - {{ $order->customer->email }}</li>
                                         <li>Tracking Number : 
                                             @if(!empty($order->tracking_number))
-                                                #{{ $order->tracking_number }}
+                                                <a href="{{ generate_tracking_shipping_link($order->tracking_number) }}" target="_blank">
+                                                    #{{ $order->tracking_number }}
+                                                </a>
                                             @else
                                                 <a href="javascript:void(0)" class="trackingNumberDialog">Add tracking number</a>
                                             @endif

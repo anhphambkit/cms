@@ -64,9 +64,19 @@
 								<div class="td">{{ ucfirst($order->payment_method) }}</div>
 								<div class="td">{{ show_address_invoice($order) }}</div>
 								<div class="td">$ {{ number_format($order->total_amount_order, 2, ',', '.') }}</div>
-								<div class="td"><a href="#" class="text-blue">{{ $order->tracking_number ?? 'NONE' }}</a></div>
+								<div class="td">
+									@if($order->tracking_number)
+										<a target="_blank" href="{{ generate_tracking_shipping_link($order->tracking_number) }}" class="text-blue">
+											#{{ $order->tracking_number }}
+										</a>
+									@else
+										<a href="javascript:void(0)" class="text-blue">
+											NONE
+										</a>
+									@endif
+								</div>
 								<div class="td">{{ show_email_invoice($order) }}</div>
-								<div class="td">{{ ucfirst(find_reference_by_id($order->status)->value) }}</div>
+								<div class="td">{{ ucfirst(find_reference_by_id($order->status)->display_value) }}</div>
 								<div class="td">{{ $order->created_at }}</div>
 								<span class="td-action text-right">
 									<a target="_blank" href="{{ route('public.order.detail', $order->id) }}" class="text-blue">View Detail</a>

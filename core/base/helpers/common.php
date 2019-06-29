@@ -104,9 +104,11 @@ if (!function_exists('table_dropdown_actions')) {
      * @return string
      * @author TrinhLe
      */
-    function table_dropdown_actions($edit, $delete, $item, $appendActions = false)
+    function table_dropdown_actions($edit, $delete, $item, $appendActions = false, array $baseTitles = [])
     {
-        return view('core-base::elements.tables.dropdown-actions', compact('edit', 'delete', 'item', 'appendActions'))->render();
+        $titleEdit = $baseTitles[0] ?? trans('core-base::forms.edit-item');
+        $titleRemove = $baseTitles[1] ?? trans('core-base::forms.delete');
+        return view('core-base::elements.tables.dropdown-actions', compact('edit', 'delete', 'item', 'appendActions', 'titleEdit', 'titleRemove'))->render();
     }
 }
 
