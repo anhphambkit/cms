@@ -75,7 +75,7 @@
                         <ul class="mega-menu tab-menu">
                             @foreach ($menu_category->childCategories as $child_menu_category)
                             <li class="col-md-2">
-                                <a href="{{ route('public.category.detail', [ 'url' => $child_menu_category->url_product_category ]) }}" class="item">
+                                <a href="{{ route('public.category.sub_category', [ 'url' => $menu_category->url_product_category, 'subCategory' => $child_menu_category->url_product_category ]) }}" class="item">
                                     <img src="{{ get_object_image($child_menu_category->image_feature, 'mediumThumb') }}" class="w-100">
                                     <div class="title">{{ $child_menu_category->name }}</div>
                                 </a>

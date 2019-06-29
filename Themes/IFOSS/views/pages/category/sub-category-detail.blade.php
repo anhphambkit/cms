@@ -5,7 +5,6 @@
  * Date: 2019-06-07
  * Time: 23:06
  */
-$categoryProducts = $categoryPageInfo['category']->products;
 $parentCategory = $categoryPageInfo['category']->parentCategory;
 ?>
 @extends("layouts.master")
@@ -18,7 +17,7 @@ $parentCategory = $categoryPageInfo['category']->parentCategory;
                     <a href="{{ route('public.category.detail', [ 'url' => $parentCategory->url_product_category ]) }}">{{ $parentCategory->name }}</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    <a href="{{ route('public.category.detail', [ 'url' => $categoryPageInfo['category']->url_product_category ]) }}">{{ $categoryPageInfo['category']->name }}</a>
+                    <a href="{{ route('public.category.sub_category', [ 'url' => $parentCategory->url_product_category, 'subCategory' => $categoryPageInfo['category']->url_product_category ]) }}">{{ $categoryPageInfo['category']->name }}</a>
                 </li>
             </ol>
         </nav>
@@ -31,20 +30,11 @@ $parentCategory = $categoryPageInfo['category']->parentCategory;
                     <div class="section-title">{{ $categoryPageInfo['category']->name }}</div>
                 </div>
                 <div class="product-filter d-sm-flex justify-content-between align-items-center">
-                    <span class="gray-color">{{ $categoryProducts->count() }} Items</span>
+                    <span class="gray-color">{{ sizeof($categoryPageInfo['products']) }} Items</span>
                     <div class="product-filter-content">
                         <div class="gray-color text-uppercase mr-3">Sort</div>
                         <div class="filter-action">
-                            <div class="dropdown dropdown-s1">
-                                <button class="btn btn-outline-custom dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Alphabet A-Z
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Alphabet Z-A</a>
-                                    <a class="dropdown-item" href="#">Price Low-High</a>
-                                    <a class="dropdown-item" href="#">Price High-Low</a>
-                                </div>
-                            </div>
+                            @include("pages.partials.sort-order-list-page", [ 'currentRoute' => route('public.category.sub_category', [ 'url' => $parentCategory->url_product_category, 'subCategory' => $categoryPageInfo['category']->url_product_category ]) ])
                             <div class="dropdown dropdown-s1">
                                 <button class="btn btn-outline-custom dropdown-toggle" type="button" id="dropdownMenuButton-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Filter
@@ -59,14 +49,14 @@ $parentCategory = $categoryPageInfo['category']->parentCategory;
                     </div>
                 </div>
                 <div class="product-slider">
-                    <div class="product-slider-wrapper">
-                        @foreach($categoryProducts as $categoryProduct)
-                        <div class="px-3 product-item-wrapper">
-                            @component("components.product-item")
-                                @slot("productItem", $categoryProduct)
-                                @slot("productWishListIds", $productWishListIds)
-                            @endcomponent
-                        </div>
+                    <div class="row">
+                        @foreach($categoryPageInfo['products'] as $categoryProduct)
+                            <div class="col-md-3">
+                                @component("components.product-item")
+                                    @slot("productItem", $categoryProduct)
+                                    @slot("productWishListIds", $productWishListIds)
+                                @endcomponent
+                            </div>
                         @endforeach
                     </div>
                 </div>

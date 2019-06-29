@@ -41,34 +41,51 @@ class ProductCategoryController extends BasePublicController
 
     /**
      * @param $url
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getListProductsOfCategoryPage($url) {
+    public function getListProductsOfCategoryPage($url, Request $request) {
         $productCategoryId = get_id_from_url($url);
-        $categoryPageInfo = $this->productServices->getListProductsOfCategoryPage($productCategoryId);
-        AssetManager::addAsset('product-detail-js', 'frontend/plugins/product/assets/js/product-detail.js');
-        AssetPipeline::requireJs('product-detail-js');
-        AssetManager::addAsset('product-detail-css', 'frontend/plugins/product/assets/css/product-detail.css');
-        AssetPipeline::requireCss('product-detail-css');
+        $categoryPageInfo = $this->productServices->getListProductsOfCategoryPage($productCategoryId, null, $request->all());
         $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
-        if (empty($categoryPageInfo['category']->parent_id))
-            return view('pages.category.detail', compact('categoryPageInfo', 'productWishListIds'));
-        else
-            return view('pages.category.sub-category-detail', compact('categoryPageInfo', 'productWishListIds'));
+        $this->addAssetListPage();
+        return view('pages.category.detail', compact('categoryPageInfo', 'productWishListIds'));
     }
 
     /**
      * @param $url
+     * @param $subCategory
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getListSaleProductsOfCategoryPage($url) {
-        $productCategoryId = get_id_from_url($url);
-        $categoryPageInfo = $this->productServices->getListProductsOfCategoryPage($productCategoryId);
+    public function getListProductsOfSubCategoryPage($url, $subCategory, Request $request) {
+        $productCategoryId = get_id_from_url($subCategory);
+        $categoryPageInfo = $this->productServices->getListProductsOfSubCategoryPage($productCategoryId, null, $request->all());
         $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
+        $this->addAssetListPage();
+        return view('pages.category.sub-category-detail', compact('categoryPageInfo', 'productWishListIds'));
+    }
+
+    /**
+     * @param $url
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getListSaleProductsOfCategoryPage($url, Request $request) {
+        $productCategoryId = get_id_from_url($url);
+        $categoryPageInfo = $this->productServices->getListSaleProductsOfCategoryPageParent($productCategoryId, null, $request->all());
+        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
+        $this->addAssetListPage();
+        return view('pages.category.sale-category', compact('categoryPageInfo', 'productWishListIds'));
+    }
+
+    /**
+     * Add assets page
+     */
+    public function addAssetListPage() {
         AssetManager::addAsset('product-detail-js', 'frontend/plugins/product/assets/js/product-detail.js');
         AssetPipeline::requireJs('product-detail-js');
         AssetManager::addAsset('product-detail-css', 'frontend/plugins/product/assets/css/product-detail.css');
         AssetPipeline::requireCss('product-detail-css');
-        return view('pages.category.sale-category', compact('categoryPageInfo', 'productWishListIds'));
     }
 }

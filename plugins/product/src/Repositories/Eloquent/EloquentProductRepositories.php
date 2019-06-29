@@ -2,30 +2,84 @@
 
 namespace Plugins\Product\Repositories\Eloquent;
 
+use Core\Base\Traits\ParseFilterSearch;
 use Core\Master\Repositories\Eloquent\RepositoriesAbstract;
 use Plugins\Product\Contracts\ProductReferenceConfig;
 use Plugins\Product\Repositories\Interfaces\ProductRepositories;
 
 class EloquentProductRepositories extends RepositoriesAbstract implements ProductRepositories
 {
+    use ParseFilterSearch;
+
+    protected $mappingColumns = [
+        'price' => 'price',
+        'name' => 'name',
+    ];
+
+    protected $defaultSortOrder = 'asc';
+
+    protected $defaultOrderBy = 'name';
+
+    protected $defaultPage = 1;
+
+    CONST PREFIX_FUNCTION_SALE_COLLECTION = 'getSaleProduct';
+
     /**
      * @param array $categoryIds
      * @param int|null $limit
-     * @return mixed
-     * @throws \Exception
+     * @param array $filterPageLoad
+     * @return array
      */
-    public function getAllProductsByCategory(array $categoryIds, int $limit = null)
+    public function getAllSaleProductsByCategory(array $categoryIds, int $limit = null, array $filterPageLoad = [])
     {
-        $query = $this->model
+        $query = $this->getAllProductByListCategoryIds($categoryIds);
+
+        if ($limit)
+            $filterPageLoad['limit'] = !empty($filterPageLoad['limit']) ? $filterPageLoad['limit'] : $limit;
+
+        $result = $this->getResultSearchWithDataPageLoadCollection($query, $filterPageLoad, self::PREFIX_FUNCTION_SALE_COLLECTION);
+
+        return $result;
+    }
+
+    /**
+     * @param $data
+     * @return mixed
+     */
+    public function getSaleProductCollectionData(&$data) {
+        return $data = $data->where('is_has_sale', true);
+    }
+
+    /**
+     * @param array $categoryIds
+     * @param int|null $limit
+     * @param array $filterPageLoad
+     * @return array|mixed
+     */
+    public function getAllProductsByCategory(array $categoryIds, int $limit = null, array $filterPageLoad = [])
+    {
+        $query = $this->getAllProductByListCategoryIds($categoryIds);
+
+        if ($limit)
+            $filterPageLoad['limit'] = !empty($filterPageLoad['limit']) ? $filterPageLoad['limit'] : $limit;
+
+        $dataPageLoad = $this->getDataPageLoad($filterPageLoad);
+        $result = $this->getResultSearchWithDataPageLoad($query, $dataPageLoad);
+
+        return $result;
+    }
+
+    /**
+     * @param array $categoryIds
+     * @return mixed
+     */
+    public function getAllProductByListCategoryIds(array $categoryIds) {
+        return $this->model
             ->select('products.*')
             ->leftJoin('product_categories_relation', 'products.id', '=', 'product_categories_relation.product_id')
             ->whereIn('product_categories_relation.product_category_id', $categoryIds)
             ->where('products.status', true)
             ->where('products.type_product', '!=', ProductReferenceConfig::PRODUCT_TYPE_VARIANT);
-        if ($limit)
-            $query = $query->limit($limit);
-
-        return $query->distinct()->get();
     }
 
     /**

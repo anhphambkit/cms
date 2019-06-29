@@ -27,10 +27,20 @@ class CacheProductRepositories extends CacheAbstractDecorator implements Product
     /**
      * @param array $categoryIds
      * @param int|null $limit
-     * @return mixed
-     * @throws \Exception
+     * @param array $filterPageLoad
+     * @return array
      */
-    public function getAllProductsByCategory(array $categoryIds, int $limit = null) {
+    public function getAllSaleProductsByCategory(array $categoryIds, int $limit = null, array $filterPageLoad = []) {
+        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
+    }
+
+    /**
+     * @param array $categoryIds
+     * @param int|null $limit
+     * @param array $filterPageLoad
+     * @return mixed
+     */
+    public function getAllProductsByCategory(array $categoryIds, int $limit = null, array $filterPageLoad = []) {
         return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
     }
 

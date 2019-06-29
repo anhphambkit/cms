@@ -20,6 +20,7 @@ use Plugins\Product\Services\ProductServices;
 
 class ImplementProductServices implements ProductServices {
 
+    const NUMBER_PRODUCTS_OF_SLIDER = 8;
     /**
      * @var ProductRepositories
      */
@@ -118,8 +119,8 @@ class ImplementProductServices implements ProductServices {
 
         $collectionIds = $product->productCollections()->pluck('product_collections_relation.product_collection_id')->toArray();
         $categoryIds = $product->productCategories()->pluck('product_categories_relation.product_category_id')->toArray();
-        $collectionProducts = $this->repository->getAllProductInCollections($collectionIds, 8);
-        $similarProducts = $this->repository->getAllProductsByCategory($categoryIds, 8);
+        $collectionProducts = $this->repository->getAllProductInCollections($collectionIds, self::NUMBER_PRODUCTS_OF_SLIDER);
+        $similarProducts = $this->repository->getAllProductsByCategory($categoryIds, self::NUMBER_PRODUCTS_OF_SLIDER);
         return [
             'product' => $product,
             'product_attributes' => $customAttributes,
@@ -189,26 +190,61 @@ class ImplementProductServices implements ProductServices {
      * @param int $limit
      * @return mixed
      */
-    public function getBestSellerProducts(int $limit = 8) {
+    public function getBestSellerProducts(int $limit = self::NUMBER_PRODUCTS_OF_SLIDER) {
         return $this->repository->getBestSellerProducts($limit);
     }
 
     /**
      * @param int $productCategoryId
      * @param int|null $limit
+     * @param array $dataPageLoad
      * @return array|mixed
-     * @throws \Exception
      */
-    public function getListProductsOfCategoryPage(int $productCategoryId, int $limit = null) {
+    public function getListProductsOfCategoryPage(int $productCategoryId, int $limit = null, array $dataPageLoad = []) {
         $category = $this->productCategoryRepositories->getCategoryById($productCategoryId);
         if (empty($category))
             abort(404);
         $subCategories = $category->childCategories;
-        $products = $this->repository->getAllProductsByCategory($subCategories->pluck('id')->toArray());
-        $saleProducts = $products->where('is_has_sale', true)->all();
+        $products = $this->repository->getAllProductsByCategory($subCategories->pluck('id')->toArray(), $limit, $dataPageLoad);
+        $saleProducts = $products['data']->where('is_has_sale', true)->all();
         return [
             'sale_products' => $saleProducts,
             'sub_categories' => $subCategories,
+            'category' => $category,
+        ];
+    }
+
+    /**
+     * @param int $productCategoryId
+     * @param int|null $limit
+     * @param array $dataPageLoad
+     * @return array|mixed
+     */
+    public function getListProductsOfSubCategoryPage(int $productCategoryId, int $limit = null, array $dataPageLoad = []) {
+        $category = $this->productCategoryRepositories->getCategoryById($productCategoryId);
+        if (empty($category))
+            abort(404);
+        $products = $this->repository->getAllProductsByCategory([$productCategoryId], $limit, $dataPageLoad);
+        $saleProducts = $products['data']->where('is_has_sale', true)->all();
+        return [
+            'products' => $saleProducts,
+            'category' => $category,
+        ];
+    }
+
+    /**
+     * @param int $productCategoryId
+     * @param int|null $limit
+     * @param array $dataPageLoad
+     * @return array|mixed
+     */
+    public function getListSaleProductsOfCategoryPageParent(int $productCategoryId, int $limit = null, array $dataPageLoad = []) {
+        $category = $this->productCategoryRepositories->getCategoryById($productCategoryId);
+        if (empty($category))
+            abort(404);
+        $products = $this->repository->getAllSaleProductsByCategory($category->childCategories->pluck('id')->toArray(), $limit, $dataPageLoad);
+        return [
+            'sale_products' => $products,
             'category' => $category,
         ];
     }

@@ -106,10 +106,19 @@ $router->group(['prefix' => 'product/order', 'middleware' => ['auth']], function
  * Route for category product:
  */
 $router->group(['prefix' => 'category'], function (Router $router) {
-    $router->get('/{url}', [
-        'as'         => 'public.category.detail',
-        'uses'       => 'ProductCategoryController@getListProductsOfCategoryPage',
-    ]);
+
+    $router->group(['prefix' => '{url}'], function (Router $router) {
+        $router->get('/', [
+            'as'         => 'public.category.detail',
+            'uses'       => 'ProductCategoryController@getListProductsOfCategoryPage',
+        ]);
+
+        $router->get('/sub-category/{subCategory}', [
+            'as'         => 'public.category.sub_category',
+            'uses'       => 'ProductCategoryController@getListProductsOfSubCategoryPage',
+        ]);
+    });
+
 
     $router->get('/sale/{url}', [
         'as'         => 'public.category.sale.page',

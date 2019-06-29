@@ -45,9 +45,26 @@ interface ProductServices {
     /**
      * @param int $productCategoryId
      * @param int|null $limit
+     * @param array $dataPageLoad
      * @return mixed
      */
-    public function getListProductsOfCategoryPage(int $productCategoryId, int $limit = null);
+    public function getListProductsOfCategoryPage(int $productCategoryId, int $limit = null, array $dataPageLoad = []);
+
+    /**
+     * @param int $productCategoryId
+     * @param int|null $limit
+     * @param array $dataPageLoad
+     * @return array|mixed
+     */
+    public function getListProductsOfSubCategoryPage(int $productCategoryId, int $limit = null, array $dataPageLoad = []);
+
+    /**
+     * @param int $productCategoryId
+     * @param int|null $limit
+     * @param array $dataPageLoad
+     * @return mixed
+     */
+    public function getListSaleProductsOfCategoryPageParent(int $productCategoryId, int $limit = null, array $dataPageLoad = []);
 
     /**
      * @param int $productId
