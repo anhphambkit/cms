@@ -52,10 +52,11 @@ interface ProductRepositories extends RepositoryInterface
      * @return mixed
      */
     public function getBestSellerProducts(int $limit = 8);
-//
-//    /**
-//     * @param array $categoryIds
-//     * @return mixed
-//     */
-//    public function getAllSaleProductsOfCategories(array $categoryIds);
+
+    /**
+     * @param string $keySearch
+     * @param array $filterPageLoad
+     * @return array|mixed
+     */
+    public function searchProduct(string $keySearch, array $filterPageLoad);
 }

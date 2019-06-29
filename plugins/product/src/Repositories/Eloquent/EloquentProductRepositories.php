@@ -141,4 +141,19 @@ class EloquentProductRepositories extends RepositoriesAbstract implements Produc
             ]
         ])->slice(0, $limit);
     }
+
+    /**
+     * @param string $keySearch
+     * @param array $filterPageLoad
+     * @return array|mixed
+     */
+    public function searchProduct(string $keySearch, array $filterPageLoad) {
+        $query = $this->model
+                        ->where('name', 'ILIKE', "%{$keySearch}%")
+                        ->orWhere('slug', 'ILIKE', "%{$keySearch}%")
+                        ->orWhere('keywords', 'ILIKE', "%{$keySearch}%");
+        $dataPageLoad = $this->getDataPageLoad($filterPageLoad);
+        $result = $this->getResultSearchWithDataPageLoad($query, $dataPageLoad);
+        return $result;
+    }
 }

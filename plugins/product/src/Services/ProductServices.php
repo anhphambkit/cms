@@ -93,4 +93,11 @@ interface ProductServices {
      * @return mixed
      */
     public function deleteProductSaved(int $productId, int $customerId);
+
+    /**
+     * @param string $keySearch
+     * @param array $filterPageLoad
+     * @return array|mixed
+     */
+    public function searchProduct(string $keySearch, array $filterPageLoad);
 }

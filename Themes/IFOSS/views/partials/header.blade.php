@@ -45,16 +45,14 @@
                     </a>
                 </div>
                 <div class="col-lg-3">
-                    <form action="">
+                    <form action="{{ route('public.product.search') }}" method="get">
                         <div class="input-icon align-right search-input">
-                            <i class="fas fa-search icon"></i>
-                            <input type="text" class="form-control form-control-lg" placeholder="Search here..." />
+                            <button class="btn btn-icon"><i class="fas fa-search"></i></button>
+                            <input type="text" class="form-control form-control-lg" placeholder="Search here..." name="search" />
                         </div>
                     </form>
                 </div>
                 <div class="col-lg-6 text-lg-right action-group">
-                    <button type="button" class="btn btn-outline-danger action-group-item">Sale</button>
-                    <button type="button" class="btn btn-outline-custom action-group-item">free design</button>
                     <button type="button" class="btn btn-outline-custom action-group-item">
                         <a class="menu-design-idea menu-link-custom" href="{{ route('public.design-ideal') }}">Design Ideal</a>
                     </button>

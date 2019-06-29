@@ -125,3 +125,8 @@ $router->group(['prefix' => 'category'], function (Router $router) {
         'uses'       => 'ProductCategoryController@getListSaleProductsOfCategoryPage',
     ]);
 });
+
+$router->get('/search', [
+    'as'         => 'public.product.search',
+    'uses'       => 'ProductController@searchProduct',
+]);

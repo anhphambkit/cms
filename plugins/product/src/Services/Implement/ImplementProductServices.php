@@ -321,4 +321,13 @@ class ImplementProductServices implements ProductServices {
             ],
         ]);
     }
+
+    /**
+     * @param string $keySearch
+     * @param array $filterPageLoad
+     * @return array|mixed
+     */
+    public function searchProduct(string $keySearch, array $filterPageLoad) {
+        return $this->repository->searchProduct($keySearch, $filterPageLoad);
+    }
 }

@@ -46,4 +46,29 @@ class ProductController extends BasePublicController
         AssetPipeline::requireCss('product-detail-css');
         return view('pages.product.detail', compact('productInfo', 'productWishListIds'));
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function searchProduct(Request $request) {
+	    $keySearch = trim($request->get('search'));
+	    if (empty($keySearch))
+	        return redirect(route('homepage'));
+
+        $products = $this->productServices->searchProduct($keySearch, $request->all());
+        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
+        $this->addAssetListPage();
+        return view('pages.product.list-search-products', compact('keySearch', 'products', 'productWishListIds'));
+    }
+
+    /**
+     * Add assets page
+     */
+    public function addAssetListPage() {
+        AssetManager::addAsset('product-detail-js', 'frontend/plugins/product/assets/js/product-detail.js');
+        AssetPipeline::requireJs('product-detail-js');
+        AssetManager::addAsset('product-detail-css', 'frontend/plugins/product/assets/css/product-detail.css');
+        AssetPipeline::requireCss('product-detail-css');
+    }
 }
