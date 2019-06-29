@@ -19,7 +19,7 @@
 document.querySelector('body').insertAdjacentHTML('beforeend', 
 	'<div class="page-loader">'+
 		'<div class="spring-spinner">'+
-			'<img src="assets/images/favicon.png" alt="" class="spinner-logo">'+
+			'<img src="/themes/ifoss/assets/images/favicon.png" alt="" class="spinner-logo">'+
 			'<div class="spring-spinner-part top">'+
 				'<div class="spring-spinner-rotator"></div>'+
 			'</div>'+
