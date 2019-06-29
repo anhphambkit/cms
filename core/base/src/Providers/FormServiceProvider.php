@@ -86,5 +86,7 @@ class FormServiceProvider extends ServiceProvider
             'value' => null,
             'attributes' => [],
         ]);
+
+         Form::component('helper', 'core-base::elements.forms.helper', ['content']);
     }
 }

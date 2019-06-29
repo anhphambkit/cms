@@ -50,6 +50,7 @@
             "Core\\User\\": "core/user/src",
             "Core\\Dashboard\\": "core/dashboard/src",
             "Core\\Page\\": "core/page/src",
+            "Core\\SeoHelper\\": "core/seo-helper/src",
             "Plugins\\Newsletter\\": "plugins/newsletter/src",
             "Plugins\\Faq\\": "plugins/faq/src",
             "Plugins\\Customer\\": "plugins/customer/src",
@@ -102,6 +103,7 @@
         "Core\\User\\": "core/user/src",
         "Core\\Dashboard\\": "core/dashboard/src",
         "Core\\Media\\": "core/media/src",
-        "Core\\Page\\": "core/page/src"
+        "Core\\Page\\": "core/page/src",
+        "Core\\SeoHelper\\": "core/seo-helper/src"
     }
 }
