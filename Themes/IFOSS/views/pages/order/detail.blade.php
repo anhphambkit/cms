@@ -49,13 +49,13 @@
 							@php
 								$shippingInfo = json_decode($order->address_shipping);
 							@endphp
-							<b>{{ $shippingInfo->first_name ?? ''}} {{ $shippingInfo->last_name }}</b> <br>
+							<b>{{ $shippingInfo->first_name ?? ''}} {{ $shippingInfo->last_name ?? '' }}</b> <br>
 							{{ $shippingInfo->address_1 ?? ''}} <br>
 							@if($shippingInfo->address_2 ?? false)
 								{{ $shippingInfo->address_2 }} <br>
 							@endif
 							{{ $shippingInfo->city ?? ''}} {{ $shippingInfo->zip ?? ''}} <br>
-							Phone : {{ $shippingInfo->phone_number }}
+							Phone : {{ $shippingInfo->phone_number ?? '' }}
 						</div>
 					</div>
 				</div>
@@ -66,13 +66,13 @@
 							@php
 								$billingInfo = json_decode($order->address_billing);
 							@endphp
-							<b>{{ $billingInfo->first_name ?? ''}} {{ $billingInfo->last_name }}</b> <br>
+							<b>{{ $billingInfo->first_name ?? ''}} {{ $billingInfo->last_name ?? '' }}</b> <br>
 							{{ $billingInfo->address_1 ?? ''}} <br>
 							@if($billingInfo->address_2 ?? false)
 								{{ $billingInfo->address_2 }} <br>
 							@endif
 							{{ $billingInfo->city ?? ''}} {{ $billingInfo->zip ?? ''}} <br>
-							Phone : {{ $billingInfo->phone_number }}
+							Phone : {{ $billingInfo->phone_number ?? '' }}
 						</div>
 					</div>
 				</div>

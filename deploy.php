@@ -25,7 +25,7 @@ host($env->getEnv('DEPLOY_HOST'))
 task('deploy:dev', [
     'deploy:start',
     'deploy:upload',
-    'deploy:build',
+    // 'deploy:build',
     'deploy:permission',
 ]);
 
@@ -35,27 +35,27 @@ task('deploy:start', function(){ //
 
 task('deploy:upload', function(){ // 
     writeln('Start upload');
-    $folders = [
-       // 'app',
-       // 'config',
-       'core',
-       'Themes',
-       // 'database//seeds',
-       'plugins',
-       // 'public//themes',
-       'public//backend',
-       // 'public//frontend',
-       // 'public//libs',
-       // 'public//vendor',
-       // 'Themes',
-       'webpack'
-    ];
-    $path = get('deploy_path');
-    foreach ($folders as $key => $folder) {
-        # code...
-        upload("{$folder}//", $path."//{$folder}");
-    }
-//    upload("composer.json", $path."//");
+    // $folders = [
+    //    // 'app',
+    //    // 'config',
+    //    'core',
+    //    'Themes',
+    //    // 'database//seeds',
+    //    'plugins',
+    //    // 'public//themes',
+    //    'public//backend',
+    //    // 'public//frontend',
+    //    // 'public//libs',
+    //    // 'public//vendor',
+    //    // 'Themes',
+    //    'webpack'
+    // ];
+    // $path = get('deploy_path');
+    // foreach ($folders as $key => $folder) {
+    //     # code...
+    //     upload("{$folder}//", $path."//{$folder}");
+    // }
+   upload("composer.json", $path."//composer.json");
 //    upload("composer.lock", $path."//");
 });
 
