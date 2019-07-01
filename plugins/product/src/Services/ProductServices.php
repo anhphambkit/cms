@@ -30,6 +30,19 @@ interface ProductServices {
     public function getDetailInfoProduct(int $productId);
 
     /**
+     * @param $product
+     * @return array
+     */
+    public function getRelatedInfoOfProduct($product);
+
+    /**
+     * @param int $productId
+     * @return array
+     * @throws \Exception
+     */
+    public function getDetailInfoProductPage(int $productId);
+
+    /**
      * @param int $productId
      * @param array $productAttributes
      * @return mixed

@@ -43,6 +43,11 @@ $router->group(['prefix' => 'product'], function (Router $router) {
         'uses' => 'ProductController@getOverviewInfoProductPopup',
     ]);
 
+    $router->get('/get-detail-info-product-by-attributes', [
+        'as' => 'ajax.product.get_detail_info_product_by_attributes',
+        'uses' => 'ProductController@getDetailInfoProductByAttributes',
+    ]);
+
     $router->get('/get-detail-info-product', [
         'as' => 'ajax.product.get_detail_info_product',
         'uses' => 'ProductController@getDetailInfoProduct',

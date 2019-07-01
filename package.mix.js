@@ -82,6 +82,9 @@ let packageName    = env.pkg;
 let basedir        = env.dir || "core";
 let resourcePath   = `./${basedir}/${packageName}/resources/assets`;
 let libsPath   = `./${basedir}/${packageName}/resources/libs`;
+let componentsPath   = `./${basedir}/${packageName}/resources/components`;
+let mediaPath   = `./${basedir}/${packageName}/resources/media`;
+
 let configs = [
     {
         config: {
@@ -111,7 +114,12 @@ let configs = [
 if (fs.existsSync(libsPath))
     mix.copyDirectory(libsPath, `public/libs/${basedir}/${packageName.toLowerCase()}/`);
 
+if (fs.existsSync(componentsPath))
+    mix.copyDirectory(componentsPath, `public/components/${basedir}/${packageName.toLowerCase()}/`);
+
+if (fs.existsSync(mediaPath))
+    mix.copyDirectory(mediaPath, `public/media/${basedir}/${packageName.toLowerCase()}/`);
+
 configs.forEach((item) => {
     bundleDevelopment(item.config, item.key, item.is_script);
 })
-

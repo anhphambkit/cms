@@ -20,7 +20,7 @@
     </div>
 
     <section class="mb-5">
-        <div class="product-detail">
+        <div class="product-detail" data-product-id="{{ $productInfo['product']->id }}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 product-detail-wrapper">
@@ -50,14 +50,14 @@
                         </div>
                         <div class="product-information">
                             <div class="item">
-                                <div class="text-paraph title dark">Description</div>
-                                <div class="content">
+                                <div class="text-paraph title dark" data-toggle="collapse" href="#panel-detail-description">Description</div>
+                                <div class="content" id="panel-detail-description">
                                     {!! $productInfo['product']->long_desc !!}
                                 </div>
                             </div>
                             <div class="item">
-                                <div class="text-paraph title dark">Weights & Dimensions</div>
-                                <div class="content">
+                                <div class="text-paraph title dark" data-toggle="collapse" href="#panel-weight-dimension-description">Weights & Dimensions</div>
+                                <div class="content" id="panel-weight-dimension-description">
                                     {!! $productInfo['product']->weight_dimension_description !!}
                                 </div>
                             </div>
@@ -131,7 +131,7 @@
                                     <hr>
                                 </div>
                                 <div class="d-flex">
-                                    <button class="btn btn-outline-custom mr-2 add-to-wish-list" data-product-id="{{ $productInfo['product']->id }}"><i class="{{ in_array($productInfo['product']->id, $productWishListIds) ? 'fas' : 'far' }} fa-heart mr-2 icon-wish-list"></i> Wishlist</button>
+                                    <button class="btn btn-outline-custom mr-2 add-to-wish-list" data-product-id="{{ $productInfo['product']->id }}"><i class="{{ ($productInfo['product']->was_added_wish_list) ? 'fas' : 'far' }} fa-heart mr-2 icon-wish-list"></i> Wishlist</button>
                                     <button class="btn btn-custom btn-block justify-content-center {{ ($productInfo['product']->type_product === \Plugins\Product\Contracts\ProductReferenceConfig::PRODUCT_TYPE_VARIANT) ? 'disabled' : 'add-to-cart-btn' }}"
                                             data-toggle="tooltip" data-placement="top"
                                             title="{{ ($productInfo['product']->type_product === \Plugins\Product\Contracts\ProductReferenceConfig::PRODUCT_TYPE_VARIANT) ? 'Please select full product attribute!' : '' }}">Add to Bag</button>
@@ -162,7 +162,7 @@
                             <div class="px-3 product-item-wrapper">
                                 @component("components.product-item")
                                     @slot("productItem", $productItemCollection)
-                                    @slot("productWishListIds", $productWishListIds)
+
                                 @endcomponent
                             </div>
                         @endforeach
@@ -182,7 +182,7 @@
                             <div class="px-3 product-item-wrapper">
                                 @component("components.product-item")
                                     @slot("productItem", $similarProduct)
-                                    @slot("productWishListIds", $productWishListIds)
+
                                 @endcomponent
                             </div>
                         @endforeach
@@ -191,9 +191,13 @@
             </div>
         </section>
     @endif
+    @include('partials.modals.quick-shop-modal')
 @stop
 @section('variable-scripts')
     <script>
         const PRODUCT_ID = {{ $productInfo['product']->id }};
+    </script>
+    <script id="template-quick-shop-modal" type="text/x-handlebars-template">
+        @include('handle-bar.quick-shop-modal')
     </script>
 @stop

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Core\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Plugins\CustomAttributes\Models\AttributeValueString;
 use Plugins\CustomAttributes\Models\CustomAttributes;
 use Plugins\Product\Contracts\ProductReferenceConfig;
@@ -72,11 +73,12 @@ class Product extends Model
         'max_price',
         'url_product',
         'has_look_book',
+        'was_added_wish_list',
+        'was_saved_for_later',
     ];
 
     /**
-     * [keywords description]
-     * @return [type] [description]
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function keywords()
     {
@@ -213,6 +215,20 @@ class Product extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function wishListProducts() {
+        return $this->hasMany(WishList::class, 'product_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function saveForLaterProducts() {
+        return $this->hasMany(SaveForLater::class, 'product_id', 'id');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      * @author AnhPham
      */
@@ -281,9 +297,23 @@ class Product extends Model
     }
 
     /**
-     *
+     * @return bool
      */
     public function getHasLookBookAttribute() {
         return $this->productLookBooks->isNotEmpty() ? true : false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getWasAddedWishListAttribute() {
+        return (!empty($this->wishListProducts) && Auth::guard('customer')->check()) ? $this->wishListProducts()->where('customer_id', Auth::guard('customer')->id())->exists() : false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getWasSavedForLaterAttribute() {
+        return (!empty($this->saveForLaterProducts) && Auth::guard('customer')->check()) ? $this->saveForLaterProducts()->where('customer_id', Auth::guard('customer')->id())->exists() : false;
     }
 }

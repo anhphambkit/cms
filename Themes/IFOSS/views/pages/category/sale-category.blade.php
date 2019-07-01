@@ -54,7 +54,7 @@ $saleProducts = $categoryPageInfo['sale_products'];
                                 <div class="col-md-3">
                                     @component("components.product-item")
                                         @slot("productItem", $saleProduct)
-                                        @slot("productWishListIds", $productWishListIds)
+
                                     @endcomponent
                                 </div>
                             @endforeach
@@ -62,8 +62,12 @@ $saleProducts = $categoryPageInfo['sale_products'];
                     </div>
                 </div>
             </div>
-        </section>
-    @stop
-    @section('variable-scripts')
+    </section>
 
-    @stop
+    @include('partials.modals.quick-shop-modal')
+@stop
+@section('variable-scripts')
+    <script id="template-quick-shop-modal" type="text/x-handlebars-template">
+        @include('handle-bar.quick-shop-modal')
+    </script>
+@stop

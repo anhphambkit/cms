@@ -35,16 +35,17 @@ class ProductController extends BasePublicController
     /**
      * @param $url
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
 	public function getProductDetail($url) {
         $productId = get_id_from_url($url);
-        $productInfo = $this->productServices->getDetailInfoProduct($productId);
-        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
+        $productInfo = $this->productServices->getDetailInfoProductPage($productId);
+
         AssetManager::addAsset('product-detail-js', 'frontend/plugins/product/assets/js/product-detail.js');
         AssetPipeline::requireJs('product-detail-js');
         AssetManager::addAsset('product-detail-css', 'frontend/plugins/product/assets/css/product-detail.css');
         AssetPipeline::requireCss('product-detail-css');
-        return view('pages.product.detail', compact('productInfo', 'productWishListIds'));
+        return view('pages.product.detail', compact('productInfo'));
     }
 
     /**
@@ -58,14 +59,14 @@ class ProductController extends BasePublicController
 	        return redirect(route('homepage'));
 
         $products = $this->productServices->searchProduct($keySearch, $request->all());
-        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
+
 //        if ($request->ajax()) {
 //            $products = $products['data'];
-//            $view = view('partials.list-product-items',compact('productWishListIds', 'products'))->render();
+//            $view = view('partials.list-product-items',compact('products'))->render();
 //            return response()->json(['html'=>$view]);
 //        }
         $this->addAssetListPage();
-        return view('pages.product.list-search-products', compact('keySearch', 'products', 'productWishListIds'));
+        return view('pages.product.list-search-products', compact('keySearch', 'products'));
     }
 
     /**

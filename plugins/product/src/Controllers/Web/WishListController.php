@@ -40,11 +40,10 @@ class WishListController extends BasePublicController
                 'customer_id', '=', $customerId
             ]
         ], ['product'], ['*']);
-        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer($customerId);
         AssetManager::addAsset('product-detail-js', 'frontend/plugins/product/assets/js/product-detail.js');
         AssetPipeline::requireJs('product-detail-js');
         AssetManager::addAsset('product-detail-css', 'frontend/plugins/product/assets/css/product-detail.css');
         AssetPipeline::requireCss('product-detail-css');
-        return view('pages.wish-list.wish-list', compact('wishListProducts', 'productWishListIds'));
+        return view('pages.wish-list.wish-list', compact('wishListProducts'));
     }
 }

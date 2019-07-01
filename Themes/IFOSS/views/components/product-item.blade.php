@@ -6,7 +6,6 @@
  * Time: 07:54
  */
 $productItem = !empty($productItem) ? $productItem : collect([]);
-$productWishListIds = !empty($productWishListIds) ? $productWishListIds : [];
 ?>
 <div class="product-item">
     <div class="item mb-3">
@@ -19,7 +18,7 @@ $productWishListIds = !empty($productWishListIds) ? $productWishListIds : [];
             </div>
             <div class="mask">
                 <div class="text-center">
-                    <button class="btn btn-outline-custom background-white mb-3">quick shop</button>
+                    <button class="btn btn-outline-custom background-white mb-3 btn-show-quick-shop-modal" data-product-id="{{ $productItem->id }}">quick shop</button>
                     @php
                     @endphp
                     @if($productItem->has_look_book)
@@ -29,7 +28,7 @@ $productWishListIds = !empty($productWishListIds) ? $productWishListIds : [];
                     @endif
                 </div>
                 <a href="javascript:void(0);" class="add-to-wish-list favourite text-custom" data-product-id="{{ $productItem->id }}">
-                    <i class="{{ in_array($productItem->id, $productWishListIds) ? 'fas' : 'far' }} fa-heart icon-wish-list"></i>
+                    <i class="{{ ($productItem->was_added_wish_list) ? 'fas' : 'far' }} fa-heart icon-wish-list"></i>
                 </a>
             </div>
         </div>

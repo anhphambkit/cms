@@ -138,7 +138,7 @@
                     <div class="px-3 px-3 product-item-wrapper">
                         @component("components.product-item")
                             @slot("productItem", $bestSellerProduct)
-                            @slot("productWishListIds", $productWishListIds)
+
                         @endcomponent
                     </div>
                 @endforeach
@@ -148,4 +148,12 @@
             {{--</div>--}}
         </div>
     </section>
+
+    @include('partials.modals.quick-shop-modal')
+@stop
+
+@section('variable-scripts')
+    <script id="template-quick-shop-modal" type="text/x-handlebars-template">
+        @include('handle-bar.quick-shop-modal')
+    </script>
 @stop

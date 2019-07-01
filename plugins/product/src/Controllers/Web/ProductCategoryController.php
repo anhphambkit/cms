@@ -47,9 +47,9 @@ class ProductCategoryController extends BasePublicController
     public function getListProductsOfCategoryPage($url, Request $request) {
         $productCategoryId = get_id_from_url($url);
         $categoryPageInfo = $this->productServices->getListProductsOfCategoryPage($productCategoryId, null, $request->all());
-        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
+
         $this->addAssetListPage();
-        return view('pages.category.detail', compact('categoryPageInfo', 'productWishListIds'));
+        return view('pages.category.detail', compact('categoryPageInfo'));
     }
 
     /**
@@ -62,14 +62,14 @@ class ProductCategoryController extends BasePublicController
     public function getListProductsOfSubCategoryPage($url, $subCategory, Request $request) {
         $productCategoryId = get_id_from_url($subCategory);
         $categoryPageInfo = $this->productServices->getListProductsOfSubCategoryPage($productCategoryId, null, $request->all());
-        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
+
         if ($request->ajax()) {
             $products = $categoryPageInfo['products'];
-            $view = view('partials.list-product-items',compact('productWishListIds', 'products'))->render();
+            $view = view('partials.list-product-items',compact('products'))->render();
             return response()->json(['html'=>$view]);
         }
         $this->addAssetListPage();
-        return view('pages.category.sub-category-detail', compact('categoryPageInfo', 'productWishListIds'));
+        return view('pages.category.sub-category-detail', compact('categoryPageInfo'));
     }
 
     /**
@@ -81,14 +81,14 @@ class ProductCategoryController extends BasePublicController
     public function getListSaleProductsOfCategoryPage($url, Request $request) {
         $productCategoryId = get_id_from_url($url);
         $categoryPageInfo = $this->productServices->getListSaleProductsOfCategoryPageParent($productCategoryId, null, $request->all());
-        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
+
         if ($request->ajax()) {
             $products = $categoryPageInfo['products'];
-            $view = view('partials.list-product-items',compact('productWishListIds', 'products'))->render();
+            $view = view('partials.list-product-items',compact('products'))->render();
             return response()->json(['html'=>$view]);
         }
         $this->addAssetListPage();
-        return view('pages.category.sale-category', compact('categoryPageInfo', 'productWishListIds'));
+        return view('pages.category.sale-category', compact('categoryPageInfo'));
     }
 
     /**

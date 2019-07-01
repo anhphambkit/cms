@@ -31,7 +31,7 @@ $(document).on('click', '.look-book-tag-product .icon-show-popup', function (e) 
                         </div>
                         <div class="product-specs mb-0">
                             <div class="title">
-                                <a href="${PRODUCT.DETAIL_PRODUCT}/${data.data.slug}.${data.data.id}" class="link-product-detail">${data.data.name}</a>
+                                <a href="${PRODUCT.DETAIL_PRODUCT_PAGE}/${data.data.slug}.${data.data.id}" class="link-product-detail">${data.data.name}</a>
                             </div>
                             <div class="price">
                                 <div class="main">$${(data.data.is_has_sale) ? data.data.price : data.data.sale_price}</div>

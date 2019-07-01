@@ -83,15 +83,17 @@
             const PRODUCT = {
                 GET_OVERVIEW_INFO_POPUP : "{{ route('ajax.product.get_overview_info_product_popup') }}",
                 ADD_PRODUCT_TO_WISH_LIST : "{{ route('ajax.product.add_or_remove_product_to_quick_list') }}",
-                DETAIL_PRODUCT : "{{ route('public.product.detail', [ 'url' => '' ]) }}",
                 GET_DETAIL_PRODUCT : "{{ route('ajax.product.get_detail_info_product') }}",
+                GET_DETAIL_PRODUCT_BY_ATTRIBUTES : "{{ route('ajax.product.get_detail_info_product_by_attributes') }}",
                 DETAIL_PRODUCT_PAGE : "{{ route('public.product.detail', [ 'url' => '' ]) }}",
             };
         </script>
-        <script src="{{ asset('frontend/plugins/product/assets/js/product.js') }}" type="text/javascript"></script>
 
         @section('variable-scripts')
         @show
+
+        <script src="{{ asset('frontend/plugins/product/assets/js/product.js') }}" type="text/javascript"></script>
+
         @section('script-media')
             @include('core-media::partials.media')
         @show

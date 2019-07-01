@@ -10,7 +10,7 @@
     <div class="col-md-3">
         @component("components.product-item")
             @slot("productItem", $product)
-            @slot("productWishListIds", $productWishListIds)
+
         @endcomponent
     </div>
 @endforeach

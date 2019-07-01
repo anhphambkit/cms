@@ -8,6 +8,7 @@
 
 namespace Plugins\Product\Services\Implement;
 
+use Core\Master\Supports\Collection;
 use Illuminate\Support\Facades\DB;
 use Plugins\Cart\Repositories\Interfaces\CartRepositories;
 use Plugins\Product\Contracts\ProductReferenceConfig;
@@ -117,18 +118,38 @@ class ImplementProductServices implements ProductServices {
             $defaultSelectedAttributeValues = $product->productStringValueAttribute()->get()->groupBy('custom_attribute_id');
         }
 
-        $collectionIds = $product->productCollections()->pluck('product_collections_relation.product_collection_id')->toArray();
-        $categoryIds = $product->productCategories()->pluck('product_categories_relation.product_category_id')->toArray();
-        $collectionProducts = $this->repository->getAllProductInCollections($collectionIds, self::NUMBER_PRODUCTS_OF_SLIDER);
-        $similarProducts = $this->repository->getAllProductsByCategory($categoryIds, self::NUMBER_PRODUCTS_OF_SLIDER);
         return [
             'product' => $product,
             'product_attributes' => $customAttributes,
             'product_attribute_values' => $attributeValues,
             'product_default_attribute_values' => $defaultSelectedAttributeValues,
+        ];
+    }
+
+    /**
+     * @param $product
+     * @return array
+     */
+    public function getRelatedInfoOfProduct($product) {
+        $collectionIds = $product->productCollections()->pluck('product_collections_relation.product_collection_id')->toArray();
+        $categoryIds = $product->productCategories()->pluck('product_categories_relation.product_category_id')->toArray();
+        $collectionProducts = $this->repository->getAllProductInCollections($collectionIds, self::NUMBER_PRODUCTS_OF_SLIDER);
+        $similarProducts = $this->repository->getAllProductsByCategory($categoryIds, self::NUMBER_PRODUCTS_OF_SLIDER);
+        return [
             'product_in_collection' => $collectionProducts,
             'similar_products' => $similarProducts,
         ];
+    }
+
+    /**
+     * @param int $productId
+     * @return array
+     * @throws \Exception
+     */
+    public function getDetailInfoProductPage(int $productId) {
+        $productInfo = $this->getDetailInfoProduct($productId);
+        $relatedInfoProduct = $this->getRelatedInfoOfProduct($productInfo['product']);
+        return array_merge($productInfo, $relatedInfoProduct);
     }
 
     /**
@@ -164,7 +185,8 @@ class ImplementProductServices implements ProductServices {
             return [
                 'min_price' => $variantProducts->min('min_price'),
                 'max_price' => $variantProducts->max('max_price'),
-                'link_product' => null
+                'link_product' => null,
+                'product_info' => null,
             ];
         }
         else {
@@ -172,6 +194,7 @@ class ImplementProductServices implements ProductServices {
             return [
                 'min_price' => null,
                 'max_price' => null,
+                'product_info' => $variantProduct,
                 'link_product' => "{$variantProduct->slug}.{$variantProduct->id}",
             ];
         }

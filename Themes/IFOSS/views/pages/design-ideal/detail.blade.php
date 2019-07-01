@@ -19,7 +19,7 @@
                     <div class="px-3 product-item-wrapper">
                         @component("components.product-item")
                             @slot("productItem", json_decode (json_encode ($lookBookProduct), FALSE))
-                            @slot("productWishListIds", $productWishListIds)
+
                         @endcomponent
                     </div>
                 @endforeach

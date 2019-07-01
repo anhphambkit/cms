@@ -44,10 +44,20 @@ class ProductController extends BaseAdminController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getDetailInfoProduct(Request $request) {
-        $productAttributes = $request->product_attribute_info;
-        $productId = (int)$request->product_id;
+    public function getDetailInfoProductByAttributes(Request $request) {
+        $productAttributes = !empty($request->get('product_attribute_info')) ? $request->get('product_attribute_info') : [];
+        $productId = (int)$request->get('product_id');
         $productInfo = $this->productServices->getDetailInfoProductByProductIdAndAttribute($productId, $productAttributes);
+        return response()->json($productInfo);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDetailInfoProduct(Request $request) {
+        $productId = (int)$request->get('product_id');
+        $productInfo = $this->productServices->getDetailInfoProduct($productId);
         return response()->json($productInfo);
     }
 

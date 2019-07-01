@@ -28,7 +28,7 @@
                         <div class="px-3 product-item-wrapper">
                             @component("components.product-item")
                                 @slot("productItem", $saleProduct)
-                                @slot("productWishListIds", $productWishListIds)
+
                             @endcomponent
                         </div>
                         @endforeach
@@ -37,7 +37,6 @@
             </div>
         </div>
     </section>
-
     @foreach($categoryPageInfo['sub_categories'] as $subCategory)
         <section class="mb-5">
             <div class="product-detail">
@@ -53,7 +52,7 @@
                             <div class="px-3 product-item-wrapper">
                                 @component("components.product-item")
                                     @slot("productItem", $subCategoryProduct)
-                                    @slot("productWishListIds", $productWishListIds)
+
                                 @endcomponent
                             </div>
                             @endforeach
@@ -63,7 +62,10 @@
             </div>
         </section>
     @endforeach
+    @include('partials.modals.quick-shop-modal')
 @stop
 @section('variable-scripts')
-
+    <script id="template-quick-shop-modal" type="text/x-handlebars-template">
+        @include('handle-bar.quick-shop-modal')
+    </script>
 @stop
