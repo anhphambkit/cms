@@ -23,43 +23,16 @@
 				<div class="h6 font-weight-500 text-custom text-uppercase mb-4">Personal Information</div>
 				<span>Placed on <b>{{ $order->created_at }}</b></span>
 			</div>
-			<div class="mb-3">
-				@php
-					$orderStatus = find_reference_by_id($order->status)->value;
-					$statusActive = [
-						OrderReferenceConfig::REFERENCE_ORDER_STATUS_OPEN,
-						OrderReferenceConfig::REFERENCE_ORDER_STATUS_SHIPPED,
-						OrderReferenceConfig::REFERENCE_ORDER_STATUS_DELIVERED
-					];	
-					$write = true;			
-				@endphp
-
-				@if(in_array($orderStatus, $statusActive))
-					<div class="progress-steps">
-						@foreach($statusActive as $status)
-							<div class="item @if($write) active @endif" >{{ $status }}
-								<div class="progress-shape">
-									<div class="dot"></div>
-									<div class="line"></div>
-								</div>
-							</div>
-							@if($orderStatus == $status)
-								@php
-									$write = false
-								@endphp
-							@endif
-						@endforeach
+			<div class="mb-4">
+				<div class="alert alert-success" role="alert">
+					<div class="alert-icon">
+						<i class="fas fa-clipboard-check"></i>
 					</div>
-				@else
-					<div class="progress-steps">
-						<div class="item @if($write) active @endif" >{{ find_reference_by_id($order->status)->display_value }}
-							<div class="progress-shape">
-								<div class="dot"></div>
-								<div class="line"></div>
-							</div>
-						</div>
+					<div>
+						<div class="h5 mb-1">Your products successfully paid!</div>
+						Please remember to tracking the orders 
 					</div>
-				@endif
+				</div>
 			</div>
 			<div class="row mb-3">
 				<div class="col-md-6">
@@ -111,7 +84,6 @@
 							<th class="th">Price</th>
 							<th class="th">Quantity</th>
 							<th class="th">Total</th>
-							<th class="th">Actions</th>
 						</thead>
 						<tbody class="tbody">
 							@php
@@ -124,17 +96,6 @@
 									<td class="text-right">$ {{ number_format($product->price, 2, ',', '.') }}</td>
 									<td class="text-right">{{ $product->quantity }}</td>
 									<td class="text-right">$ {{ number_format($product->price * $product->quantity, 2, ',', '.') }}</td>
-									<td>
-										@if(!$product->is_return)
-											<a href="javascript:void(0)" class="send-email-product-order text-blue px-2" data-refund-url="{{ route('public.order.send_return_order', [ 'id' => $order->id, 'idProduct' => $product->product_id] ) }}">Return</a> 
-										@endif
-										@if(!$product->is_replace)
-											<a href="javascript:void(0)" class="send-email-product-order text-blue px-2" data-refund-url="{{ route('public.order.send_replace_order', [ 'id' => $order->id, 'idProduct' => $product->product_id]) }}">Replace</a> 
-										@endif
-										@if(!$product->is_cancel)
-											<a href="javascript:void(0)" class="send-email-product-order px-2" data-refund-url="{{ route('public.order.send_cancel_order', [ 'id' => $order->id, 'idProduct' => $product->product_id]) }}">Cancel</a>
-										@endif
-									</td>
 								</tr>
 							@endforeach
 						</tbody>
@@ -163,38 +124,6 @@
 @endsection
 @section('master-footer')
 <script>
-	let sendEmailForProductOrder = function (url, reason){
-		Lcms.beginLoading('#form-refund-order');
-		$.ajax({
-            url : url,
-            type : "post",
-            data : { _token : _token, reason: reason },
-            success : function (data){
-            	if(!data.error){
-            		$('#refund-order-modal').modal('hide');
-            		$(`a[data-refund-url="${url}"]`).remove();
-                	Lcms.showNotice('success', data.message, Lcms.languages.notices_msg.success);  
-            	}
-                else
-                	Lcms.showNotice('error', data.message, Lcms.languages.notices_msg.error);
-            },
-            error: function(error) { // if error occured
-                Lcms.showNotice('error', error.message || 'Cannot send email for this order.', Lcms.languages.notices_msg.error);  
-            }
-        }).done(function() {
-			Lcms.endLoading('#form-refund-order');
-		});
-	}
-
-	$(document).on('click', '.send-email-product-order', function (event) {
-        event.preventDefault();
-        let urlSendEmail = $(this).data('refund-url');
-        $('#form-refund-order')[0].reset();
-        $('#form-refund-order').attr('action', urlSendEmail);
-        $('#refund-order-modal').modal('show');
-    });
-
-
 	$(document).ready(function() {
 		var tbodyWidth = [];
 		$('.flex-table .thead .th').each(function(index, el) {
@@ -208,14 +137,4 @@
 		});
 	});
 </script>
-<script type="text/javascript">
-	$(document).on('click', '#btn-send-refund', function(event){
-	    event.preventDefault();
-	    let reason = $('input[name="reason"]:checked').val();
-	    if(!reason) return Lcms.showNotice('error', 'Please choose reason to send refund.', Lcms.languages.notices_msg.error);
-	    var formAction = $("#form-refund-order").attr('action');
-	    sendEmailForProductOrder(formAction, reason);
-	});
-</script>
-	@include('pages.order.confirm-modal')
 @endsection

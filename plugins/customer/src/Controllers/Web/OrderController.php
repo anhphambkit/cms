@@ -12,6 +12,7 @@ use Plugins\Customer\Repositories\Interfaces\OrderRepositories;
 use Plugins\Customer\Events\EventSendRefundOrder;
 use Plugins\Customer\Events\EventSendOrderProduct;
 use Plugins\Customer\Repositories\Interfaces\ProductsInOrderRepositories;
+use URL;
 
 class OrderController extends BasePublicController
 {
@@ -57,9 +58,9 @@ class OrderController extends BasePublicController
 
 	/**
 	 * [detail description]
-	 * @param  [type]  $id      [description]
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
+	 * @param  [type]  $id     
+	 * @param  Request $request
+	 * @return [type]          
 	 */
 	public function myOrderDetail($id, Request $request)
 	{
@@ -69,11 +70,11 @@ class OrderController extends BasePublicController
 
 	/**
 	 * [returnProductOrder description]
-	 * @param  [type]           $idOrder   [description]
-	 * @param  [type]           $idProduct [description]
-	 * @param  Request          $request   [description]
-	 * @param  BaseHttpResponse $response  [description]
-	 * @return [type]                      [description]
+	 * @param  [type]           $idOrder  
+	 * @param  [type]           $idProduct
+	 * @param  Request          $request  
+	 * @param  BaseHttpResponse $response 
+	 * @return [type]                     
 	 */
 	public function returnProductOrder($idOrder, $idProduct, Request $request, BaseHttpResponse $response)
 	{
@@ -91,11 +92,11 @@ class OrderController extends BasePublicController
 
 	/**
 	 * [replaceProductOrder description]
-	 * @param  [type]           $idOrder   [description]
-	 * @param  [type]           $idProduct [description]
-	 * @param  Request          $request   [description]
-	 * @param  BaseHttpResponse $response  [description]
-	 * @return [type]                      [description]
+	 * @param  [type]           $idOrder  
+	 * @param  [type]           $idProduct
+	 * @param  Request          $request  
+	 * @param  BaseHttpResponse $response 
+	 * @return [type]                     
 	 */
 	public function replaceProductOrder($idOrder, $idProduct, Request $request, BaseHttpResponse $response)
 	{
@@ -113,11 +114,11 @@ class OrderController extends BasePublicController
 
 	/**
 	 * [cancelProductOrder description]
-	 * @param  [type]           $idOrder   [description]
-	 * @param  [type]           $idProduct [description]
-	 * @param  Request          $request   [description]
-	 * @param  BaseHttpResponse $response  [description]
-	 * @return [type]                      [description]
+	 * @param  [type]           $idOrder  
+	 * @param  [type]           $idProduct
+	 * @param  Request          $request  
+	 * @param  BaseHttpResponse $response 
+	 * @return [type]                     
 	 */
 	public function cancelProductOrder($idOrder, $idProduct, Request $request, BaseHttpResponse $response)
 	{
@@ -131,5 +132,21 @@ class OrderController extends BasePublicController
 		event(new EventSendOrderProduct($order, EMAIL_CANCEL_PRODUCT_ORDER));
 		return $response
                 ->setMessage(trans('Send Cancel Order Success.'));
+	}
+
+	/**
+	 * [getConfirmation description]
+	 * @param  [type]           $idOrder 
+	 * @param  Request          $request 
+	 * @return Illuminate\View\View
+	 */				
+	public function getConfirmation($idOrder, Request $request)
+	{
+		if (!URL::hasValidSignature($request)) {
+            abort(404);
+        }
+
+		$order = $this->orderService->findOrderCustomer(['id' => (int)$idOrder]);
+		return view('pages.order.order-confirmation', compact('order'));
 	}
 }
