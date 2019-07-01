@@ -22,7 +22,9 @@ use Plugins\Payment\Repositories\Interfaces\PaymentRepositories;
 use Plugins\Customer\Models\Order;
 use AssetManager;
 use AssetPipeline;
+use Plugins\Customer\Repositories\Interfaces\OrderRepositories;
 use Plugins\Customer\Events\EventConfirmOrder;
+use URL;
 
 class CheckoutController extends BasePublicController
 {	
@@ -51,8 +53,7 @@ class CheckoutController extends BasePublicController
 	private $paymentRepositories;
 
 	/**
-	 * [$orderRepository description]
-	 * @var OrderRepositories
+	 * @var IOrderService
 	 */
 	private $orderService;
 
@@ -173,9 +174,16 @@ class CheckoutController extends BasePublicController
 				'transaction_id' => $transaction->related_resources[0]->sale->id
             ];
 			$this->orderService->updateOrder($conditionsUpdateOrder, $dataUpdate);
+
+			$link = URL::signedRoute('public.order.confirmation', ['id' => $orderId]);
+
+			# send email confirmation
+			$order = app(OrderRepositories::class)->findOrFail((int)$orderId);
+        	event(new EventConfirmOrder($order));
+
 			return $response
-				->setPreviousUrl(route('homepage'))
-				->setNextUrl(route('homepage'))
+				->setPreviousUrl($link)
+				->setNextUrl($link)
                 ->setMessage(trans('Your transaction Success!!! Thank your order.'));
 		}
 

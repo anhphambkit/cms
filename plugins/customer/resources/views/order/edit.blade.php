@@ -72,7 +72,7 @@
                                               <th class="text-right">Item price</th>
                                               <th class="text-right">Item quantity</th>
                                               <th class="text-right">Total</th>
-                                              <th class="text-right">Status</th>
+                                              <th class="text-right">Request</th>
                                             </tr>
                                           </thead>
                                           <tbody>
@@ -136,10 +136,12 @@
                                         <div class="table-responsive">
                                             <table class="table">
                                               <tbody>
-                                                <tr>
-                                                    <td>Coupon Code</td>
-                                                    <td class="text-right">{{ $order->coupon_code }}</td>
-                                                </tr>
+                                                @if($order->coupon_code)
+                                                    <tr>
+                                                        <td>Coupon Code</td>
+                                                        <td class="text-right">{{ $order->coupon_code }}</td>
+                                                    </tr>
+                                                @endif
                                                 <tr>
                                                     <td>Sub Total</td>
                                                     <td class="text-right">$ {{ number_format($order->total_price, 2, ',', '.') }}</td>

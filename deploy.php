@@ -45,7 +45,7 @@ task('deploy:upload', function(){ //
        'plugins',
        // 'public//themes',
        // 'public//backend',
-       // 'public//frontend',
+       'public//frontend//core//base',
        // 'public//libs',
        // 'public//vendor',
        // 'Themes',
