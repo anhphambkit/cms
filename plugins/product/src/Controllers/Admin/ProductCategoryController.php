@@ -59,7 +59,7 @@ class ProductCategoryController extends BaseAdminController
             [
                 'parent_id', '=', 0
             ]
-        ])->pluck('name', 'id');
+        ])->pluck('name', 'id')->toArray();
 
         $categories = [ 0 => "Please select parent product category" ] + $categories;
 
