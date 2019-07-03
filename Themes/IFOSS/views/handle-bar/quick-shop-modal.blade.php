@@ -91,29 +91,77 @@
                                     <div class="reviews">6,415 reviews</div>
                                 </div>
                                 <div class="price current-selected-product">
-                                    @{{#ifEquals product.type_product "variants"}}
+                                    @{{#ifNotEquals product.type_product "variants"}}
                                         <div class="main">$@{{#if product.is_has_sale }} @{{ product.sale_price }} @{{else}} @{{ product.price }} @{{/if}}</div>
                                         @{{#if product.is_has_sale }}
                                             <div class="discount">$@{{ product.price }}</div>
                                             <div class="sale">@{{ product.percent_sale }}% off</div>
-                                        @@{{/if}}
+                                        @{{/if}}
                                     @{{else}}
                                         <div class="main">$@{{ product.min_price }} - $@{{ product.max_price }}</div>
-                                    @{{/ifEquals}}
+                                    @{{/ifNotEquals}}
                                 </div>
                                 <div class="feature-items">
                                     <div class="item"><img src="{{ asset('themes/ifoss/assets/images/icons/truck.png') }}" alt="" class="icon"> Free Shipping</div>
                                 </div>
                                 <div class="choose-color">
-
-                                    {{--@component("components.product-custom-attributes")--}}
-                                        {{--@slot("productAttributeValues", $productInfo['product_attribute_values'])--}}
-                                        {{--@slot("productAttributes", $productInfo['product_attributes'])--}}
-                                        {{--@slot("productDefaultAttributeValues", $productInfo['product_default_attribute_values'])--}}
-                                        {{--@slot("typeProduct", $productInfo['product']->type_product)--}}
-                                    {{--@endcomponent--}}
+                                    <div class="product-attributes">
+                                        @{{#each product_attributes }}
+                                            <div class="product-attribute @{{#if (isVariantProduct @root.product.type_product) }} variant-attribute @{{/if}} product-attribute-@{{ id }}" data-attribute-type="@{{ type_render }}" data-product-attribute="@{{ id }}"
+                                                 data-is-variant-attribute="@{{ isVariantProduct @root.product.type_product }}"
+                                                 data-attribute-selected-id="@{{#if (productDefaultValue @root.product_default_attribute_values id) }} @{{ productDefaultValue.id }} @{{/if}}">
+                                                @{{#ifEquals type_render "color_picker"}}
+                                                    <div class="d-flex mb-3">
+                                                        <div class="gray-color mr-4">Select @{{ name }}</div>
+                                                        <div class="font-weight-600 attribute-selected-title"
+                                                             data-attribute-selected-id="@{{#if (productDefaultValue @root.product_default_attribute_values id) }} @{{ productDefaultValue.id }} @{{/if}}"
+                                                             data-title="@{{#if (productDefaultValue @root.product_default_attribute_values id) }} @{{ productDefaultValue.name }} @{{/if}}">
+                                                                @{{#if (productDefaultValue @root.product_default_attribute_values id) }} @{{ productDefaultValue.name }} @{{/if}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="color-box">
+                                                        @{{#each (lookup @root.product_attribute_values id) }}
+                                                            <a href="javascript:void(0);" data-attribute-value-name="@{{ name }}" data-attribute-value-id="@{{ id }}"
+                                                               class="item item-color-attribute item-product-attribute
+                                                                    @{{#if (productDefaultValue @root.product_default_attribute_values id) }}
+                                                                        @{{#ifEquals productDefaultValue.id id }} active @{{/ifEquals}}
+                                                                    @{{/if}}">
+                                                                @{{#if image_feature }}
+                                                                <img src="@{{ image_feature }}" alt="@{{ name }}">
+                                                                @{{else}}
+                                                                <span class="product-color-attribute-preview">
+                                                                            <span class="product-color-attribute-square-box" style="background-color: @{{ value }};"></span>
+                                                                        </span>
+                                                                @{{/if}}
+                                                            </a>
+                                                        @{{/each}}
+                                                    </div>
+                                                @{{/ifEquals}}
+                                                @{{#ifEquals type_render "string"}}
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="mr-4">
+                                                            <span class="d-inline-block gray-color" style="width: 120px;">Select @{{ name }}</span>
+                                                            @{{#each (lookup @root.product_attribute_values id) }}
+                                                                @{{#if (productDefaultValue @root.product_default_attribute_values id) }}
+                                                                    @{{#ifEquals productDefaultValue.id id }}
+                                                                        <span class="font-weight-600" data-attribute-value-id="@{{ id }}">@{{  name }}</span>
+                                                                    @{{/ifEquals}}
+                                                                @{{/if}}
+                                                            @{{/each}}
+                                                        </div>
+                                                        <a href="javascript:void(0);" class="action-icon" data-toggle="dropdown"><i class="fas fa-chevron-right"></i></a>
+                                                        <div class="dropdown-menu align-left" aria-labelledby="account-dropdown">
+                                                            @{{#each (lookup @root.product_attribute_values id) }}
+                                                                <a class="dropdown-item item-product-attribute" href="javascript:void(0);" data-attribute-value-name="@{{ name }}" data-attribute-value-id="@{{ id }}">@{{ name }}</a>
+                                                            @{{/each}}
+                                                        </div>
+                                                    </div>
+                                                @{{/ifEquals}}
+                                            </div>
+                                        @{{/each}}
+                                    </div>
                                     <hr>
-                                    <div class="d-flex justify-content-between">
+                                    <div class="d-flex justify-content-between product-quantity-section">
                                         <div class="mr-4">
                                             <span class="d-inline-block gray-color" style="width: 120px;">Select Quantity</span>
                                             <span class="font-weight-600 quantity-product" data-quantity="1">1</span>

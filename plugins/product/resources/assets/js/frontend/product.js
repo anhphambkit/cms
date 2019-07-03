@@ -4,6 +4,7 @@
     Author: Anh Pham
 ==========================================================================================*/
 import { HandlebarRender } from '@coreComponents/base/inc/handlebarForm';
+import { Handlebars } from '@pluginComponents/product/product-handlebar';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -40,7 +41,7 @@ $(document).on('click', '.add-to-wish-list', function(e) {
 });
 
 $(document).ready(function() {
-    initSliderProductGalleries();
+    initSliderProductGalleriesPage();
 
     fixedSidebar();
 
@@ -67,9 +68,18 @@ $(document).ready(function() {
 
             return request
                 .then(function(data){
-                    if (data.data.link_product)
+                    if (data.data.link_product) {
+                        if ($(this).parents('.product-attribute').hasClass('product-detail-section-page')) {
+                            window.location.replace(`${PRODUCT.DETAIL_PRODUCT_PAGE}/${data.data.link_product}`);
+                        }
+                        else {
+                            destroySlider();
+                            quickShopModal.setData(data.data.product_info);
+                            quickShopModal.parseTemplate();
+                            initSliderProductGalleriesModal();
+                        }
+                    }
                     // console.log(data.data.product_info);
-                        window.location.replace(`${PRODUCT.DETAIL_PRODUCT_PAGE}/${data.data.link_product}`);
                     else if(data.data.min_price && data.data.max_price) {
                         $('.product-specs .price.current-selected-product .main').html(`$${data.data.min_price} - $${data.data.max_price}`);
                         $('.product-specs .price.current-selected-product .discount').hide();
@@ -87,7 +97,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.quantity-action', function (event) {
         event.preventDefault();
-        let currentQuantity = parseInt($('.quantity-product').data('quantity'));
+        let currentQuantity = parseInt($(this).parents('.product-quantity-section').find('.quantity-product').data('quantity'));
         let newQuantity = currentQuantity;
         let actionQuantity = $(this).data('action');
         if (actionQuantity === 'minus') {
@@ -97,8 +107,8 @@ $(document).ready(function() {
         else if (actionQuantity === 'plus') {
             newQuantity += 1;
         }
-        $('.quantity-product').text(newQuantity);
-        $('.quantity-product').data('quantity', newQuantity);
+        $(this).parents('.product-quantity-section').find('.quantity-product').text(newQuantity);
+        $(this).parents('.product-quantity-section').find('.quantity-product').data('quantity', newQuantity);
     });
 
     $(document).on('click', '.add-to-cart-btn', function (event) {
@@ -107,7 +117,7 @@ $(document).ready(function() {
         let productId = $(this).parents('.product-detail').data('product-id');
         let products = {};
         let newProduct = {};
-        let quantity = $('.quantity-product').data('quantity');
+        let quantity = $(this).parents('.product-detail').find('.quantity-product').data('quantity');
         newProduct[productId] = quantity;
         products = Object.assign(products, newProduct);
         let dataAttributes = getAllAttributeValue();
@@ -176,7 +186,7 @@ $(document).ready(function() {
     });
 
     $('#item-quick-shop-modal').on('shown.bs.modal', function (e) {
-        initSliderProductGalleries();
+        initSliderProductGalleriesModal();
     });
 
     $('#item-quick-shop-modal').on('hidden.bs.modal', function (e) {
@@ -211,7 +221,7 @@ $(document).ready(function() {
         });
     }
 
-    function initSliderProductGalleries() {
+    function initSliderProductGalleriesPage() {
         $('.slider-for').slick({
             slidesToShow: 1,
             slidesToScroll: 1,
@@ -226,6 +236,32 @@ $(document).ready(function() {
         });
 
         $('.slider-nav').slick({
+            slidesToShow: 6,
+            slidesToScroll: 1,
+            asNavFor: '.slider-for',
+            accessibility: false,
+            infinite: false,
+            dots: false,
+            arrows: false,
+            focusOnSelect: true
+        });
+    }
+
+    function initSliderProductGalleriesModal() {
+        $('#item-quick-shop-modal .slider-for').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            accessibility: false,
+            infinite: false,
+            dots: false,
+            arrows: true,
+            // fade: true,
+            asNavFor: '.slider-nav',
+            prevArrow:"<i class='fas fa-arrow-left slick-prev'></i>",
+            nextArrow:"<i class='fas fa-arrow-right slick-next'></i>"
+        });
+
+        $('#item-quick-shop-modal .slider-nav').slick({
             slidesToShow: 6,
             slidesToScroll: 1,
             asNavFor: '.slider-for',

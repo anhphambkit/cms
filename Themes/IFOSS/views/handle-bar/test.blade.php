@@ -1,0 +1,68 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: AnhPham
+ * Date: 2019-07-02
+ * Time: 09:31
+ */
+?>
+<div class="product-attributes">
+    @{{#each product_attributes }}
+        <div class="product-attribute @{{#if isVariantProduct }} variant-attribute @{{/if}} product-attribute-@{{ productAttribute.id }}" data-attribute-type="@{{ productAttribute.type_render }}" data-product-attribute="@{{ productAttribute.id }}"
+             data-is-variant-attribute="@{{ isVariantProduct product.type_product }}" data-attribute-selected-id="@{{#if productDefaultAttributeValues productDefaultAttributeValues productAttribute.id }} productDefaultValue.id @{{/if}}">
+            @switch($productAttribute->type_render)
+                @case(str_slug(\Plugins\CustomAttributes\Contracts\CustomAttributeConfig::REFERENCE_CUSTOM_ATTRIBUTE_TYPE_RENDER_COLOR_PICKER, '_'))
+                <div class="d-flex mb-3">
+                    <div class="gray-color mr-4">Select {{ strtolower($productAttribute->name) }}</div>
+                    <div class="font-weight-600 attribute-selected-title"
+                         data-attribute-selected-id="{{ (!empty($productDefaultValue)) ? $productDefaultValue->id : '' }}"
+                         data-title="{{ (!empty($productDefaultValue)) ? $productDefaultValue->name : '' }}">
+                        {{ (!empty($productDefaultValue)) ? $productDefaultValue->name : '' }}
+                    </div>
+                </div>
+                <div class="color-box">
+                    @foreach($productAttributeValues[$productAttribute->id] as $productAttributeValue)
+                        <a href="javascript:void(0);" data-attribute-value-name="{{ $productAttributeValue->name }}" data-attribute-value-id="{{ $productAttributeValue->id }}"
+                           class="item item-color-attribute item-product-attribute {{ (!empty($productDefaultValue) && $productDefaultValue->id === $productAttributeValue->id) ? 'active' : '' }}">
+                            @if($productAttributeValue->image_feature)
+                                <img src="{{ asset($productAttributeValue->image_feature) }}" alt="{{ $productAttributeValue->name }}">
+                            @else
+                                <span class="product-color-attribute-preview">
+                                                                            <span class="product-color-attribute-square-box" style="background-color: {{ $productAttributeValue->value }};"></span>
+                                                                        </span>
+                            @endif
+                        </a>
+                    @endforeach
+                </div>
+                @break;
+                @case(str_slug(\Plugins\CustomAttributes\Contracts\CustomAttributeConfig::REFERENCE_CUSTOM_ATTRIBUTE_TYPE_RENDER_STRING, '_'))
+                <div class="d-flex justify-content-between">
+                    <div class="mr-4">
+                        <span class="d-inline-block gray-color" style="width: 120px;">Select {{ strtolower($productAttribute->name) }}</span>
+                        @foreach($productAttributeValues[$productAttribute->id] as $productAttributeValue)
+                            @if(!empty($productDefaultValue) && $productDefaultValue->id === $productAttributeValue->id)
+                                <span class="font-weight-600" data-attribute-value-id="{{ $productAttributeValue->id }}">{{  $productAttributeValue->name }}</span>
+                            @endif
+                        @endforeach
+                    </div>
+                    <a href="javascript:void(0);" class="action-icon" data-toggle="dropdown"><i class="fas fa-chevron-right"></i></a>
+                    <div class="dropdown-menu align-left" aria-labelledby="account-dropdown">
+                        @foreach($productAttributeValues[$productAttribute->id] as $productAttributeValue)
+                            <a class="dropdown-item item-product-attribute" href="javascript:void(0);" data-attribute-value-name="{{ $productAttributeValue->name }}" data-attribute-value-id="{{ $productAttributeValue->id }}">{{ $productAttributeValue->name }}</a>
+                        @endforeach
+                    </div>
+                </div>
+                @break;
+            @endswitch
+        </div>
+        @if($indexProductAttribute < $productAttributes->count() - 1)
+            <hr />
+        @endif
+    @{{/each}}
+    @foreach($productAttributes as $indexProductAttribute => $productAttribute)
+        @php
+        $productDefaultValue = !empty($productDefaultAttributeValues[$productAttribute->id]) ? $productDefaultAttributeValues[$productAttribute->id]->first() : null;
+        @endphp
+    @endforeach
+</div>
+

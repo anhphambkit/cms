@@ -251,10 +251,10 @@ class ProductController extends BaseAdminController
 
         // Business space product
         $productSpaces = (!empty($data['space_business']) ? $data['space_business'] : []);
-        $product->productBusinessSpaces()->createMany($productSpaces);
+        if (!empty($productSpaces))
+            $product->productBusinessSpaces()->createMany($productSpaces);
 
         $productAllSpaces = (!empty($data['all_space']) ? $data['all_space'] : []);
-        
         foreach ($productAllSpaces as $productAllSpace) {
             $product->productBusinessSpaces()->create([
                 'business_type_id' => 0,

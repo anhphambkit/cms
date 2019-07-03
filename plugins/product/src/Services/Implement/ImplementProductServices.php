@@ -155,7 +155,8 @@ class ImplementProductServices implements ProductServices {
     /**
      * @param int $productId
      * @param array $productAttributes
-     * @return mixed
+     * @return array|mixed
+     * @throws \Exception
      */
     public function getDetailInfoProductByProductIdAndAttribute(int $productId, array $productAttributes) {
         $product = $this->repository->findById($productId);
@@ -190,12 +191,12 @@ class ImplementProductServices implements ProductServices {
             ];
         }
         else {
-            $variantProduct = $this->repository->findById(reset($variantProductIds));
+            $productInfo = $this->getDetailInfoProduct((int)reset($variantProductIds));
             return [
                 'min_price' => null,
                 'max_price' => null,
-                'product_info' => $variantProduct,
-                'link_product' => "{$variantProduct->slug}.{$variantProduct->id}",
+                'product_info' => $productInfo,
+                'link_product' => "{$productInfo['product']->slug}.{$productInfo['product']->id}",
             ];
         }
     }

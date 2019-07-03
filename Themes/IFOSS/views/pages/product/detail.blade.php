@@ -20,7 +20,7 @@
     </div>
 
     <section class="mb-5">
-        <div class="product-detail" data-product-id="{{ $productInfo['product']->id }}">
+        <div class="product-detail product-detail-section-page" data-product-id="{{ $productInfo['product']->id }}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 product-detail-wrapper">
@@ -118,7 +118,7 @@
                                         @slot("typeProduct", $productInfo['product']->type_product)
                                     @endcomponent
                                     <hr>
-                                    <div class="d-flex justify-content-between">
+                                    <div class="d-flex justify-content-between product-quantity-section">
                                         <div class="mr-4">
                                             <span class="d-inline-block gray-color" style="width: 120px;">Select Quantity</span>
                                             <span class="font-weight-600 quantity-product" data-quantity="1">1</span>

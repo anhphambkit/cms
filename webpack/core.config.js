@@ -8,6 +8,7 @@ module.exports = {
             // "@helper": path.resolve(__dirname, '../helper/js'),
             // "@resources": path.resolve(__dirname, '../resources/assets/js'),
             "@coreComponents": path.resolve('public/components/core'),
+            "@pluginComponents": path.resolve('public/components/plugins'),
         }
     }
 }
