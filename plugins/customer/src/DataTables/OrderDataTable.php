@@ -32,11 +32,19 @@ class OrderDataTable extends DataTableAbstract
             ->editColumn('total_amount_order', function ($item) {
                 return  '$'. number_format($item->total_amount_order, 2, ',', '.');
             })
-            // ->editColumn('address_billing', function ($item) {
-            //     return  show_address_invoice($item);
-            // })
+            ->editColumn('address_shipping', function ($item) {
+                return  show_address_invoice($item, 'address_shipping');
+            })
             ->editColumn('amount_refund', function ($item) {
                 return  '$'. $item->amount_refund;
+            })
+            ->editColumn('customer_name', function ($item) {
+                $address = json_decode($item->address_billing);
+                $items = array_values([
+                    $address->first_name ?? '',
+                    $address->last_name ?? '',
+                ]);
+                return implode(' ', $items);
             })
             ->editColumn('payment_method', function ($item) {
                 return ucfirst($item->payment_method);
@@ -101,14 +109,18 @@ class OrderDataTable extends DataTableAbstract
                 'footer' => __('Method'),
                 'class'  => 'text-left',
             ],
-
-            // 'address_billing' => [
-            //     'name'   => 'customer_orders.address_billing',
-            //     'title'  => __('Address'),
-            //     'footer' => __('Address'),
-            //     'width' => '300px',
-            //     'class'  => 'text-left',
-            // ],
+            'customer_name' => [
+                'name'   => 'customer_orders.address_billing',
+                'title'  => __('Customer'),
+                'footer' => __('Customer'),
+                'class'  => 'text-left',
+            ],
+            'address_shipping' => [
+                'name'   => 'customer_orders.address_shipping',
+                'title'  => __('Shipping Address'),
+                'footer' => __('Shipping Address'),
+                'class'  => 'text-left',
+            ],
             'total_amount_order' => [
                 'name'   => 'customer_orders.total_amount_order',
                 'title'  => __('Amount'),
