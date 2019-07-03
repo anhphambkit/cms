@@ -69,7 +69,7 @@ $(document).ready(function() {
             return request
                 .then(function(data){
                     if (data.data.link_product) {
-                        if ($(this).parents('.product-attribute').hasClass('product-detail-section-page')) {
+                        if ($(_this).parents('.product-detail').hasClass('product-detail-section-page')) {
                             window.location.replace(`${PRODUCT.DETAIL_PRODUCT_PAGE}/${data.data.link_product}`);
                         }
                         else {

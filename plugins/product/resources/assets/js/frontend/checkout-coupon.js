@@ -32,6 +32,7 @@ $(document).on('click', '#add-coupon-btn', function (e) {
             }
             $('.total-price-checkout').html(`$${data.data.total_price}`);
             $('.your-saved-checkout').html(`$${data.data.saved_price}`);
+            $('.discount-price').html(`-$${data.data.coupon_discount_amount}`);
             $('.checkout-get-design .wanting-price').html(`+  $${data.data.free_design.wanting_price}`);
             $('.checkout-get-design .total-free-designs-cart').html(`to qualify for ${data.data.free_design.total_free_design + 1} FREE DESIGN`);
             if (data.data.status === 'success') {
@@ -66,6 +67,7 @@ $(document).on('click', '.action-delete-coupon', function (e) {
             $(`.coupon-in-use .coupon-${couponId}`).remove();
             $('.total-price-checkout').html(`$${data.data.total_price}`);
             $('.your-saved-checkout').html(`$${data.data.saved_price}`);
+            $('.discount-price').html(`-$${data.data.coupon_discount_amount}`);
             $('.checkout-get-design .wanting-price').html(`+  $${data.data.free_design.wanting_price}`);
             $('.checkout-get-design .total-free-designs-cart').html(`to qualify for ${data.data.free_design.total_free_design + 1} FREE DESIGN`);
             if (data.data.status === 'success') {

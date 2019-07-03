@@ -32,6 +32,7 @@ $(document).on('click', '#add-coupon-btn', function (e) {
             }
             $('.cart-info-total .total-price-cart').html(`$${data.data.total_price}`);
             $('.cart-info-total .saved-price-cart').html(`$${data.data.saved_price}`);
+            $('.cart-info-total .discount-price').html(`-$${data.data.coupon_discount_amount}`);
             $('.cart-info-total .wanting-price').html(`+  $${data.data.free_design.wanting_price}`);
             $('.cart-info-total .total-free-designs-cart').html(`to qualify for ${data.data.free_design.total_free_design + 1} FREE DESIGN`);
             if (data.data.status === 'success') {
@@ -63,6 +64,7 @@ $(document).on('click', '.action-delete-coupon', function (e) {
             $(`.coupon-in-use .coupon-${couponId}`).remove();
             $('.cart-info-total .total-price-cart').html(`$${data.data.total_price}`);
             $('.cart-info-total .saved-price-cart').html(`$${data.data.saved_price}`);
+            $('.discount-price').html(`-$${data.data.coupon_discount_amount}`);
             $('.cart-info-total .wanting-price').html(`$${data.data.free_design.wanting_price}`);
             $('.cart-info-total .total-free-designs-cart').html(`to qualify for ${data.data.free_design.total_free_design + 1} FREE DESIGN`);
             if (data.data.status === 'success') {
