@@ -13,10 +13,6 @@ class EloquentOrderRepositories extends RepositoriesAbstract implements OrderRep
      * @throws \Exception
      */
     public function createNewInvoiceOrder(array $data) {
-        try {
-            return $this->model->insertGetId($data);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
+        return $this->model->insertGetId($data);
     }
 }

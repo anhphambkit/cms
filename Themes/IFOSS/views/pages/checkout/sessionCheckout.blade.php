@@ -15,6 +15,10 @@
 			<span>FREE</span>
 		</div>
 		<div class="list-item">
+			Discount
+			<span class="discount-price">${{ number_format($cart['coupon_discount_amount']) }}</span>
+		</div>
+		<div class="list-item">
 			Tax
 			<span>0</span>
 		</div>

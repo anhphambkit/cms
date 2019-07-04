@@ -54,59 +54,55 @@ class OrderService implements IOrderService
      * @throws \Exception
      */
     public function createOrderCustomerProduct(array $dataCheckouts, int $customerId, bool $isGuest = false){
-        try {
-            $now = Carbon::now();
-            // Current Cart:
-            $cart = $this->cartServices->getProductsInCartToOrder($customerId);
+        $now = Carbon::now();
+        // Current Cart:
+        $cart = $this->cartServices->getProductsInCartToOrder($customerId);
 
-            if ($cart['products']->isEmpty())
-                abort(404, 'cart not empty');
-            // Get fee shipping:
-            $shippingFee = 0;
+        if ($cart['products']->isEmpty())
+            abort(404, 'cart not empty');
+        // Get fee shipping:
+        $shippingFee = 0;
 
-            // Prepare data for create new order
-            $dataOrder = [
-                'customer_id'                  => $customerId,
-                'is_guest'                     => $isGuest,
-                'address_shipping'             => $dataCheckouts['address_shipping'],
-                'address_billing'              => $dataCheckouts['address_billing'],
-                'payment_method'               => $dataCheckouts['payment_method'],
-                'total_original_price'         => $cart['total_original_price'],
-                'discount_price'               => $cart['discount_price'],
-                'total_sale_price_on_products' => $cart['total_sale_price_on_products'],
-                'saved_price'                  => $cart['saved_price'],
-                'coupon_code'                  => $cart['coupon'] ? $cart['coupon']->code : null,
-                'total_price'                  => $cart['sub_total'],
-                'total_amount_order'           => $cart['total_price'] + $shippingFee,
-                'shipping_fee'                 => $shippingFee,
-                'is_free_shipping'             => ($shippingFee > 0) ? false : true,
-                'updated_at'                   => $now,
-                'created_at'                   => $now,
-                'status'                       => $dataCheckouts['invoice_status'],
+        // Prepare data for create new order
+        $dataOrder = [
+            'customer_id'                  => $customerId,
+            'is_guest'                     => $isGuest,
+            'address_shipping'             => json_encode($dataCheckouts['address_shipping']),
+            'address_billing'              => json_encode($dataCheckouts['address_billing']),
+            'payment_method'               => $dataCheckouts['payment_method'],
+            'total_original_price'         => $cart['total_original_price'],
+            'discount_price'               => $cart['discount_price'],
+            'total_sale_price_on_products' => $cart['total_sale_price_on_products'],
+            'saved_price'                  => $cart['saved_price'],
+            'coupon_code'                  => $cart['coupon'] ? $cart['coupon']->code : null,
+            'total_price'                  => $cart['sub_total'],
+            'total_amount_order'           => $cart['total_price'] + $shippingFee,
+            'shipping_fee'                 => $shippingFee,
+            'is_free_shipping'             => ($shippingFee > 0) ? false : true,
+            'updated_at'                   => $now,
+            'created_at'                   => $now,
+            'status'                       => $dataCheckouts['invoice_status'],
+        ];
+        $couponId = $cart['coupon'] ? $cart['coupon']->id : null;
+
+        return DB::transaction(function () use ($dataOrder, $cart, $customerId, $couponId, $isGuest) {
+            // Create new Order:
+            $orderId = $this->orderRepository->createNewInvoiceOrder($dataOrder);
+            // Products:
+            $productsInOder = $this->prepareProductsDataInOrder($cart['products']->toArray(), $orderId);
+            // Insert products in cart to order:
+            $this->productsInOrderServices->insertProductsInOrder($productsInOder['products']);
+            // Delete products in cart:
+            $this->cartServices->deleteListProductInCart($productsInOder['id_products'], $customerId, false);
+            // Update number use of coupon:
+            if ($couponId) {
+                $this->productCouponRepositories->updateNumberUseOfCoupon($couponId);
+            }
+            return [
+                'order_id'           => $orderId,
+                'total_amount_order' => $dataOrder['total_amount_order']
             ];
-            $couponId = $cart['coupon'] ? $cart['coupon']->id : null;
-
-            return DB::transaction(function () use ($dataOrder, $cart, $customerId, $couponId, $isGuest) {
-                // Create new Order:
-                $orderId = $this->orderRepository->createNewInvoiceOrder($dataOrder);
-                // Products:
-                $productsInOder = $this->prepareProductsDataInOrder($cart['products']->toArray(), $orderId);
-                // Insert products in cart to order:
-                $this->productsInOrderServices->insertProductsInOrder($productsInOder['products']);
-                // Delete products in cart:
-                $this->cartServices->deleteListProductInCart($productsInOder['id_products'], $customerId, false);
-               // Update number use of coupon:
-                if ($couponId) {
-                    $this->productCouponRepositories->updateNumberUseOfCoupon($couponId);
-                }
-                return [
-                    'order_id'           => $orderId,
-                    'total_amount_order' => $dataOrder['total_amount_order']
-                ];
-            }, 3);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
+        }, 3);
     }
 
     /**

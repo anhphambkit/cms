@@ -69,6 +69,8 @@ class ProductCategoryController extends BasePublicController
             return response()->json(['html'=>$view]);
         }
         $this->addAssetListPage();
+        AssetManager::addAsset('auto-scroll-loading-product-js', 'frontend/plugins/product/assets/js/auto-scroll-loading-product.js');
+        AssetPipeline::requireJs('auto-scroll-loading-product-js');
         return view('pages.category.sub-category-detail', compact('categoryPageInfo'));
     }
 
@@ -83,7 +85,7 @@ class ProductCategoryController extends BasePublicController
         $categoryPageInfo = $this->productServices->getListSaleProductsOfCategoryPageParent($productCategoryId, null, $request->all());
 
         if ($request->ajax()) {
-            $products = $categoryPageInfo['products'];
+            $products = $categoryPageInfo['sale_products'];
             $view = view('partials.list-product-items',compact('products'))->render();
             return response()->json(['html'=>$view]);
         }
@@ -97,8 +99,7 @@ class ProductCategoryController extends BasePublicController
     public function addAssetListPage() {
         AssetManager::addAsset('product-detail-js', 'frontend/plugins/product/assets/js/product-detail.js');
         AssetPipeline::requireJs('product-detail-js');
-        AssetManager::addAsset('auto-scroll-loading-product-js', 'frontend/plugins/product/assets/js/auto-scroll-loading-product.js');
-        AssetPipeline::requireJs('auto-scroll-loading-product-js');
+
         AssetManager::addAsset('product-detail-css', 'frontend/plugins/product/assets/css/product-detail.css');
         AssetPipeline::requireCss('product-detail-css');
     }

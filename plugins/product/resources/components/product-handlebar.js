@@ -11,4 +11,8 @@ Handlebars.registerHelper("productDefaultValue", function(productDefaultAttribut
     return productDefaultAttributeValues[attributeId] ? productDefaultAttributeValues[attributeId][0] : 0;
 });
 
+Handlebars.registerHelper("valueByKeyObject", function(productDefaultAttributeValues, attributeId, key) {
+    return productDefaultAttributeValues[attributeId] ? productDefaultAttributeValues[attributeId][0][key] : null;
+});
+
 export { Handlebars };
