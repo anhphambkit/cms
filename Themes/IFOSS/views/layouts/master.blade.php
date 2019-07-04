@@ -43,7 +43,7 @@
     <!--[if IE 7]><body class="ie7 lt-ie8 lt-ie9 lt-ie10"><![endif]-->
     <!--[if IE 8]><body class="ie8 lt-ie9 lt-ie10"><![endif]-->
     <!--[if IE 9]><body class="ie9 lt-ie10"><![endif]-->
-    <body class="@yield('body-class') id="@yield('body-id', 'module')">
+    <body class="@yield('body-class') id="@yield('body-id', 'module')"  data-img-loading="@yield('loading-img', URL::asset('favicon.png'))">
         @include("partials.header")
 
         @section('content')

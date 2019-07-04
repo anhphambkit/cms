@@ -94,5 +94,6 @@
 </header>
 <script type="text/javascript">
     const _token = "{{ csrf_token() }}";
+    const imgLoading = "{{ URL::asset('favicon.png') }}";
 </script>
     

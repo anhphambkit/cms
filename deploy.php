@@ -37,26 +37,24 @@ task('deploy:start', function(){ //
 task('deploy:upload', function(){ // 
     writeln('Start upload');
     $folders = [
-       // 'app',
-       // 'config',
+       'app',
+       'config',
        'core',
        'Themes',
        'database//seeds',
        'plugins',
-       // 'public//themes',
-       // 'public//backend',
-       'public//frontend//core//base',
-       // 'public//libs',
-       // 'public//vendor',
-       // 'Themes',
-       // 'webpack'
+       'public//themes',
+       'public//backend',
+       'public//frontend',
+       'public//libs',
+       'Themes'
     ];
     $path = get('deploy_path');
     foreach ($folders as $key => $folder) {
         # code...
         upload("{$folder}//", $path."//{$folder}");
     }
-   upload("composer.json", $path."//composer.json");
+   upload("public//favicon.png", $path."//public//favicon.png");
 //    upload("composer.lock", $path."//");
 });
 
