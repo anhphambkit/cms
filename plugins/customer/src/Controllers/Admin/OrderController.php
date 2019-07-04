@@ -3,6 +3,7 @@
 namespace Plugins\Customer\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Plugins\Customer\Requests\AdminOrderRequest;
 use Plugins\Customer\Requests\OrderRequest;
 use Plugins\Customer\Repositories\Interfaces\OrderRepositories;
 use Plugins\Customer\DataTables\OrderDataTable;
@@ -65,11 +66,11 @@ class OrderController extends BaseAdminController
 
     /**
      * @param $id
-     * @param OrderRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @author TrinhLe
+     * @param AdminOrderRequest $request
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
      */
-    public function postEdit($id, OrderRequest $request, BaseHttpResponse $response)
+    public function postEdit($id, AdminOrderRequest $request, BaseHttpResponse $response)
     {
         $order = $this->orderRepository->findOrFail($id);
         
