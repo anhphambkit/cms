@@ -36,3 +36,14 @@ if (!function_exists('get_array_product_wish_list')) {
         ], [], ['id'])->pluck('id')->toArray();
     }
 }
+
+if (!function_exists('get_info_basic_cart')) {
+    /**
+     * @param int $customerId
+     * @return mixed
+     */
+    function get_info_basic_cart(int $customerId)
+    {
+        return app()->make(\Plugins\Cart\Services\CartServices::class)->getBasicInfoCartOfCustomer($customerId);
+    }
+}

@@ -8,7 +8,7 @@
 		@endforeach
 		<div class="list-item justify-content-start">
 			Subtotal
-			<span>: ${{ $cart['total_price'] }}</span>
+			<span>: ${{ $cart['sub_total'] }}</span>
 		</div>
 		<div class="list-item">
 			Shipping fee

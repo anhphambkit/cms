@@ -87,20 +87,22 @@ class ImplementCartServices implements CartServices {
             $coupon = $this->productCouponRepositories->findById($couponId);
             $productInCarts = $this->productRepositories->findByArrayId($products->pluck('id')->toArray(), [ 'productAttributeValues', 'productCustomAttributes' ]);
             $totalItems = $products->sum('quantity');
-            $totalPrice = $this->calculatorTotalPrice($products, $coupon);
-            $savedPrice = $this->calculatorSavedPrice($products, $totalPrice);
+            $priceCart = $this->calculatorPriceOfCart($products, $coupon);
             $salePrice = $this->calculatorTotalSalePrice($products);
-            $couponDiscountAmount = $totalPrice - $salePrice;
+            $totalPrice = $priceCart['sub_total'] - $priceCart['discount'];
+            $savedPrice = $this->calculatorSavedPrice($products, $totalPrice);
             $freeDesignIdeaInfo = $this->calculatorWantingPriceAndTotalFreeDesignIdea($totalPrice);
             return [
                 'products' => $productInCarts,
                 'quantities' => $products->pluck('quantity', 'id')->toArray(),
                 'total_items' => $totalItems,
                 'total_price' => $totalPrice,
-                'saved_price' => $savedPrice,
+                'saved_price' => abs($savedPrice),
                 'free_design' => $freeDesignIdeaInfo,
                 'coupon' => $coupon,
-                'coupon_discount_amount' => abs($couponDiscountAmount),
+                'sub_total' => $priceCart['sub_total'],
+                'sale_price' => $salePrice,
+                'coupon_discount_amount' => abs($priceCart['discount']),
             ];
         }
         catch (\Exception $e) {
@@ -142,13 +144,68 @@ class ImplementCartServices implements CartServices {
         try {
             $now = Carbon::now();
             $total = $products->sum(function ($product) use ($now, $coupon) {
-                $price = ($product->sale_price && ($now->lessThan($product->sale_start_date) || $now->greaterThan($product->sale_end_date))) ? $product->sale_price : $product->price;
+                $isHasSale = $this->checkProductHasSale($product, $now);
+                $price = $isHasSale ? $product->sale_price : $product->price;
                 if ($coupon) {
                     $price = $this->getPriceAfterCoupon($coupon, $price, $product);
                 }
                 return $price*$product->quantity;
             });
             return $total;
+        }
+        catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * @param $product
+     * @param Carbon|null $nowDefault
+     * @return bool
+     */
+    public function checkProductHasSale($product, Carbon $nowDefault = null) {
+        $now = !empty($nowDefault) ? $nowDefault : Carbon::now();
+        if (!empty($product->sale_price)) {
+            if (!empty($product->sale_start_date) && !empty($product->sale_end_date))
+                return ($now->greaterThanOrEqualTo($product->sale_start_date) && $now->lessThanOrEqualTo($product->sale_end_date));
+            else if (!empty($product->sale_start_date))
+                return $now->greaterThanOrEqualTo($product->sale_start_date);
+            else if (!empty($product->sale_end_date))
+                return $now->lessThanOrEqualTo($product->sale_end_date);
+            else
+                return true;
+        }
+        else
+            return false;
+    }
+
+    /**
+     * @param Collection $products
+     * @param null $coupon
+     * @return mixed
+     * @throws \Exception
+     */
+    public function calculatorPriceOfCart(Collection $products, $coupon = null) {
+        try {
+            $now = Carbon::now();
+            $subTotal = 0;
+            $discount = 0;
+            foreach ($products as $product) {
+                $isHasSale = $this->checkProductHasSale($product, $now);
+                $price = $isHasSale ? $product->sale_price : $product->price;
+                $discountPrice = 0;
+                if ($coupon) {
+                    $discountPrice = $this->getDiscountPriceCoupon($coupon, $price, $product);
+                }
+
+                $subTotal += $price*$product->quantity;
+                $discount += $discountPrice*$product->quantity;
+            };
+
+            return [
+                'sub_total' => $subTotal,
+                'discount' => $discount,
+            ];
         }
         catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -179,6 +236,33 @@ class ImplementCartServices implements CartServices {
             }
         }
         return ($price) ? $price : 0;
+    }
+
+    /**
+     * @param $coupon
+     * @param int $price
+     * @param $product
+     * @return float|int
+     */
+    public function getDiscountPriceCoupon($coupon, int $price, $product) {
+        $discount = 0;
+        if ($coupon->is_all_product) {
+            if ($coupon->coupon_type)
+                $discount = $price*($coupon->coupon_value/100);
+            else
+                $discount = $coupon->coupon_value;
+        }
+        else {
+            $categories = $this->productRepositories->findById($product->id, ['productCategories'])->productCategories->pluck('id')->toArray();
+            if (in_array($coupon->product_category, $categories)) {
+
+                if ($coupon->coupon_type)
+                    $discount = $price*($coupon->coupon_value/100);
+                else
+                    $discount = $coupon->coupon_value;
+            }
+        }
+        return $discount;
     }
 
     /**
@@ -287,13 +371,12 @@ class ImplementCartServices implements CartServices {
             $couponId = $products->pluck('coupon_id')->first();
             $coupon = $this->productCouponRepositories->findById($couponId);
             $totalItems = $products->sum('quantity');
-            $totalPrice = $this->calculatorTotalPrice($products, $coupon);
-            $totalOriginalPrice = $this->calculatorTotalOriginalPrice($products);
+            $priceCart = $this->calculatorPriceOfCart($products, $coupon);
             $salePrice = $this->calculatorTotalSalePrice($products);
+            $totalPrice = $priceCart['sub_total'] - $priceCart['discount'];
+            $totalOriginalPrice = $this->calculatorTotalOriginalPrice($products);
             $savedPrice = $this->calculatorSavedPrice($products, $totalPrice);
             $freeDesignIdeaInfo = $this->calculatorWantingPriceAndTotalFreeDesignIdea($totalPrice);
-            $discountPrice = $totalOriginalPrice - $totalPrice - $salePrice;
-            $subTotal = $totalPrice - $discountPrice;
             return [
                 'products' => $products,
                 'total_items' => $totalItems,
@@ -303,8 +386,8 @@ class ImplementCartServices implements CartServices {
                 'saved_price' => $savedPrice,
                 'total_free_design' => $freeDesignIdeaInfo['total_free_design'],
                 'coupon' => $coupon,
-                'discount_price' => $discountPrice,
-                'sub_total' => $subTotal,
+                'discount_price' => $priceCart['discount'],
+                'sub_total' => $priceCart['sub_total'],
             ];
         }
         catch (\Exception $e) {
@@ -336,8 +419,10 @@ class ImplementCartServices implements CartServices {
      */
     public function calculatorTotalSalePrice(Collection $products) {
         try {
-            $total = $products->sum(function ($product) {
-                $price = ($product->sale_price) ? $product->sale_price : 0;
+            $now = Carbon::now();
+            $total = $products->sum(function ($product) use ($now){
+                $isHasSale = $this->checkProductHasSale($product, $now);
+                $price = $isHasSale ? $product->sale_price : $product->price;
                 return $price*$product->quantity;
             });
             return $total;
@@ -355,9 +440,11 @@ class ImplementCartServices implements CartServices {
      */
     public function calculatorAllPrice(Collection $products) {
         try {
-            $total = $products->sum(function ($product) {
-                $salePrice = ($product->sale_price) ? $product->sale_price : 0;
-                $price = ($product->sale_price) ? $product->sale_price : $product->price;
+            $now = Carbon::now();
+            $total = $products->sum(function ($product) use ($now) {
+                $isHasSale = $this->checkProductHasSale($product, $now);
+                $salePrice = $isHasSale ? $product->sale_price : 0;
+                $price = $isHasSale ? $product->sale_price : $product->price;
                 return [
                     "sub_total" => $product->price*$product->quantity,
                     'total_price' => $price*$product->quantity,

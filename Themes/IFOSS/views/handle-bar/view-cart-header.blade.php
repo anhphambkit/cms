@@ -1,42 +1,55 @@
 @{{#if total_items }}
-    <div class="tt-cart-list">
+    <div class="product-list mb-2">
         @{{#each products }}
-        <div class="tt-item">
-            <a href="@{{ urlProduct slug id }}">
-                <div class="tt-item-img">
-                    <img src="@{{ featureProduct medias }}" data-src="@{{ featureProduct medias }}" alt="@{{ name }}">
-                </div>
-                <div class="tt-item-descriptions">
-                    <h2 class="tt-title">@{{ name }}</h2>
-                    <div class="tt-quantity">
-                        <span class="cart-header-quantity">@{{ quantity }}</span>&nbsp;x
-                    </div>
-                    <div class="tt-price cart-header-price">@{{ formatCurrency price }}</div>
-                </div>
-            </a>
-            {{--<div class="tt-item-close">--}}
-                {{--<a href="#" class="tt-btn-close"></a>--}}
-            {{--</div>--}}
+        <div class="item">
+            <div class="mini-thumbnail-cart"><img src="{{ asset('assets/images/products/product-chair-' . $i . '.jpg') }}" /></div>
+            <div class="quantity">x>@{{ (getQuantityProduct @root.quantities id) }} <br> <span class="font-weight-500">$@{{ formatCurrency price }}</span></div>
+            <div class="name">@{{ name }}</div>
         </div>
         @{{/each}}
     </div>
-    <div class="tt-cart-total-row">
-        <div class="tt-cart-total-title text-uppercase">TẠM TÍNH:</div>
-        <div class="tt-cart-total-price cart-header-sub-price">@{{ formatCurrency total_price }}</div>
-    </div>
-    <div class="tt-cart-btn">
-        <div class="tt-item">
-            <a href="/shop/checkout/shipping" class="btn text-uppercase">Tiến hành thanh toán</a>
+
+    <div class="cart-order-info font-weight-500 p-0 mb-0">
+        <div class="list-item">
+            Subtotal
+            <span>$@{{ formatCurrency sub_total }}</span>
         </div>
-        <div class="tt-item">
-            <a href="/shop/cart" class="btn-link-02 tt-hidden-mobile text-uppercase">Xem giỏ hàng</a>
-            <a href="/shop/cart" class="btn btn-border tt-hidden-desctope text-uppercase">Xem giỏ hàng</a>
+        <div class="list-item">
+            Shipping fee
+            <span>FREE</span>
+        </div>
+        <div class="list-item">
+            Tax
+            <span>$0</span>
+        </div>
+        <hr class="my-1">
+        <div class="list-item">
+            Total
+            <span>$@{{ formatCurrency total_price }}</span>
+        </div>
+        <hr>
+        <div class="font-weight-500 mb-0" style="background: rgba(150,196,189,.2); margin: -15px; padding: 15px;">
+            <div class="mb-2">Coupon DISCOUNT</div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control rounded-0" placeholder="Enter your code here">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary rounded-0" type="button">apply</button>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <a href="{{ route('public.cart') }}">
+                    <button class="btn btn-outline-custom rounded-0 btn-sm w-50 justify-content-center mr-1">Go to Cart</button>
+                </a>
+                <a href="{{ route('public.product.checkout') }}">
+                    <button class="btn btn-outline-custom rounded-0 btn-sm w-50 justify-content-center ml-1">Checkout</button>
+                </a>
+            </div>
         </div>
     </div>
 @{{else}}
     <!-- layout emty cart -->
     <a href="#" class="tt-cart-empty">
         <i class="icon-f-39"></i>
-        <p>Chưa có sản phẩm nào trong giỏ hàng!</p>
+        <p>Empty!</p>
     </a>
 @{{/if}}

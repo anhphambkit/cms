@@ -65,7 +65,7 @@
                             <div class="cart-order-info font-weight-500">
                                 <div class="list-item">
                                     Subtotal
-                                    <span class="sub-total-cart">${{ number_format($cart['total_price']) }}</span>
+                                    <span class="sub-total-cart">${{ number_format($cart['sub_total']) }}</span>
                                 </div>
                                 <div class="list-item">
                                     Shipping fee

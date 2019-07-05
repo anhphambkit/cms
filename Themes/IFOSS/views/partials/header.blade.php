@@ -21,11 +21,65 @@
                                     <a class="dropdown-item" href="{{ route('public.customer.logout') }}">Logout</a>
                                 </div>
                             </li>
-                            <li><a href="{{ route('public.cart') }}" class="shopping-cart-quantity">
+                            <li>
+                                <a href="javascript:void(0);" class="shopping-cart-quantity">
                                     @php
-                                        $totalItemsInCart = get_total_items_in_cart();
+                                        $miniCartInfo = get_info_basic_cart(Auth::guard('customer')->id());
                                     @endphp
-                                    <i class="fas fa-shopping-cart">{{ ($totalItemsInCart ? "({$totalItemsInCart})" : '') }}</i>
+                                    <i class="fas fa-shopping-cart">{{ ($miniCartInfo['total_items'] ? "({$miniCartInfo['total_items']})" : '') }}</i>
+                                    <div class="mini-cart pb-0" id="mini-cart-header">
+                                        <div class="product-list mb-2">
+                                           @foreach($miniCartInfo['products'] as $miniCartProduct)
+                                                <div class="item">
+                                                    <div class="mini-thumbnail-cart">
+                                                        <img src="{{ asset($miniCartProduct->image_feature) }}" />
+                                                    </div>
+                                                    <div class="quantity">x1
+                                                        <br />
+                                                        @if($miniCartProduct->type_product !== \Plugins\Product\Contracts\ProductReferenceConfig::PRODUCT_TYPE_VARIANT)
+                                                            <span class="font-weight-500">${{ ($miniCartProduct->is_has_sale ? number_format($miniCartProduct->sale_price) : number_format($miniCartProduct->price)) }}</span>
+                                                        @else
+                                                            <div class="font-size-18">${{ number_format($miniCartProduct->min_price) }} - ${{ number_format($miniCartProduct->max_price) }}</div>
+                                                        @endif
+                                                    </div>
+                                                    <div class="name">{{ $miniCartProduct->name }}</div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="cart-order-info font-weight-500 p-0 mb-0">
+                                            <div class="list-item">
+                                                Subtotal
+                                                <span>${{ number_format($miniCartInfo['sub_total']) }}</span>
+                                            </div>
+                                            <div class="list-item">
+                                                Shipping fee
+                                                <span>FREE</span>
+                                            </div>
+                                            <div class="list-item">
+                                                Tax
+                                                <span>$0</span>
+                                            </div>
+                                            <hr class="my-1">
+                                            <div class="list-item">
+                                                Total
+                                                <span>${{ number_format($miniCartInfo['total_price']) }}</span>
+                                            </div>
+                                            <hr>
+                                            <div class="font-weight-500 mb-0" style="background: rgba(150,196,189,.2); margin: -15px; padding: 15px;">
+                                                <div class="mb-2">Coupon DISCOUNT</div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control rounded-0" placeholder="Enter your code here" id="mini_coupon_code" name="coupon_code">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-secondary rounded-0 add-coupon-btn" id="add-coupon-btn-mini-cart" type="button">apply</button>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                        <button class="btn btn-outline-custom rounded-0 btn-sm w-50 justify-content-center mr-1">Go to Cart</button>
+                                                        <button class="btn btn-outline-custom rounded-0 btn-sm w-50 justify-content-center ml-1">Checkout</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </a>
                             </li>
                         @else

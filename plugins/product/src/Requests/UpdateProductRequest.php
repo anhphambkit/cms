@@ -1,10 +1,16 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: AnhPham
+ * Date: 2019-07-06
+ * Time: 00:41
+ */
 
 namespace Plugins\Product\Requests;
 
 use Core\Master\Requests\CoreRequest;
 
-class ProductRequest extends CoreRequest
+class UpdateProductRequest extends CoreRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,9 +20,11 @@ class ProductRequest extends CoreRequest
      */
     public function rules()
     {
+        $productId = $this->route()->parameter('id');
+
         return [
             'name'                             => 'required|max:120',
-            'upc'                              => 'required|max:150|unique:products',
+            'upc'                              => "required|max:150|unique:products,upc,{$productId}",
             'sku'                              => 'required|max:30',
             'category_id'                      => 'required|integer',
             'manufacturer_id'                  => 'required|integer',
@@ -43,6 +51,8 @@ class ProductRequest extends CoreRequest
             'variant_products.*.price'         => 'required_without:is_same_price',
             'variant_products.*.inventory'     => 'required_without:is_same_inventory',
             'variant_products.*.image_feature' => 'required_without:is_same_image_feature',
+
         ];
     }
 }
+

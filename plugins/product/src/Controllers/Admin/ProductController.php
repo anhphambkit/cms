@@ -20,6 +20,7 @@ use Plugins\Product\Requests\ProductRequest;
 use Plugins\Product\Repositories\Interfaces\ProductRepositories;
 use Plugins\Product\DataTables\ProductDataTable;
 use Core\Base\Controllers\Admin\BaseAdminController;
+use Plugins\Product\Requests\UpdateProductRequest;
 use Plugins\Product\Services\StoreKeywordService;
 use AssetManager;
 use AssetPipeline;
@@ -375,11 +376,11 @@ class ProductController extends BaseAdminController
 
     /**
      * @param $id
-     * @param ProductRequest $request
+     * @param UpdateProductRequest $request
+     * @param StoreKeywordService $keywordService
      * @return \Illuminate\Http\RedirectResponse
-     * @author AnhPham
      */
-    public function postEdit($id, ProductRequest $request, StoreKeywordService $keywordService)
+    public function postEdit($id, UpdateProductRequest $request, StoreKeywordService $keywordService)
     {
         $product = $this->productRepository->findById($id);
         if (empty($product)) {

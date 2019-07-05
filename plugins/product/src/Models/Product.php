@@ -242,7 +242,18 @@ class Product extends Model
      */
     public function checkProductHasSale() {
         $now = Carbon::now();
-        return ($this->sale_price && ($now->lessThan($this->sale_start_date) || $now->greaterThan($this->sale_end_date)));
+        if (!empty($this->sale_price)) {
+            if (!empty($this->sale_start_date) && !empty($this->sale_end_date))
+                return ($now->greaterThanOrEqualTo($this->sale_start_date) && $now->lessThanOrEqualTo($this->sale_end_date));
+            else if (!empty($this->sale_start_date))
+                return $now->greaterThanOrEqualTo($this->sale_start_date);
+            else if (!empty($this->sale_end_date))
+                return $now->lessThanOrEqualTo($this->sale_end_date);
+            else
+                return true;
+        }
+        else
+            return false;
     }
 
     /**
