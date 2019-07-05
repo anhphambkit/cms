@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Plugins\CustomAttributes\Contracts\CustomAttributeConfig;
 use Plugins\Product\Contracts\ProductReferenceConfig;
+use Plugins\Product\Models\ProductBusinessTypeSpaceRelation;
 use Plugins\Product\Models\ProductGallery;
 use Plugins\CustomAttributes\Repositories\Interfaces\CustomAttributesRepositories;
 use Plugins\Product\Repositories\Interfaces\ManufacturerRepositories;
@@ -353,6 +354,7 @@ class ProductController extends BaseAdminController
         $businessSpaces = [];
         $allSpaces = [];
         if ($product->productBusinessSpaces() != null) {
+//            dd($product->productBusinessSpaces()->get());
             $businessSpaces = $product->productBusinessSpaces()->where('product_business_type_space_relation.apply_all', false)->select('*')->get()->toArray();
             $allSpaces = $product->productBusinessSpaces()->where('product_business_type_space_relation.apply_all', true)->select('*')->get()->toArray();
         }
@@ -434,6 +436,22 @@ class ProductController extends BaseAdminController
             $product->productMaterials()->detach();
             $product->productMaterials()->attach($materialIds);
 
+            ProductBusinessTypeSpaceRelation::with('product')->where('product_id', $product->id)->delete();
+            // Business space product
+            $productSpaces = (!empty($data['space_business']) ? $data['space_business'] : []);
+            if (!empty($productSpaces))
+                $product->productBusinessSpaces()->createMany($productSpaces);
+
+            $productAllSpaces = (!empty($data['all_space']) ? $data['all_space'] : []);
+            foreach ($productAllSpaces as $productAllSpace) {
+                $product->productBusinessSpaces()->create([
+                    'business_type_id' => 0,
+                    'space_id' => $productAllSpace['space_id'],
+                    'apply_all' => true
+                ]);
+            }
+
+            $product->save();
             return $product;
         }, 3);
 

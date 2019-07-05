@@ -18,7 +18,7 @@ class ProductRequest extends CoreRequest
             'name'                             => 'required|max:120',
             'upc'                              => 'required|max:150|unique:products',
             'sku'                              => 'required|max:30',
-            'category_id'                      => 'required|integer',
+            'category_id'                      => 'required',
             'manufacturer_id'                  => 'required|integer',
             'image_gallery'                    => 'required',
             'price'                            => 'required|numeric',

@@ -22,7 +22,7 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="shopping-cart-quantity">
+                                <div class="mini-cart-content">
                                     @php
                                         $miniCartInfo = get_info_basic_cart(Auth::guard('customer')->id());
                                     @endphp
@@ -73,14 +73,31 @@
                                                         <button class="btn btn-secondary rounded-0 add-coupon-btn" id="add-coupon-btn-mini-cart" type="button">apply</button>
                                                     </div>
                                                 </div>
+                                                <div class="coupon-in-use">
+                                                    @if($miniCartInfo['coupon'])
+                                                        <div class="row coupon-{{ $miniCartInfo['coupon']->id }}">
+                                                            <div class="text-uppercase mb-2 col-md-8 coupon-code-text">{{ $miniCartInfo['coupon']->code }}</div>
+                                                            <div class="text-uppercase mb-2 col-md-4">
+                                                                <a class="action-delete-coupon delete-coupon-{{ $miniCartInfo['coupon']->id }}" data-coupon-id="{{ $miniCartInfo['coupon']->id }}">
+                                                                    <i class="far fa-trash-alt icon-action-delete-coupon"></i>
+                                                                    {{ trans('core-base::forms.delete') }}
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </div>
                                                 <div class="d-flex align-items-center">
+                                                    <a href="{{ route('public.cart') }}">
                                                         <button class="btn btn-outline-custom rounded-0 btn-sm w-50 justify-content-center mr-1">Go to Cart</button>
+                                                    </a>
+                                                    <a href="{{ route('public.product.checkout') }}">
                                                         <button class="btn btn-outline-custom rounded-0 btn-sm w-50 justify-content-center ml-1">Checkout</button>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </li>
                         @else
                             <li><a href="{{ route('public.customer.login') }}"><i class="fas fa-user-circle"></i> <span>Sign In</span></a></li>

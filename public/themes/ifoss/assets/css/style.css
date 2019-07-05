@@ -15801,11 +15801,17 @@ a {
       color: #fff; }
       .top-navigation .top-navigation-right ul > li > a:hover {
         text-decoration: none; }
-        .top-navigation .top-navigation-right ul > li > a:hover .mini-cart {
-          visibility: visible;
-          opacity: 1; }
       .top-navigation .top-navigation-right ul > li > a i {
         font-size: 16px; }
+    .top-navigation .top-navigation-right ul > li .mini-cart-content {
+      position: relative;
+      padding: 0 16px;
+      color: #fff;
+      cursor: pointer;
+      border-left: 1px solid #fff; }
+      .top-navigation .top-navigation-right ul > li .mini-cart-content:hover .mini-cart {
+        visibility: visible;
+        opacity: 1; }
     .top-navigation .top-navigation-right ul > li:last-child a {
       border-left: 1px solid #fff; }
   @media (max-width: 1199.98px) {
