@@ -17,7 +17,7 @@ class EloquentWishListRepositories extends RepositoriesAbstract implements WishL
     public function addOrRemoveProductToQuickList(int $entityId, int $customerId, string $typeEntity = ProductReferenceConfig::ENTITY_TYPE_PRODUCT) {
         $exist = $this->model
                         ->where('entity_id', $entityId)
-                        ->where('type_entity', $typeEntity)
+                        ->where('entity_type', $typeEntity)
                         ->where('customer_id', $customerId)
                         ->exists();
 
@@ -26,7 +26,7 @@ class EloquentWishListRepositories extends RepositoriesAbstract implements WishL
                 [
                     'entity_id', '=', $entityId,
                     'customer_id', '=', $customerId,
-                    'type_entity', '=', $typeEntity,
+                    'entity_type', '=', $typeEntity,
                 ]
             ]);
             $result = "remove";
@@ -35,7 +35,7 @@ class EloquentWishListRepositories extends RepositoriesAbstract implements WishL
             $data = [
                 'entity_id' => $entityId,
                 'customer_id' => $customerId,
-                'type_entity' => $typeEntity,
+                'entity_type' => $typeEntity,
             ];
             $this->insert($data);
             $result = "add";
@@ -47,11 +47,13 @@ class EloquentWishListRepositories extends RepositoriesAbstract implements WishL
      * @param int $customerId
      * @return mixed
      */
-    public function getArrayIdWishListProductsByCustomer(int $customerId) {
+    public function getArrayIdWishListByCustomer(int $customerId) {
         return $this->allBy([
             [
                 'customer_id', '=', $customerId
             ]
-        ], [], ['entity_id', 'type_entity'])->grougBy('type_entity');
+        ], [], ['entity_id', 'entity_type'])->mapToGroups(function ($item, $key) {
+            return [$item['entity_type'] => $item['entity_id']];
+        })->toArray();
     }
 }

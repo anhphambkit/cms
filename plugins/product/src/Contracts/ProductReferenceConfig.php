@@ -20,6 +20,9 @@ interface ProductReferenceConfig
     const PRODUCT_TYPE_VARIANT                          = 'variants';
     const PRODUCT_TYPE_CHILD_VARIANT                    = 'child_variant';
 
-    const ENTITY_TYPE_PRODUCT                           = 'product';
-    const ENTITY_TYPE_LOOK_BOOK                         = 'look_book';
+    const ENTITY_CLASS_PRODUCT                           = 'Plugins\Product\Models\Product';
+    const ENTITY_CLASS_LOOK_BOOK                         = 'Plugins\Product\Models\LookBook';
+
+    const ENTITY_TYPE_PRODUCT                           = 'products';
+    const ENTITY_TYPE_LOOK_BOOK                         = 'look_books';
 }

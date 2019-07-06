@@ -16,5 +16,5 @@ interface WishListRepositories extends RepositoryInterface{
      * @param int $customerId
      * @return mixed
      */
-    public function getArrayIdWishListProductsByCustomer(int $customerId);
+    public function getArrayIdWishListByCustomer(int $customerId);
 }

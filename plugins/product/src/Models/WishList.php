@@ -24,23 +24,15 @@ class WishList extends Model
     protected $fillable = [
         'customer_id',
         'entity_id',
-        'type_entity'
+        'entity_type'
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function product()
+    public function entity()
     {
-        return $this->belongsTo(Product::class, 'id', 'entity_id')->where('type_entity', ProductReferenceConfig::ENTITY_TYPE_PRODUCT);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function lookBook()
-    {
-        return $this->belongsTo(LookBook::class, 'id', 'entity_id')->where('type_entity', ProductReferenceConfig::ENTITY_TYPE_LOOK_BOOK);
+        return $this->morphTo();
     }
 
     /**

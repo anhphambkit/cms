@@ -98,6 +98,13 @@ class LookBook extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function wishListLookBooks() {
+        return $this->morphMany(WishList::class, 'entity');
+    }
+
+    /**
      * @return string
      */
     public function getLookBookAllSpacesAttribute()

@@ -215,10 +215,10 @@ class Product extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function wishListProducts() {
-        return $this->hasMany(WishList::class, 'product_id', 'id');
+        return $this->morphMany(WishList::class, 'entity');
     }
 
     /**

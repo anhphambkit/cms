@@ -36,7 +36,7 @@ class CacheWishListRepositories extends CacheAbstractDecorator implements WishLi
      * @param int $customerId
      * @return mixed
      */
-    public function getArrayIdWishListProductsByCustomer(int $customerId) {
+    public function getArrayIdWishListByCustomer(int $customerId) {
         return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
     }
 }

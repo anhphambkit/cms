@@ -35,15 +35,18 @@ class WishListController extends BasePublicController
      */
     public function getProductWishList() {
         $customerId = (int)Auth::guard('customer')->id();
-        $wishListProducts = $this->wishListRepositories->allBy([
+        $wishListEntities = $this->wishListRepositories->allBy([
             [
                 'customer_id', '=', $customerId
             ]
-        ], ['product'], ['*']);
+        ], ['entity'], ['*'])->mapToGroups(function ($item, $key) {
+            return [$item['entity_type'] => $item->entity];
+        });
+//        dd($wishListEntities);
         AssetManager::addAsset('product-detail-js', 'frontend/plugins/product/assets/js/product-detail.js');
         AssetPipeline::requireJs('product-detail-js');
         AssetManager::addAsset('product-detail-css', 'frontend/plugins/product/assets/css/product-detail.css');
         AssetPipeline::requireCss('product-detail-css');
-        return view('pages.wish-list.wish-list', compact('wishListProducts'));
+        return view('pages.wish-list.wish-list', compact('wishListEntities'));
     }
 }
