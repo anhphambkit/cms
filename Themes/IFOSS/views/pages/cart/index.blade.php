@@ -31,6 +31,18 @@
                                     <a href="{{ route('homepage') }}" class="text-custom d-inline-block"><img src="{{ asset('themes/ifoss/assets/images/icons/arrow-left.png') }}" class="mr-2">Continue Shopping</a>
                                 </div>
                             </div>
+                            @if($savedProducts->count())
+                                <div class="mb-4">
+                                    <div class="font-weight-500 mb-2">My Saved Items ({{ $savedProducts->count() }} Item)</div>
+                                    <div class="cart-list">
+                                        @foreach($savedProducts as $savedProduct)
+                                            @component("components.product-item-save-for-later")
+                                                @slot("productItem", $savedProduct->product)
+                                            @endcomponent
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @else
@@ -50,16 +62,18 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="mb-4">
-                                <div class="font-weight-500 mb-2">My Saved Items ({{ $savedProducts->count() }} Item)</div>
-                                <div class="cart-list">
-                                    @foreach($savedProducts as $savedProduct)
-                                        @component("components.product-item-save-for-later")
-                                            @slot("productItem", $savedProduct->product)
-                                        @endcomponent
-                                    @endforeach
+                            @if($savedProducts->count())
+                                <div class="mb-4">
+                                    <div class="font-weight-500 mb-2">My Saved Items ({{ $savedProducts->count() }} Item)</div>
+                                    <div class="cart-list">
+                                        @foreach($savedProducts as $savedProduct)
+                                            @component("components.product-item-save-for-later")
+                                                @slot("productItem", $savedProduct->product)
+                                            @endcomponent
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                         <div class="col-lg-4 cart-info-total" style="margin-top: 66px;">
                             <div class="cart-order-info font-weight-500">

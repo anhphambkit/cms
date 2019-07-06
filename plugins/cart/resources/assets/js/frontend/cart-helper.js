@@ -31,13 +31,6 @@ window.updateInfoUICart = function(data) {
     $('.cart-info-total .discount-price').html(`-$${discount}`);
     $('.cart-info-total .wanting-price').html(`+  $${wanting}`);
     $('.cart-info-total .total-free-designs-cart').html(`to qualify for ${data.free_design.total_free_design + 1} FREE DESIGN`);
-
-    $('.total-price-checkout').html(`$${data.data.total_price}`);
-    $('.total-price-checkout').html(`$${data.data.total_price}`);
-    $('.your-saved-checkout').html(`$${data.data.saved_price}`);
-    $('.discount-price').html(`-$${data.data.coupon_discount_amount}`);
-    $('.checkout-get-design .wanting-price').html(`+  $${data.data.free_design.wanting_price}`);
-    $('.checkout-get-design .total-free-designs-cart').html(`to qualify for ${data.data.free_design.total_free_design + 1} FREE DESIGN`);
 }
 
 function currencyFormat(num) {
