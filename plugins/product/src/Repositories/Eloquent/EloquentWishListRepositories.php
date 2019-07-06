@@ -3,34 +3,39 @@
  * WishList repository implemented
  */
 namespace Plugins\Product\Repositories\Eloquent;
+use Plugins\Product\Contracts\ProductReferenceConfig;
 use Plugins\Product\Repositories\Interfaces\WishListRepositories;
 use Core\Master\Repositories\Eloquent\RepositoriesAbstract;
 
 class EloquentWishListRepositories extends RepositoriesAbstract implements WishListRepositories {
     /**
-     * @param int $productId
+     * @param int $entityId
      * @param int $customerId
-     * @return mixed
+     * @param string $typeEntity
+     * @return mixed|string
      */
-    public function addOrRemoveProductToQuickList(int $productId, int $customerId) {
+    public function addOrRemoveProductToQuickList(int $entityId, int $customerId, string $typeEntity = ProductReferenceConfig::ENTITY_TYPE_PRODUCT) {
         $exist = $this->model
-                        ->where('product_id', $productId)
+                        ->where('entity_id', $entityId)
+                        ->where('type_entity', $typeEntity)
                         ->where('customer_id', $customerId)
                         ->exists();
 
         if ($exist) {
             $this->deleteBy([
                 [
-                    'product_id', '=', $productId,
+                    'entity_id', '=', $entityId,
                     'customer_id', '=', $customerId,
+                    'type_entity', '=', $typeEntity,
                 ]
             ]);
             $result = "remove";
         }
         else {
             $data = [
-                'product_id' => $productId,
-                'customer_id' => $customerId
+                'entity_id' => $entityId,
+                'customer_id' => $customerId,
+                'type_entity' => $typeEntity,
             ];
             $this->insert($data);
             $result = "add";
@@ -47,6 +52,6 @@ class EloquentWishListRepositories extends RepositoriesAbstract implements WishL
             [
                 'customer_id', '=', $customerId
             ]
-        ], [], ['product_id'])->pluck('product_id')->toArray();
+        ], [], ['entity_id', 'type_entity'])->grougBy('type_entity');
     }
 }

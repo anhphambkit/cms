@@ -27,7 +27,7 @@ $productItem = !empty($productItem) ? $productItem : collect([]);
                         </a>
                     @endif
                 </div>
-                <a href="javascript:void(0);" class="add-to-wish-list favourite text-custom" data-product-id="{{ $productItem->id }}">
+                <a href="javascript:void(0);" class="add-to-wish-list favourite text-custom" data-entity-id="{{ $productItem->id }}" data-type-entity="{{ \Plugins\Product\Contracts\ProductReferenceConfig::ENTITY_TYPE_PRODUCT }}">
                     <i class="{{ ($productItem->was_added_wish_list) ? 'fas' : 'far' }} fa-heart icon-wish-list"></i>
                 </a>
             </div>

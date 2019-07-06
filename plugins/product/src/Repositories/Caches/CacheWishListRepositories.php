@@ -1,6 +1,7 @@
 <?php
 namespace Plugins\Product\Repositories\Caches;
 use Core\Master\Repositories\Cache\CacheAbstractDecorator;
+use Plugins\Product\Contracts\ProductReferenceConfig;
 use Plugins\Product\Repositories\Interfaces\WishListRepositories;
 
 class CacheWishListRepositories extends CacheAbstractDecorator implements WishListRepositories
@@ -22,11 +23,12 @@ class CacheWishListRepositories extends CacheAbstractDecorator implements WishLi
     }
 
     /**
-     * @param int $productId
+     * @param int $entityId
      * @param int $customerId
+     * @param string $typeEntity
      * @return mixed
      */
-    public function addOrRemoveProductToQuickList(int $productId, int $customerId) {
+    public function addOrRemoveProductToQuickList(int $entityId, int $customerId, string $typeEntity = ProductReferenceConfig::ENTITY_TYPE_PRODUCT) {
         return $this->flushCacheAndUpdateData(__FUNCTION__, func_get_args());
     }
 

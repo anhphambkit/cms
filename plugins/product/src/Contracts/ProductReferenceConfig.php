@@ -19,4 +19,7 @@ interface ProductReferenceConfig
     const PRODUCT_TYPE_SIMPLE                           = 'simple';
     const PRODUCT_TYPE_VARIANT                          = 'variants';
     const PRODUCT_TYPE_CHILD_VARIANT                    = 'child_variant';
+
+    const ENTITY_TYPE_PRODUCT                           = 'product';
+    const ENTITY_TYPE_LOOK_BOOK                         = 'look_book';
 }

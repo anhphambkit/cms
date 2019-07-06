@@ -10,6 +10,7 @@ namespace Plugins\Product\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Plugins\Customer\Models\Customer;
+use Plugins\Product\Contracts\ProductReferenceConfig;
 
 class WishList extends Model
 {
@@ -22,7 +23,8 @@ class WishList extends Model
 
     protected $fillable = [
         'customer_id',
-        'product_id'
+        'entity_id',
+        'type_entity'
     ];
 
     /**
@@ -30,7 +32,15 @@ class WishList extends Model
      */
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'id', 'entity_id')->where('type_entity', ProductReferenceConfig::ENTITY_TYPE_PRODUCT);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function lookBook()
+    {
+        return $this->belongsTo(LookBook::class, 'id', 'entity_id')->where('type_entity', ProductReferenceConfig::ENTITY_TYPE_LOOK_BOOK);
     }
 
     /**

@@ -274,12 +274,13 @@ class ImplementProductServices implements ProductServices {
     }
 
     /**
-     * @param int $productId
+     * @param int $entityId
      * @param int $customerId
-     * @return mixed
+     * @param string $typeEntity
+     * @return array|mixed
      */
-    public function addOrRemoveProductToQuickList(int $productId, int $customerId) {
-        $result = $this->wishListRepositories->addOrRemoveProductToQuickList($productId, $customerId);
+    public function addOrRemoveProductToQuickList(int $entityId, int $customerId, string $typeEntity = ProductReferenceConfig::ENTITY_TYPE_PRODUCT) {
+        $result = $this->wishListRepositories->addOrRemoveProductToQuickList($entityId, $customerId, $typeEntity);
         return [
             'type_update' => $result,
             'message' => trans('plugins-product::wish-list.update_wish_list_success')

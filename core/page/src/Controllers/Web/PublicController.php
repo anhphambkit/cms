@@ -45,6 +45,7 @@ class PublicController extends BasePublicController{
                     ->setDescription('Ifoss homepage ne');
         $bestSellerProducts = $this->productServices->getBestSellerProducts(8);
         $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
+        dd($productWishListIds);
 		return view('homepage', compact('bestSellerProducts', 'productWishListIds'));
 	}
 }
