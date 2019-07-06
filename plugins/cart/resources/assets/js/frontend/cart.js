@@ -62,7 +62,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         newProduct[productId] = quantity;
         products = Object.assign(products, newProduct);
         let _this = $(this);
-        let request = axios.post(API.DELETE_PRODUCT_SAVED, { 'products' : products });
+        let request = axios.post(API.SAVE_PRODUCT_FOR_LATER, { 'products' : products });
 
         request
             .then(function(data){
@@ -82,7 +82,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     $(document).on('click', '.btn-move-product-to-cart', function(e) {
         let productId = $(this).parents('.row-product').data('product-id');
         let _this = $(this);
-        let request = axios.post(API.DELETE_PRODUCT_SAVED, { 'product_id' : productId });
+        let request = axios.post(API.MOVE_PRODUCT_TO_CART, { 'product_id' : productId });
         request
             .then(function(data){
                 location.reload();
