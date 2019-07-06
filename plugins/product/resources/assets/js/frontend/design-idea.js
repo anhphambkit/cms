@@ -40,9 +40,37 @@ $(document).on('click', '.look-book-tag-product .icon-show-popup', function (e) 
                             </div>
                         </div>
                     </div>`;
+
+            let html = `
+                    <div class="tag-popup-info align-top ${classProductPopupPosition}">
+                        <div class="thumbnail">
+                            <img src="${data.data.image_feature}">
+                        </div>
+                         <div class="product-specs mb-0">
+                            <div class="title">
+                                <a href="${PRODUCT.DETAIL_PRODUCT_PAGE}/${data.data.slug}.${data.data.id}" class="link-product-detail">${data.data.name}</a>
+                            </div>
+                            <div class="price">
+                                <div class="main">$${(data.data.is_has_sale) ? data.data.price : data.data.sale_price}</div>
+                                <div class="discount ${(data.data.is_has_sale) ? 'd-none' : ''}">$${(data.data.is_has_sale) ? data.data.price : data.data.sale_price}</div>
+                                <div class="sale ${(data.data.is_has_sale) ? 'd-none' : ''}">${(data.data.is_has_sale) ? data.data.percent_sale : 0}% off</div>
+                            </div>
+                            <div class="rating">
+                                <div class="rating-star">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star unrate"></i>
+                                </div>
+                                <a href="#" class="reviews">6,415 reviews</a>
+                            </div>
+                        </div>
+                    </div>`;
+
             $(_this).parents('.look-book-tag-product').find('.tt-btn .icon-show-popup').hide();
             $(_this).parents('.look-book-tag-product').find('.tt-btn .icon-close-popup').show();
-            $(_this).parents('.look-book-tag-product').append(htmlPopup);
+            $(_this).parents('.look-book-tag-product').append(html);
         })
         .catch(function(data){
             console.log("error", data);
