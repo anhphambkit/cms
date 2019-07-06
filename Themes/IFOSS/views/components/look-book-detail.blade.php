@@ -7,6 +7,7 @@
  */
 $currentBusinessSlug = !empty($currentBusinessSlug) ? $currentBusinessSlug : '';
 $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
+$wasAddedWishList = !empty($wasAddedWishList) ? $wasAddedWishList : false;
 $spaces = !empty($spaces) ? $spaces : [];
 $tags = !empty($tags) ? $tags : [];
 ?>
@@ -46,7 +47,9 @@ $tags = !empty($tags) ? $tags : [];
                         @endif
                     </ul>
                 </div>
-                <button class="btn btn-outline-custom"><i class="fas fa-heart text-save mr-1"></i> Save</button>
+                <button class="btn btn-outline-custom add-to-wish-list favourite" data-entity-id="{{ $idLookBook }}" data-type-entity="{{ \Plugins\Product\Contracts\ProductReferenceConfig::ENTITY_TYPE_LOOK_BOOK }}">
+                    <i class="{{ ($wasAddedWishList) ? 'fas' : 'far' }} fa-heart text-save mr-1 icon-wish-list"></i> Save
+                </button>
             </div>
         </div>
     </div>

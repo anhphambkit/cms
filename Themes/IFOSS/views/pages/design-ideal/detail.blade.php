@@ -9,6 +9,8 @@
             @slot('spaces', $lookBook['look_book_spaces_belong'])
             @slot('tags', $lookBook['look_book_tags'])
             @slot('urlLookBook', $lookBook['slug_link'])
+            @slot('idLookBook', $lookBook['id'])
+            @slot('wasAddedWishList', $lookBook['was_added_wish_list'])
         @endcomponent
     </section>
     <section class="product-wrapper">

@@ -25,7 +25,11 @@ class EloquentWishListRepositories extends RepositoriesAbstract implements WishL
             $this->deleteBy([
                 [
                     'entity_id', '=', $entityId,
+                ],
+                [
                     'customer_id', '=', $customerId,
+                ],
+                [
                     'entity_type', '=', $typeEntity,
                 ]
             ]);

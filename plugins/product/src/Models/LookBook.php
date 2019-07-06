@@ -11,6 +11,7 @@ namespace Plugins\Product\Models;
 use Core\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class LookBook extends Model
 {
@@ -43,7 +44,8 @@ class LookBook extends Model
     protected $appends = [
         'look_book_all_spaces',
         'look_book_all_business',
-        'slug_link'
+        'slug_link',
+        'was_added_wish_list',
     ];
 
     /**
@@ -139,5 +141,12 @@ class LookBook extends Model
     {
         $slug = str_slug($this->name);
         return "{$slug}.{$this->id}";
+    }
+
+    /**
+     * @return bool
+     */
+    public function getWasAddedWishListAttribute() {
+        return (!empty($this->wishListLookBooks) && Auth::guard('customer')->check()) ? $this->wishListLookBooks()->where('customer_id', Auth::guard('customer')->id())->exists() : false;
     }
 }
