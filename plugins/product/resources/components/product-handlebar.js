@@ -15,4 +15,8 @@ Handlebars.registerHelper("valueByKeyObject", function(productDefaultAttributeVa
     return productDefaultAttributeValues[attributeId] ? productDefaultAttributeValues[attributeId][0][key] : null;
 });
 
+Handlebars.registerHelper("getQuantityProduct", function(quantities, productId) {
+    return (quantities[productId]) ? quantities[productId] : null;
+});
+
 export { Handlebars };

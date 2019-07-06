@@ -3,18 +3,28 @@
     ----------------------------------------------------------------------------------------
     Author: Anh Pham
 ==========================================================================================*/
+import { HandlebarRender } from '@coreComponents/base/inc/handlebarForm';
+import { Handlebars } from '@pluginComponents/product/product-handlebar';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-$(document).on('click', '#add-coupon-btn', function (e) {
+/* register handlebar */
+let miniCart = new HandlebarRender();
+miniCart.setSourceElement('#template-mini-cart');
+miniCart.setTemplateElement('#mini-cart-header');
+miniCart.afterParseTemplate(() => {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).on('click', '.add-coupon-btn', function (e) {
     e.preventDefault();
-    let couponCode = $('#coupon_code').val();
+    let couponCode = $(this).parents('.coupon-form').find('.coupon_code').val();
     let data = {
         coupon_code : couponCode
     };
-
-    let request = axios.post(API.ADD_COUPON_TO_CART, data);
+    let _this = this;
+    let request = axios.post(API_SHOP.ADD_COUPON_TO_CART, data);
     request
         .then(function(data){
             if (data.data.coupon) {
@@ -30,11 +40,7 @@ $(document).on('click', '#add-coupon-btn', function (e) {
                                                </div>
                                            </div>`);
             }
-            $('.cart-info-total .total-price-cart').html(`$${data.data.total_price}`);
-            $('.cart-info-total .saved-price-cart').html(`$${data.data.saved_price}`);
-            $('.cart-info-total .discount-price').html(`-$${data.data.coupon_discount_amount}`);
-            $('.cart-info-total .wanting-price').html(`+  $${data.data.free_design.wanting_price}`);
-            $('.cart-info-total .total-free-designs-cart').html(`to qualify for ${data.data.free_design.total_free_design + 1} FREE DESIGN`);
+            updateInfoUICart(data.data);
             if (data.data.status === 'success') {
                 $('#coupon_code').val('');
                 Lcms.showNotice('success', data.data.message, Lcms.languages.notices_msg.success);
@@ -58,15 +64,11 @@ $(document).on('click', '.action-delete-coupon', function (e) {
         coupon_id : couponId
     };
 
-    let request = axios.delete(API.DELETE_COUPON_IN_CART, { params: data});
+    let request = axios.delete(API_SHOP.DELETE_COUPON_IN_CART, { params: data});
     request
         .then(function(data){
             $(`.coupon-in-use .coupon-${couponId}`).remove();
-            $('.cart-info-total .total-price-cart').html(`$${data.data.total_price}`);
-            $('.cart-info-total .saved-price-cart').html(`$${data.data.saved_price}`);
-            $('.discount-price').html(`-$${data.data.coupon_discount_amount}`);
-            $('.cart-info-total .wanting-price').html(`$${data.data.free_design.wanting_price}`);
-            $('.cart-info-total .total-free-designs-cart').html(`to qualify for ${data.data.free_design.total_free_design + 1} FREE DESIGN`);
+            updateInfoUICart(data.data);
             if (data.data.status === 'success') {
                 Lcms.showNotice('success', data.data.message, Lcms.languages.notices_msg.success);
             }

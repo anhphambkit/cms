@@ -21,8 +21,8 @@
                                     <a class="dropdown-item" href="{{ route('public.customer.logout') }}">Logout</a>
                                 </div>
                             </li>
-                            <li>
-                                <div class="mini-cart-content">
+                            <li class="noti-added-to-cart">
+                                <div class="mini-cart-content shopping-cart-quantity" id="mini-cart-content">
                                     @php
                                         $miniCartInfo = get_info_basic_cart(Auth::guard('customer')->id());
                                     @endphp
@@ -34,7 +34,7 @@
                                                     <div class="mini-thumbnail-cart">
                                                         <img src="{{ asset($miniCartProduct->image_feature) }}" />
                                                     </div>
-                                                    <div class="quantity">x1
+                                                    <div class="quantity">x{{ $miniCartInfo['quantities'][$miniCartProduct->id] }}
                                                         <br />
                                                         @if($miniCartProduct->type_product !== \Plugins\Product\Contracts\ProductReferenceConfig::PRODUCT_TYPE_VARIANT)
                                                             <span class="font-weight-500">${{ ($miniCartProduct->is_has_sale ? number_format($miniCartProduct->sale_price) : number_format($miniCartProduct->price)) }}</span>
@@ -55,6 +55,12 @@
                                                 Shipping fee
                                                 <span>FREE</span>
                                             </div>
+                                            @if($miniCartInfo['coupon_discount_amount'])
+                                                <div class="list-item">
+                                                    Discount
+                                                    <span class="discount-price">-${{ number_format($miniCartInfo['coupon_discount_amount']) }}</span>
+                                                </div>
+                                            @endif
                                             <div class="list-item">
                                                 Tax
                                                 <span>$0</span>
@@ -67,8 +73,8 @@
                                             <hr>
                                             <div class="font-weight-500 mb-0" style="background: rgba(150,196,189,.2); margin: -15px; padding: 15px;">
                                                 <div class="mb-2">Coupon DISCOUNT</div>
-                                                <div class="input-group mb-3">
-                                                    <input type="text" class="form-control rounded-0" placeholder="Enter your code here" id="mini_coupon_code" name="coupon_code">
+                                                <div class="input-group mb-3 coupon-form">
+                                                    <input type="text" class="form-control rounded-0 coupon_code" placeholder="Enter your code here" id="mini_coupon_code" name="coupon_code">
                                                     <div class="input-group-append">
                                                         <button class="btn btn-secondary rounded-0 add-coupon-btn" id="add-coupon-btn-mini-cart" type="button">apply</button>
                                                     </div>
@@ -87,11 +93,11 @@
                                                     @endif
                                                 </div>
                                                 <div class="d-flex align-items-center">
-                                                    <a href="{{ route('public.cart') }}">
-                                                        <button class="btn btn-outline-custom rounded-0 btn-sm w-50 justify-content-center mr-1">Go to Cart</button>
+                                                    <a href="{{ route('public.cart') }}" class="w-50">
+                                                        <button class="btn btn-outline-custom rounded-0 btn-sm w-100 justify-content-center mr-1">Go to Cart</button>
                                                     </a>
-                                                    <a href="{{ route('public.product.checkout') }}">
-                                                        <button class="btn btn-outline-custom rounded-0 btn-sm w-50 justify-content-center ml-1">Checkout</button>
+                                                    <a href="{{ route('public.product.checkout') }}" class="w-50">
+                                                        <button class="btn btn-outline-custom rounded-0 btn-sm w-100 justify-content-center ml-1">Checkout</button>
                                                     </a>
                                                 </div>
                                             </div>

@@ -21,17 +21,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
         request
             .then(function(data){
-                let totalItems = data.data.total_items;
-                if (totalItems > 0) // Update UI cart number
-                    $('.shopping-cart-quantity i').html(`(${totalItems})`);
-                else
-                    $('.shopping-cart-quantity i').html();
-
-                $('.cart-info-total .sub-total-cart').html(`$${data.data.total_price}`);
-                $('.cart-info-total .total-price-cart').html(`$${data.data.total_price}`);
-                $('.cart-info-total .saved-price-cart').html(`$${data.data.saved_price}`);
-                $('.cart-info-total .wanting-price').html(`+  $${data.data.free_design.wanting_price}`);
-                $('.cart-info-total .total-free-designs-cart').html(`to qualify for ${data.data.free_design.total_free_design + 1} FREE DESIGN`);
+                updateInfoUICart(data.data);
             })
             .catch(function(error){
                 if (error.response.status === 401)
@@ -50,16 +40,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         let request = axios.post(API_SHOP.DELETE_PRODUCT_IN_CART, { 'product_id' : productId });
         request
             .then(function(data){
-                let totalItems = data.data.total_items;
-                if (totalItems > 0) // Update UI cart number
-                    $('.shopping-cart-quantity i').html(`(${totalItems})`);
-                else
-                    $('.shopping-cart-quantity i').html();
-                $('.cart-info-total .sub-total-cart').html(`$${data.data.total_price}`);
-                $('.cart-info-total .total-price-cart').html(`$${data.data.total_price}`);
-                $('.cart-info-total .saved-price-cart').html(`$${data.data.saved_price}`);
-                $('.cart-info-total .wanting-price').html(`+  $${data.data.free_design.wanting_price}`);
-                $('.cart-info-total .total-free-designs-cart').html(`to qualify for ${data.data.free_design.total_free_design + 1} FREE DESIGN`);
+                updateInfoUICart(data.data);
                 _this.parents('.row-product').remove();
             })
             .catch(function(error){
@@ -81,7 +62,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         newProduct[productId] = quantity;
         products = Object.assign(products, newProduct);
         let _this = $(this);
-        let request = axios.post(API.SAVE_PRODUCT_FOR_LATER, { 'products' : products });
+        let request = axios.post(API.DELETE_PRODUCT_SAVED, { 'products' : products });
 
         request
             .then(function(data){
@@ -101,7 +82,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     $(document).on('click', '.btn-move-product-to-cart', function(e) {
         let productId = $(this).parents('.row-product').data('product-id');
         let _this = $(this);
-        let request = axios.post(API.MOVE_PRODUCT_TO_CART, { 'product_id' : productId });
+        let request = axios.post(API.DELETE_PRODUCT_SAVED, { 'product_id' : productId });
         request
             .then(function(data){
                 location.reload();

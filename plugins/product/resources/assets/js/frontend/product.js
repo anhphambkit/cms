@@ -10,6 +10,14 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /* register handlebar */
+let miniCart = new HandlebarRender();
+miniCart.setSourceElement('#template-mini-cart');
+miniCart.setTemplateElement('#mini-cart-content');
+miniCart.afterParseTemplate(() => {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+/* register handlebar */
 let quickShopModal = new HandlebarRender();
 quickShopModal.setSourceElement('#template-quick-shop-modal');
 quickShopModal.setTemplateElement('#content-quick-shop-modal');
@@ -121,30 +129,20 @@ $(document).ready(function() {
         newProduct[productId] = quantity;
         products = Object.assign(products, newProduct);
         let dataAttributes = getAllAttributeValue();
-
+        $('.add-to-cart-success').remove();
         let request = axios.post(API_SHOP.ADD_TO_CART, { 'products' : products, 'is_update_product' : false, 'product_attributes' : dataAttributes });
         request
             .then(function(data){
-                let totalItems = data.data.total_items;
-                if (totalItems > 0) {
-                    $('.shopping-cart-quantity i').html(`(${totalItems})`);
-                } // Update UI cart number
-                else
-                    $('.shopping-cart-quantity i').html();
+                updateInfoUICart(data.data);
 
-                $('ul.menu-info-customer').append(
-                    `<li class="noti-added-to-cart">
-                        <a href="javascript:void(0);">
-                            <i class="fas fa-shopping-cart"></i> (1)
-                            <div class="add-to-cart-success">
-                                <span class="close close-noti-added-to-cart"><i class="fas fa-times"></i></span>
-                                <div class="mb-2">Your item(s) have been added to cart</div>
-                                <a href="/cart" class="go-to-cart">
-                                    <button class="btn btn-custom btn-sm btn-block justify-content-center">Go to Cart and Checkout</button>
-                                </a>
-                            </div>
+                $('ul.menu-info-customer li.noti-added-to-cart').append(
+                    `<div class="add-to-cart-success">
+                        <span class="close close-noti-added-to-cart"><i class="fas fa-times"></i></span>
+                        <div class="mb-2">Your item(s) have been added to cart</div>
+                        <a href="/cart" class="go-to-cart">
+                            <button class="btn btn-custom btn-sm btn-block justify-content-center">Go to Cart and Checkout</button>
                         </a>
-                    </li>`
+                    </div>`
                 );
             })
             .catch(function(data){
@@ -159,7 +157,7 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.close-noti-added-to-cart', function () {
-        $('.noti-added-to-cart').remove();
+        $('.add-to-cart-success').remove();
     });
 
     $(document).on('click', '.btn-show-quick-shop-modal', function (event) {

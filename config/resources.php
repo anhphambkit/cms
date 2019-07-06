@@ -56,6 +56,7 @@ return [
 		/* css */
 		'vendor-css' => ['theme' => 'assets/css/style.min.css'],
 		'loading-css' => ['cdn' => 'frontend/core/base/assets/css/loading-component.css'],
+		'cart-css' => ['cdn' => 'frontend/plugins/cart/assets/css/cart.css'],
 		'toastr-css' => ['cdn' => '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css'],
 	],
 
@@ -63,7 +64,8 @@ return [
 		'css' => [
 			'vendor-css',
 			'toastr-css',
-			'loading-css'
+			'loading-css',
+			'cart-css',
 		],
 		'js' => [
 			'vendor-js',

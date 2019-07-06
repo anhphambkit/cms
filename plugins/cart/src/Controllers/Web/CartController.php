@@ -45,12 +45,8 @@ class CartController extends BasePublicController
                 'customer_id', '=', $customerId
             ]
         ], ['product']);
-        AssetManager::addAsset('cart-css', 'frontend/plugins/cart/assets/css/cart.css');
-        AssetPipeline::requireCss('cart-css');
         AssetManager::addAsset('cart-js', 'frontend/plugins/cart/assets/js/cart.js');
         AssetPipeline::requireJs('cart-js');
-        AssetManager::addAsset('cart-coupon-js', 'frontend/plugins/cart/assets/js/cart-coupon.js');
-        AssetPipeline::requireJs('cart-coupon-js');
         return view('pages.cart.index', compact('cart', 'savedProducts'));
     }
 }

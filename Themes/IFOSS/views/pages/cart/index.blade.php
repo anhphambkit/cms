@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="list-item">
                                     Discount
-                                    <span class="discount-price">${{ number_format($cart['coupon_discount_amount']) }}</span>
+                                    <span class="discount-price">-${{ number_format($cart['coupon_discount_amount']) }}</span>
                                 </div>
                                 <div class="list-item">
                                     Tax
@@ -92,8 +92,8 @@
 
                             <div class="cart-order-info font-weight-500 mb-0">
                                 <div class="text-uppercase mb-2">Coupon DISCOUNT</div>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control rounded-0" placeholder="Enter your code here" id="coupon_code" name="coupon_code">
+                                <div class="input-group mb-3 coupon-form">
+                                    <input type="text" class="form-control rounded-0 coupon_code" placeholder="Enter your code here" id="coupon_code" name="coupon_code">
                                     <div class="input-group-append">
                                         <button class="btn btn-secondary rounded-0 add-coupon-btn" id="add-coupon-btn" type="button">apply</button>
                                     </div>
@@ -139,8 +139,6 @@
 @section('variable-scripts')
     <script>
         const API = {
-            ADD_COUPON_TO_CART : "{{ route('ajax.product.add_coupon') }}",
-            DELETE_COUPON_IN_CART : "{{ route('ajax.product.delete_coupon') }}",
             SAVE_PRODUCT_FOR_LATER : "{{ route('ajax.product.save_product_for_later') }}",
             MOVE_PRODUCT_TO_CART : "{{ route('ajax.product.move_product_to_cart') }}",
             DELETE_PRODUCT_SAVED : "{{ route('ajax.product.delete_product_saved') }}",

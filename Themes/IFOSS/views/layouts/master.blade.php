@@ -78,6 +78,8 @@
                 UPDATE_PRODUCT_IN_CART : "{{ route('ajax.cart.update_product_in_cart') }}",
                 {{--VIEW_CART_HEADER : "{{ route('ajax.shop.view_cart_header') }}",--}}
                 DELETE_PRODUCT_IN_CART : "{{ route('ajax.cart.delete_product_in_cart') }}",
+                ADD_COUPON_TO_CART : "{{ route('ajax.product.add_coupon') }}",
+                DELETE_COUPON_IN_CART : "{{ route('ajax.product.delete_coupon') }}",
             };
 
             const PRODUCT = {
@@ -92,7 +94,12 @@
         @section('variable-scripts')
         @show
 
+        <script id="template-mini-cart" type="text/x-handlebars-template">
+            @include('handle-bar.mini-cart')
+        </script>
+        <script src="{{ asset('frontend/plugins/cart/assets/js/cart-helper.js') }}" type="text/javascript"></script>
         <script src="{{ asset('frontend/plugins/product/assets/js/product.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('frontend/plugins/cart/assets/js/cart-coupon.js') }}" type="text/javascript"></script>
 
         @section('script-media')
             @include('core-media::partials.media')
