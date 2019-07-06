@@ -93,8 +93,9 @@ class ProductController extends BaseAdminController
      * @throws \Exception
      */
     public function addOrRemoveProductToQuickList(Request $request) {
-        $productId = (int)($request->get('product_id'));
-        $result = $this->productServices->addOrRemoveProductToQuickList($productId, Auth::guard('customer')->id());
+        $entityId = (int)($request->get('entity_id'));
+        $typeEntity = (string)($request->get('type_entity'));
+        $result = $this->productServices->addOrRemoveProductToQuickList($entityId, Auth::guard('customer')->id(), $typeEntity);
         return response()->json($result);
     }
 

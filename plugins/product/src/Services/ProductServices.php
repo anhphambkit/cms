@@ -8,6 +8,8 @@
 
 namespace Plugins\Product\Services;
 
+use Plugins\Product\Contracts\ProductReferenceConfig;
+
 interface ProductServices {
     /**
      * @param array $categoryIds
@@ -80,11 +82,12 @@ interface ProductServices {
     public function getListSaleProductsOfCategoryPageParent(int $productCategoryId, int $limit = null, array $dataPageLoad = []);
 
     /**
-     * @param int $productId
+     * @param int $entityId
      * @param int $customerId
+     * @param string $typeEntity
      * @return mixed
      */
-    public function addOrRemoveProductToQuickList(int $productId, int $customerId);
+    public function addOrRemoveProductToQuickList(int $entityId, int $customerId, string $typeEntity = ProductReferenceConfig::ENTITY_TYPE_PRODUCT);
 
     /**
      * @param array $products

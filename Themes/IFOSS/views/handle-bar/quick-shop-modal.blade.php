@@ -174,7 +174,7 @@
                                     <hr>
                                 </div>
                                 <div class="d-flex">
-                                    <button class="btn btn-outline-custom mr-2 add-to-wish-list" data-product-id="@{{ product.id }}"><i class="@{{#if product.was_added_wish_list }} fas @{{else}} far @{{/if}} fa-heart mr-2 icon-wish-list"></i> Wishlist</button>
+                                    <button class="btn btn-outline-custom mr-2 add-to-wish-list" data-entity-id="@{{ product.id }}" data-type-entity="{{ \Plugins\Product\Contracts\ProductReferenceConfig::ENTITY_TYPE_PRODUCT }}"><i class="@{{#if product.was_added_wish_list }} fas @{{else}} far @{{/if}} fa-heart mr-2 icon-wish-list"></i> Wishlist</button>
                                     <button class="btn btn-custom btn-block justify-content-center @{{#ifEquals product.type_product 'variants'}} disabled @{{else}} add-to-cart-btn @{{/ifEquals}}"
                                             data-toggle="tooltip" data-placement="top"
                                             title="@{{#ifEquals product.type_product 'variants'}} Please select full product attribute! @{{else}} Add to bag @{{/ifEquals}}">Add to Bag</button>

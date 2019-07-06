@@ -10,6 +10,7 @@ namespace Plugins\Product\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Plugins\Customer\Models\Customer;
+use Plugins\Product\Contracts\ProductReferenceConfig;
 
 class WishList extends Model
 {
@@ -22,15 +23,16 @@ class WishList extends Model
 
     protected $fillable = [
         'customer_id',
-        'product_id'
+        'entity_id',
+        'entity_type'
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function product()
+    public function entity()
     {
-        return $this->belongsTo(Product::class);
+        return $this->morphTo();
     }
 
     /**

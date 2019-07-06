@@ -26,9 +26,10 @@ quickShopModal.afterParseTemplate(() => {
 });
 
 $(document).on('click', '.add-to-wish-list', function(e) {
-    let productId = $(this).data('product-id');
+    let entityId = $(this).data('entity-id');
+    let typeEntity = $(this).data('type-entity');
     let _this = $(this);
-    let request = axios.post(PRODUCT.ADD_PRODUCT_TO_WISH_LIST, { 'product_id' : productId });
+    let request = axios.post(PRODUCT.ADD_PRODUCT_TO_WISH_LIST, { 'entity_id' : entityId, 'type_entity' : typeEntity });
 
     request
         .then(function(data){

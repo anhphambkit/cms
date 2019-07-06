@@ -2,7 +2,9 @@
 
 namespace Plugins\Product\Providers;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+use Plugins\Product\Contracts\ProductReferenceConfig;
 use Plugins\Product\Repositories\Interfaces\LookBookRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductAttributeValueRelationRepositories;
 use Plugins\Product\Repositories\Interfaces\ProductCategoryRepositories;
@@ -90,5 +92,10 @@ class ProductServiceProvider extends ServiceProvider
     /**
      * @author AnhPham
      */
-    public function boot(){}
+    public function boot(){
+        Relation::morphMap([
+            ProductReferenceConfig::ENTITY_TYPE_PRODUCT => ProductReferenceConfig::ENTITY_CLASS_PRODUCT,
+            ProductReferenceConfig::ENTITY_TYPE_LOOK_BOOK => ProductReferenceConfig::ENTITY_CLASS_LOOK_BOOK,
+        ]);
+    }
 }

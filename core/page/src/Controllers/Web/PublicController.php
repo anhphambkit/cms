@@ -44,7 +44,6 @@ class PublicController extends BasePublicController{
         SeoHelper::setTitle('Ifoss Homepage')
                     ->setDescription('Ifoss homepage ne');
         $bestSellerProducts = $this->productServices->getBestSellerProducts(8);
-        $productWishListIds = $this->wishListRepositories->getArrayIdWishListProductsByCustomer((int)Auth::guard('customer')->id());
-		return view('homepage', compact('bestSellerProducts', 'productWishListIds'));
+		return view('homepage', compact('bestSellerProducts'));
 	}
 }
