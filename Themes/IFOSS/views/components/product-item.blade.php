@@ -42,13 +42,13 @@ $productItem = !empty($productItem) ? $productItem : collect([]);
         </div>
         <div class="price">
             @if($productItem->type_product !== \Plugins\Product\Contracts\ProductReferenceConfig::PRODUCT_TYPE_VARIANT)
-                <div class="main">${{ ($productItem->is_has_sale ? $productItem->sale_price : $productItem->price) }}</div>
+                <div class="main">${{ ($productItem->is_has_sale ? number_format($productItem->sale_price) : number_format($productItem->price)) }}</div>
                 @if($productItem->is_has_sale)
-                    <div class="discount">${{ $productItem->price }}</div>
-                    <div class="sale">{{ $productItem->percent_sale }}% off</div>
+                    <div class="discount">${{ number_format($productItem->price) }}</div>
+                    <div class="sale">{{ number_format($productItem->percent_sale) }}% off</div>
                 @endif
             @else
-                <div class="main">${{ $productItem->min_price }} - ${{ $productItem->max_price }}</div>
+                <div class="main">${{ number_format($productItem->min_price) }} - ${{ number_format($productItem->max_price) }}</div>
             @endif
         </div>
         <div class="rating">

@@ -17,12 +17,12 @@ $attributeValues = $productItem->productStringValueAttribute()->get();
     <div class="content">
         <div class="price">
             @if($productItem->type_product !== \Plugins\Product\Contracts\ProductReferenceConfig::PRODUCT_TYPE_VARIANT)
-                <div class="font-size-18">${{ ($productItem->is_has_sale ? $productItem->sale_price : $productItem->price) }}</div>
+                <div class="font-size-18">${{ ($productItem->is_has_sale ? number_format($productItem->sale_price) : number_format($productItem->price)) }}</div>
                 @if($productItem->is_has_sale)
-                    <div class="font-size-12 text-line-through">${{ $productItem->price }}</div>
+                    <div class="font-size-12 text-line-through">${{ number_format($productItem->price) }}</div>
                 @endif
             @else
-                <div class="font-size-18">${{ $productItem->min_price }} - ${{ $productItem->max_price }}</div>
+                <div class="font-size-18">${{ number_format($productItem->min_price) }} - ${{ number_format($productItem->max_price) }}</div>
             @endif
         </div>
         <div class="title">

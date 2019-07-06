@@ -98,13 +98,13 @@
                                 </div>
                                 <div class="price current-selected-product">
                                     @if($productInfo['product']->type_product !== \Plugins\Product\Contracts\ProductReferenceConfig::PRODUCT_TYPE_VARIANT)
-                                        <div class="main">${{ ($productInfo['product']->is_has_sale ? $productInfo['product']->sale_price : $productInfo['product']->price) }}</div>
+                                        <div class="main">${{ ($productInfo['product']->is_has_sale ? number_format($productInfo['product']->sale_price) : number_format($productInfo['product']->price)) }}</div>
                                         @if($productInfo['product']->is_has_sale)
-                                            <div class="discount">${{ $productInfo['product']->price }}</div>
-                                            <div class="sale">{{ $productInfo['product']->percent_sale }}% off</div>
+                                            <div class="discount">${{ number_format($productInfo['product']->price) }}</div>
+                                            <div class="sale">{{ number_format($productInfo['product']->percent_sale) }}% off</div>
                                         @endif
                                     @else
-                                        <div class="main">${{ $productInfo['product']->min_price }} - ${{ $productInfo['product']->max_price }}</div>
+                                        <div class="main">${{ number_format($productInfo['product']->min_price) }} - ${{ number_format($productInfo['product']->max_price) }}</div>
                                     @endif
                                 </div>
                                 <div class="feature-items">
