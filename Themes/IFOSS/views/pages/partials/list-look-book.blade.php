@@ -26,6 +26,7 @@ $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
                             @slot('spaces', $list[$i]['look_book_spaces_belong'])
                             @slot('tags', $list[$i]['look_book_tags'])
                             @slot('urlLookBook', $list[$i]['slug_link'])
+                            @slot('tagProducts', $list[$i]['look_book_all_products'])
                         @endcomponent
                     </div>
                     @php
@@ -63,6 +64,7 @@ $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
                                                 @slot('spaces', $normalLayoutChunk[$j]['look_book_spaces_belong'])
                                                 @slot('tags', $normalLayoutChunk[$j]['look_book_tags'])
                                                 @slot('urlLookBook', $normalLayoutChunk[$j]['slug_link'])
+                                                @slot('tagProducts', $normalLayoutChunk[$j]['look_book_all_products'])
                                             @endcomponent
                                         </div>
                                         @php
@@ -85,6 +87,7 @@ $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
                         @slot('spaces', $list[$i]['look_book_spaces_belong'])
                         @slot('tags', $list[$i]['look_book_tags'])
                         @slot('urlLookBook', $list[$i]['slug_link'])
+                        @slot('tagProducts', $list[$i]['look_book_all_products'])
                     @endcomponent
                 </div>
                 @php

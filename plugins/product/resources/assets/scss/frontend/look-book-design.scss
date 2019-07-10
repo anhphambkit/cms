@@ -33,6 +33,9 @@
     width: 38px;
     height: 38px;
     text-align: center;
+    &:hover + .tag-popup-info {
+      display: block;
+    }
     .tt-btn {
       opacity: 0;
       visibility: hidden;

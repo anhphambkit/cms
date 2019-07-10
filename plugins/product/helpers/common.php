@@ -47,3 +47,30 @@ if (!function_exists('get_info_basic_cart')) {
         return app()->make(\Plugins\Cart\Services\CartServices::class)->getBasicInfoCartOfCustomer($customerId);
     }
 }
+
+if (!function_exists('get_position_popup')) {
+    /**
+     * @param float $left
+     * @param float $top
+     * @return array
+     */
+    function get_position_popup(float $left, float $top)
+    {
+        if ($top <= 50) {
+            return [
+                'top' => "calc({$top}% + 50px)",
+                'left' => "calc({$left}% - 110px)",
+                'class' => 'align-top',
+                'is_top' => true,
+            ];
+        }
+        else {
+            return [
+                'bottom' => "calc(100% - {$top}% + 15px)",
+                'left' => "calc({$left}% - 110px)",
+                'class' => 'align-bottom',
+                'is_top' => false,
+            ];
+        }
+    }
+}

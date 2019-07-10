@@ -46,6 +46,7 @@ class LookBook extends Model
         'look_book_all_business',
         'slug_link',
         'was_added_wish_list',
+        'look_book_all_products',
     ];
 
     /**
@@ -70,7 +71,7 @@ class LookBook extends Model
      */
     public function lookBookProducts()
     {
-        return $this->belongsToMany(Product::class, 'look_book_tags')->whereNull('look_book_tags.deleted_at');
+        return $this->belongsToMany(Product::class, 'look_book_tags')->whereNull('look_book_tags.deleted_at')->distinct();
     }
 
     /**
@@ -148,5 +149,14 @@ class LookBook extends Model
      */
     public function getWasAddedWishListAttribute() {
         return (!empty($this->wishListLookBooks) && Auth::guard('customer')->check()) ? $this->wishListLookBooks()->where('customer_id', Auth::guard('customer')->id())->exists() : false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLookBookAllProductsAttribute() {
+        return $this->lookBookProducts->mapWithKeys(function ($item) {
+            return [$item['id'] => $item];
+        });
     }
 }

@@ -1,6 +1,5 @@
 {
     "/frontend/plugins/product/assets/js/product.js": "/frontend/plugins/product/assets/js/product.js",
-    "/frontend/plugins/product/assets/js/design-idea.js": "/frontend/plugins/product/assets/js/design-idea.js",
     "/backend/plugins/product/assets/js/variants.js": "/backend/plugins/product/assets/js/variants.js",
     "/backend/plugins/product/assets/js/business-spaces.js": "/backend/plugins/product/assets/js/business-spaces.js",
     "/backend/plugins/product/assets/js/look-book.js": "/backend/plugins/product/assets/js/look-book.js",
@@ -18,6 +17,7 @@
     "/backend/plugins/product/assets/scripts/form-select2.min.js": "/backend/plugins/product/assets/scripts/form-select2.min.js",
     "/backend/plugins/product/assets/scripts/form-select2.js": "/backend/plugins/product/assets/scripts/form-select2.js",
     "/frontend/plugins/product/assets/js/product-detail.js": "/frontend/plugins/product/assets/js/product-detail.js",
+    "/frontend/plugins/product/assets/js/design-idea.js": "/frontend/plugins/product/assets/js/design-idea.js",
     "/frontend/plugins/product/assets/js/checkout-coupon.js": "/frontend/plugins/product/assets/js/checkout-coupon.js",
     "/backend/plugins/product/assets/js/product.js": "/backend/plugins/product/assets/js/product.js",
     "/backend/plugins/product/assets/js/select2-helper.js": "/backend/plugins/product/assets/js/select2-helper.js"

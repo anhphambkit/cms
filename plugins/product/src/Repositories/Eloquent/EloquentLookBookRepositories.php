@@ -23,7 +23,7 @@ class EloquentLookBookRepositories extends RepositoriesAbstract implements LookB
                     ->leftJoin('look_book_business_type_space_relation', 'look_book_business_type_space_relation.look_book_id', '=', 'look_books.id')
                     ->where('look_books.type_layout', $type)
                     ->where('look_books.is_main', $isMain)
-                    ->with('lookBookTags', 'lookBookSpacesBelong', 'lookBookBusiness')
+                    ->with('lookBookTags', 'lookBookSpacesBelong', 'lookBookBusiness', 'lookBookProducts')
                     ->orderBy('look_books.created_at', 'desc');
 
         if (!empty($spaces))
