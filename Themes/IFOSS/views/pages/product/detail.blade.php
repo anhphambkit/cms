@@ -79,7 +79,9 @@
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc nisi justo, porttitor nec tristique venenatis, laoreet nec velit. Suspendisse eu elit scelerisque justo scelerisque faucibus. Vivamus accumsan iaculis tortor a consectetur. Duis ornare semper velit id finibus. Phasellus in feugiat metus. Fusce iaculis turpis efficitur luctus vulputate. Nam nec tempus erat, eu blandit ipsum. Sed at luctus turpis. Donec porta, metus ac varius cursus, urna quam pharetra odio, ut consequat nunc orci vel dolor. Fusce porttitor dolor a ligula vestibulum, eget consectetur ipsum viverra. In dui nulla, volutpat et sapien non, aliquam vulputate lacus. Mauris laoreet sapien et urna luctus dapibus. Nulla massa velit, faucibus sit amet malesuada nec, dapibus rhoncus quam.
                                 </div>
                             </div>
+                            @include('pages.partials.review-list')
                         </div>
+                        @include('pages.partials.review-post')
                     </div>
                     <div class="col-lg-4">
                         <div class="product-sidebar">
@@ -197,5 +199,53 @@
     <script>
         const PRODUCT_ID = {{ $productInfo['product']->id }};
     </script>
+    <script id="template-quick-shop-modal" type="text/x-handlebars-template">
+        @include('handle-bar.quick-shop-modal')
+    </script>
 
+    <script type="text/javascript">
+        // Rating Control
+        $(".form-rating-control input:radio").attr("checked", false);
+
+        $('.form-rating-control input').click(function () {
+            $(".form-rating-control span").removeClass('checked');
+            $(this).parent().addClass('checked');
+        });
+
+        $(document).on('click', '.btn-write-review', function(event){
+            event.preventDefault();
+            let content = $('#content-review').val();
+            if(!content) return Lcms.showNotice('error', 'Please write content to post a review.', Lcms.languages.notices_msg.error);
+            $('#form-post-review').submit();
+        });
+
+        let postCommentReview = function (url, content){
+            $.ajax({
+                url : url,
+                type : "post",
+                data : { _token : _token, content: content },
+                success : function (data){
+                    if(!data.error){
+                        Lcms.showNotice('success', data.message, Lcms.languages.notices_msg.success);
+                        location.reload();
+                    }
+                    else
+                        Lcms.showNotice('error', data.message, Lcms.languages.notices_msg.error);
+                },
+                error: function(error) { // if error occured
+                    Lcms.showNotice('error', error.message || 'Cannot comment for this review.', Lcms.languages.notices_msg.error);  
+                }
+            })
+        }
+
+        $(".post-comment-review").on("keypress",function(e) {
+            var key = e.keyCode;
+            if (key == 13) {
+                let url = $(this).data('url');
+                let content = $(this).val();
+                if(!content) return Lcms.showNotice('error', 'Please write content to comment a review.', Lcms.languages.notices_msg.error);
+                postCommentReview(url, content);
+            }
+        });
+    </script>
 @stop

@@ -99,5 +99,14 @@ return [
         'icon'        => 'fas fa-users-cog',
         'url'         => 'admin.product.coupon.list',
         'permissions' => ['product_coupon.list']
+    ],
+    [
+        'id'          => 'menu-product-review',
+        'priority'    => 11,
+        'parent_id'   => 'menu-product-administrator',
+        'name'        => 'plugins-review::sidebar.name',
+        'icon'        => 'fas fa-users-cog',
+        'url'         => 'admin.review.list',
+        'permissions' => ['review.list']
     ]
 ];
