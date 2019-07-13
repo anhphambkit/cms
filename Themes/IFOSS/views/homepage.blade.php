@@ -153,7 +153,5 @@
 @stop
 
 @section('variable-scripts')
-    <script id="template-quick-shop-modal" type="text/x-handlebars-template">
-        @include('handle-bar.quick-shop-modal')
-    </script>
+
 @stop

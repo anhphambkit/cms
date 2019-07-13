@@ -19,4 +19,8 @@ Handlebars.registerHelper("getQuantityProduct", function(quantities, productId) 
     return (quantities[productId]) ? quantities[productId] : null;
 });
 
+Handlebars.registerHelper("getUrlLink", function(url, param) {
+    return `${url}/${param}`;
+});
+
 export { Handlebars };

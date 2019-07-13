@@ -97,6 +97,12 @@
         <script id="template-mini-cart" type="text/x-handlebars-template">
             @include('handle-bar.mini-cart')
         </script>
+        <script id="template-quick-shop-modal" type="text/x-handlebars-template">
+            @include('handle-bar.quick-shop-modal')
+        </script>
+        <script id="template-product-item" type="text/x-handlebars-template">
+            @include('handle-bar.product-item')
+        </script>
         <script src="{{ asset('frontend/plugins/cart/assets/js/cart-helper.js') }}" type="text/javascript"></script>
         <script src="{{ asset('frontend/plugins/product/assets/js/product.js') }}" type="text/javascript"></script>
         <script src="{{ asset('frontend/plugins/cart/assets/js/cart-coupon.js') }}" type="text/javascript"></script>

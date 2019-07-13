@@ -14,7 +14,7 @@
 </div>
 <div class="modal-body">
     <div class="container-fluid">
-        <div class="product-detail" data-product-id="@{{ product.id }}">
+        <div class="product-detail product-detail-item product-detail-item-@{{ product.id }}" data-product-id="@{{ product.id }}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 product-detail-wrapper">
@@ -35,9 +35,9 @@
                                         <div class="item"><img src="@{{ media }}" alt="@{{ media }}"></div>
                                     @{{/each}}
                                 </div>
-                                @{{#if product.available_3d }}
+                                @{{#if product.has_look_book }}
                                     <div class="text-right">
-                                        <a href="#" class="btn-link-custom">View in Design Ideas</a>
+                                        <a href="@{{ getUrlLink '/design-ideal/product' product.url_product }}" class="btn-link-custom">View in Design Ideas</a>
                                     </div>
                                 @{{/if}}
                             </div>
@@ -79,7 +79,9 @@
                         <div class="product-sidebar">
                             <div class="product-specs">
                                 <div class="sku">SKU:  @{{ product.sku }}</div>
-                                <div class="title">@{{ product.name }}</div>
+                                <div class="title">
+                                    <a href="@{{ getUrlLink '/product/detail' product.url_product }}" class="link-product-detail">@{{ product.name }}</a>
+                                </div>
                                 <div class="rating">
                                     <div class="rating-star">
                                         <i class="fas fa-star"></i>
@@ -92,13 +94,13 @@
                                 </div>
                                 <div class="price current-selected-product">
                                     @{{#ifNotEquals product.type_product "variants"}}
-                                        <div class="main">$@{{#if product.is_has_sale }} @{{ product.sale_price }} @{{else}} @{{ product.price }} @{{/if}}</div>
+                                        <div class="main">@{{#if product.is_has_sale }} $@{{ formatCurrency product.sale_price }} @{{else}} $@{{ formatCurrency product.price }} @{{/if}}</div>
                                         @{{#if product.is_has_sale }}
-                                            <div class="discount">$@{{ product.price }}</div>
-                                            <div class="sale">@{{ product.percent_sale }}% off</div>
+                                            <div class="discount">$@{{ formatCurrency product.price }}</div>
+                                            <div class="sale">@{{ formatCurrency product.percent_sale }}% off</div>
                                         @{{/if}}
                                     @{{else}}
-                                        <div class="main">$@{{ product.min_price }} - $@{{ product.max_price }}</div>
+                                        <div class="main">$@{{ formatCurrency product.min_price }} - $@{{ formatCurrency product.max_price }}</div>
                                     @{{/ifNotEquals}}
                                 </div>
                                 <div class="feature-items">
@@ -143,7 +145,7 @@
                                                             <span class="d-inline-block gray-color" style="width: 120px;">Select @{{ name }}</span>
                                                             @{{#each (lookup @root.product_attribute_values id) }}
                                                                 @{{#ifEquals (valueByKeyObject @root.product_default_attribute_values ../id 'id') id}}
-                                                                    <span class="font-weight-600" data-attribute-value-id="@{{ id }}">@{{  name }}</span>
+                                                                    <span class="font-weight-600 attribute-selected-title" data-attribute-value-id="@{{ id }}">@{{  name }}</span>
                                                                 @{{/ifEquals}}
                                                             @{{/each}}
                                                         </div>
@@ -174,7 +176,9 @@
                                     <hr>
                                 </div>
                                 <div class="d-flex">
-                                    <button class="btn btn-outline-custom mr-2 add-to-wish-list" data-entity-id="@{{ product.id }}" data-type-entity="{{ \Plugins\Product\Contracts\ProductReferenceConfig::ENTITY_TYPE_PRODUCT }}"><i class="@{{#if product.was_added_wish_list }} fas @{{else}} far @{{/if}} fa-heart mr-2 icon-wish-list"></i> Wishlist</button>
+                                    <button class="btn btn-outline-custom mr-2 add-to-wish-list" data-entity-id="@{{ product.id }}" data-type-entity="{{ \Plugins\Product\Contracts\ProductReferenceConfig::ENTITY_TYPE_PRODUCT }}">
+                                        <i class="@{{#if product.was_added_wish_list }} fas @{{else}} far @{{/if}} fa-heart mr-2 icon-wish-list"></i> Wishlist
+                                    </button>
                                     <button class="btn btn-custom btn-block justify-content-center @{{#ifEquals product.type_product 'variants'}} disabled @{{else}} add-to-cart-btn @{{/ifEquals}}"
                                             data-toggle="tooltip" data-placement="top"
                                             title="@{{#ifEquals product.type_product 'variants'}} Please select full product attribute! @{{else}} Add to bag @{{/ifEquals}}">Add to Bag</button>
