@@ -34,7 +34,7 @@ class ReviewServiceProvider extends ServiceProvider
 
         if (setting('enable_cache', false)) {
             $this->app->singleton(ReviewCommentRepositories::class, function () {
-                return new CacheReviewCommentRepositories(new EloquentReviewCommentRepositories(new \Plugins\Review\Models\Review()));
+                return new CacheReviewCommentRepositories(new EloquentReviewCommentRepositories(new \Plugins\Review\Models\ReviewComment()));
             });
         } else {
             $this->app->singleton(ReviewCommentRepositories::class, function () {

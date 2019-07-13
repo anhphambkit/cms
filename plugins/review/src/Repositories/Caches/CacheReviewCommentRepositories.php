@@ -19,6 +19,6 @@ class CacheReviewCommentRepositories extends CacheAbstractDecorator implements R
     {
         parent::__construct();
         $this->repository = $repository;
-        $this->entityName = 'default'; # Please setup reference name of cache.
+        $this->entityName = 'Cache-Review'; # Please setup reference name of cache.
     }
 }

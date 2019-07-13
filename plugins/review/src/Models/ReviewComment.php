@@ -21,6 +21,7 @@ class ReviewComment extends Eloquent
 
     protected $fillable = [
     	'content',
+        'review_id'
     ];
 
     /**
