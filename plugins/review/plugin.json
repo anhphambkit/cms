@@ -1,0 +1,10 @@
+{
+    "name": "Review",
+    "provider": "Plugins\\Review\\Providers\\ReviewServiceProvider",
+    "plugin": "Plugins\\Review\\Plugin",
+    "author": "Trinh Le",
+    "version": "1.0",
+    "description": "Review",
+    "namespace": "Plugins\\Review\\",
+    "src": "plugins/review/src"
+}

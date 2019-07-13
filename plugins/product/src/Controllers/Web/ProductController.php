@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Core\Base\Controllers\Web\BasePublicController;
 use Illuminate\Support\Facades\Auth;
 use Plugins\Product\Repositories\Interfaces\WishListRepositories;
+use Plugins\Review\Repositories\Interfaces\ReviewRepositories;
 use Plugins\Product\Services\ProductServices;
 use AssetManager;
 use AssetPipeline;
@@ -22,14 +23,20 @@ class ProductController extends BasePublicController
     protected $wishListRepositories;
 
     /**
+     * @var ReviewRepositories
+     */
+    protected $reviewRepository;
+
+    /**
      * ProductController constructor.
      * @param ProductServices $productServices
      * @param WishListRepositories $wishListRepositories
      */
-    public function __construct(ProductServices $productServices, WishListRepositories $wishListRepositories)
+    public function __construct(ProductServices $productServices, WishListRepositories $wishListRepositories, ReviewRepositories $reviewRepository)
     {
-        $this->productServices = $productServices;
+        $this->productServices      = $productServices;
         $this->wishListRepositories = $wishListRepositories;
+        $this->reviewRepository     = $reviewRepository;
     }
 
     /**
@@ -45,7 +52,18 @@ class ProductController extends BasePublicController
         AssetPipeline::requireJs('product-detail-js');
         AssetManager::addAsset('product-detail-css', 'frontend/plugins/product/assets/css/product-detail.css');
         AssetPipeline::requireCss('product-detail-css');
-        return view('pages.product.detail', compact('productInfo'));
+
+        try{
+            $reviews = $this->reviewRepository->allBy([
+                'product_id' => $productInfo['product']->id
+            ], ['comments', 'customer']);
+        }
+        catch(\Exception $ex){
+            info($ex->getMessage());
+            $reviews = [];
+        }
+
+        return view('pages.product.detail', compact('productInfo', 'reviews'));
     }
 
     /**

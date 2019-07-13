@@ -79,7 +79,9 @@
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc nisi justo, porttitor nec tristique venenatis, laoreet nec velit. Suspendisse eu elit scelerisque justo scelerisque faucibus. Vivamus accumsan iaculis tortor a consectetur. Duis ornare semper velit id finibus. Phasellus in feugiat metus. Fusce iaculis turpis efficitur luctus vulputate. Nam nec tempus erat, eu blandit ipsum. Sed at luctus turpis. Donec porta, metus ac varius cursus, urna quam pharetra odio, ut consequat nunc orci vel dolor. Fusce porttitor dolor a ligula vestibulum, eget consectetur ipsum viverra. In dui nulla, volutpat et sapien non, aliquam vulputate lacus. Mauris laoreet sapien et urna luctus dapibus. Nulla massa velit, faucibus sit amet malesuada nec, dapibus rhoncus quam.
                                 </div>
                             </div>
+                            @include('pages.partials.review-list')
                         </div>
+                        @include('pages.partials.review-post')
                     </div>
                     <div class="col-lg-4">
                         <div class="product-sidebar">
@@ -199,5 +201,22 @@
     </script>
     <script id="template-quick-shop-modal" type="text/x-handlebars-template">
         @include('handle-bar.quick-shop-modal')
+    </script>
+
+    <script type="text/javascript">
+        // Rating Control
+        $(".form-rating-control input:radio").attr("checked", false);
+
+        $('.form-rating-control input').click(function () {
+            $(".form-rating-control span").removeClass('checked');
+            $(this).parent().addClass('checked');
+        });
+
+        $(document).on('click', '.btn-write-review', function(event){
+            event.preventDefault();
+            let content = $('#content-review').val();
+            if(!content) return Lcms.showNotice('error', 'Please write content to post a review.', Lcms.languages.notices_msg.error);
+            $('#form-post-review').submit();
+        });
     </script>
 @stop

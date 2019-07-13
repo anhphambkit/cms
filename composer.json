@@ -59,7 +59,8 @@
             "Plugins\\Payment\\": "plugins/payment/src",
             "Plugins\\Customattributes\\": "plugins/customattributes/src",
             "Plugins\\CustomAttributes\\": "plugins/custom-attributes/src",
-            "Plugins\\Cart\\": "plugins/cart/src"
+            "Plugins\\Cart\\": "plugins/cart/src",
+            "Plugins\\Review\\": "plugins/review/src"
         },
         "files": [
             "helpers.php"

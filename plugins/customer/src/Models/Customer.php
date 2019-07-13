@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Plugins\Product\Models\WishList;
+use Core\Master\Supports\Gravatar;
 
 /**
  * Plugins\Customer\Models\Customer
