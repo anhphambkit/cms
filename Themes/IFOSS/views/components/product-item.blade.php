@@ -13,8 +13,8 @@ if ($productItem->type_product !== \Plugins\Product\Contracts\ProductReferenceCo
 }
 else {
     $parentVariantProduct = $productItem->parentVariantProduct()->first();
-    $customAttributes = $parentVariantProduct->productCustomAttributes()->get();
-    $attributeValues = $parentVariantProduct->productStringValueAttribute()->get()->groupBy('custom_attribute_id');
+    $customAttributes = (!empty($parentVariantProduct)) ? $parentVariantProduct->productCustomAttributes()->get() : null;
+    $attributeValues = (!empty($parentVariantProduct)) ? $parentVariantProduct->productStringValueAttribute()->get()->groupBy('custom_attribute_id') : null;
     $defaultSelectedAttributeValues = $productItem->productStringValueAttribute()->get()->groupBy('custom_attribute_id');
 }
 ?>
