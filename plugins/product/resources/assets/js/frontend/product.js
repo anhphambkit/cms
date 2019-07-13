@@ -93,7 +93,7 @@ $(document).ready(function() {
                             initSliderProductGalleriesModal();
 
                             // Parse new data product item:
-                            productItemHanlebar.setTemplateElement(`.product-item-${productId}`);
+                            productItemHanlebar.setTemplateElement($(_this).parents('.product-detail-item'));
                             productItemHanlebar.setData(data.data.product_info);
                             productItemHanlebar.parseTemplate();
                         }
