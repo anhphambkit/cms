@@ -423,6 +423,7 @@ class ImplementLookBookServices implements LookBookServices {
      * @return mixed
      */
     public function getDetailLookBook(int $lookBookId) {
-        return $this->repository->findById($lookBookId, ['lookBookTags', 'lookBookSpacesBelong', 'lookBookBusiness', 'lookBookProducts'])->toArray();
+        return $this->repository->findById($lookBookId, ['lookBookTags', 'lookBookSpacesBelong', 'lookBookBusiness', 'lookBookProducts',
+            'lookBookProducts.parentVariantProduct', 'lookBookProducts.productCustomAttributes', 'lookBookProducts.productStringValueAttribute']);
     }
 }

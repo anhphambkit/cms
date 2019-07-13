@@ -2,26 +2,25 @@
 @section('content')
     <section class="product-detail">
         @component("components.look-book-detail")
-            @slot('urlImage', $lookBook['image'])
-            @slot('nameLookBook', $lookBook['name'])
-            @slot('currentBusinessName', (!empty($currentBusinessName) ? $currentBusinessName : get_attribute_from_random_array($lookBook['look_book_business'], 'text')))
-            @slot('currentBusinessSlug', (!empty($currentBusinessSlug) ? $currentBusinessSlug : get_attribute_from_random_array($lookBook['look_book_business'], 'slug')))
-            @slot('spaces', $lookBook['look_book_spaces_belong'])
-            @slot('tags', $lookBook['look_book_tags'])
-            @slot('urlLookBook', $lookBook['slug_link'])
-            @slot('idLookBook', $lookBook['id'])
-            @slot('wasAddedWishList', $lookBook['was_added_wish_list'])
+            @slot('urlImage', $lookBook->image)
+            @slot('nameLookBook', $lookBook->name)
+            @slot('currentBusinessName', (!empty($currentBusinessName) ? $currentBusinessName : get_attribute_from_random_array($lookBook->lookBookBusiness->toArray(), 'text')))
+            @slot('currentBusinessSlug', (!empty($currentBusinessSlug) ? $currentBusinessSlug : get_attribute_from_random_array($lookBook->lookBookBusiness->toArray(), 'slug')))
+            @slot('spaces', $lookBook->lookBookSpacesBelong)
+            @slot('tags', $lookBook->lookBookTags)
+            @slot('urlLookBook', $lookBook->slug_link)
+            @slot('idLookBook', $lookBook->id)
+            @slot('wasAddedWishList', $lookBook->was_added_wish_list)
         @endcomponent
     </section>
     <section class="product-wrapper">
         <div class="container">
             <div class="h6 text-uppercase text-center mb-3">Items in This Room</div>
             <div class="product-slider-wrapper">
-                @foreach($lookBook['look_book_products'] as $lookBookProduct)
+                @foreach($lookBook->lookBookProducts as $lookBookProduct)
                     <div class="px-3 product-item-wrapper">
                         @component("components.product-item")
-                            @slot("productItem", json_decode (json_encode ($lookBookProduct), FALSE))
-
+                            @slot("productItem", $lookBookProduct)
                         @endcomponent
                     </div>
                 @endforeach
