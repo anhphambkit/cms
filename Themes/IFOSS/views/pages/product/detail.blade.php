@@ -20,7 +20,7 @@
     </div>
 
     <section class="mb-5">
-        <div class="product-detail product-detail-section-page" data-product-id="{{ $productInfo['product']->id }}">
+        <div class="product-detail product-detail-section-page product-detail-item product-detail-item-{{ $productInfo['product']->id }}" data-product-id="{{ $productInfo['product']->id }}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 product-detail-wrapper">
@@ -197,7 +197,5 @@
     <script>
         const PRODUCT_ID = {{ $productInfo['product']->id }};
     </script>
-    <script id="template-quick-shop-modal" type="text/x-handlebars-template">
-        @include('handle-bar.quick-shop-modal')
-    </script>
+
 @stop

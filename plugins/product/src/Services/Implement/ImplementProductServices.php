@@ -249,9 +249,8 @@ class ImplementProductServices implements ProductServices {
         if (empty($category))
             abort(404);
         $products = $this->repository->getAllProductsByCategory([$productCategoryId], $limit, $dataPageLoad);
-        $saleProducts = $products['data']->where('is_has_sale', true)->all();
         return [
-            'products' => $saleProducts,
+            'products' => $products['data'],
             'category' => $category,
         ];
     }

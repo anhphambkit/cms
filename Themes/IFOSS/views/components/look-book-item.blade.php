@@ -14,10 +14,33 @@ $tags = !empty($tags) ? $tags : [];
 $tagProducts = !empty($tagProducts) ? $tagProducts : [];
 ?>
 <div class="item {{ $typeLookBook }}-look-book item-look-book">
-    <img alt="preview image" class="preview_image preview-look-book-image" src="{{ URL::asset($urlImage) }}"/>
+    <div class="wrap-look-book-item">
+        <img alt="preview image" class="preview_image preview-look-book-image" src="{{ URL::asset($urlImage) }}"/>
+        <div class="design-ideas-overlay-content">
+            <div class="title">
+                <a class="link-look-book btn-link-custom" href="{{ route('public.design-ideal.detail_look_book', [ 'url' => $urlLookBook ]) }}">{{ $nameLookBook }}</a>
+            </div>
+            <ul class="tag">
+                @if(!empty($currentBusinessName) && !empty($currentBusinessSlug))
+                    <li>
+                        <span class="sub-title-look-book">Business: </span>
+                        <a href="{{ route('public.design-ideal.business-type', [ 'businessType' => $currentBusinessSlug ]) }}">{{ $currentBusinessName }}</a>
+                    </li>
+                    @if(!empty($spaces))
+                        <li>
+                            <span class="sub-title-look-book">Space: </span>
+                            @foreach($spaces as $indexSpace => $space)
+                                <a href="{{ route('public.design-ideal.business-type.space', [ 'businessType' => $currentBusinessSlug, 'space' => $space['slug'] ]) }}">{{ $space['text'] }}</a>{{ ($indexSpace < (sizeof($spaces) - 1)) ? ',' : '' }}
+                            @endforeach
+                        </li>
+                    @endif
+                @endif
+            </ul>
+        </div>
+    </div>
     @foreach($tags as $tag)
-        <div class="tag-popup-box">
-            <div class="tt-hotspot show-popup look-book-tag-product tt-tag-{{ $tag['id'] }}" style="left: {{ $tag['left'] }}%; top: {{ $tag['top'] }}%;" data-left="{{ $tag['left'] }}" data-top="{{ $tag['top'] }}" data-tag-id="{{ $tag['id'] }}"
+        <div class="tag-popup-box" style="left: {{ $tag['left'] }}%; top: {{ $tag['top'] }}%;" data-left="{{ $tag['left'] }}">
+            <div class="tt-hotspot show-popup look-book-tag-product tt-tag-{{ $tag['id'] }}"  data-top="{{ $tag['top'] }}" data-tag-id="{{ $tag['id'] }}"
                  data-product-id="{{ $tag['product_id'] }}">
                 <div class="tt-btn">
                     <i class="icon-tag icon-show-popup fas fa-tag"></i>
@@ -65,25 +88,4 @@ $tagProducts = !empty($tagProducts) ? $tagProducts : [];
             </div>
         </div>
     @endforeach
-    <div class="design-ideas-overlay-content">
-        <div class="title">
-            <a class="link-look-book btn-link-custom" href="{{ route('public.design-ideal.detail_look_book', [ 'url' => $urlLookBook ]) }}">{{ $nameLookBook }}</a>
-        </div>
-        <ul class="tag">
-            @if(!empty($currentBusinessName) && !empty($currentBusinessSlug))
-                <li>
-                    <span class="sub-title-look-book">Business: </span>
-                    <a href="{{ route('public.design-ideal.business-type', [ 'businessType' => $currentBusinessSlug ]) }}">{{ $currentBusinessName }}</a>
-                </li>
-                @if(!empty($spaces))
-                    <li>
-                        <span class="sub-title-look-book">Space: </span>
-                        @foreach($spaces as $indexSpace => $space)
-                            <a href="{{ route('public.design-ideal.business-type.space', [ 'businessType' => $currentBusinessSlug, 'space' => $space['slug'] ]) }}">{{ $space['text'] }}</a>{{ ($indexSpace < (sizeof($spaces) - 1)) ? ',' : '' }}
-                        @endforeach
-                    </li>
-                @endif
-            @endif
-        </ul>
-    </div>
 </div>

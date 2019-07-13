@@ -25,6 +25,13 @@ quickShopModal.afterParseTemplate(() => {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
+/* register handlebar */
+let productItemHanlebar = new HandlebarRender();
+productItemHanlebar.setSourceElement('#template-product-item');
+productItemHanlebar.afterParseTemplate(() => {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
 $(document).on('click', '.add-to-wish-list', function(e) {
     let entityId = $(this).data('entity-id');
     let typeEntity = $(this).data('type-entity');
@@ -56,18 +63,15 @@ $(document).ready(function() {
 
     $(document).on('click', '.item-product-attribute', function(event) {
         event.preventDefault();
-        let attributeType = $(this).parents('.product-attribute').data('attribute-type');
-        if (attributeType === 'color_picker') {
-            $('.item-product-attribute.item-color-attribute').removeClass('active');
-        }
+        $('.item-product-attribute').removeClass('active');
         $(this).addClass('active');
         $(this).parents('.product-attribute').find('.attribute-selected-title').text($(this).data('attribute-value-name'));
         $(this).parents('.product-attribute').data('attribute-selected-id', $(this).data('attribute-value-id'));
 
         let isVariant = $(this).parents('.product-attribute').data('is-variant-attribute');
         if (isVariant) {
-            let productId = $(this).parents('.product-detail').data('product-id');
-            let dataAttributes = getAllAttributeValue();
+            let productId = $(this).parents('.product-detail-item').data('product-id');
+            let dataAttributes = getAllAttributeValue($(this).parents('.product-attributes'));
             let data = {
                 'product_attribute_info' : dataAttributes,
                 'product_id' : productId,
@@ -78,14 +82,20 @@ $(document).ready(function() {
             return request
                 .then(function(data){
                     if (data.data.link_product) {
-                        if ($(_this).parents('.product-detail').hasClass('product-detail-section-page')) {
+                        if ($(_this).parents('.product-detail-item').hasClass('product-detail-section-page')) {
                             window.location.replace(`${PRODUCT.DETAIL_PRODUCT_PAGE}/${data.data.link_product}`);
                         }
                         else {
+                            // Parse new data quick shop modal
                             destroySlider();
                             quickShopModal.setData(data.data.product_info);
                             quickShopModal.parseTemplate();
                             initSliderProductGalleriesModal();
+
+                            // Parse new data product item:
+                            productItemHanlebar.setTemplateElement(`.product-item-${productId}`);
+                            productItemHanlebar.setData(data.data.product_info);
+                            productItemHanlebar.parseTemplate();
                         }
                     }
                     // console.log(data.data.product_info);
@@ -122,11 +132,11 @@ $(document).ready(function() {
 
     $(document).on('click', '.add-to-cart-btn', function (event) {
         event.preventDefault();
-        Lcms.beginLoading('.product-detail');
-        let productId = $(this).parents('.product-detail').data('product-id');
+        let productId = $(this).parents('.product-detail-item').data('product-id');
+        Lcms.beginLoading(`.product-detail-item.product-detail-item-${productId}`);
         let products = {};
         let newProduct = {};
-        let quantity = $(this).parents('.product-detail').find('.quantity-product').data('quantity');
+        let quantity = $(this).parents('.product-detail-item').find('.quantity-product').data('quantity');
         newProduct[productId] = quantity;
         products = Object.assign(products, newProduct);
         let dataAttributes = getAllAttributeValue();
@@ -153,7 +163,7 @@ $(document).ready(function() {
                     Lcms.showNotice('error', "Please contact IT support!", Lcms.languages.notices_msg.error);
             })
             .then(function(data){
-                Lcms.endLoading('.product-detail');
+                Lcms.endLoading(`.product-detail-item.product-detail-item-${productId}`);
             });
     });
 
@@ -192,12 +202,12 @@ $(document).ready(function() {
         destroySlider();
     });
 
-    function getAllAttributeValue() {
+    function getAllAttributeValue(parentElement) {
         let data = [];
-        $('.product-attributes .product-attribute').each(function (el) {
+        $(parentElement).find('.product-attribute').each(function (el) {
             let attributeId = $(this).data('product-attribute');
             let attributeValueId = $(this).data('attribute-selected-id');
-            let productId = $(this).parents('.product-detail').data('product-id');
+            let productId = $(this).parents('.product-detail-item').data('product-id');
             data.push({
                 'attribute_id' : attributeId,
                 'attribute_value_id' : attributeValueId,
@@ -211,7 +221,7 @@ $(document).ready(function() {
         $(window).on('scroll', function(){
             var productSidebar = $('.product-sidebar'),
                 headerHeight = $('#header').outerHeight() + $('.breadcrumb').outerHeight(),
-                productHeight = headerHeight + $('.product-detail .product-detail-wrapper').outerHeight() - productSidebar.outerHeight(),
+                productHeight = headerHeight + $('.product-detail-item .product-detail-wrapper').outerHeight() - productSidebar.outerHeight(),
                 windowScrollTop = $(window).scrollTop();
 
             if(window.innerWidth > 991){

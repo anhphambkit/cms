@@ -79,7 +79,8 @@ class EloquentProductRepositories extends RepositoriesAbstract implements Produc
             ->leftJoin('product_categories_relation', 'products.id', '=', 'product_categories_relation.product_id')
             ->whereIn('product_categories_relation.product_category_id', $categoryIds)
             ->where('products.status', true)
-            ->where('products.type_product', '!=', ProductReferenceConfig::PRODUCT_TYPE_VARIANT);
+            ->where('products.type_product', '!=', ProductReferenceConfig::PRODUCT_TYPE_VARIANT)
+            ->with(['galleries', 'productAttributeValues', 'productCustomAttributes', 'childVariantsProduct', 'productCollections', 'productCategories']);
     }
 
     /**
