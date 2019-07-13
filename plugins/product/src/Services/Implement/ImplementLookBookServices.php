@@ -8,6 +8,7 @@
 
 namespace Plugins\Product\Services\Implement;
 
+use Illuminate\Database\Eloquent\Collection;
 use Plugins\Product\Contracts\ProductReferenceConfig;
 use Plugins\Product\Repositories\Interfaces\LookBookRepositories;
 use Plugins\Product\Services\LookBookServices;
@@ -46,19 +47,66 @@ class ImplementLookBookServices implements LookBookServices {
      */
     public function getBlockRenderLookBook(int $numberBlock = 0, array $businessTypes = [], array $spaces = [],
                                            array $exceptBusinessType = [], bool $hasFirstMainBlock = true, array $productIds = []) {
-        $takeNormalLookBook = $numberBlock*6;
-        $takeVerticalLookBook = $numberBlock*3;
-        $takeMainLookBook = $numberBlock*1;
+        $listWeights = config('plugins-product.product.value_percent_look_book');
+        $takeNormalLookBook = $numberBlock*$listWeights['normal'];
+        $takeVerticalLookBook = $numberBlock*$listWeights['vertical'];
+        $takeMainLookBook = $numberBlock*$listWeights['main'];
         $mainLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL, true, $takeMainLookBook, $businessTypes, $spaces, $exceptBusinessType, $productIds)->toArray();
         $normalLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL, false, $takeNormalLookBook, $businessTypes, $spaces, $exceptBusinessType, $productIds)->toArray();
         $verticalLookBooks = $this->repository->getAllLookBookByTypeLayout(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_VERTICAL, false, $takeVerticalLookBook, $businessTypes, $spaces, $exceptBusinessType, $productIds)->toArray();
+        return $this->getBlockRendersFromLookBook($mainLookBooks, $normalLookBooks, $verticalLookBooks, $hasFirstMainBlock, $numberBlock);
+    }
+
+    /**
+     * @param Collection $lookBooks
+     * @return Collection|mixed
+     */
+    public function getTypeLookBookFromCollectionLookBook(Collection $lookBooks) {
+        $result = $lookBooks->mapToGroups(function ($item, $key) {
+            // Main
+            if ($item->type_layout === ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL && $item->is_main)
+                return [ strtolower(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_MAIN) => $item ];
+
+            // Normal
+            else if ($item->type_layout === ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL && !$item->is_main)
+                return [ strtolower(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL) => $item ];
+
+            // Vertical
+            else if ($item->type_layout === ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_VERTICAL)
+                return [ strtolower(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_VERTICAL) => $item ];
+        });
+        return $result;
+    }
+
+    /**
+     * @param Collection $lookBooks
+     * @return array
+     */
+    public function renderListBlockLookBookFromCollectionLookBook(Collection $lookBooks) {
+        $lookBooks = $this->getTypeLookBookFromCollectionLookBook($lookBooks);
+        return $this->getBlockRendersFromLookBook((
+            !empty($lookBooks[strtolower(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_MAIN)])) ? $lookBooks[strtolower(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_MAIN)]->toArray() : [],
+            !empty($lookBooks[strtolower(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL)]) ? $lookBooks[strtolower(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_NORMAL)]->toArray() : [],
+            !empty($lookBooks[strtolower(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_VERTICAL)]) ? $lookBooks[strtolower(ProductReferenceConfig::REFERENCE_LOOK_BOOK_TYPE_LAYOUT_VERTICAL)]->toArray() : [],
+            false);
+    }
+
+    /**
+     * @param array $mainLookBooks
+     * @param array $normalLookBooks
+     * @param array $verticalLookBooks
+     * @param bool $hasFirstMainBlock
+     * @param int $numberBlock
+     * @return array
+     */
+    public function getBlockRendersFromLookBook(array $mainLookBooks, array $normalLookBooks, array $verticalLookBooks, bool $hasFirstMainBlock = true, int $numberBlock = 0) {
         $listFullPercents = config('plugins-product.product.percent_layout_look_book.full');
         $listWeights = config('plugins-product.product.weight_layout_look_book');
+        $maxWeight = config('plugins-product.product.max_weight_look_book');
         $blocks = array();
         $firstBlock = array();
-
         if ($hasFirstMainBlock)
-            $firstBlock = $this->renderFirstBlock($listWeights, $normalLookBooks, $verticalLookBooks, $mainLookBooks, 6);
+            $firstBlock = $this->renderFirstBlock($listWeights, $normalLookBooks, $verticalLookBooks, $mainLookBooks, $maxWeight);
 
         if (!empty($firstBlock))
             array_push($blocks, $firstBlock);
@@ -66,9 +114,9 @@ class ImplementLookBookServices implements LookBookServices {
         while (sizeof($normalLookBooks) >= 2 || sizeof($verticalLookBooks) >= 1 || sizeof($mainLookBooks) >= 1) {
             if (sizeof($normalLookBooks) >= 2 && sizeof($verticalLookBooks) >= 1 && sizeof($mainLookBooks) >= 1) {
                 $randomBlockKeys = $this->generateRandomByPercent($listFullPercents, 3);
-                $renderBlock = $this->renderBlockWithWeight($randomBlockKeys, $listWeights, $normalLookBooks, $verticalLookBooks, $mainLookBooks, 6);
-                if ($renderBlock['total_weight'] < 6) {
-                    $differentWight = 6 - $renderBlock['total_weight'];
+                $renderBlock = $this->renderBlockWithWeight($randomBlockKeys, $listWeights, $normalLookBooks, $verticalLookBooks, $mainLookBooks, $maxWeight);
+                if ($renderBlock['total_weight'] < $maxWeight) {
+                    $differentWight = $maxWeight - $renderBlock['total_weight'];
                     $this->loopAddLookBookWeight($differentWight, $normalLookBooks, $verticalLookBooks, $mainLookBooks, $renderBlock, $listWeights);
                 }
                 array_push($blocks, $renderBlock['block']);
@@ -78,9 +126,9 @@ class ImplementLookBookServices implements LookBookServices {
             else if (sizeof($verticalLookBooks) >= 1 && sizeof($mainLookBooks) >= 1) {
                 $listVerticalMainPercents = config('plugins-product.product.percent_layout_look_book.vertical_main');
                 $randomBlockKeys = $this->generateRandomByPercent($listVerticalMainPercents, 2);
-                $renderBlock = $this->renderBlockWithWeight($randomBlockKeys, $listWeights, $normalLookBooks, $verticalLookBooks, $mainLookBooks, 6);
-                if ($renderBlock['total_weight'] < 6) {
-                    $differentWight = 6 - $renderBlock['total_weight'];
+                $renderBlock = $this->renderBlockWithWeight($randomBlockKeys, $listWeights, $normalLookBooks, $verticalLookBooks, $mainLookBooks, $maxWeight);
+                if ($renderBlock['total_weight'] < $maxWeight) {
+                    $differentWight = $maxWeight - $renderBlock['total_weight'];
                     $this->loopAddLookBookWeight($differentWight, $normalLookBooks, $verticalLookBooks, $mainLookBooks, $renderBlock, $listWeights);
                 }
                 array_push($blocks, $renderBlock['block']);
@@ -88,9 +136,9 @@ class ImplementLookBookServices implements LookBookServices {
             else if (sizeof($normalLookBooks) >= 2 && sizeof($verticalLookBooks) >= 1) {
                 $listVerticalNormalPercents = config('plugins-product.product.percent_layout_look_book.vertical_normal');
                 $randomBlockKeys = $this->generateRandomByPercent($listVerticalNormalPercents, 3);
-                $renderBlock = $this->renderBlockWithWeight($randomBlockKeys, $listWeights, $normalLookBooks, $verticalLookBooks, $mainLookBooks, 6);
-                if ($renderBlock['total_weight'] < 6) {
-                    $differentWight = 6 - $renderBlock['total_weight'];
+                $renderBlock = $this->renderBlockWithWeight($randomBlockKeys, $listWeights, $normalLookBooks, $verticalLookBooks, $mainLookBooks, $maxWeight);
+                if ($renderBlock['total_weight'] < $maxWeight) {
+                    $differentWight = $maxWeight - $renderBlock['total_weight'];
                     $this->loopAddLookBookWeight($differentWight, $normalLookBooks, $verticalLookBooks, $mainLookBooks, $renderBlock, $listWeights);
                 }
                 array_push($blocks, $renderBlock['block']);
@@ -100,9 +148,9 @@ class ImplementLookBookServices implements LookBookServices {
             else if (sizeof($normalLookBooks) >= 2 && sizeof($mainLookBooks) >= 1) {
                 $listNormalMainPercents = config('plugins-product.product.percent_layout_look_book.normal_main');
                 $randomBlockKeys = $this->generateRandomByPercent($listNormalMainPercents, 2);
-                $renderBlock = $this->renderBlockWithWeight($randomBlockKeys, $listWeights, $normalLookBooks, $verticalLookBooks, $mainLookBooks, 6);
-                if ($renderBlock['total_weight'] < 6) {
-                    $differentWight = 6 - $renderBlock['total_weight'];
+                $renderBlock = $this->renderBlockWithWeight($randomBlockKeys, $listWeights, $normalLookBooks, $verticalLookBooks, $mainLookBooks, $maxWeight);
+                if ($renderBlock['total_weight'] < $maxWeight) {
+                    $differentWight = $maxWeight - $renderBlock['total_weight'];
                     $this->loopAddLookBookWeight($differentWight, $normalLookBooks, $verticalLookBooks, $mainLookBooks, $renderBlock, $listWeights);
                 }
                 array_push($blocks, $renderBlock['block']);
@@ -110,26 +158,26 @@ class ImplementLookBookServices implements LookBookServices {
 
             }
             else if (sizeof($mainLookBooks) >= 1) {
-                $mainSingleBlocks = $this->renderSingleBlock($mainLookBooks, $normalLookBooks, $listWeights['main'], $listWeights['normal'], 6);
+                $mainSingleBlocks = $this->renderSingleBlock($mainLookBooks, $normalLookBooks, $listWeights['main'], $listWeights['normal'], $maxWeight);
                 $blocks = array_merge($blocks, $mainSingleBlocks);
 
             }
             else if (sizeof($verticalLookBooks) >= 1) {
-                $verticalSingleBlocks = $this->renderSingleBlock($verticalLookBooks, $normalLookBooks, $listWeights['vertical'], $listWeights['normal'], 6);
+                $verticalSingleBlocks = $this->renderSingleBlock($verticalLookBooks, $normalLookBooks, $listWeights['vertical'], $listWeights['normal'], $maxWeight);
                 $blocks = array_merge($blocks, $verticalSingleBlocks);
 
             }
             else if (sizeof($normalLookBooks) >= 2) {
-                $normalSingleBlocks = $this->renderSingleBlock($normalLookBooks, $normalLookBooks, $listWeights['normal'], $listWeights['normal'], 6);
+                $normalSingleBlocks = $this->renderSingleBlock($normalLookBooks, $normalLookBooks, $listWeights['normal'], $listWeights['normal'], $maxWeight);
                 $blocks = array_merge($blocks, $normalSingleBlocks);
 
             }
         }
 
         // render last block:
-        $lastMainSingleBlocks = $this->renderSingleBlock($mainLookBooks, $normalLookBooks, $listWeights['main'], $listWeights['normal'], 6);
-        $lastVerticalSingleBlocks = $this->renderSingleBlock($verticalLookBooks, $normalLookBooks, $listWeights['vertical'], $listWeights['normal'], 6);
-        $lastNormalSingleBlocks = $this->renderSingleBlock($normalLookBooks,$normalLookBooks,  $listWeights['normal'], $listWeights['normal'], 6);
+        $lastMainSingleBlocks = $this->renderSingleBlock($mainLookBooks, $normalLookBooks, $listWeights['main'], $listWeights['normal'], $maxWeight);
+        $lastVerticalSingleBlocks = $this->renderSingleBlock($verticalLookBooks, $normalLookBooks, $listWeights['vertical'], $listWeights['normal'], $maxWeight);
+        $lastNormalSingleBlocks = $this->renderSingleBlock($normalLookBooks,$normalLookBooks,  $listWeights['normal'], $listWeights['normal'], $maxWeight);
 
         $blocks = array_merge($blocks, $lastNormalSingleBlocks, $lastVerticalSingleBlocks, $lastMainSingleBlocks);
 

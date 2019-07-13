@@ -7,6 +7,7 @@
  */
 $currentBusinessSlug = !empty($currentBusinessSlug) ? $currentBusinessSlug : '';
 $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
+$isFullWidthLayout = isset($isFullWidthLayout) ? $isFullWidthLayout : true;
 ?>
 <div class="row design-ideas-row">
     @foreach($listRender as $list)
@@ -27,6 +28,9 @@ $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
                             @slot('tags', $list[$i]['look_book_tags'])
                             @slot('urlLookBook', $list[$i]['slug_link'])
                             @slot('tagProducts', $list[$i]['look_book_all_products'])
+                            @slot('isFullWidthLayout', $isFullWidthLayout)
+                            @slot('idLookBook', $list[$i]['id'])
+                            @slot('wasAddedWishList', $list[$i]['was_added_wish_list'])
                         @endcomponent
                     </div>
                     @php
@@ -65,6 +69,9 @@ $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
                                                 @slot('tags', $normalLayoutChunk[$j]['look_book_tags'])
                                                 @slot('urlLookBook', $normalLayoutChunk[$j]['slug_link'])
                                                 @slot('tagProducts', $normalLayoutChunk[$j]['look_book_all_products'])
+                                                @slot('isFullWidthLayout', $isFullWidthLayout)
+                                                @slot('idLookBook', $normalLayoutChunk[$j]['id'])
+                                                @slot('wasAddedWishList', $normalLayoutChunk[$j]['was_added_wish_list'])
                                             @endcomponent
                                         </div>
                                         @php
@@ -88,6 +95,9 @@ $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
                         @slot('tags', $list[$i]['look_book_tags'])
                         @slot('urlLookBook', $list[$i]['slug_link'])
                         @slot('tagProducts', $list[$i]['look_book_all_products'])
+                        @slot('isFullWidthLayout', $isFullWidthLayout)
+                        @slot('idLookBook', $list[$i]['id'])
+                        @slot('wasAddedWishList', $list[$i]['was_added_wish_list'])
                     @endcomponent
                 </div>
                 @php

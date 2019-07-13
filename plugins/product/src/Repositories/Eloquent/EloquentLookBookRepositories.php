@@ -23,7 +23,7 @@ class EloquentLookBookRepositories extends RepositoriesAbstract implements LookB
                     ->leftJoin('look_book_business_type_space_relation', 'look_book_business_type_space_relation.look_book_id', '=', 'look_books.id')
                     ->where('look_books.type_layout', $type)
                     ->where('look_books.is_main', $isMain)
-                    ->with('lookBookTags', 'lookBookSpacesBelong', 'lookBookBusiness', 'lookBookProducts')
+                    ->with('lookBookTags', 'lookBookSpacesBelong', 'lookBookBusiness', 'lookBookProducts', 'wishListLookBooks')
                     ->orderBy('look_books.created_at', 'desc');
 
         if (!empty($spaces))
@@ -39,7 +39,7 @@ class EloquentLookBookRepositories extends RepositoriesAbstract implements LookB
             $query = $query->leftJoin('look_book_tags', 'look_book_tags.look_book_id', '=', 'look_books.id')
                             ->whereIn('look_book_tags.product_id', $productIds);
 
-        if ($take)
+        if (!empty($take))
             $query = $query->take($take);
         return $query->distinct()->get();
     }

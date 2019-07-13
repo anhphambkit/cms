@@ -89,10 +89,7 @@ class DesignIdeaController extends BasePublicController{
     {
         $businessTypes = $this->businessTypeServices->getAllBusinessTypeGroupByParent();
         $listRender = $this->lookBookServices->getBlockRenderLookBook(1, [], [], [0], false);
-        AssetManager::addAsset('look-book-design-css', 'frontend/plugins/product/assets/css/look-book-design.css');
-        AssetPipeline::requireCss('look-book-design-css');
-        AssetManager::addAsset('design-idea-js', 'frontend/plugins/product/assets/js/design-idea.js');
-        AssetPipeline::requireJs('design-idea-js');
+        $this->getAssetDesignIdea();
         return view('pages.design-ideal.index', compact('businessTypes', 'listRender'));
     }
 
@@ -108,10 +105,7 @@ class DesignIdeaController extends BasePublicController{
         if (!$businessTypeModel)
             abort(404);
 
-        AssetManager::addAsset('look-book-design-css', 'frontend/plugins/product/assets/css/look-book-design.css');
-        AssetPipeline::requireCss('look-book-design-css');
-        AssetManager::addAsset('design-idea-js', 'frontend/plugins/product/assets/js/design-idea.js');
-        AssetPipeline::requireJs('design-idea-js');
+        $this->getAssetDesignIdea();
         $businessTypeName = $businessTypeModel->name;
 
         $spaces = $this->businessTypeServices->getAllSpacesByBusinessTypeBySlug($businessType);
@@ -136,10 +130,7 @@ class DesignIdeaController extends BasePublicController{
         if (!$businessTypeModel || !$spaceModel)
             abort(404);
 
-        AssetManager::addAsset('look-book-design-css', 'frontend/plugins/product/assets/css/look-book-design.css');
-        AssetPipeline::requireCss('look-book-design-css');
-        AssetManager::addAsset('design-idea-js', 'frontend/plugins/product/assets/js/design-idea.js');
-        AssetPipeline::requireJs('design-idea-js');
+        $this->getAssetDesignIdea();
         $businessTypeName = $businessTypeModel->name;
 
         $spaces = $this->businessTypeServices->getAllSpacesByBusinessTypeBySlug($businessType);
@@ -166,13 +157,9 @@ class DesignIdeaController extends BasePublicController{
         $spaces = $this->businessTypeServices->getAllSpacesByBusinessTypeBySlug($businessType);
         $spaceName = 'All Rooms';
 
-        AssetManager::addAsset('look-book-design-css', 'frontend/plugins/product/assets/css/look-book-design.css');
-        AssetPipeline::requireCss('look-book-design-css');
-
-        AssetManager::addAsset('design-idea-js', 'frontend/plugins/product/assets/js/design-idea.js');
-        AssetPipeline::requireJs('design-idea-js');
-
         $listRender = $this->lookBookServices->getBlockRenderLookBook(0, [0, $businessTypeModel->id]);
+
+        $this->getAssetDesignIdea();
 
         return view('pages.design-ideal.list', compact('listRender', 'businessType', 'businessTypeName', 'spaceName', 'spaces'));
     }
@@ -183,10 +170,7 @@ class DesignIdeaController extends BasePublicController{
      */
     public function pageDesignIdealList(Request $request)
     {
-        AssetManager::addAsset('look-book-design-css', 'frontend/plugins/product/assets/css/look-book-design.css');
-        AssetPipeline::requireCss('look-book-design-css');
-        AssetManager::addAsset('design-idea-js', 'frontend/plugins/product/assets/js/design-idea.js');
-        AssetPipeline::requireJs('design-idea-js');
+        $this->getAssetDesignIdea();
         $listRender = $this->lookBookServices->getBlockRenderLookBook();
 
         return view('pages.design-ideal.list', compact('listRender'));
@@ -204,10 +188,7 @@ class DesignIdeaController extends BasePublicController{
         if (!$product)
             abort(404);
 
-        AssetManager::addAsset('look-book-design-css', 'frontend/plugins/product/assets/css/look-book-design.css');
-        AssetPipeline::requireCss('look-book-design-css');
-        AssetManager::addAsset('design-idea-js', 'frontend/plugins/product/assets/js/design-idea.js');
-        AssetPipeline::requireJs('design-idea-js');
+        $this->getAssetDesignIdea();
         $listRender = $this->lookBookServices->getBlockRenderLookBook(0, [], [], [], true, [$productId]);
 
         return view('pages.design-ideal.product-design-idea', compact('listRender', 'product'));
@@ -223,10 +204,14 @@ class DesignIdeaController extends BasePublicController{
         $lookBookId = get_id_from_url($url);
         $lookBook = $this->lookBookServices->getDetailLookBook($lookBookId);
 
+        $this->getAssetDesignIdea();
+        return view('pages.design-ideal.detail', compact('lookBook'));
+    }
+
+    protected function getAssetDesignIdea() {
         AssetManager::addAsset('look-book-design-css', 'frontend/plugins/product/assets/css/look-book-design.css');
         AssetPipeline::requireCss('look-book-design-css');
         AssetManager::addAsset('design-idea-js', 'frontend/plugins/product/assets/js/design-idea.js');
         AssetPipeline::requireJs('design-idea-js');
-        return view('pages.design-ideal.detail', compact('lookBook'));
     }
 }

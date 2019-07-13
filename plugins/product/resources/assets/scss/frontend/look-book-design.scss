@@ -2,9 +2,15 @@
   width: 100%;
   &.main-look-book, &.vertical-look-book  {
     height: 845px;
+    &.small-look-book {
+      height: 474px;
+    }
   }
   &.normal-look-book {
     height: 415px;
+    &.small-look-book {
+      height: 237px;
+    }
   }
   img {
     width: 100%;

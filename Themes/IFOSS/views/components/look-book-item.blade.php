@@ -10,10 +10,12 @@ $typeLookBook = !empty($typeLookBook) ? $typeLookBook : 'normal';
 $currentBusinessSlug = !empty($currentBusinessSlug) ? $currentBusinessSlug : '';
 $currentBusinessName = !empty($currentBusinessName) ? $currentBusinessName : '';
 $spaces = !empty($spaces) ? $spaces : [];
+$wasAddedWishList = !empty($wasAddedWishList) ? $wasAddedWishList : false;
 $tags = !empty($tags) ? $tags : [];
 $tagProducts = !empty($tagProducts) ? $tagProducts : [];
+$isFullWidthLayout = isset($isFullWidthLayout) ? $isFullWidthLayout : true;
 ?>
-<div class="item {{ $typeLookBook }}-look-book item-look-book">
+<div class="item {{ $typeLookBook }}-look-book item-look-book {{ !$isFullWidthLayout ? 'small-look-book' : '' }}">
     <img alt="preview image" class="preview_image preview-look-book-image" src="{{ URL::asset($urlImage) }}"/>
     @foreach($tags as $tag)
         <div class="tag-popup-box">
@@ -66,6 +68,9 @@ $tagProducts = !empty($tagProducts) ? $tagProducts : [];
         </div>
     @endforeach
     <div class="design-ideas-overlay-content">
+        <a href="javascript:void(0);" class="wishlist ml-2 float-right add-to-wish-list favourite" data-entity-id="{{ $idLookBook }}" data-type-entity="{{ \Plugins\Product\Contracts\ProductReferenceConfig::ENTITY_TYPE_LOOK_BOOK }}">
+            <i class="{{ ($wasAddedWishList) ? 'fas' : 'far' }} fa-heart mr-1 icon-wish-list"></i>
+        </a>
         <div class="title">
             <a class="link-look-book btn-link-custom" href="{{ route('public.design-ideal.detail_look_book', [ 'url' => $urlLookBook ]) }}">{{ $nameLookBook }}</a>
         </div>

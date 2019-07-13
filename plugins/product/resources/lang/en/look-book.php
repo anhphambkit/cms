@@ -7,7 +7,7 @@
  */
 
 return [
-    'name' => 'Look Book',
+    'name' => 'Look Books',
     'create' => 'New look book',
     'edit' => 'Edit look book',
     'list' => 'List look book',

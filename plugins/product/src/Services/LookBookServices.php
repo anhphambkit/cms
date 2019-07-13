@@ -8,6 +8,8 @@
 
 namespace Plugins\Product\Services;
 
+use Illuminate\Database\Eloquent\Collection;
+
 interface LookBookServices {
     /**
      * @param string $type
@@ -34,4 +36,26 @@ interface LookBookServices {
      * @return mixed
      */
     public function getDetailLookBook(int $lookBookId);
+
+    /**
+     * @param array $mainLookBooks
+     * @param array $normalLookBooks
+     * @param array $verticalLookBooks
+     * @param bool $hasFirstMainBlock
+     * @param int $numberBlock
+     * @return array
+     */
+    public function getBlockRendersFromLookBook(array $mainLookBooks, array $normalLookBooks, array $verticalLookBooks, bool $hasFirstMainBlock = true, int $numberBlock = 0);
+
+    /**
+     * @param Collection $lookBooks
+     * @return mixed
+     */
+    public function getTypeLookBookFromCollectionLookBook(Collection $lookBooks);
+
+    /**
+     * @param Collection $lookBooks
+     * @return array
+     */
+    public function renderListBlockLookBookFromCollectionLookBook(Collection $lookBooks);
 }
