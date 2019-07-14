@@ -256,6 +256,9 @@
                     </div>
                 </div>
                 {{--End Weight/dimensions and specifications--}}
+
+                @include('plugins-product::partials.product-review-list')
+
                 @php do_action(BASE_ACTION_META_BOXES, PRODUCT_MODULE_SCREEN_NAME, 'advanced', $product) @endphp
             </div>
             <div class="col-md-3 right-sidebar">
@@ -359,5 +362,38 @@
         const ALL_SPACE_INDEX = 1;
         const ALL_SPACES = {!! json_encode($spaces) !!};
         const PRODUCT_ATTRIBUTES = {!! json_encode($productAttributes) !!};
+    </script>
+@stop
+
+@section('scripts')
+    <script type="text/javascript">
+        let postCommentReview = function (url, content){
+            $.ajax({
+                url : url,
+                type : "post",
+                data : { content: content },
+                success : function (data){
+                    if(!data.error){
+                        Lcms.showNotice('success', data.message, Lcms.languages.notices_msg.success);
+                        location.reload();
+                    }
+                    else
+                        Lcms.showNotice('error', data.message, Lcms.languages.notices_msg.error);
+                },
+                error: function(error) { // if error occured
+                    Lcms.showNotice('error', error.message || 'Cannot comment for this review.', Lcms.languages.notices_msg.error);  
+                }
+            })
+        }
+
+        $(".post-comment-review").on("keypress",function(e) {
+            var key = e.keyCode;
+            if (key == 13) {
+                let url = $(this).data('url');
+                let content = $(this).val();
+                if(!content) return Lcms.showNotice('error', 'Please write content to comment a review.', Lcms.languages.notices_msg.error);
+                postCommentReview(url, content);
+            }
+        });
     </script>
 @stop

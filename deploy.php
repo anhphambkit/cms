@@ -55,6 +55,7 @@ task('deploy:upload', function(){ //
         upload("{$folder}//", $path."//{$folder}");
     }
    upload("public//favicon.png", $path."//public//favicon.png");
+   upload("composer.json", $path."composer.json");
 //    upload("composer.lock", $path."//");
 });
 
