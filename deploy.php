@@ -19,43 +19,85 @@ host($env->getEnv('DEPLOY_HOST'))
     ->port($env->getEnv('DEPLOY_PORT')) //68 : qa - 70 : dev
     ->identityFile($env->getEnv('DEPLOY_CERTIFICATE'))
     ->set('deploy_path', $env->getEnv('DEPLOY_PATH'))
+    ->set('deploy_path_local', $env->getEnv('DEPLOY_PATH_LOCAL'))
     ->set('permission', $env->getEnv('DEPLOY_PERMISSION'))
     ->multiplexing(true);
-    
+
 task('deploy:dev', [
     'deploy:start',
+//    'deploy:build_pkg',
     'deploy:upload',
-    // 'deploy:build',
+//     'deploy:build',
     'deploy:permission',
     'restart:supervisor',
 ]);
 
-task('deploy:start', function(){ // 
+task('deploy:start', function(){ //
     writeln('Start deployer');
 });
 
-task('deploy:upload', function(){ // 
+task('deploy:build_pkg', function(){ // Build frontend
+    $path = '/Users/anhpham/Documents/workspace/php/cms/';
+
+    $coreModules = [
+        'base',
+        'dashboard',
+        'master',
+        'media',
+        'page',
+        'seo',
+        'seo-helper',
+        'setting',
+        'slug',
+        'theme',
+        'user',
+    ];
+
+    $pluginModules = [
+        'blog',
+        'cart',
+        'customer-attributes',
+        'customer',
+        'faq',
+        'newsletter',
+        'payment',
+        'product',
+        'review',
+    ];
+
+    foreach ($coreModules as $coreModule) {
+        run("cd \"{$path}\" && npm run build-package -- --env.pkg={$coreModule}");
+    }
+
+    foreach ($pluginModules as $pluginModule) {
+        run("cd \"{$path}\" && npm run build-package -- --env.dir=plugins --env.pkg={$pluginModule}");
+    }
+})->local();
+
+task('deploy:upload', function(){ //
     writeln('Start upload');
     $folders = [
-       'app',
-       'config',
-       'core',
-       'Themes',
-       'database//seeds',
-       'plugins',
-       'public//themes',
-       'public//backend',
-       'public//frontend',
-       'public//libs',
-       'Themes'
+//        'app',
+//        'config',
+//        'core',
+        'Themes',
+//        'database//seeds',
+//        'plugins',
+//        'public//themes',
+//        'public//backend',
+//        'public//frontend',
+//        'public//libs',
+//        'public//vendor',
+//        'webpack'
     ];
     $path = get('deploy_path');
     foreach ($folders as $key => $folder) {
         # code...
         upload("{$folder}//", $path."//{$folder}");
     }
-   upload("public//favicon.png", $path."//public//favicon.png");
-//    upload("composer.lock", $path."//");
+//    upload("package.json", $path."//package.json");
+//    upload("composer.lock", $path."//composer.lock");
+//    upload("composer.json", $path."//composer.json");
 });
 
 task('deploy:build', function(){ // 
@@ -93,7 +135,7 @@ task('restart:supervisor', function(){
 });
 
 task('deploy:restore', function(){
-  
+
 });
 
 after('deploy:failed', 'deploy:restore');
