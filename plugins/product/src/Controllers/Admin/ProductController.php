@@ -23,6 +23,7 @@ use Plugins\Product\DataTables\ProductDataTable;
 use Core\Base\Controllers\Admin\BaseAdminController;
 use Plugins\Product\Requests\UpdateProductRequest;
 use Plugins\Product\Services\StoreKeywordService;
+use Plugins\Review\Repositories\Interfaces\ReviewRepositories;
 use AssetManager;
 use AssetPipeline;
 
@@ -74,6 +75,11 @@ class ProductController extends BaseAdminController
     protected $customAttributesRepositories;
 
     /**
+     * @var ReviewRepositories
+     */
+    protected $reviewRepository;
+
+    /**
      * ProductController constructor.
      * @param ProductRepositories $productRepository
      * @param ProductCategoryRepositories $productCategoryRepositories
@@ -89,17 +95,18 @@ class ProductController extends BaseAdminController
                                 ManufacturerRepositories $manufacturerRepositories, ProductColorRepositories $productColorRepositories,
                                 BusinessTypeRepositories $businessTypeRepositories, ProductCollectionRepositories $productCollectionRepositories,
                                 ProductMaterialRepositories $productMaterialRepositories, ProductSpaceRepositories $productSpaceRepositories,
-                                CustomAttributesRepositories $customAttributesRepositories)
+                                CustomAttributesRepositories $customAttributesRepositories, ReviewRepositories $reviewRepository)
     {
-        $this->productRepository = $productRepository;
-        $this->productCategoryRepositories = $productCategoryRepositories;
-        $this->manufacturerRepositories = $manufacturerRepositories;
-        $this->productColorRepositories = $productColorRepositories;
-        $this->businessTypeRepositories = $businessTypeRepositories;
+        $this->productRepository             = $productRepository;
+        $this->productCategoryRepositories   = $productCategoryRepositories;
+        $this->manufacturerRepositories      = $manufacturerRepositories;
+        $this->productColorRepositories      = $productColorRepositories;
+        $this->businessTypeRepositories      = $businessTypeRepositories;
         $this->productCollectionRepositories = $productCollectionRepositories;
-        $this->productMaterialRepositories = $productMaterialRepositories;
-        $this->productSpaceRepositories = $productSpaceRepositories;
-        $this->customAttributesRepositories = $customAttributesRepositories;
+        $this->productMaterialRepositories   = $productMaterialRepositories;
+        $this->productSpaceRepositories      = $productSpaceRepositories;
+        $this->customAttributesRepositories  = $customAttributesRepositories;
+        $this->reviewRepository              = $reviewRepository;
     }
 
     /**
@@ -121,19 +128,13 @@ class ProductController extends BaseAdminController
      */
     public function getCreate()
     {
-        $categories = $this->productCategoryRepositories->pluck('name', 'id');
-
-        $manufacturer = $this->manufacturerRepositories->pluck('name', 'id');
-
-        $colors = $this->productColorRepositories->pluck('name', 'id');
-
+        $categories    = $this->productCategoryRepositories->pluck('name', 'id');
+        $manufacturer  = $this->manufacturerRepositories->pluck('name', 'id');
+        $colors        = $this->productColorRepositories->pluck('name', 'id');
         $businessTypes = $this->businessTypeRepositories->pluck('name', 'id');
-
-        $collections = $this->productCollectionRepositories->pluck('name', 'id');
-
-        $materials = $this->productMaterialRepositories->pluck('name', 'id');
-
-        $spaces = $this->productSpaceRepositories->select(['id', 'name as text', 'image_feature'])->get();
+        $collections   = $this->productCollectionRepositories->pluck('name', 'id');
+        $materials     = $this->productMaterialRepositories->pluck('name', 'id');
+        $spaces        = $this->productSpaceRepositories->select(['id', 'name as text', 'image_feature'])->get();
 
         $productAttributes = $this->customAttributesRepositories->allBy([
            [ 'type_entity', '=', strtolower(CustomAttributeConfig::REFERENCE_CUSTOM_ATTRIBUTE_TYPE_ENTITY_PRODUCT) ]
@@ -301,25 +302,30 @@ class ProductController extends BaseAdminController
      */
     public function getEdit($id)
     {
-        $categories = $this->productCategoryRepositories->pluck('name', 'id');
-
-        $manufacturer = $this->manufacturerRepositories->pluck('name', 'id');
-
-        $colors = $this->productColorRepositories->pluck('name', 'id');
-
+        $categories    = $this->productCategoryRepositories->pluck('name', 'id');
+        $manufacturer  = $this->manufacturerRepositories->pluck('name', 'id');
+        $colors        = $this->productColorRepositories->pluck('name', 'id');
         $businessTypes = $this->businessTypeRepositories->pluck('name', 'id');
-
-        $collections = $this->productCollectionRepositories->pluck('name', 'id');
-
-        $materials = $this->productMaterialRepositories->pluck('name', 'id');
-
-        $spaces = $this->productSpaceRepositories->select(['id', 'name as text', 'image_feature'])->get();
+        $collections   = $this->productCollectionRepositories->pluck('name', 'id');
+        $materials     = $this->productMaterialRepositories->pluck('name', 'id');
+        $spaces        = $this->productSpaceRepositories->select(['id', 'name as text', 'image_feature'])->get();
 
         $productAttributes = $this->customAttributesRepositories->allBy([
             [ 'type_entity', '=', strtolower(CustomAttributeConfig::REFERENCE_CUSTOM_ATTRIBUTE_TYPE_ENTITY_PRODUCT) ]
         ], [], [ 'id', 'name as text', 'slug' ]);
 
         $product = $this->productRepository->findById($id);
+
+        # Get list review of product.
+        try{
+            $reviews = $this->reviewRepository->allBy([
+                'product_id' => (int)$id
+            ], ['comments', 'customer']);
+        }
+        catch(\Exception $ex){
+            info($ex->getMessage());
+            $reviews = [];
+        }
 
         $selectedProductCategories = [];
         if ($product->productCategories != null) {
@@ -373,7 +379,7 @@ class ProductController extends BaseAdminController
         return view('plugins-product::product.edit', compact('product', 'categories', 'manufacturer', 'colors',
                     'businessTypes', 'collections', 'materials', 'spaces', 'productAttributes',
                     'selectedProductCategories', 'selectedProductBusinessTypes', 'businessSpaces', 'allSpaces',
-                    'selectedProductCollections', 'selectedProductColors', 'selectedProductMaterials', 'galleries', 'keywords'));
+                    'selectedProductCollections', 'selectedProductColors', 'selectedProductMaterials', 'galleries', 'keywords', 'reviews'));
     }
 
     /**

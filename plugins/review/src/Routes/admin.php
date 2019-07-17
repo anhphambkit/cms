@@ -45,6 +45,12 @@ $router->group(['prefix' => 'review'], function (Router $router) {
         'as' => 'admin.review.delete',
         'uses' => 'ReviewController@getDelete',
     ]);
+
+    $router->post('comment/{reviewId}', [
+        'as'         => 'admin.review.comment.create', 
+        'uses'       => 'ReviewController@postCommentReview',
+    ]);
+
 });
 
 	

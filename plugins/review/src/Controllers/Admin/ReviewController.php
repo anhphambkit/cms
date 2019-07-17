@@ -7,6 +7,9 @@ use Plugins\Review\Requests\ReviewRequest;
 use Plugins\Review\Repositories\Interfaces\ReviewRepositories;
 use Plugins\Review\DataTables\ReviewDataTable;
 use Core\Base\Controllers\Admin\BaseAdminController;
+use Core\Base\Responses\BaseHttpResponse;
+use Plugins\Review\Repositories\Interfaces\ReviewCommentRepositories;
+use Plugins\Review\Requests\PostReviewRequest;
 
 class ReviewController extends BaseAdminController
 {
@@ -16,13 +19,19 @@ class ReviewController extends BaseAdminController
     protected $reviewRepository;
 
     /**
+     * @var ReviewRepositories
+     */
+    protected $reviewCommentRepository;
+
+    /**
      * ReviewController constructor.
      * @param ReviewRepositories $reviewRepository
      * @author TrinhLe
      */
-    public function __construct(ReviewRepositories $reviewRepository)
+    public function __construct(ReviewRepositories $reviewRepository, ReviewCommentRepositories $reviewCommentRepository)
     {
-        $this->reviewRepository = $reviewRepository;
+        $this->reviewRepository        = $reviewRepository;
+        $this->reviewCommentRepository = $reviewCommentRepository;
     }
 
     /**
@@ -141,6 +150,33 @@ class ReviewController extends BaseAdminController
                 'error' => true,
                 'message' => trans('core-base::notices.cannot_delete'),
             ];
+        }
+    }
+
+    /**
+     * [postCommentReview description]
+     * @param  Request $request [description]
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postCommentReview($reviewId, PostReviewRequest $request, BaseHttpResponse $response){
+        try{
+            $comment = $this->reviewCommentRepository->getModel();
+            $comment->fill([
+                'review_id' => (int)$reviewId,
+                'content'   => $request->get('content'),
+                'is_admin'  => true
+            ]);
+
+            $comment->author()->associate(auth()->user());
+            $this->reviewCommentRepository->createOrUpdate($comment);
+
+            return $response
+                ->setMessage(trans('core-base::notices.create_success_message'));
+        }catch(\Exception $ex){
+            info($ex->getMessage());
+            return $response
+                ->setError()
+                ->setMessage(trans('cannot write a comment. Please try again.'));   
         }
     }
 }
