@@ -1,6 +1,6 @@
 @extends("layouts.master")
 @section('content')
-    <section class="product-detail">
+    <section class="product-detail design-ideas-row">
         @component("components.look-book-detail")
             @slot('urlImage', $lookBook->image)
             @slot('nameLookBook', $lookBook->name)
@@ -11,6 +11,7 @@
             @slot('urlLookBook', $lookBook->slug_link)
             @slot('idLookBook', $lookBook->id)
             @slot('wasAddedWishList', $lookBook->was_added_wish_list)
+            @slot('tagProducts', $lookBook->look_book_all_products)
         @endcomponent
     </section>
     <section class="product-wrapper">
