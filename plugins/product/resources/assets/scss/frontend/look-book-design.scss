@@ -44,12 +44,15 @@
       }
     }
   }
-  &:hover .tt-btn i {
-    &.icon-show-popup {
-      display: none;
-    }
-    &.icon-close-popup {
-      display: block;
+  &:hover {
+    background: #5C8E85;
+    .tt-btn i {
+      &.icon-show-popup {
+        display: none;
+      }
+      &.icon-close-popup {
+        display: block;
+      }
     }
   }
 }
