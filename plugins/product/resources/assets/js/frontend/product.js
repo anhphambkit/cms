@@ -136,7 +136,7 @@ $(document).ready(function() {
         Lcms.beginLoading(`.product-detail-item.product-detail-item-${productId}`);
         let products = {};
         let newProduct = {};
-        let quantity = $(this).parents('.product-detail-item').find('.quantity-product').data('quantity');
+        let quantity = $(this).parents('.product-detail-item').find('.quantity-product').data('quantity') || 1;
         newProduct[productId] = quantity;
         products = Object.assign(products, newProduct);
         let dataAttributes = getAllAttributeValue();

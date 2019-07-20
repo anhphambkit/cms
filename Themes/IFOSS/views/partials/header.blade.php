@@ -28,7 +28,8 @@
                                     @endphp
                                     <i class="fas fa-shopping-cart">{{ ($miniCartInfo['total_items'] ? "({$miniCartInfo['total_items']})" : '') }}</i>
                                     <div class="mini-cart pb-0" id="mini-cart-header">
-                                        <div class="product-list mb-2">
+                                        @if($miniCartInfo['total_items'])
+                                            <div class="product-list mb-2">
                                            @foreach($miniCartInfo['products'] as $miniCartProduct)
                                                 <div class="item">
                                                     <div class="mini-thumbnail-cart">
@@ -46,7 +47,7 @@
                                                 </div>
                                             @endforeach
                                         </div>
-                                        <div class="cart-order-info font-weight-500 p-0 mb-0">
+                                            <div class="cart-order-info font-weight-500 p-0 mb-0">
                                             <div class="list-item">
                                                 Subtotal
                                                 <span>${{ number_format($miniCartInfo['sub_total']) }}</span>
@@ -102,6 +103,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @else
+                                        <!-- layout emty cart -->
+                                            <div class="tt-cart-empty text-custom">
+                                                <i class="fas fa-shopping-cart"></i>
+                                                <p>Empty Cart!</p>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </li>

@@ -19,3 +19,12 @@ input.quantity-product-item-input {
 a.action-delete-coupon {
   cursor: pointer;
 }
+
+.tt-cart-empty {
+  padding: 21px 20px 19px;
+  text-align: center;
+  display: block;
+  i {
+    font-size: 30px;
+  }
+}

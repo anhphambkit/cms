@@ -15660,17 +15660,31 @@ body {
   position: absolute;
   background-color: #fff;
   padding: 15px;
-  width: 260px;
   text-align: left;
-  display: none; }
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  z-index: 9; }
+  .tag-popup-info .product-specs .title {
+    color: #3c3c3c;
+    font-size: 14px;
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
+    overflow: hidden;
+    max-height: 1.4em; }
+  .tag-popup-info .product-specs .rating .rating-star > i {
+    font-size: 14px;
+    margin-right: 0 !important; }
   .tag-popup-info .thumbnail {
     width: 100%;
     position: relative;
-    position: relative;
-    margin-bottom: 30px;
-    height: 230px; }
-    .tag-popup-info .thumbnail:before {
-      padding-top: 0 !important; }
+    margin-bottom: 10px; }
     .tag-popup-info .thumbnail:before {
       display: block;
       content: "";
@@ -15688,6 +15702,41 @@ body {
       height: 100%;
       -o-object-fit: cover;
          object-fit: cover; }
+  .tag-popup-info.tag-xs .thumbnail {
+    width: 150px;
+    margin-right: 10px; }
+  .tag-popup-info.tag-xs .product-specs {
+    width: calc(100% - 150px); }
+    .tag-popup-info.tag-xs .product-specs .title {
+      width: 150px; }
+  .tag-popup-info.tag-sm .thumbnail {
+    width: 190px;
+    margin-right: 10px; }
+  .tag-popup-info.tag-sm .product-specs {
+    width: calc(100% - 190px); }
+    .tag-popup-info.tag-sm .product-specs .title {
+      width: 190px; }
+  .tag-popup-info.tag-md .thumbnail {
+    width: 230px;
+    margin-right: 10px; }
+  .tag-popup-info.tag-md .product-specs {
+    width: calc(100% - 230px); }
+    .tag-popup-info.tag-md .product-specs .title {
+      width: 230px; }
+  .tag-popup-info.tag-lg .thumbnail {
+    width: 270px;
+    margin-right: 10px; }
+  .tag-popup-info.tag-lg .product-specs {
+    width: calc(100% - 270px); }
+    .tag-popup-info.tag-lg .product-specs .title {
+      width: 270px; }
+  .tag-popup-info.tag-xl .thumbnail {
+    width: 310px;
+    margin-right: 10px; }
+  .tag-popup-info.tag-xl .product-specs {
+    width: calc(100% - 310px); }
+    .tag-popup-info.tag-xl .product-specs .title {
+      width: 310px; }
   .tag-popup-info:after {
     content: "";
     position: absolute;
@@ -15698,6 +15747,30 @@ body {
   .tag-popup-info.align-top:after {
     top: -6px;
     right: 50%;
+    -webkit-transform: translateX(50%) rotate(45deg);
+        -ms-transform: translateX(50%) rotate(45deg);
+            transform: translateX(50%) rotate(45deg); }
+  .tag-popup-info.align-top-right:after {
+    top: -6px;
+    right: 6%;
+    -webkit-transform: translateX(50%) rotate(45deg);
+        -ms-transform: translateX(50%) rotate(45deg);
+            transform: translateX(50%) rotate(45deg); }
+  .tag-popup-info.align-bottom-right:after {
+    bottom: -6px;
+    right: 6%;
+    -webkit-transform: translateX(50%) rotate(45deg);
+        -ms-transform: translateX(50%) rotate(45deg);
+            transform: translateX(50%) rotate(45deg); }
+  .tag-popup-info.align-top-left:after {
+    top: -6px;
+    left: 3%;
+    -webkit-transform: translateX(50%) rotate(45deg);
+        -ms-transform: translateX(50%) rotate(45deg);
+            transform: translateX(50%) rotate(45deg); }
+  .tag-popup-info.align-bottom-left:after {
+    bottom: -6px;
+    left: 3%;
     -webkit-transform: translateX(50%) rotate(45deg);
         -ms-transform: translateX(50%) rotate(45deg);
             transform: translateX(50%) rotate(45deg); }
@@ -17018,6 +17091,10 @@ a {
     color: #dbdbdb;
     font-size: 24px; }
 
+.content-overlay {
+  position: relative;
+  overflow: hidden; }
+
 .design-ideas-overlay-content {
   padding: 25px;
   background-color: rgba(255, 255, 255, 0.85);
@@ -17053,7 +17130,7 @@ a {
     .design-ideas-overlay-content .tag a {
       color: #6caea4; }
 
-.design-ideas [class*="col-"] {
+.design-ideas [class*="col-"], .design-ideas .design-ideas-row .row {
   padding-left: 7.5px;
   padding-right: 7.5px; }
 
@@ -17062,7 +17139,6 @@ a {
   padding-right: 7.5px; }
   .design-ideas-row .item {
     position: relative;
-    overflow: hidden;
     margin-bottom: 15px; }
     .design-ideas-row .item .wishlist {
       color: #96c4bd;
@@ -17072,12 +17148,54 @@ a {
       width: 100%;
       -o-object-fit: cover;
          object-fit: cover; }
-    .design-ideas-row .item:hover > .design-ideas-overlay-content {
+    .design-ideas-row .item:not(.sub-item):hover .design-ideas-overlay-content {
       -webkit-transform: translateY(0);
           -ms-transform: translateY(0);
               transform: translateY(0); }
+    .design-ideas-row .item:not(.sub-item):hover .tag-popup {
+      visibility: visible;
+      opacity: 1; }
     .design-ideas-row .item.sub-item {
       margin-bottom: 0; }
+  .design-ideas-row .tag-popup {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    background-color: #00000057;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.54);
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+       -moz-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+    .design-ideas-row .tag-popup > i {
+      font-size: 16px;
+      color: #fff; }
+    .design-ideas-row .tag-popup .tag-popup-info {
+      visibility: hidden;
+      opacity: 0;
+      -webkit-transition: all .3s ease;
+      -o-transition: all .3s ease;
+      transition: all .3s ease; }
+    .design-ideas-row .tag-popup:hover .tag-popup-info {
+      visibility: visible;
+      opacity: 1; }
 
 .design-ideas--row--s2--item {
   position: relative;

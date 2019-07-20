@@ -13,8 +13,10 @@ window.updateInfoUICart = function(data) {
     let totalItems = data.total_items;
     if (totalItems > 0) // Update UI cart number
         $('.shopping-cart-quantity i').html(`(${totalItems})`);
-    else
-        $('.shopping-cart-quantity i').html();
+    else {
+        $('.shopping-cart-quantity i').html("");
+        window.location.reload();
+    }
 
     miniCart.setData(data);
     miniCart.parseTemplate();

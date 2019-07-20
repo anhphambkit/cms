@@ -56,20 +56,40 @@ if (!function_exists('get_position_popup')) {
      */
     function get_position_popup(float $left, float $top)
     {
-        if ($top <= 50) {
+        if ($top <= 30 && $left <= 40) {
             return [
-                'top' => "calc({$top}% + 50px)",
-                'left' => "calc({$left}% - 110px)",
-                'class' => 'align-top',
+                'top' => "48px",
+                'left' => "0",
+                'class' => 'align-top-left',
                 'is_top' => true,
+                'is_right' => false,
+            ];
+        }
+        else if ($top >= 30 && $left <= 40) {
+            return [
+                'bottom' => "48px",
+                'left' => "0",
+                'class' => 'align-bottom-left',
+                'is_top' => false,
+                'is_right' => false,
+            ];
+        }
+        else if ($top <= 30 && $left > 40) {
+            return [
+                'top' => "48px",
+                'right' => "0",
+                'class' => 'align-top-right',
+                'is_top' => true,
+                'is_right' => true,
             ];
         }
         else {
             return [
-                'bottom' => "calc(100% - {$top}% + 15px)",
-                'left' => "calc({$left}% - 110px)",
-                'class' => 'align-bottom',
+                'bottom' => "48px",
+                'right' => "0",
+                'class' => 'align-bottom-right',
                 'is_top' => false,
+                'is_right' => true,
             ];
         }
     }

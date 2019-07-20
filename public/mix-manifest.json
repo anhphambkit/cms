@@ -1,3 +1,6 @@
 {
-    "/backend/plugins/custom-attributes/assets/css/custom-attributes.css": "/backend/plugins/custom-attributes/assets/css/custom-attributes.css"
+    "/frontend/plugins/cart/assets/js/cart-coupon.js": "/frontend/plugins/cart/assets/js/cart-coupon.js",
+    "/frontend/plugins/cart/assets/css/cart.css": "/frontend/plugins/cart/assets/css/cart.css",
+    "/frontend/plugins/cart/assets/js/cart.js": "/frontend/plugins/cart/assets/js/cart.js",
+    "/frontend/plugins/cart/assets/js/cart-helper.js": "/frontend/plugins/cart/assets/js/cart-helper.js"
 }

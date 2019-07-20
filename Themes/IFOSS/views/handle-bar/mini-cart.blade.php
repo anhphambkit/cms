@@ -73,8 +73,8 @@
     </div>
 @{{else}}
     <!-- layout emty cart -->
-    <a href="#" class="tt-cart-empty">
-        <i class="icon-f-39"></i>
-        <p>Empty!</p>
-    </a>
+    <div class="tt-cart-empty text-custom">
+        <i class="fas fa-shopping-cart"></i>
+        <p>Empty Cart!</p>
+    </div>
 @{{/if}}
